@@ -1,0 +1,22 @@
+[
+  {
+    "provider": "DeepSeek",
+    "url": "https://platform.deepseek.com/api-docs/pricing",
+    "models": ["deepseek-chat", "deepseek-reasoner"]
+  },
+  {
+    "provider": "OpenAI",
+    "url": "https://openai.com/api/pricing/",
+    "models": ["gpt-4.1", "gpt-4.1-mini"]
+  },
+  {
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/pricing",
+    "models": ["claude-sonnet", "claude-opus"]
+  },
+  {
+    "provider": "Google",
+    "url": "https://ai.google.dev/pricing",
+    "models": ["gemini-pro", "gemini-flash"]
+  }
+]

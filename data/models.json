@@ -1,0 +1,13 @@
+[
+  {
+    "id": "deepseek-chat",
+    "name": "DeepSeek Chat",
+    "provider": "DeepSeek",
+    "input_price_usd_per_1m": null,
+    "output_price_usd_per_1m": null,
+    "context_window": null,
+    "currency": "USD",
+    "source_url": "https://platform.deepseek.com/api-docs/pricing",
+    "updated_at": null
+  }
+]
