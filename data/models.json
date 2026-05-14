@@ -268,61 +268,78 @@
       "updatedAt": "2026-05-14T00:00:00.000Z"
     },
     {
-      "id": "openai-gpt-4-1",
-      "name": "GPT-4.1",
+      "id": "openai-gpt-5-5",
+      "name": "GPT-5.5",
       "provider": "OpenAI",
-      "family": "GPT-4.1",
-      "description": "通用旗舰文本与工具调用模型。",
-      "inputPriceUsdPer1M": 2.25,
-      "outputPriceUsdPer1M": 8.75,
-      "cacheWritePriceUsdPer1M": 0.55,
-      "cacheReadPriceUsdPer1M": 0.2,
-      "contextWindow": 128000,
-      "maxOutputTokens": 16384,
+      "family": "GPT-5.5",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "inputPriceUsdPer1M": 5,
+      "outputPriceUsdPer1M": 30,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
       "capabilities": [
-        "文本",
-        "工具调用",
-        "多模态"
+        "文本"
       ],
       "recommendedFor": [
-        "通用 Agent",
-        "代码生成",
-        "复杂问答"
+        "待补充"
       ],
-      "status": "stable",
+      "status": "live",
       "sourceUrl": "https://openai.com/api/pricing/",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-4-1",
-      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "detailPath": "/model/openai-gpt-5-5",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-14T00:00:00.000Z"
     },
     {
-      "id": "openai-gpt-4-1-mini",
-      "name": "GPT-4.1 mini",
+      "id": "openai-gpt-5-4",
+      "name": "GPT-5.4",
       "provider": "OpenAI",
-      "family": "GPT-4.1",
-      "description": "更适合大规模在线调用的低成本版本。",
-      "inputPriceUsdPer1M": 0.45,
-      "outputPriceUsdPer1M": 1.75,
-      "cacheWritePriceUsdPer1M": 0.12,
-      "cacheReadPriceUsdPer1M": 0.04,
-      "contextWindow": 128000,
-      "maxOutputTokens": 16384,
+      "family": "GPT-5.4",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "inputPriceUsdPer1M": 2.5,
+      "outputPriceUsdPer1M": 15,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
       "capabilities": [
-        "文本",
-        "多模态",
-        "低成本"
+        "文本"
       ],
       "recommendedFor": [
-        "在线客服",
-        "内容生成",
-        "批量 Agent"
+        "待补充"
       ],
-      "status": "stable",
+      "status": "live",
       "sourceUrl": "https://openai.com/api/pricing/",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-4-1-mini",
-      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "detailPath": "/model/openai-gpt-5-4",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "id": "openai-gpt-5-4-mini",
+      "name": "GPT-5.4 mini",
+      "provider": "OpenAI",
+      "family": "GPT-5.4",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "inputPriceUsdPer1M": 0.75,
+      "outputPriceUsdPer1M": 4.5,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://openai.com/api/pricing/",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-5-4-mini",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-14T00:00:00.000Z"
     },
     {
