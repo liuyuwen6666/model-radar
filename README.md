@@ -52,12 +52,12 @@ These endpoints are intended for:
 
 ## License
 
-Current project metadata in `package.json` uses `ISC`.
+This project uses the MIT License.
 
-Current repository status:
+License files and metadata:
 
-- no standalone `LICENSE` file yet
-- if you want stronger AI-friendly reuse clarity before public distribution, adding an explicit `MIT` license file is a reasonable next step
+- [`LICENSE`](./LICENSE)
+- `package.json` `license: "MIT"`
 
 ## 项目结构
 
