@@ -1,2 +1,4 @@
 .cache/
+.npm-cache/
+node_modules/
 .tmp-validation/

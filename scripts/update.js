@@ -1,5 +1,6 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
+const fetchOpenAIModels = require("./providers/openai");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const DATA_DIR = process.env.MODEL_RADAR_DATA_DIR
@@ -14,6 +15,9 @@ const SOURCES_PATH = path.join(DATA_DIR, "sources.json");
 const PREVIOUS_MODELS_PATH = path.join(CACHE_DIR, "models.previous.json");
 
 const DEFAULT_SOURCE_LABEL = "Official Pricing";
+const PROVIDER_LOADERS = {
+  OpenAI: fetchOpenAIModels
+};
 const PRICE_FIELDS = [
   "inputPriceUsdPer1M",
   "outputPriceUsdPer1M",
@@ -300,6 +304,16 @@ function buildSourceIndex(sourceList) {
   );
 }
 
+function buildBaseIndex(models) {
+  const index = new Map();
+
+  for (const model of Array.isArray(models) ? models : []) {
+    index.set(model.id, model);
+  }
+
+  return index;
+}
+
 function normalizeModel(model, sourceIndex, timestamp) {
   const source = sourceIndex.get(model.provider) || {};
 
@@ -324,6 +338,37 @@ function normalizeModel(model, sourceIndex, timestamp) {
     pricingNotes: model.pricingNotes || "模拟数据，字段结构可直接切换到真实抓取结果。",
     updatedAt: timestamp
   };
+}
+
+function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDate) {
+  const timestamp = providerModel.updated_at || buildTimestamp(targetDate);
+
+  return normalizeModel(
+    {
+      ...baseModel,
+      id: providerModel.id,
+      name: providerModel.name,
+      provider: providerModel.provider,
+      family: baseModel?.family || providerModel.name.split(/\s+/)[0] || providerModel.provider,
+      description: baseModel?.description || `抓取自 ${providerModel.provider} 官方定价页。`,
+      inputPriceUsdPer1M: providerModel.input_price_usd_per_1m,
+      outputPriceUsdPer1M: providerModel.output_price_usd_per_1m,
+      cacheWritePriceUsdPer1M: baseModel?.cacheWritePriceUsdPer1M ?? null,
+      cacheReadPriceUsdPer1M: baseModel?.cacheReadPriceUsdPer1M ?? null,
+      contextWindow: baseModel?.contextWindow ?? null,
+      maxOutputTokens: baseModel?.maxOutputTokens ?? null,
+      capabilities: baseModel?.capabilities || ["文本"],
+      recommendedFor: baseModel?.recommendedFor || ["待补充"],
+      status: baseModel?.status || "live",
+      sourceUrl: providerModel.source_url,
+      sourceLabel: baseModel?.sourceLabel,
+      detailPath: baseModel?.detailPath || `/model/${providerModel.id}`,
+      pricingNotes: "由 provider 抓取器从官方定价页解析得到。",
+      updatedAt: timestamp
+    },
+    sourceIndex,
+    timestamp
+  );
 }
 
 function simulatePrice(baseValue, modelId, field, targetDate) {
@@ -364,6 +409,86 @@ function simulateNextModels(baseModels, sourceIndex, targetDate) {
     });
 }
 
+async function loadProviderSnapshots(sourceList, targetDate) {
+  const snapshots = new Map();
+
+  for (const source of Array.isArray(sourceList) ? sourceList : []) {
+    const loader = PROVIDER_LOADERS[source.provider];
+
+    if (!loader) {
+      continue;
+    }
+
+    console.log(`[update] loading provider ${source.provider} from ${source.url}`);
+
+    try {
+      const models = await loader({
+        url: source.url,
+        updatedAt: buildTimestamp(targetDate)
+      });
+
+      if (Array.isArray(models) && models.length > 0) {
+        snapshots.set(source.provider, models);
+        console.log(`[update] provider ${source.provider} returned ${models.length} models`);
+      } else {
+        console.log(`[update] provider ${source.provider} returned no models, using fallback data`);
+      }
+    } catch (error) {
+      console.warn(`[update] provider ${source.provider} failed: ${error.message}`);
+    }
+  }
+
+  return snapshots;
+}
+
+function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate, shouldSimulateFallback) {
+  const timestamp = buildTimestamp(targetDate);
+  const baseIndex = buildBaseIndex(baseModels);
+  const loadedProviders = new Set(providerSnapshots.keys());
+  const injectedProviders = new Set();
+  const nextModels = [];
+
+  for (const model of baseModels) {
+    if (loadedProviders.has(model.provider) && !injectedProviders.has(model.provider)) {
+      const providerModels = providerSnapshots.get(model.provider) || [];
+
+      for (const providerModel of providerModels) {
+        const baseProviderModel = baseIndex.get(providerModel.id);
+        nextModels.push(normalizeProviderModel(providerModel, baseProviderModel, sourceIndex, targetDate));
+      }
+
+      injectedProviders.add(model.provider);
+    }
+
+    if (loadedProviders.has(model.provider)) {
+      continue;
+    }
+
+    const nextModel = normalizeModel(model, sourceIndex, timestamp);
+
+    if (shouldSimulateFallback) {
+      for (const field of PRICE_FIELDS) {
+        nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
+      }
+    }
+
+    nextModels.push(nextModel);
+  }
+
+  for (const [providerName, providerModels] of providerSnapshots.entries()) {
+    if (injectedProviders.has(providerName)) {
+      continue;
+    }
+
+    for (const providerModel of providerModels) {
+      const baseModel = baseIndex.get(providerModel.id);
+      nextModels.push(normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDate));
+    }
+  }
+
+  return nextModels;
+}
+
 function buildDataset(models, targetDate) {
   return {
     schemaVersion: 1,
@@ -401,13 +526,17 @@ async function main() {
     );
   }
 
-  if (isDataset(currentDataset) && currentDataset.effectiveDate === targetDate) {
-    console.log(`models.json already up to date for ${targetDate}`);
-    return;
-  }
-
   const baseModels = isDataset(currentDataset) ? currentDataset.models : MODEL_BLUEPRINTS;
-  const nextModels = simulateNextModels(baseModels, sourceIndex, targetDate);
+  const shouldSimulateFallback =
+    !isDataset(currentDataset) || currentDataset.effectiveDate !== targetDate;
+  const providerSnapshots = await loadProviderSnapshots(sourceList, targetDate);
+  const nextModels = buildNextModels(
+    baseModels,
+    providerSnapshots,
+    sourceIndex,
+    targetDate,
+    shouldSimulateFallback
+  );
   const nextDataset = buildDataset(nextModels, targetDate);
 
   await writeJson(MODELS_PATH, nextDataset);

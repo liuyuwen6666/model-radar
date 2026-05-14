@@ -1,0 +1,25 @@
+{
+  "name": "ai-model-price-radar",
+  "version": "1.0.0",
+  "description": "Static AI model pricing radar with JSON data updates and lightweight Node.js scripts.",
+  "main": "index.js",
+  "scripts": {
+    "update": "node scripts/update.js",
+    "diff": "node scripts/diff.js"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "pricing",
+    "radar"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}
