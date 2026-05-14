@@ -529,32 +529,22 @@
             <a class="btn" href="/data/models.json">下载 JSON 数据</a>
           </div>
           <div class="stats" aria-label="站点统计">
-            <div class="stat"><strong>8+</strong><span>已追踪厂商</span></div>
-            <div class="stat"><strong>30+</strong><span>计划覆盖模型</span></div>
-            <div class="stat"><strong>每日</strong><span>自动抓取与更新</span></div>
+            <div class="stat"><strong id="trackedProvidersStat">载入中</strong><span>已追踪厂商</span></div>
+            <div class="stat"><strong id="trackedModelsStat">载入中</strong><span>当前模型数</span></div>
+            <div class="stat"><strong id="updateFrequencyStat">每 12 小时</strong><span>自动抓取与更新</span></div>
           </div>
         </div>
 
         <aside class="card" id="changelog" aria-labelledby="changelog-title">
           <div class="card-header">
             <h2 id="changelog-title">今日价格变更</h2>
-            <span class="updated">最后更新：2026-05-12</span>
+            <span class="updated" id="changelogUpdated">最后更新：载入中</span>
           </div>
-          <ul class="change-list">
+          <ul class="change-list" id="changelogList">
             <li>
-              <span class="tag good">降价</span>
-              <div><strong>示例：DeepSeek Chat</strong><br><span class="updated">输入 token 价格下调，具体以官方页面为准。</span></div>
-              <a class="tag" href="/model/deepseek-chat">详情</a>
-            </li>
-            <li>
-              <span class="tag warn">新增</span>
-              <div><strong>示例：某模型新增缓存计费</strong><br><span class="updated">适合长上下文、多轮对话场景。</span></div>
-              <a class="tag" href="/history">历史</a>
-            </li>
-            <li>
-              <span class="tag">无变化</span>
-              <div><strong>OpenAI / Claude / Gemini</strong><br><span class="updated">今日未检测到主要价格字段变化。</span></div>
-              <a class="tag" href="/providers">来源</a>
+              <span class="tag">载入中</span>
+              <div><strong>正在读取 changelog.json</strong><br><span class="updated">首页会从 /data/changelog.json 自动渲染今日价格变更。</span></div>
+              <a class="tag" href="/data/changelog.json">JSON</a>
             </li>
           </ul>
         </aside>
@@ -566,29 +556,21 @@
         <div class="section-title">
           <div>
             <h2 id="models-title">主流模型价格表</h2>
-            <p>价格单位统一换算为“每 100 万 token”。数据字段可由 OpenClaw 每日抓取后生成。</p>
+            <p>价格单位统一换算为“每 100 万 token”。页面启动后会从 <code>/data/models.json</code> 动态读取。</p>
           </div>
-          <a class="btn" href="/models">查看全部模型</a>
+          <a class="btn" href="/data/models.json">查看 JSON 数据</a>
         </div>
 
         <div class="toolbar" role="search">
           <input id="modelSearch" class="search-input" type="search" placeholder="搜索模型或厂商，例如 DeepSeek、Claude、豆包" aria-label="搜索模型或厂商" />
           <select id="providerFilter" class="select-input" aria-label="按厂商筛选">
             <option value="all">全部厂商</option>
-            <option value="OpenAI">OpenAI</option>
-            <option value="Anthropic">Anthropic</option>
-            <option value="Google">Google</option>
-            <option value="DeepSeek">DeepSeek</option>
-            <option value="字节豆包">字节豆包</option>
-            <option value="阿里通义">阿里通义</option>
-            <option value="月之暗面">月之暗面</option>
-            <option value="腾讯混元">腾讯混元</option>
           </select>
         </div>
 
         <div class="table-wrap">
           <table id="modelTable">
-            <caption class="updated" style="caption-side: bottom; padding: 12px; text-align: left;">说明：本页为第一版示例数据结构，请接入官方价格源后替换为真实数据。</caption>
+            <caption id="tableCaption" class="updated" style="caption-side: bottom; padding: 12px; text-align: left;">说明：正在读取模型价格数据。</caption>
             <thead>
               <tr>
                 <th>模型</th>
@@ -601,86 +583,9 @@
                 <th>来源</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="modelTableBody">
               <tr data-provider="OpenAI">
-                <td><a class="model-name" href="/model/openai-gpt">GPT 系列</a><br><span class="provider">示例占位</span></td>
-                <td>OpenAI</td>
-                <td class="mono">待抓取</td>
-                <td class="mono">待抓取</td>
-                <td>待抓取</td>
-                <td><span class="tag">文本</span> <span class="tag">多模态</span></td>
-                <td>通用问答、Agent、代码、工具调用</td>
-                <td><a href="/source/openai" rel="nofollow">官方价格页</a></td>
-              </tr>
-              <tr data-provider="Anthropic">
-                <td><a class="model-name" href="/model/claude">Claude 系列</a><br><span class="provider">示例占位</span></td>
-                <td>Anthropic</td>
-                <td class="mono">待抓取</td>
-                <td class="mono">待抓取</td>
-                <td>待抓取</td>
-                <td><span class="tag">长文本</span> <span class="tag">代码</span></td>
-                <td>代码生成、长文档分析、复杂推理</td>
-                <td><a href="/source/anthropic" rel="nofollow">官方价格页</a></td>
-              </tr>
-              <tr data-provider="Google">
-                <td><a class="model-name" href="/model/gemini">Gemini 系列</a><br><span class="provider">示例占位</span></td>
-                <td>Google</td>
-                <td class="mono">待抓取</td>
-                <td class="mono">待抓取</td>
-                <td>待抓取</td>
-                <td><span class="tag">长上下文</span> <span class="tag">多模态</span></td>
-                <td>长上下文、多模态、低成本批处理</td>
-                <td><a href="/source/google" rel="nofollow">官方价格页</a></td>
-              </tr>
-              <tr data-provider="DeepSeek">
-                <td><a class="model-name" href="/model/deepseek">DeepSeek 系列</a><br><span class="provider">示例占位</span></td>
-                <td>DeepSeek</td>
-                <td class="mono">待抓取</td>
-                <td class="mono">待抓取</td>
-                <td>待抓取</td>
-                <td><span class="tag">推理</span> <span class="tag">代码</span></td>
-                <td>中文、代码、低成本推理</td>
-                <td><a href="/source/deepseek" rel="nofollow">官方价格页</a></td>
-              </tr>
-              <tr data-provider="字节豆包">
-                <td><a class="model-name" href="/model/doubao">豆包大模型</a><br><span class="provider">示例占位</span></td>
-                <td>字节豆包</td>
-                <td class="mono">待抓取</td>
-                <td class="mono">待抓取</td>
-                <td>待抓取</td>
-                <td><span class="tag">中文</span> <span class="tag">多模态</span></td>
-                <td>中文应用、内容生成、企业场景</td>
-                <td><a href="/source/doubao" rel="nofollow">官方价格页</a></td>
-              </tr>
-              <tr data-provider="阿里通义">
-                <td><a class="model-name" href="/model/qwen">通义千问</a><br><span class="provider">示例占位</span></td>
-                <td>阿里通义</td>
-                <td class="mono">待抓取</td>
-                <td class="mono">待抓取</td>
-                <td>待抓取</td>
-                <td><span class="tag">开源</span> <span class="tag">中文</span></td>
-                <td>企业应用、私有化、中文任务</td>
-                <td><a href="/source/qwen" rel="nofollow">官方价格页</a></td>
-              </tr>
-              <tr data-provider="月之暗面">
-                <td><a class="model-name" href="/model/kimi">Kimi / Moonshot</a><br><span class="provider">示例占位</span></td>
-                <td>月之暗面</td>
-                <td class="mono">待抓取</td>
-                <td class="mono">待抓取</td>
-                <td>待抓取</td>
-                <td><span class="tag">长文本</span> <span class="tag">中文</span></td>
-                <td>长文档、中文写作、知识库问答</td>
-                <td><a href="/source/moonshot" rel="nofollow">官方价格页</a></td>
-              </tr>
-              <tr data-provider="腾讯混元">
-                <td><a class="model-name" href="/model/hunyuan">腾讯混元</a><br><span class="provider">示例占位</span></td>
-                <td>腾讯混元</td>
-                <td class="mono">待抓取</td>
-                <td class="mono">待抓取</td>
-                <td>待抓取</td>
-                <td><span class="tag">中文</span> <span class="tag">企业</span></td>
-                <td>腾讯生态、企业应用、中文内容</td>
-                <td><a href="/source/hunyuan" rel="nofollow">官方价格页</a></td>
+                <td colspan="8" class="updated">正在读取 <code>/data/models.json</code> ...</td>
               </tr>
             </tbody>
           </table>
@@ -792,22 +697,230 @@
   </footer>
 
   <script>
-    const table = document.getElementById('modelTable');
+    const MODELS_ENDPOINT = '/data/models.json';
+    const CHANGELOG_ENDPOINT = '/data/changelog.json';
+    const tableBody = document.getElementById('modelTableBody');
+    const tableCaption = document.getElementById('tableCaption');
     const search = document.getElementById('modelSearch');
     const providerFilter = document.getElementById('providerFilter');
+    const changelogList = document.getElementById('changelogList');
+    const changelogUpdated = document.getElementById('changelogUpdated');
+    const trackedProvidersStat = document.getElementById('trackedProvidersStat');
+    const trackedModelsStat = document.getElementById('trackedModelsStat');
+    const state = {
+      models: []
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatPrice(value) {
+      return typeof value === 'number' ? `$${value.toFixed(2)}` : '待更新';
+    }
+
+    function formatContext(value) {
+      return Number.isFinite(value) ? `${value.toLocaleString('en-US')} tokens` : '待更新';
+    }
+
+    function formatChangeTypeLabel(type) {
+      const labels = {
+        price_decrease: '降价',
+        price_increase: '涨价',
+        pricing_added: '新增',
+        pricing_removed: '移除',
+        new_model: '新增模型',
+        removed_model: '移除模型'
+      };
+
+      return labels[type] || '变更';
+    }
+
+    function formatChangeTypeClass(type) {
+      if (type === 'price_decrease') {
+        return 'good';
+      }
+
+      if (type === 'price_increase' || type === 'pricing_removed' || type === 'removed_model') {
+        return 'bad';
+      }
+
+      if (type === 'pricing_added' || type === 'new_model') {
+        return 'warn';
+      }
+
+      return '';
+    }
+
+    function formatUpdatedLabel(dateOrTimestamp) {
+      if (!dateOrTimestamp) {
+        return '未知';
+      }
+
+      return dateOrTimestamp.length > 10 ? dateOrTimestamp.slice(0, 10) : dateOrTimestamp;
+    }
+
+    function buildTags(tags) {
+      return (Array.isArray(tags) ? tags : [])
+        .slice(0, 3)
+        .map(tag => `<span class="tag">${escapeHtml(tag)}</span>`)
+        .join(' ');
+    }
+
+    function populateProviderFilter(models) {
+      const providers = Array.from(new Set(models.map(model => model.provider))).sort((a, b) => a.localeCompare(b, 'zh-CN'));
+      providerFilter.innerHTML = '<option value="all">全部厂商</option>' + providers
+        .map(provider => `<option value="${escapeHtml(provider)}">${escapeHtml(provider)}</option>`)
+        .join('');
+    }
+
+    function updateStats(models) {
+      const providers = new Set(models.map(model => model.provider));
+      trackedProvidersStat.textContent = `${providers.size}`;
+      trackedModelsStat.textContent = `${models.length}`;
+    }
+
+    function renderModelRows(models) {
+      if (!models.length) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="8" class="updated">当前筛选条件下没有匹配结果。</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tableBody.innerHTML = models.map(model => {
+        const modelLink = model.sourceUrl
+          ? `<a class="model-name" href="${escapeHtml(model.sourceUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(model.name)}</a>`
+          : `<span class="model-name">${escapeHtml(model.name)}</span>`;
+        const sourceLink = model.sourceUrl
+          ? `<a href="${escapeHtml(model.sourceUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(model.sourceLabel || '官方价格页')}</a>`
+          : '-';
+
+        return `
+          <tr data-provider="${escapeHtml(model.provider)}">
+            <td>${modelLink}<br><span class="provider">${escapeHtml(model.description || model.family || '')}</span></td>
+            <td>${escapeHtml(model.provider)}</td>
+            <td class="mono">${formatPrice(model.inputPriceUsdPer1M)}</td>
+            <td class="mono">${formatPrice(model.outputPriceUsdPer1M)}</td>
+            <td>${formatContext(model.contextWindow)}</td>
+            <td>${buildTags(model.capabilities)}</td>
+            <td>${escapeHtml((model.recommendedFor || []).join('、') || '待补充')}</td>
+            <td>${sourceLink}</td>
+          </tr>
+        `;
+      }).join('');
+    }
 
     function filterRows() {
       const keyword = search.value.trim().toLowerCase();
       const provider = providerFilter.value;
-      const rows = table.querySelectorAll('tbody tr');
-
-      rows.forEach(row => {
-        const text = row.innerText.toLowerCase();
-        const rowProvider = row.dataset.provider;
-        const keywordMatch = !keyword || text.includes(keyword);
-        const providerMatch = provider === 'all' || rowProvider === provider;
-        row.style.display = keywordMatch && providerMatch ? '' : 'none';
+      const filteredModels = state.models.filter(model => {
+        const haystack = [
+          model.name,
+          model.provider,
+          model.family,
+          model.description,
+          ...(model.capabilities || []),
+          ...(model.recommendedFor || [])
+        ]
+          .join(' ')
+          .toLowerCase();
+        const keywordMatch = !keyword || haystack.includes(keyword);
+        const providerMatch = provider === 'all' || model.provider === provider;
+        return keywordMatch && providerMatch;
       });
+
+      renderModelRows(filteredModels);
+    }
+
+    function renderChangelog(payload) {
+      if (!payload || typeof payload !== 'object') {
+        renderChangelogError('changelog.json 结构无效');
+        return;
+      }
+
+      changelogUpdated.textContent = `最后更新：${formatUpdatedLabel(payload.effectiveDate || payload.generatedAt)}`;
+
+      if (!payload || !Array.isArray(payload.latest) || !payload.latest.length) {
+        changelogList.innerHTML = `
+          <li>
+            <span class="tag">无变化</span>
+            <div><strong>今日未检测到价格变化</strong><br><span class="updated">当前更新批次没有发现核心价格字段差异。</span></div>
+            <a class="tag" href="/data/changelog.json">JSON</a>
+          </li>
+        `;
+        return;
+      }
+
+      changelogList.innerHTML = payload.latest.slice(0, 3).map(item => `
+        <li>
+          <span class="tag ${formatChangeTypeClass(item.type)}">${escapeHtml(formatChangeTypeLabel(item.type))}</span>
+          <div><strong>${escapeHtml(item.modelName)}</strong><br><span class="updated">${escapeHtml(item.summary || item.fieldLabel || '价格发生变化')}</span></div>
+          <a class="tag" href="${escapeHtml(item.sourceUrl || '/data/changelog.json')}" ${item.sourceUrl ? 'target="_blank" rel="nofollow noopener"' : ''}>${item.sourceUrl ? '来源' : 'JSON'}</a>
+        </li>
+      `).join('');
+    }
+
+    function renderDataError(message) {
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="8" class="updated">${escapeHtml(message)}</td>
+        </tr>
+      `;
+    }
+
+    function renderChangelogError(message) {
+      changelogUpdated.textContent = '最后更新：读取失败';
+      changelogList.innerHTML = `
+        <li>
+          <span class="tag bad">失败</span>
+          <div><strong>价格变更加载失败</strong><br><span class="updated">${escapeHtml(message)}</span></div>
+          <a class="tag" href="/data/changelog.json">JSON</a>
+        </li>
+      `;
+    }
+
+    async function fetchJson(url) {
+      const response = await fetch(url, { cache: 'no-store' });
+
+      if (!response.ok) {
+        throw new Error(`${url} 返回 ${response.status}`);
+      }
+
+      return response.json();
+    }
+
+    async function loadData() {
+      const [modelsResult, changelogResult] = await Promise.allSettled([
+        fetchJson(MODELS_ENDPOINT),
+        fetchJson(CHANGELOG_ENDPOINT)
+      ]);
+
+      if (modelsResult.status === 'fulfilled') {
+        const modelsPayload = modelsResult.value;
+        state.models = Array.isArray(modelsPayload.models) ? modelsPayload.models : [];
+        populateProviderFilter(state.models);
+        updateStats(state.models);
+        tableCaption.textContent = `说明：${modelsPayload.disclaimer || '模型价格由 JSON 数据驱动，可直接替换为真实抓取结果。'}`;
+        filterRows();
+      } else {
+        renderDataError(`模型数据读取失败：${modelsResult.reason.message}`);
+        trackedProvidersStat.textContent = '-';
+        trackedModelsStat.textContent = '-';
+      }
+
+      if (changelogResult.status === 'fulfilled') {
+        renderChangelog(changelogResult.value);
+      } else {
+        renderChangelogError(`变更数据读取失败：${changelogResult.reason.message}`);
+      }
     }
 
     search.addEventListener('input', filterRows);
@@ -833,6 +946,7 @@
     });
 
     calculateCost();
+    loadData();
   </script>
 </body>
 </html>

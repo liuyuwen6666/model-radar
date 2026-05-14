@@ -1,22 +1,70 @@
 [
   {
-    "provider": "DeepSeek",
-    "url": "https://platform.deepseek.com/api-docs/pricing",
-    "models": ["deepseek-chat", "deepseek-reasoner"]
-  },
-  {
     "provider": "OpenAI",
+    "label": "OpenAI API Pricing",
     "url": "https://openai.com/api/pricing/",
-    "models": ["gpt-4.1", "gpt-4.1-mini"]
+    "models": [
+      "openai-gpt-4-1",
+      "openai-gpt-4-1-mini"
+    ]
   },
   {
     "provider": "Anthropic",
+    "label": "Anthropic Pricing",
     "url": "https://www.anthropic.com/pricing",
-    "models": ["claude-sonnet", "claude-opus"]
+    "models": [
+      "anthropic-claude-3-7-sonnet",
+      "anthropic-claude-3-5-haiku"
+    ]
   },
   {
     "provider": "Google",
+    "label": "Google AI Pricing",
     "url": "https://ai.google.dev/pricing",
-    "models": ["gemini-pro", "gemini-flash"]
+    "models": [
+      "google-gemini-2-5-pro",
+      "google-gemini-2-5-flash"
+    ]
+  },
+  {
+    "provider": "DeepSeek",
+    "label": "DeepSeek Pricing",
+    "url": "https://platform.deepseek.com/api-docs/pricing",
+    "models": [
+      "deepseek-chat",
+      "deepseek-reasoner"
+    ]
+  },
+  {
+    "provider": "字节豆包",
+    "label": "豆包 Pricing",
+    "url": "https://www.volcengine.com/docs/82379/1547233",
+    "models": [
+      "doubao-1-5-pro-32k"
+    ]
+  },
+  {
+    "provider": "阿里通义",
+    "label": "通义千问 Pricing",
+    "url": "https://help.aliyun.com/zh/model-studio/product-overview/billing-of-model-studio",
+    "models": [
+      "qwen-max"
+    ]
+  },
+  {
+    "provider": "月之暗面",
+    "label": "Moonshot Pricing",
+    "url": "https://platform.moonshot.cn/docs/pricing/chat",
+    "models": [
+      "kimi-latest-128k"
+    ]
+  },
+  {
+    "provider": "腾讯混元",
+    "label": "腾讯云混元 Pricing",
+    "url": "https://cloud.tencent.com/document/product/1729/97731",
+    "models": [
+      "hunyuan-turbo-s"
+    ]
   }
 ]
