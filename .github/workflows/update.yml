@@ -2,39 +2,33 @@ name: Update Model Pricing
 
 on:
   schedule:
-    - cron: "0 */12 * * *"
-  workflow_dispatch:
+    - cron: '0 */12 * * *'
 
-permissions:
-  contents: write
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 22
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Update model dataset
+      - name: Run update script
         run: node scripts/update.js
 
-      - name: Generate changelog
-        run: node scripts/diff.js
-
-      - name: Commit and push data updates
+      - name: Commit changes
         run: |
-          git config user.name "model-radar-bot"
+          git config user.name "modelradar-bot"
           git config user.email "bot@modelradar.cn"
-          git add data/
-          if git diff --cached --quiet -- data/; then
-            echo "No data changes to commit"
-            exit 0
-          fi
-          git commit -m "chore: update model pricing data"
+
+          git add .
+
+          git commit -m "auto update pricing" || echo "No changes"
+
           git push
