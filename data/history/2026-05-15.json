@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-15T00:00:00.000Z",
+  "effectiveDate": "2026-05-15",
+  "currency": "USD",
+  "billingUnit": "per_1m_tokens",
+  "disclaimer": "当前为模拟数据，用于演示自动更新链路；后续可将 update.js 替换为真实抓取逻辑。",
+  "models": [
+    {
+      "id": "anthropic-claude-3-5-haiku",
+      "name": "Claude 3.5 Haiku",
+      "provider": "Anthropic",
+      "family": "Claude",
+      "description": "低延迟、低成本的轻量模型。",
+      "inputPriceUsdPer1M": 0.936,
+      "outputPriceUsdPer1M": 4.59,
+      "cacheWritePriceUsdPer1M": 0.26,
+      "cacheReadPriceUsdPer1M": 0.0768,
+      "contextWindow": 200000,
+      "maxOutputTokens": 8192,
+      "capabilities": [
+        "文本",
+        "分类",
+        "代码"
+      ],
+      "recommendedFor": [
+        "批量处理",
+        "摘要",
+        "轻量客服"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://www.anthropic.com/pricing",
+      "sourceLabel": "Anthropic Pricing",
+      "detailPath": "/model/claude-3-5-haiku",
+      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "anthropic-claude-3-7-sonnet",
+      "name": "Claude 3.7 Sonnet",
+      "provider": "Anthropic",
+      "family": "Claude",
+      "description": "偏复杂推理与代码的主力模型。",
+      "inputPriceUsdPer1M": 3,
+      "outputPriceUsdPer1M": 14.1,
+      "cacheWritePriceUsdPer1M": 0.816,
+      "cacheReadPriceUsdPer1M": 0.3,
+      "contextWindow": 200000,
+      "maxOutputTokens": 16384,
+      "capabilities": [
+        "长文本",
+        "推理",
+        "代码"
+      ],
+      "recommendedFor": [
+        "复杂 Agent",
+        "代码审查",
+        "长文档分析"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://www.anthropic.com/pricing",
+      "sourceLabel": "Anthropic Pricing",
+      "detailPath": "/model/claude-3-7-sonnet",
+      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "deepseek-v4-flash",
+      "name": "DeepSeek V4 Flash",
+      "provider": "DeepSeek",
+      "family": "DeepSeek",
+      "description": "抓取自 DeepSeek 官方定价页。",
+      "inputPriceUsdPer1M": 0.14,
+      "outputPriceUsdPer1M": 0.28,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "sourceLabel": "DeepSeek Pricing",
+      "detailPath": "/model/deepseek-v4-flash",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "name": "DeepSeek V4 Pro",
+      "provider": "DeepSeek",
+      "family": "DeepSeek",
+      "description": "抓取自 DeepSeek 官方定价页。",
+      "inputPriceUsdPer1M": 0.435,
+      "outputPriceUsdPer1M": 0.87,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "sourceLabel": "DeepSeek Pricing",
+      "detailPath": "/model/deepseek-v4-pro",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "doubao-1-5-pro-32k",
+      "name": "豆包 1.5 Pro 32K",
+      "provider": "字节豆包",
+      "family": "Doubao",
+      "description": "偏中文企业应用的主力模型。",
+      "inputPriceUsdPer1M": 0.8,
+      "outputPriceUsdPer1M": 2.4,
+      "cacheWritePriceUsdPer1M": 0.212,
+      "cacheReadPriceUsdPer1M": 0.0832,
+      "contextWindow": 32000,
+      "maxOutputTokens": 8192,
+      "capabilities": [
+        "中文",
+        "多模态",
+        "企业"
+      ],
+      "recommendedFor": [
+        "企业 Copilot",
+        "中文内容",
+        "客服助手"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://www.volcengine.com/docs/82379/1547233",
+      "sourceLabel": "豆包 Pricing",
+      "detailPath": "/model/doubao-1-5-pro-32k",
+      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "google-gemini-2-5-flash",
+      "name": "Gemini 2.5 Flash",
+      "provider": "Google",
+      "family": "Gemini",
+      "description": "面向高吞吐与低成本推理。",
+      "inputPriceUsdPer1M": 0.35,
+      "outputPriceUsdPer1M": 1.8,
+      "cacheWritePriceUsdPer1M": 0.08,
+      "cacheReadPriceUsdPer1M": 0.0312,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 8192,
+      "capabilities": [
+        "多模态",
+        "长上下文",
+        "低成本"
+      ],
+      "recommendedFor": [
+        "批量摘要",
+        "多模态分类",
+        "低成本应用"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://ai.google.dev/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/gemini-2-5-flash",
+      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "google-gemini-2-5-pro",
+      "name": "Gemini 2.5 Pro",
+      "provider": "Google",
+      "family": "Gemini",
+      "description": "适合长上下文和复杂多模态任务。",
+      "inputPriceUsdPer1M": 1.5,
+      "outputPriceUsdPer1M": 9.8,
+      "cacheWritePriceUsdPer1M": 0.343,
+      "cacheReadPriceUsdPer1M": 0.1,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 16384,
+      "capabilities": [
+        "多模态",
+        "长上下文",
+        "推理"
+      ],
+      "recommendedFor": [
+        "长文档分析",
+        "图文理解",
+        "复杂工作流"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://ai.google.dev/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/gemini-2-5-pro",
+      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "hunyuan-turbo-s",
+      "name": "混元 Turbo S",
+      "provider": "腾讯混元",
+      "family": "Hunyuan",
+      "description": "面向腾讯生态和企业集成。",
+      "inputPriceUsdPer1M": 0.65,
+      "outputPriceUsdPer1M": 2.236,
+      "cacheWritePriceUsdPer1M": 0.147,
+      "cacheReadPriceUsdPer1M": 0.06,
+      "contextWindow": 128000,
+      "maxOutputTokens": 8192,
+      "capabilities": [
+        "中文",
+        "企业",
+        "Agent"
+      ],
+      "recommendedFor": [
+        "企业应用",
+        "客服系统",
+        "微信生态"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
+      "sourceLabel": "腾讯云混元 Pricing",
+      "detailPath": "/model/hunyuan-turbo-s",
+      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "kimi-latest-128k",
+      "name": "Kimi Latest 128K",
+      "provider": "月之暗面",
+      "family": "Kimi",
+      "description": "长文本处理和中文知识问答。",
+      "inputPriceUsdPer1M": 1.431,
+      "outputPriceUsdPer1M": 4.896,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": 128000,
+      "maxOutputTokens": 8192,
+      "capabilities": [
+        "中文",
+        "长文本",
+        "检索"
+      ],
+      "recommendedFor": [
+        "知识库问答",
+        "文档解读",
+        "中文写作"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat",
+      "sourceLabel": "Moonshot Pricing",
+      "detailPath": "/model/kimi-latest-128k",
+      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "openai-gpt-5-5",
+      "name": "GPT-5.5",
+      "provider": "OpenAI",
+      "family": "GPT-5.5",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "inputPriceUsdPer1M": 5,
+      "outputPriceUsdPer1M": 30,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://openai.com/api/pricing/",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-5-5",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "openai-gpt-5-4",
+      "name": "GPT-5.4",
+      "provider": "OpenAI",
+      "family": "GPT-5.4",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "inputPriceUsdPer1M": 2.5,
+      "outputPriceUsdPer1M": 15,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://openai.com/api/pricing/",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-5-4",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "openai-gpt-5-4-mini",
+      "name": "GPT-5.4 mini",
+      "provider": "OpenAI",
+      "family": "GPT-5.4",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "inputPriceUsdPer1M": 0.75,
+      "outputPriceUsdPer1M": 4.5,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://openai.com/api/pricing/",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-5-4-mini",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "qwen-max",
+      "name": "Qwen Max",
+      "provider": "阿里通义",
+      "family": "Qwen",
+      "description": "适合中文企业应用与混合部署。",
+      "inputPriceUsdPer1M": 1.1,
+      "outputPriceUsdPer1M": 4.2,
+      "cacheWritePriceUsdPer1M": 0.2856,
+      "cacheReadPriceUsdPer1M": 0.106,
+      "contextWindow": 32000,
+      "maxOutputTokens": 8192,
+      "capabilities": [
+        "中文",
+        "企业",
+        "开源生态"
+      ],
+      "recommendedFor": [
+        "企业知识库",
+        "中文应用",
+        "私有化方案"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/product-overview/billing-of-model-studio",
+      "sourceLabel": "通义千问 Pricing",
+      "detailPath": "/model/qwen-max",
+      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    }
+  ]
+}

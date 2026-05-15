@@ -37,7 +37,7 @@ jobs:
           git config user.name "modelradar-bot"
           git config user.email "bot@modelradar.cn"
 
-          git add data/
+          git add data/ sitemap.xml
 
           git commit -m "auto update pricing" || echo "No changes"
 

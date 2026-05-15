@@ -10,12 +10,21 @@ const DATA_DIR = process.env.MODEL_RADAR_DATA_DIR
 const CACHE_DIR = process.env.MODEL_RADAR_CACHE_DIR
   ? path.resolve(ROOT_DIR, process.env.MODEL_RADAR_CACHE_DIR)
   : path.join(ROOT_DIR, ".cache");
+const SITEMAP_PATH = process.env.MODEL_RADAR_SITEMAP_PATH
+  ? path.resolve(ROOT_DIR, process.env.MODEL_RADAR_SITEMAP_PATH)
+  : path.join(ROOT_DIR, "sitemap.xml");
 
 const MODELS_PATH = path.join(DATA_DIR, "models.json");
 const SOURCES_PATH = path.join(DATA_DIR, "sources.json");
 const PREVIOUS_MODELS_PATH = path.join(CACHE_DIR, "models.previous.json");
+const HISTORY_DIR = path.join(DATA_DIR, "history");
 
 const DEFAULT_SOURCE_LABEL = "Official Pricing";
+const SITE_ORIGIN = (process.env.MODEL_RADAR_SITE_ORIGIN || "https://modelradar.cn").replace(
+  /\/+$/,
+  ""
+);
+const SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
 const PROVIDER_LOADERS = {
   OpenAI: fetchOpenAIModels,
   DeepSeek: fetchDeepSeekModels
@@ -291,6 +300,18 @@ async function readJson(filePath, fallback = null) {
   }
 }
 
+async function readText(filePath, fallback = "") {
+  try {
+    return await fs.readFile(filePath, "utf8");
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      return fallback;
+    }
+
+    throw error;
+  }
+}
+
 function isDataset(dataset) {
   return Boolean(
     dataset &&
@@ -503,9 +524,86 @@ function buildDataset(models, targetDate) {
   };
 }
 
+function getHistorySnapshotPath(targetDate) {
+  return path.join(HISTORY_DIR, `${targetDate}.json`);
+}
+
+function escapeXml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function parseSitemapEntries(xml) {
+  const entries = [];
+
+  for (const match of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+    const block = match[1];
+    const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1]?.trim();
+
+    if (!loc) {
+      continue;
+    }
+
+    const lastmod = block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1]?.trim() || null;
+    entries.push({ loc, lastmod });
+  }
+
+  return entries;
+}
+
+function buildManagedSitemapEntries(targetDate) {
+  return [
+    { loc: `${SITE_ORIGIN}/`, lastmod: targetDate },
+    { loc: `${SITE_ORIGIN}/data/models.json`, lastmod: targetDate },
+    { loc: `${SITE_ORIGIN}/data/changelog.json`, lastmod: targetDate },
+    { loc: `${SITE_ORIGIN}/data/history/${targetDate}.json`, lastmod: targetDate }
+  ];
+}
+
+function mergeSitemapEntries(existingEntries, targetDate) {
+  const managedEntries = buildManagedSitemapEntries(targetDate);
+  const managedLocs = new Set(managedEntries.map((entry) => entry.loc));
+  const preservedEntries = existingEntries.filter((entry) => !managedLocs.has(entry.loc));
+
+  return [...managedEntries, ...preservedEntries];
+}
+
+function buildSitemapXml(entries) {
+  const lines = [`<urlset xmlns="${SITEMAP_NAMESPACE}">`];
+
+  for (const entry of entries) {
+    lines.push("  <url>");
+    lines.push(`    <loc>${escapeXml(entry.loc)}</loc>`);
+
+    if (entry.lastmod) {
+      lines.push(`    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`);
+    }
+
+    lines.push("  </url>");
+  }
+
+  lines.push("</urlset>", "");
+  return lines.join("\n");
+}
+
 async function writeJson(filePath, value) {
   await ensureDirectory(path.dirname(filePath));
   await fs.writeFile(filePath, stableJson(value), "utf8");
+}
+
+async function updateSitemap(targetDate) {
+  const currentXml = await readText(SITEMAP_PATH, "");
+  const existingEntries = parseSitemapEntries(currentXml);
+  const nextEntries = mergeSitemapEntries(existingEntries, targetDate);
+
+  await fs.writeFile(SITEMAP_PATH, buildSitemapXml(nextEntries), "utf8");
+  console.log(
+    `[update] wrote sitemap ${path.relative(ROOT_DIR, SITEMAP_PATH) || path.basename(SITEMAP_PATH)}`
+  );
 }
 
 async function main() {
@@ -540,8 +638,15 @@ async function main() {
     shouldSimulateFallback
   );
   const nextDataset = buildDataset(nextModels, targetDate);
+  const historySnapshotPath = getHistorySnapshotPath(targetDate);
 
-  await writeJson(MODELS_PATH, nextDataset);
+  await Promise.all([writeJson(MODELS_PATH, nextDataset), writeJson(historySnapshotPath, nextDataset)]);
+  console.log(
+    `[update] wrote history snapshot ${
+      path.relative(ROOT_DIR, historySnapshotPath) || path.basename(historySnapshotPath)
+    }`
+  );
+  await updateSitemap(targetDate);
   console.log(`Updated ${nextModels.length} models for ${targetDate}`);
 }
 

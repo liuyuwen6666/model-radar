@@ -1,6 +1,6 @@
 # AI 模型价格雷达
 
-一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，无需前端框架，也无需构建步骤。
+一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照，无需前端框架，也无需构建步骤。
 
 项目同时补齐了最小 Node.js 工程基础，用于后续接入真实抓取逻辑：
 
@@ -43,6 +43,7 @@ Primary machine-readable endpoints:
 
 - `/data/models.json`
 - `/data/changelog.json`
+- `/data/history/YYYY-MM-DD.json`
 
 These endpoints are intended for:
 
@@ -67,6 +68,7 @@ License files and metadata:
 |-- data/
 |   |-- models.json                # 当前模型价格数据
 |   |-- changelog.json             # 最新变更和历史变更记录
+|   |-- history/                   # 每日快照，文件名为 YYYY-MM-DD.json
 |   `-- sources.json               # 厂商来源配置，后续可扩展真实抓取
 |-- package.json                   # Node.js 工程配置
 |-- package-lock.json              # npm 锁文件，供 GitHub Actions 使用 npm ci
@@ -110,14 +112,21 @@ npm install
 - `history` 保存累计变更历史
 - `summary` 汇总涨价、降价、新增字段、新增模型等数量
 
+`data/history/YYYY-MM-DD.json`：
+
+- 内容与当次生成的 `data/models.json` 完全一致
+- 每次 `npm run update` 都会按 `effectiveDate` 覆盖写入当天快照
+- 便于回溯每日价格状态，也方便外部系统按日期抓取
+
 ## 自动更新链路
 
 1. GitHub Actions 按 `0 */12 * * *` 触发，或手动运行 `workflow_dispatch`
 2. `npm ci` 安装 `package-lock.json` 中锁定的依赖
 3. `npm run update` 读取 `data/sources.json` 和现有 `data/models.json`
-4. 当前示例会用模拟逻辑生成下一版 `data/models.json`
-5. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
-6. 若 `data/` 下文件发生变化，workflow 自动 commit 并 push
+4. `update.js` 生成新的 `data/models.json`，并同步覆盖 `data/history/YYYY-MM-DD.json`
+5. `update.js` 同时更新 `sitemap.xml`，加入当日快照 `/data/history/YYYY-MM-DD.json`
+6. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
+7. 若 `data/` 或 `sitemap.xml` 发生变化，workflow 自动 commit 并 push
 
 当前脚本是“可替换骨架”：
 
@@ -169,6 +178,7 @@ npm run diff
 - `GITHUB_TOKEN` 默认具备 `contents: write`
 - `update.yml` 已配置 `permissions: contents: write`
 - workflow 会先执行 `npm ci`，再运行 `npm run update` 与 `npm run diff`
+- `npm run update` 会同时写入 `data/models.json`、`data/history/YYYY-MM-DD.json` 和 `sitemap.xml`
 - 因为仓库已提交 `package-lock.json`，GitHub Actions 可以稳定完成依赖安装
 
 ## 后续接真实数据建议
