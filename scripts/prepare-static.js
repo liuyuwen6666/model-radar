@@ -1,0 +1,54 @@
+const fs = require("node:fs/promises");
+const path = require("node:path");
+
+const ROOT_DIR = path.resolve(__dirname, "..");
+const PUBLIC_DIR = path.join(ROOT_DIR, "public");
+const STATIC_ENTRIES = ["index.html", "history.html", "robots.txt", "sitemap.xml", "data"];
+
+async function pathExists(targetPath) {
+  try {
+    await fs.access(targetPath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function copyEntry(sourceRelativePath, targetRelativePath = sourceRelativePath) {
+  const sourcePath = path.join(ROOT_DIR, sourceRelativePath);
+  const targetPath = path.join(PUBLIC_DIR, targetRelativePath);
+  const sourceStats = await fs.stat(sourcePath);
+
+  await fs.mkdir(path.dirname(targetPath), { recursive: true });
+  await fs.cp(sourcePath, targetPath, {
+    force: true,
+    recursive: sourceStats.isDirectory()
+  });
+
+  console.log(`[build] copied ${sourceRelativePath} -> public/${targetRelativePath}`);
+}
+
+async function main() {
+  console.log("[build] clearing public/");
+  await fs.rm(PUBLIC_DIR, { recursive: true, force: true });
+  await fs.mkdir(PUBLIC_DIR, { recursive: true });
+
+  for (const entry of STATIC_ENTRIES) {
+    await copyEntry(entry);
+  }
+
+  const assetsPath = path.join(ROOT_DIR, "assets");
+
+  if (await pathExists(assetsPath)) {
+    await copyEntry("assets", "assets");
+  } else {
+    console.log("[build] assets/ not found, skipping");
+  }
+
+  console.log("[build] static output ready in public/");
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

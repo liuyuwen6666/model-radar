@@ -76,10 +76,12 @@ License files and metadata:
 |   |-- providers/
 |   |   `-- openai.js             # OpenAI 官方价格页抓取与解析
 |   |   `-- deepseek.js           # DeepSeek 官方价格页抓取与解析
+|   |-- prepare-static.js          # 生成 Cloudflare Worker 静态资源目录 public/
 |   |-- update.js                  # 模拟每日更新模型价格
 |   `-- diff.js                    # 对比新旧数据并生成 changelog.json
 |-- index.html                     # 首页，运行时 fetch JSON 渲染
 |-- history.html                   # 价格变化历史页，运行时读取 changelog.json
+|-- wrangler.jsonc                 # Cloudflare Worker 静态资源部署配置
 |-- robots.txt
 `-- sitemap.xml
 ```
@@ -91,6 +93,8 @@ License files and metadata:
 - 模块系统：CommonJS
 - `package.json` 已锁定 `engines.node >=22`
 - 运行脚本：
+  - `npm run build`
+  - `npm run deploy`
   - `npm run update`
   - `npm run diff`
 
@@ -125,6 +129,12 @@ npm install
 - 把 `latest` 变化记录渲染成可读表格
 - 展示日期、模型、Provider、变化字段、旧值、新值、变化百分比和来源链接
 
+`public/`：
+
+- 由 `npm run build` 自动生成
+- 用于 Cloudflare Worker 静态资源部署
+- 只包含 `index.html`、`history.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+
 ## 自动更新链路
 
 1. GitHub Actions 按 `0 */12 * * *` 触发，或手动运行 `workflow_dispatch`
@@ -151,8 +161,10 @@ npm install
 
 ```powershell
 npm install
+node --check scripts/prepare-static.js
 node --check scripts/update.js
 node --check scripts/diff.js
+npm run build
 npm run update
 npm run diff
 ```
@@ -171,12 +183,25 @@ npm run diff
 
 ## 部署
 
+### Cloudflare Worker 静态资源模式
+
+1. 构建命令：`npm run build`
+2. 部署命令：`npm run deploy`
+3. 路径：`/`
+4. `npm run build` 会先清空 `public/`，再复制 `index.html`、`history.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+5. `wrangler.jsonc` 已配置：
+   - `name: model-radar`
+   - `compatibility_date: 2026-05-15`
+   - `assets.directory: ./public`
+   - `observability.enabled: true`
+
 ### Cloudflare Pages
 
-1. 连接 GitHub 仓库
-2. Build command 留空
-3. Build output directory 设为 `/`
-4. 发布后静态资源会直接提供 `index.html` 与 `data/*.json`
+如果继续使用 Pages 触发构建，也保持同一套构建输出：
+
+1. Build command：`npm run build`
+2. Build output directory：`/`
+3. 构建后由 `public/` 提供 Worker 静态资源目录
 
 ### GitHub Actions
 

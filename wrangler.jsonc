@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "model-radar",
+  "compatibility_date": "2026-05-15",
+  "assets": {
+    "directory": "./public"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
