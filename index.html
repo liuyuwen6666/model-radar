@@ -798,8 +798,8 @@
       }
 
       tableBody.innerHTML = models.map(model => {
-        const modelLink = model.sourceUrl
-          ? `<a class="model-name" href="${escapeHtml(model.sourceUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(model.name)}</a>`
+        const modelLink = model.id
+          ? `<a class="model-name" href="/model.html?id=${encodeURIComponent(model.id)}">${escapeHtml(model.name)}</a>`
           : `<span class="model-name">${escapeHtml(model.name)}</span>`;
         const sourceLink = model.sourceUrl
           ? `<a href="${escapeHtml(model.sourceUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(model.sourceLabel || '官方价格页')}</a>`

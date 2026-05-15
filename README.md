@@ -1,6 +1,6 @@
 # AI 模型价格雷达
 
-一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 把 changelog 渲染成人类可读的价格变化历史页面，无需前端框架，也无需构建步骤。
+一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 把 changelog 渲染成人类可读的价格变化历史页面，提供 `model.html?id=模型ID` 展示单个模型详情与相关变更，无需前端框架，也无需构建步骤。
 
 项目同时补齐了最小 Node.js 工程基础，用于后续接入真实抓取逻辑：
 
@@ -81,6 +81,7 @@ License files and metadata:
 |   `-- diff.js                    # 对比新旧数据并生成 changelog.json
 |-- index.html                     # 首页，运行时 fetch JSON 渲染
 |-- history.html                   # 价格变化历史页，运行时读取 changelog.json
+|-- model.html                     # 模型详情页，读取 models.json 与 changelog.json
 |-- wrangler.jsonc                 # Cloudflare Worker 静态资源部署配置
 |-- robots.txt
 `-- sitemap.xml
@@ -129,11 +130,18 @@ npm install
 - 把 `latest` 变化记录渲染成可读表格
 - 展示日期、模型、Provider、变化字段、旧值、新值、变化百分比和来源链接
 
+`model.html?id=模型ID`：
+
+- 运行时读取 `/data/models.json`
+- 根据 URL 参数 `id` 渲染单个模型详情
+- 同时读取 `/data/changelog.json`，展示该模型相关的价格变化记录
+- 如果模型不存在，会显示 404 风格提示
+
 `public/`：
 
 - 由 `npm run build` 自动生成
 - 用于 Cloudflare Worker 静态资源部署
-- 只包含 `index.html`、`history.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+- 只包含 `index.html`、`history.html`、`model.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
 
 ## 自动更新链路
 
@@ -141,7 +149,7 @@ npm install
 2. `npm ci` 安装 `package-lock.json` 中锁定的依赖
 3. `npm run update` 读取 `data/sources.json` 和现有 `data/models.json`
 4. `update.js` 生成新的 `data/models.json`，并同步覆盖 `data/history/YYYY-MM-DD.json`
-5. `update.js` 同时更新 `sitemap.xml`，加入 `/history.html` 和当日快照 `/data/history/YYYY-MM-DD.json`
+5. `update.js` 同时更新 `sitemap.xml`，加入 `/history.html`、`/model.html` 和当日快照 `/data/history/YYYY-MM-DD.json`
 6. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
 7. 若 `data/` 或 `sitemap.xml` 发生变化，workflow 自动 commit 并 push
 
@@ -188,7 +196,7 @@ npm run diff
 1. 构建命令：`npm run build`
 2. 部署命令：`npm run deploy`
 3. 路径：`/`
-4. `npm run build` 会先清空 `public/`，再复制 `index.html`、`history.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+4. `npm run build` 会先清空 `public/`，再复制 `index.html`、`history.html`、`model.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
 5. `wrangler.jsonc` 已配置：
    - `name: model-radar`
    - `compatibility_date: 2026-05-15`
