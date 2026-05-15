@@ -1,6 +1,6 @@
 # AI 模型价格雷达
 
-一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照，无需前端框架，也无需构建步骤。
+一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 把 changelog 渲染成人类可读的价格变化历史页面，无需前端框架，也无需构建步骤。
 
 项目同时补齐了最小 Node.js 工程基础，用于后续接入真实抓取逻辑：
 
@@ -79,6 +79,7 @@ License files and metadata:
 |   |-- update.js                  # 模拟每日更新模型价格
 |   `-- diff.js                    # 对比新旧数据并生成 changelog.json
 |-- index.html                     # 首页，运行时 fetch JSON 渲染
+|-- history.html                   # 价格变化历史页，运行时读取 changelog.json
 |-- robots.txt
 `-- sitemap.xml
 ```
@@ -118,13 +119,19 @@ npm install
 - 每次 `npm run update` 都会按 `effectiveDate` 覆盖写入当天快照
 - 便于回溯每日价格状态，也方便外部系统按日期抓取
 
+`history.html`：
+
+- 运行时读取 `/data/changelog.json`
+- 把 `latest` 变化记录渲染成可读表格
+- 展示日期、模型、Provider、变化字段、旧值、新值、变化百分比和来源链接
+
 ## 自动更新链路
 
 1. GitHub Actions 按 `0 */12 * * *` 触发，或手动运行 `workflow_dispatch`
 2. `npm ci` 安装 `package-lock.json` 中锁定的依赖
 3. `npm run update` 读取 `data/sources.json` 和现有 `data/models.json`
 4. `update.js` 生成新的 `data/models.json`，并同步覆盖 `data/history/YYYY-MM-DD.json`
-5. `update.js` 同时更新 `sitemap.xml`，加入当日快照 `/data/history/YYYY-MM-DD.json`
+5. `update.js` 同时更新 `sitemap.xml`，加入 `/history.html` 和当日快照 `/data/history/YYYY-MM-DD.json`
 6. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
 7. 若 `data/` 或 `sitemap.xml` 发生变化，workflow 自动 commit 并 push
 

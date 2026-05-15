@@ -558,6 +558,7 @@ function parseSitemapEntries(xml) {
 function buildManagedSitemapEntries(targetDate) {
   return [
     { loc: `${SITE_ORIGIN}/`, lastmod: targetDate },
+    { loc: `${SITE_ORIGIN}/history.html`, lastmod: targetDate },
     { loc: `${SITE_ORIGIN}/data/models.json`, lastmod: targetDate },
     { loc: `${SITE_ORIGIN}/data/changelog.json`, lastmod: targetDate },
     { loc: `${SITE_ORIGIN}/data/history/${targetDate}.json`, lastmod: targetDate }
