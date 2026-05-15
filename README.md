@@ -135,6 +135,7 @@ npm install
 
 - 运行时读取 `/data/models.json`
 - 根据 URL 参数 `id` 渲染单个模型详情
+- 模型详情页 ID 直接来自 `/data/models.json` 的 `id` 字段，首页和排行榜链接都应使用 `/model.html?id=${model.id}`
 - 同时读取 `/data/changelog.json`，展示该模型相关的价格变化记录
 - 如果模型不存在，会显示 404 风格提示
 
@@ -143,7 +144,7 @@ npm install
 - 运行时读取 `/data/models.json`
 - 生成输入价格最低、输出价格最低、上下文最长、缓存读取价格最低四类 Top 10 榜单
 - `null` 字段不会参与对应排行
-- 每个模型名都链接到 `/model.html?id=模型ID`
+- 每个模型名都链接到 `/model.html?id=模型ID`，且这个 ID 同样来自 `/data/models.json` 的 `id` 字段
 
 `public/`：
 

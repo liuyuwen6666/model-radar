@@ -920,7 +920,10 @@
 
     async function loadModelPage() {
       if (!requestedModelId) {
-        renderNotFound('模型未找到', '当前 URL 缺少 <code>?id=模型ID</code> 参数，例如 <code>/model.html?id=deepseek-v4-flash</code>。');
+        renderNotFound(
+          '模型未找到',
+          '当前 URL 缺少 <code>?id=模型ID</code> 参数。模型详情页的 ID 来自 <code>/data/models.json</code> 的 <code>id</code> 字段。'
+        );
         return;
       }
 
