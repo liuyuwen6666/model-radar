@@ -802,7 +802,7 @@
         },
         {
           label: '来源链接',
-          value: model.sourceUrl
+          html: model.sourceUrl
             ? `<a href="${escapeHtml(model.sourceUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(model.sourceLabel || '官方价格页')}</a>`
             : '待补充',
           helper: model.pricingNotes || '当前价格说明。'
@@ -826,7 +826,7 @@
       detailGrid.innerHTML = detailItems.map((item) => `
         <article class="detail-card">
           <span>${escapeHtml(item.label)}</span>
-          <strong>${item.value}</strong>
+          <strong>${item.html || escapeHtml(String(item.value ?? '—'))}</strong>
           <p>${escapeHtml(item.helper)}</p>
         </article>
       `).join('');
@@ -898,6 +898,16 @@
       }).join('');
     }
 
+    function renderChangesError(message, model) {
+      changeCountValue.textContent = '—';
+      changeCaption.textContent = `${model.name} 的相关变更记录暂时无法读取。`;
+      changeTableBody.innerHTML = `
+        <tr>
+          <td colspan="7" class="empty-state">${escapeHtml(message)}</td>
+        </tr>
+      `;
+    }
+
     async function fetchJson(url) {
       const response = await fetch(url, { cache: 'no-store' });
 
@@ -915,11 +925,17 @@
       }
 
       try {
-        const [modelsPayload, changelogPayload] = await Promise.all([
+        const [modelsResult, changelogResult] = await Promise.allSettled([
           fetchJson(MODELS_ENDPOINT),
           fetchJson(CHANGELOG_ENDPOINT)
         ]);
-        const models = Array.isArray(modelsPayload.models) ? modelsPayload.models : [];
+
+        if (modelsResult.status !== 'fulfilled') {
+          renderNotFound('读取失败', `模型详情加载失败：<code>${escapeHtml(modelsResult.reason.message)}</code>`);
+          return;
+        }
+
+        const models = Array.isArray(modelsResult.value.models) ? modelsResult.value.models : [];
         const model = models.find((item) => item.id === requestedModelId);
 
         if (!model) {
@@ -931,7 +947,12 @@
         }
 
         renderModel(model);
-        renderChanges(getRelatedChanges(changelogPayload, model.id), model);
+
+        if (changelogResult.status === 'fulfilled') {
+          renderChanges(getRelatedChanges(changelogResult.value, model.id), model);
+        } else {
+          renderChangesError(`变更数据读取失败：${changelogResult.reason.message}`, model);
+        }
       } catch (error) {
         renderNotFound('读取失败', `模型详情加载失败：<code>${escapeHtml(error.message)}</code>`);
       }
