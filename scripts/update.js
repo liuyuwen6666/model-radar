@@ -1,6 +1,7 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const fetchOpenAIModels = require("./providers/openai");
+const fetchDeepSeekModels = require("./providers/deepseek");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const DATA_DIR = process.env.MODEL_RADAR_DATA_DIR
@@ -16,7 +17,8 @@ const PREVIOUS_MODELS_PATH = path.join(CACHE_DIR, "models.previous.json");
 
 const DEFAULT_SOURCE_LABEL = "Official Pricing";
 const PROVIDER_LOADERS = {
-  OpenAI: fetchOpenAIModels
+  OpenAI: fetchOpenAIModels,
+  DeepSeek: fetchDeepSeekModels
 };
 const PRICE_FIELDS = [
   "inputPriceUsdPer1M",

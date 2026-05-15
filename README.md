@@ -73,6 +73,7 @@ License files and metadata:
 |-- scripts/
 |   |-- providers/
 |   |   `-- openai.js             # OpenAI 官方价格页抓取与解析
+|   |   `-- deepseek.js           # DeepSeek 官方价格页抓取与解析
 |   |-- update.js                  # 模拟每日更新模型价格
 |   `-- diff.js                    # 对比新旧数据并生成 changelog.json
 |-- index.html                     # 首页，运行时 fetch JSON 渲染
@@ -123,6 +124,7 @@ npm install
 - `scripts/update.js` 负责“抓取/归一化/落盘”
 - `scripts/diff.js` 负责“比对/生成变更记录”
 - `scripts/providers/openai.js` 已接入 `fetch + cheerio` 抓取 OpenAI 官方价格页
+- `scripts/providers/deepseek.js` 已接入 `fetch + cheerio` 抓取 DeepSeek 官方价格页
 - 后续接真实爬虫时，只需要继续在 `scripts/providers/` 下扩展其他厂商模块
 
 ## 本地运行与测试

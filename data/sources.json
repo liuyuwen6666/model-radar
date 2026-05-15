@@ -29,10 +29,10 @@
   {
     "provider": "DeepSeek",
     "label": "DeepSeek Pricing",
-    "url": "https://platform.deepseek.com/api-docs/pricing",
+    "url": "https://api-docs.deepseek.com/quick_start/pricing/",
     "models": [
-      "deepseek-chat",
-      "deepseek-reasoner"
+      "deepseek-v4-flash",
+      "deepseek-v4-pro"
     ]
   },
   {
