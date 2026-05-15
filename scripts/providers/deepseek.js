@@ -1,6 +1,10 @@
 const cheerio = require("cheerio");
 
 const DEEPSEEK_PRICING_URL = "https://api-docs.deepseek.com/quick_start/pricing/";
+const MODEL_ID_MAP = new Map([
+  ["deepseek-chat", "deepseek-v4-flash"],
+  ["deepseek-reasoner", "deepseek-v4-pro"]
+]);
 
 function normalizeWhitespace(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -78,7 +82,7 @@ function extractModelsFromHtml(html, options = {}) {
     }
 
     const model = {
-      id: slugify(modelKey),
+      id: MODEL_ID_MAP.get(modelKey) || slugify(modelKey),
       name: modelName,
       provider: "DeepSeek",
       input_price_usd_per_1m: inputPrice,

@@ -26,6 +26,10 @@ const PRICE_FIELDS = [
   "cacheWritePriceUsdPer1M",
   "cacheReadPriceUsdPer1M"
 ];
+const MODEL_ID_ALIASES = new Map([
+  ["deepseek-chat", "deepseek-v4-flash"],
+  ["deepseek-reasoner", "deepseek-v4-pro"]
+]);
 
 const MODEL_BLUEPRINTS = [
   {
@@ -63,7 +67,7 @@ const MODEL_BLUEPRINTS = [
     detailPath: "/model/claude-3-7-sonnet"
   },
   {
-    id: "deepseek-chat",
+    id: "deepseek-v4-flash",
     name: "DeepSeek Chat",
     provider: "DeepSeek",
     family: "DeepSeek",
@@ -77,10 +81,10 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "文本", "低成本"],
     recommendedFor: ["通用问答", "内容生成", "中文助手"],
     status: "stable",
-    detailPath: "/model/deepseek-chat"
+    detailPath: "/model/deepseek-v4-flash"
   },
   {
-    id: "deepseek-reasoner",
+    id: "deepseek-v4-pro",
     name: "DeepSeek Reasoner",
     provider: "DeepSeek",
     family: "DeepSeek",
@@ -94,7 +98,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["推理", "代码", "中文"],
     recommendedFor: ["复杂推理", "代码生成", "分析任务"],
     status: "stable",
-    detailPath: "/model/deepseek-reasoner"
+    detailPath: "/model/deepseek-v4-pro"
   },
   {
     id: "doubao-1-5-pro-32k",
@@ -316,6 +320,22 @@ function buildBaseIndex(models) {
   return index;
 }
 
+function canonicalizeModelId(model) {
+  const canonicalId = MODEL_ID_ALIASES.get(model?.id);
+
+  if (!canonicalId) {
+    return model;
+  }
+
+  const legacyDetailPath = `/model/${model.id}`;
+
+  return {
+    ...model,
+    id: canonicalId,
+    detailPath: model.detailPath === legacyDetailPath ? `/model/${canonicalId}` : model.detailPath
+  };
+}
+
 function normalizeModel(model, sourceIndex, timestamp) {
   const source = sourceIndex.get(model.provider) || {};
 
@@ -528,7 +548,9 @@ async function main() {
     );
   }
 
-  const baseModels = isDataset(currentDataset) ? currentDataset.models : MODEL_BLUEPRINTS;
+  const baseModels = (isDataset(currentDataset) ? currentDataset.models : MODEL_BLUEPRINTS).map(
+    canonicalizeModelId
+  );
   const shouldSimulateFallback =
     !isDataset(currentDataset) || currentDataset.effectiveDate !== targetDate;
   const providerSnapshots = await loadProviderSnapshots(sourceList, targetDate);
