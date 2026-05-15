@@ -1,6 +1,12 @@
 const cheerio = require("cheerio");
 
 const DEEPSEEK_PRICING_URL = "https://api-docs.deepseek.com/quick_start/pricing/";
+const MODEL_ID_MAP = {
+  "deepseek-chat": "deepseek-v4-flash",
+  "deepseek-reasoner": "deepseek-v4-pro",
+  "deepseek-v4-flash": "deepseek-v4-flash",
+  "deepseek-v4-pro": "deepseek-v4-pro"
+};
 
 function normalizeWhitespace(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -45,6 +51,19 @@ function modelNameFromVersion(value, fallback) {
   return normalized || fallback;
 }
 
+function resolveModelId(modelKey) {
+  const stableId = MODEL_ID_MAP[modelKey];
+
+  if (stableId) {
+    console.log(`[deepseek] mapped ${modelKey} -> ${stableId}`);
+    return stableId;
+  }
+
+  const fallbackId = slugify(modelKey);
+  console.log(`[deepseek] unknown model key ${modelKey}, fallback id ${fallbackId}`);
+  return fallbackId;
+}
+
 function extractModelsFromHtml(html, options = {}) {
   const $ = cheerio.load(html);
   const updatedAt = options.updatedAt || new Date().toISOString();
@@ -78,7 +97,7 @@ function extractModelsFromHtml(html, options = {}) {
     }
 
     const model = {
-      id: slugify(modelKey),
+      id: resolveModelId(modelKey),
       name: modelName,
       provider: "DeepSeek",
       input_price_usd_per_1m: inputPrice,

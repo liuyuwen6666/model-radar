@@ -63,8 +63,8 @@ const MODEL_BLUEPRINTS = [
     detailPath: "/model/claude-3-7-sonnet"
   },
   {
-    id: "deepseek-chat",
-    name: "DeepSeek Chat",
+    id: "deepseek-v4-flash",
+    name: "DeepSeek V4 Flash",
     provider: "DeepSeek",
     family: "DeepSeek",
     description: "中文与通用问答的低成本模型。",
@@ -77,11 +77,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "文本", "低成本"],
     recommendedFor: ["通用问答", "内容生成", "中文助手"],
     status: "stable",
-    detailPath: "/model/deepseek-chat"
+    detailPath: "/model/deepseek-v4-flash"
   },
   {
-    id: "deepseek-reasoner",
-    name: "DeepSeek Reasoner",
+    id: "deepseek-v4-pro",
+    name: "DeepSeek V4 Pro",
     provider: "DeepSeek",
     family: "DeepSeek",
     description: "强化推理与代码分析场景。",
@@ -94,7 +94,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["推理", "代码", "中文"],
     recommendedFor: ["复杂推理", "代码生成", "分析任务"],
     status: "stable",
-    detailPath: "/model/deepseek-reasoner"
+    detailPath: "/model/deepseek-v4-pro"
   },
   {
     id: "doubao-1-5-pro-32k",
