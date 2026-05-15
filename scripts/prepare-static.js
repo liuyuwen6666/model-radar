@@ -3,7 +3,15 @@ const path = require("node:path");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
-const STATIC_ENTRIES = ["index.html", "history.html", "model.html", "robots.txt", "sitemap.xml", "data"];
+const STATIC_ENTRIES = [
+  "index.html",
+  "history.html",
+  "model.html",
+  "rankings.html",
+  "robots.txt",
+  "sitemap.xml",
+  "data"
+];
 
 async function pathExists(targetPath) {
   try {
