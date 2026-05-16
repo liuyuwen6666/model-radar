@@ -74,7 +74,8 @@ License files and metadata:
 |-- package-lock.json              # npm 锁文件，供 GitHub Actions 使用 npm ci
 |-- scripts/
 |   |-- providers/
-|   |   `-- openai.js             # OpenAI 官方价格页抓取与解析
+|   |   |-- anthropic.js          # Anthropic 官方价格页抓取与解析
+|   |   |-- openai.js             # OpenAI 官方价格页抓取与解析
 |   |   `-- deepseek.js           # DeepSeek 官方价格页抓取与解析
 |   |-- prepare-static.js          # 生成 Cloudflare Worker 静态资源目录 public/
 |   |-- update.js                  # 模拟每日更新模型价格
@@ -166,6 +167,7 @@ npm install
 
 - `scripts/update.js` 负责“抓取/归一化/落盘”
 - `scripts/diff.js` 负责“比对/生成变更记录”
+- `scripts/providers/anthropic.js` 已接入 `fetch + cheerio` 抓取 Anthropic 官方价格页
 - `scripts/providers/openai.js` 已接入 `fetch + cheerio` 抓取 OpenAI 官方价格页
 - `scripts/providers/deepseek.js` 已接入 `fetch + cheerio` 抓取 DeepSeek 官方价格页
 - 后续接真实爬虫时，只需要继续在 `scripts/providers/` 下扩展其他厂商模块

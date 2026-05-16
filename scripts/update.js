@@ -1,5 +1,6 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
+const fetchAnthropicModels = require("./providers/anthropic");
 const fetchOpenAIModels = require("./providers/openai");
 const fetchDeepSeekModels = require("./providers/deepseek");
 
@@ -26,6 +27,7 @@ const SITE_ORIGIN = (process.env.MODEL_RADAR_SITE_ORIGIN || "https://modelradar.
 );
 const SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
 const PROVIDER_LOADERS = {
+  Anthropic: fetchAnthropicModels,
   OpenAI: fetchOpenAIModels,
   DeepSeek: fetchDeepSeekModels
 };

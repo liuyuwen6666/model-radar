@@ -7,42 +7,13 @@
   "disclaimer": "当前为模拟数据，用于演示自动更新链路；后续可将 update.js 替换为真实抓取逻辑。",
   "models": [
     {
-      "id": "anthropic-claude-3-5-haiku",
-      "name": "Claude 3.5 Haiku",
-      "provider": "Anthropic",
-      "family": "Claude",
-      "description": "低延迟、低成本的轻量模型。",
-      "inputPriceUsdPer1M": 0.936,
-      "outputPriceUsdPer1M": 4.59,
-      "cacheWritePriceUsdPer1M": 0.26,
-      "cacheReadPriceUsdPer1M": 0.0768,
-      "contextWindow": 200000,
-      "maxOutputTokens": 8192,
-      "capabilities": [
-        "文本",
-        "分类",
-        "代码"
-      ],
-      "recommendedFor": [
-        "批量处理",
-        "摘要",
-        "轻量客服"
-      ],
-      "status": "stable",
-      "sourceUrl": "https://www.anthropic.com/pricing",
-      "sourceLabel": "Anthropic Pricing",
-      "detailPath": "/model/claude-3-5-haiku",
-      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
-      "updatedAt": "2026-05-15T00:00:00.000Z"
-    },
-    {
       "id": "anthropic-claude-3-7-sonnet",
-      "name": "Claude 3.7 Sonnet",
+      "name": "Claude Sonnet 4.6",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "偏复杂推理与代码的主力模型。",
       "inputPriceUsdPer1M": 3,
-      "outputPriceUsdPer1M": 14.1,
+      "outputPriceUsdPer1M": 15,
       "cacheWritePriceUsdPer1M": 0.816,
       "cacheReadPriceUsdPer1M": 0.3,
       "contextWindow": 200000,
@@ -61,7 +32,36 @@
       "sourceUrl": "https://www.anthropic.com/pricing",
       "sourceLabel": "Anthropic Pricing",
       "detailPath": "/model/claude-3-7-sonnet",
-      "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "id": "anthropic-claude-3-5-haiku",
+      "name": "Claude Haiku 4.5",
+      "provider": "Anthropic",
+      "family": "Claude",
+      "description": "低延迟、低成本的轻量模型。",
+      "inputPriceUsdPer1M": 1,
+      "outputPriceUsdPer1M": 5,
+      "cacheWritePriceUsdPer1M": 0.26,
+      "cacheReadPriceUsdPer1M": 0.0768,
+      "contextWindow": 200000,
+      "maxOutputTokens": 8192,
+      "capabilities": [
+        "文本",
+        "分类",
+        "代码"
+      ],
+      "recommendedFor": [
+        "批量处理",
+        "摘要",
+        "轻量客服"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://www.anthropic.com/pricing",
+      "sourceLabel": "Anthropic Pricing",
+      "detailPath": "/model/claude-3-5-haiku",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-15T00:00:00.000Z"
     },
     {
