@@ -23,7 +23,7 @@
     "@context": "https://schema.org",
     "@type": "Dataset",
     "name": "AI 模型排行榜数据集",
-    "description": "ModelRadar 根据 models.json 生成的 AI 模型输入价、输出价、上下文长度和缓存读取价格排行榜。",
+    "description": "ModelRadar 的 AI 模型排行榜数据集基于 models.json 自动生成，按照输入价格、输出价格、上下文长度和缓存读取价格等字段对主流 AI 模型进行排序。排行榜用于帮助开发者快速筛选低成本模型、长上下文模型和适合批量调用的模型，并保留对应的厂商、价格单位、更新时间和数据来源。",
     "url": "https://modelradar.cn/rankings",
     "creator": {
       "@type": "Organization",
@@ -652,23 +652,16 @@
       `;
     }
 
-    function updateRankingStructuredData(payload, rankingResults) {
+    function updateRankingStructuredData(payload) {
       if (!rankingStructuredData || !payload) {
         return;
       }
-
-      const topEntries = rankingResults
-        .flatMap((ranking) => ranking.models.slice(0, 3).map((model, index) => ({
-          ranking: ranking.title,
-          position: index + 1,
-          model: model.name
-        })));
 
       rankingStructuredData.textContent = JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Dataset',
         name: 'AI 模型排行榜数据集',
-        description: 'ModelRadar 根据 models.json 生成的 AI 模型输入价、输出价、上下文长度和缓存读取价格排行榜。',
+        description: 'ModelRadar 的 AI 模型排行榜数据集基于 models.json 自动生成，按照输入价格、输出价格、上下文长度和缓存读取价格等字段对主流 AI 模型进行排序。排行榜用于帮助开发者快速筛选低成本模型、长上下文模型和适合批量调用的模型，并保留对应的厂商、价格单位、更新时间和数据来源。',
         url: 'https://modelradar.cn/rankings',
         creator: {
           '@type': 'Organization',
@@ -680,14 +673,7 @@
           '@type': 'DataDownload',
           encodingFormat: 'application/json',
           contentUrl: 'https://modelradar.cn/data/models.json'
-        },
-        variableMeasured: RANKINGS.map((ranking) => ranking.key),
-        hasPart: topEntries.map((entry) => ({
-          '@type': 'Observation',
-          name: `${entry.ranking} #${entry.position}`,
-          measuredProperty: entry.ranking,
-          measuredValue: entry.model
-        }))
+        }
       }, null, 2);
     }
 
@@ -708,7 +694,7 @@
       rankingUpdated.textContent = `最后更新：${formatUpdatedLabel(payload.effectiveDate || payload.generatedAt)}`;
       renderSummary(payload, rankingResults);
       rankingGrid.innerHTML = rankingResults.map((ranking) => renderRankingTable(ranking, ranking.models)).join('');
-      updateRankingStructuredData(payload, rankingResults);
+      updateRankingStructuredData(payload);
     }
 
     function renderError(message) {

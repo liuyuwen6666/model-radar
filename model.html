@@ -767,49 +767,26 @@
         document.head.appendChild(modelStructuredData);
       }
 
+      const description = `ModelRadar 收录的 ${model.name}（${model.provider}）API 价格数据，包含输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源链接。数据来自厂商公开 pricing 页面，并会随自动化更新流程同步刷新。`;
+
       modelStructuredData.textContent = JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'Product',
-        name: model.name,
+        '@type': 'Dataset',
+        name: `${model.name} API pricing data`,
+        description: description,
+        url: `https://modelradar.cn/model?id=${encodeURIComponent(model.id)}`,
+        creator: {
+          '@type': 'Organization',
+          name: 'ModelRadar',
+          url: 'https://modelradar.cn/'
+        },
         provider: {
           '@type': 'Organization',
           name: model.provider
         },
-        brand: {
-          '@type': 'Organization',
-          name: model.provider
-        },
-        description: model.description || `${model.provider} 模型详情页。`,
-        url: `https://modelradar.cn/model?id=${encodeURIComponent(model.id)}`,
-        sourceUrl: model.sourceUrl || undefined,
         dateModified: model.updatedAt || undefined,
-        additionalProperty: [
-          {
-            '@type': 'PropertyValue',
-            name: 'input_price_usd_per_1m',
-            value: model.inputPriceUsdPer1M
-          },
-          {
-            '@type': 'PropertyValue',
-            name: 'output_price_usd_per_1m',
-            value: model.outputPriceUsdPer1M
-          },
-          {
-            '@type': 'PropertyValue',
-            name: 'cache_write_price_usd_per_1m',
-            value: model.cacheWritePriceUsdPer1M
-          },
-          {
-            '@type': 'PropertyValue',
-            name: 'cache_read_price_usd_per_1m',
-            value: model.cacheReadPriceUsdPer1M
-          },
-          {
-            '@type': 'PropertyValue',
-            name: 'context_window',
-            value: model.contextWindow
-          }
-        ]
+        isBasedOn: model.sourceUrl || undefined,
+        license: 'https://modelradar.cn/'
       }, null, 2);
     }
 

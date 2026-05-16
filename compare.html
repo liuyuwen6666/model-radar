@@ -23,7 +23,7 @@
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "AI 模型对比｜ModelRadar",
-    "description": "比较两款主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源。",
+    "description": "ModelRadar 的模型对比页面允许开发者选择两个 AI 模型，并基于 models.json 中的结构化数据比较输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源链接。该页面用于辅助模型选型、成本评估和 API 调用方案设计。",
     "url": "https://modelradar.cn/compare",
     "isPartOf": {
       "@type": "WebSite",
@@ -643,7 +643,7 @@
           '@context': 'https://schema.org',
           '@type': 'WebPage',
           name: title,
-          description,
+          description: 'ModelRadar 的模型对比页面允许开发者选择两个 AI 模型，并基于 models.json 中的结构化数据比较输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源链接。该页面用于辅助模型选型、成本评估和 API 调用方案设计。',
           url: canonicalUrl,
           dateModified: state.payload?.effectiveDate || state.payload?.generatedAt || undefined,
           isPartOf: {

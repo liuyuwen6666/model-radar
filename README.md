@@ -80,6 +80,17 @@ ModelRadar is intentionally structured for both traditional SEO and AI retrieval
 - model detail links use stable IDs from `/data/models.json`, which makes them easier for AI systems and downstream tools to cite reliably
 - pages expose or render the latest update time from JSON payloads, so both users and crawlers can detect freshness
 
+### 结构化数据策略
+
+本站 JSON-LD 结构化数据遵循以下策略：
+
+- 所有 AI 模型数据使用 `Dataset` 或 `WebPage` 类型描述，不使用 `Product` 类型，避免将 AI 模型 API 价格数据误标为电商商品。
+- `Dataset.description` 使用完整自然语言描述（120–250 个中文字符），不堆砌关键词，不写营销话术。
+- 每个模型详情页的 `Dataset` JSON-LD 会拼接模型名称和厂商名称，确保描述唯一且足够详细。
+- 不伪造 `offers`、`review`、`aggregateRating` 等不属于 AI 模型价格数据的字段。
+- 排行榜页面（/rankings）的 Dataset 不使用 `hasPart` 字段，避免因对象类型无效导致 Search Console 报警。
+- 数据来源标注为各厂商官方 pricing 页面，并在 JSON-LD 中通过 `isBasedOn` 或 `url` 引用来源链接。
+
 ## License
 
 This project uses the MIT License.
