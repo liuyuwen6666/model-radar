@@ -7,10 +7,21 @@ const STATIC_ENTRIES = [
   "index.html",
   "history.html",
   "model.html",
+  "compare.html",
   "rankings.html",
   "robots.txt",
   "sitemap.xml",
   "data"
+];
+const ROUTE_ALIASES = [
+  {
+    source: "model.html",
+    target: path.join("model", "index.html")
+  },
+  {
+    source: "compare.html",
+    target: path.join("compare", "index.html")
+  }
 ];
 
 async function pathExists(targetPath) {
@@ -43,6 +54,10 @@ async function main() {
 
   for (const entry of STATIC_ENTRIES) {
     await copyEntry(entry);
+  }
+
+  for (const alias of ROUTE_ALIASES) {
+    await copyEntry(alias.source, alias.target);
   }
 
   const assetsPath = path.join(ROOT_DIR, "assets");

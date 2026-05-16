@@ -7,12 +7,12 @@
   <meta name="description" content="查看单个 AI 模型的输入价、输出价、缓存价格、上下文长度、更新时间和价格变化记录。" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="theme-color" content="#0f172a" />
-  <link rel="canonical" href="https://modelradar.cn/model.html" />
+  <link rel="canonical" href="https://modelradar.cn/model" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="模型详情｜ModelRadar" />
   <meta property="og:description" content="查看单个 AI 模型的输入价、输出价、缓存价格、上下文长度、更新时间和价格变化记录。" />
-  <meta property="og:url" content="https://modelradar.cn/model.html" />
+  <meta property="og:url" content="https://modelradar.cn/model" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="模型详情｜ModelRadar" />
@@ -440,6 +440,8 @@
       <nav class="nav-links" aria-label="主导航">
         <a href="/">首页</a>
         <a href="/history.html">价格历史</a>
+        <a href="/rankings.html">模型排行</a>
+        <a href="/compare">模型对比</a>
         <a href="/data/models.json">Models JSON</a>
         <a href="/data/changelog.json">Changelog JSON</a>
       </nav>
@@ -580,6 +582,8 @@
       <div>
         <a href="/">首页</a> ·
         <a href="/history.html">价格历史</a> ·
+        <a href="/rankings.html">模型排行</a> ·
+        <a href="/compare">模型对比</a> ·
         <a href="/data/models.json">数据</a> ·
         <a href="/sitemap.xml">站点地图</a>
       </div>
@@ -715,7 +719,7 @@
     function updateSeo(model) {
       const title = `${model.name} 价格详情｜ModelRadar`;
       const description = `${model.name}（${model.provider}）的输入价、输出价、缓存价格、上下文长度、更新时间和价格变化记录。`;
-      const canonicalUrl = `https://modelradar.cn/model.html?id=${encodeURIComponent(model.id)}`;
+      const canonicalUrl = `https://modelradar.cn/model?id=${encodeURIComponent(model.id)}`;
       const descriptionMeta = document.querySelector('meta[name="description"]');
       const canonicalLink = document.querySelector('link[rel="canonical"]');
       const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -761,7 +765,7 @@
         {
           label: '模型 ID',
           value: model.id,
-          helper: '用于 /model.html?id=模型ID 路由参数。'
+          helper: '用于 /model?id=模型ID 路由参数。'
         },
         {
           label: '厂商',

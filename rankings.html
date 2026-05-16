@@ -388,6 +388,7 @@
         <a href="/">首页</a>
         <a href="/history.html">价格历史</a>
         <a href="/rankings.html" aria-current="page">模型排行</a>
+        <a href="/compare">模型对比</a>
         <a href="/data/models.json">Models JSON</a>
       </nav>
     </div>
@@ -459,6 +460,7 @@
         <a href="/">首页</a> ·
         <a href="/history.html">价格历史</a> ·
         <a href="/rankings.html">模型排行</a> ·
+        <a href="/compare">模型对比</a> ·
         <a href="/sitemap.xml">站点地图</a>
       </div>
     </div>
@@ -615,7 +617,7 @@
                   <tr>
                     <td class="mono">#${index + 1}</td>
                     <td>
-                      <a class="model-link" href="/model.html?id=${encodeURIComponent(model.id)}">${escapeHtml(model.name)}</a><br>
+                      <a class="model-link" href="/model?id=${encodeURIComponent(model.id)}">${escapeHtml(model.name)}</a><br>
                       <span class="provider">${escapeHtml(model.description || model.family || '')}</span>
                     </td>
                     <td>${escapeHtml(model.provider)}</td>

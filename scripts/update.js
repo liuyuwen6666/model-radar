@@ -562,6 +562,7 @@ function buildManagedSitemapEntries(targetDate) {
     { loc: `${SITE_ORIGIN}/`, lastmod: targetDate },
     { loc: `${SITE_ORIGIN}/history.html`, lastmod: targetDate },
     { loc: `${SITE_ORIGIN}/model.html`, lastmod: targetDate },
+    { loc: `${SITE_ORIGIN}/compare`, lastmod: targetDate },
     { loc: `${SITE_ORIGIN}/rankings.html`, lastmod: targetDate },
     { loc: `${SITE_ORIGIN}/data/models.json`, lastmod: targetDate },
     { loc: `${SITE_ORIGIN}/data/changelog.json`, lastmod: targetDate },

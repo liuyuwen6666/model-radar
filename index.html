@@ -510,6 +510,7 @@
         <a href="#models">模型价格</a>
         <a href="/history.html">价格历史</a>
         <a href="/rankings.html">模型排行</a>
+        <a href="/compare">模型对比</a>
         <a href="#calculator">成本计算器</a>
         <a href="#changelog">价格变更</a>
         <a href="#workflow">玩法工作流</a>
@@ -693,6 +694,7 @@
         <a href="/about">关于</a> ·
         <a href="/history.html">价格历史</a> ·
         <a href="/rankings.html">模型排行</a> ·
+        <a href="/compare">模型对比</a> ·
         <a href="/data/models.json">数据</a> ·
         <a href="/sitemap.xml">站点地图</a> ·
         <a href="/robots.txt">Robots</a>
@@ -801,7 +803,7 @@
 
       tableBody.innerHTML = models.map(model => {
         const modelLink = model.id
-          ? `<a class="model-name" href="/model.html?id=${encodeURIComponent(model.id)}">${escapeHtml(model.name)}</a>`
+          ? `<a class="model-name" href="/model?id=${encodeURIComponent(model.id)}">${escapeHtml(model.name)}</a>`
           : `<span class="model-name">${escapeHtml(model.name)}</span>`;
         const sourceLink = model.sourceUrl
           ? `<a href="${escapeHtml(model.sourceUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(model.sourceLabel || '官方价格页')}</a>`

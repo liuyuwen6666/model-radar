@@ -1,6 +1,6 @@
 # AI 模型价格雷达
 
-一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 把 changelog 渲染成人类可读的价格变化历史页面，提供 `model.html?id=模型ID` 展示单个模型详情与相关变更，并提供 `rankings.html` 基于 `models.json` 生成模型排行榜，无需前端框架，也无需构建步骤。
+一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 把 changelog 渲染成人类可读的价格变化历史页面，提供 `model.html` 作为模型详情页源码并通过 `/model?id=模型ID` 展示单个模型详情与相关变更，提供 `rankings.html` 基于 `models.json` 生成模型排行榜，并提供 `compare.html` 让用户同屏对比两款模型，无需前端框架，也无需构建步骤。
 
 项目同时补齐了最小 Node.js 工程基础，用于后续接入真实抓取逻辑：
 
@@ -83,6 +83,7 @@ License files and metadata:
 |-- index.html                     # 首页，运行时 fetch JSON 渲染
 |-- history.html                   # 价格变化历史页，运行时读取 changelog.json
 |-- model.html                     # 模型详情页，读取 models.json 与 changelog.json
+|-- compare.html                   # 模型对比页，读取 models.json 比较两款模型
 |-- rankings.html                  # 模型排行榜页，读取 models.json 动态排序
 |-- wrangler.jsonc                 # Cloudflare Worker 静态资源部署配置
 |-- robots.txt
@@ -132,26 +133,35 @@ npm install
 - 把 `latest` 变化记录渲染成可读表格
 - 展示日期、模型、Provider、变化字段、旧值、新值、变化百分比和来源链接
 
-`model.html?id=模型ID`：
+`model.html` / `/model?id=模型ID`：
 
 - 运行时读取 `/data/models.json`
 - 根据 URL 参数 `id` 渲染单个模型详情
-- 模型详情页 ID 直接来自 `/data/models.json` 的 `id` 字段，首页和排行榜链接都应使用 `/model.html?id=${model.id}`
+- 模型详情页 ID 直接来自 `/data/models.json` 的 `id` 字段，首页、排行榜和模型对比页链接都应使用 `/model?id=${model.id}`
 - 同时读取 `/data/changelog.json`，展示该模型相关的价格变化记录
 - 如果模型不存在，会显示 404 风格提示
+
+`compare.html` / `/compare`：
+
+- 运行时读取 `/data/models.json`
+- 提供左右两个模型选择器，默认比较 `deepseek-v4-flash` 和 `anthropic-claude-3-7-sonnet`
+- 展示厂商、输入价、输出价、缓存写价、缓存读价、上下文长度、更新时间和来源链接
+- 价格字段会自动高亮更便宜的一侧
+- 模型名会链接到 `/model?id=模型ID`
 
 `rankings.html`：
 
 - 运行时读取 `/data/models.json`
 - 生成输入价格最低、输出价格最低、上下文最长、缓存读取价格最低四类 Top 10 榜单
 - `null` 字段不会参与对应排行
-- 每个模型名都链接到 `/model.html?id=模型ID`，且这个 ID 同样来自 `/data/models.json` 的 `id` 字段
+- 每个模型名都链接到 `/model?id=模型ID`，且这个 ID 同样来自 `/data/models.json` 的 `id` 字段
 
 `public/`：
 
 - 由 `npm run build` 自动生成
 - 用于 Cloudflare Worker 静态资源部署
-- 只包含 `index.html`、`history.html`、`model.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+- 只包含 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+- 额外生成 `public/model/index.html` 和 `public/compare/index.html`，分别支持 `/model?id=模型ID` 和 `/compare` 这两个无扩展名路由
 
 ## 自动更新链路
 
@@ -159,7 +169,7 @@ npm install
 2. `npm ci` 安装 `package-lock.json` 中锁定的依赖
 3. `npm run update` 读取 `data/sources.json` 和现有 `data/models.json`
 4. `update.js` 生成新的 `data/models.json`，并同步覆盖 `data/history/YYYY-MM-DD.json`
-5. `update.js` 同时更新 `sitemap.xml`，加入 `/history.html`、`/model.html`、`/rankings.html` 和当日快照 `/data/history/YYYY-MM-DD.json`
+5. `update.js` 同时更新 `sitemap.xml`，加入 `/history.html`、`/model.html`、`/compare`、`/rankings.html` 和当日快照 `/data/history/YYYY-MM-DD.json`
 6. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
 7. 若 `data/` 或 `sitemap.xml` 发生变化，workflow 自动 commit 并 push
 
@@ -207,8 +217,9 @@ npm run diff
 1. 构建命令：`npm run build`
 2. 部署命令：`npm run deploy`
 3. 路径：`/`
-4. `npm run build` 会先清空 `public/`，再复制 `index.html`、`history.html`、`model.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-5. `wrangler.jsonc` 已配置：
+4. `npm run build` 会先清空 `public/`，再复制 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+5. 构建时还会额外生成 `public/model/index.html` 和 `public/compare/index.html`，让 Worker 静态资源可以直接响应 `/model?id=...` 和 `/compare`
+6. `wrangler.jsonc` 已配置：
    - `name: model-radar`
    - `compatibility_date: 2026-05-15`
    - `assets.directory: ./public`
