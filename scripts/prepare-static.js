@@ -1,6 +1,7 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const { writeSitemapFromDatasetPath } = require("./lib/sitemap");
+const { FIXED_COMPARE_PAGES } = require("./lib/compare-pages");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
@@ -73,6 +74,14 @@ async function createModelAliases(dataset) {
   console.log(`[build] generated ${models.length} model clean-route aliases`);
 }
 
+async function createCompareAliases() {
+  for (const page of FIXED_COMPARE_PAGES) {
+    await copyEntry("compare.html", path.join("compare", page.slug, "index.html"));
+  }
+
+  console.log(`[build] generated ${FIXED_COMPARE_PAGES.length} fixed compare landing pages`);
+}
+
 async function main() {
   console.log("[build] syncing sitemap.xml from data/models.json");
   const { dataset } = await writeSitemapFromDatasetPath({
@@ -93,6 +102,7 @@ async function main() {
   }
 
   await createModelAliases(dataset);
+  await createCompareAliases();
 
   const assetsPath = path.join(ROOT_DIR, "assets");
 

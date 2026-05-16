@@ -456,8 +456,8 @@
       <div class="container hero-grid">
         <div>
           <span class="eyebrow">双模型对比 · JSON 驱动 · 成本高亮</span>
-          <h1>把两个模型放在同一张表里，直接比价格、上下文和来源。</h1>
-          <p>这个页面会直接读取 <code>/data/models.json</code>，让你选择两个模型并同屏比较输入价、输出价、缓存价格、上下文长度、更新时间和官方来源。价格更低的一侧会被高亮，方便快速做技术选型。</p>
+          <h1 id="compareHeroTitle">把两个模型放在同一张表里，直接比价格、上下文和来源。</h1>
+          <p id="compareHeroDescription">这个页面会直接读取 <code>/data/models.json</code>，让你选择两个模型并同屏比较输入价、输出价、缓存价格、上下文长度、更新时间和官方来源。价格更低的一侧会被高亮，方便快速做技术选型。</p>
           <div class="hero-actions">
             <a class="btn primary" href="#compareControls">开始对比</a>
             <a class="btn" href="/data/models.json">查看 JSON 原始数据</a>
@@ -502,14 +502,14 @@
               <select id="leftModelSelect" aria-label="选择左侧模型">
                 <option>载入中...</option>
               </select>
-              <p>默认：DeepSeek V4 Flash</p>
+              <p id="leftModelHint">默认：DeepSeek V4 Flash</p>
             </div>
             <div class="field">
               <label for="rightModelSelect">右侧模型</label>
               <select id="rightModelSelect" aria-label="选择右侧模型">
                 <option>载入中...</option>
               </select>
-              <p>默认：Claude Sonnet 4.6</p>
+              <p id="rightModelHint">默认：Claude Sonnet 4.6</p>
             </div>
           </div>
         </div>
@@ -553,8 +553,51 @@
 
   <script>
     const MODELS_ENDPOINT = '/data/models.json';
+    const GENERIC_COMPARE_DESCRIPTION = '对比两款主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度和官方来源，帮助开发者评估 API 调用成本。';
+    const COMPARE_STRUCTURED_DESCRIPTION = 'ModelRadar 的模型对比页面允许开发者选择两个 AI 模型，并基于 models.json 中的结构化数据比较输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源链接。该页面用于辅助模型选型、成本评估和 API 调用方案设计。';
+    const FIXED_COMPARE_PAGES = [
+      {
+        slug: 'deepseek-vs-claude',
+        leftId: 'deepseek-v4-flash',
+        rightId: 'anthropic-claude-3-7-sonnet',
+        titleLabel: 'DeepSeek vs Claude',
+        descriptionLabel: '对比 DeepSeek 与 Claude 主流模型的输入价格、输出价格、缓存价格、上下文长度和官方来源，帮助开发者评估 API 调用成本。'
+      },
+      {
+        slug: 'deepseek-vs-openai',
+        leftId: 'deepseek-v4-flash',
+        rightId: 'openai-gpt-5-5',
+        titleLabel: 'DeepSeek vs OpenAI',
+        descriptionLabel: '对比 DeepSeek 与 OpenAI 主流模型的输入价格、输出价格、缓存价格、上下文长度和官方来源，帮助开发者评估 API 调用成本。'
+      },
+      {
+        slug: 'claude-vs-openai',
+        leftId: 'anthropic-claude-3-7-sonnet',
+        rightId: 'openai-gpt-5-5',
+        titleLabel: 'Claude vs OpenAI',
+        descriptionLabel: '对比 Claude 与 OpenAI 主流模型的输入价格、输出价格、缓存价格、上下文长度和官方来源，帮助开发者评估 API 调用成本。'
+      },
+      {
+        slug: 'gemini-vs-claude',
+        leftId: 'google-gemini-2-5-flash',
+        rightId: 'anthropic-claude-3-7-sonnet',
+        titleLabel: 'Gemini vs Claude',
+        descriptionLabel: '对比 Gemini 与 Claude 主流模型的输入价格、输出价格、缓存价格、上下文长度和官方来源，帮助开发者评估 API 调用成本。'
+      },
+      {
+        slug: 'gemini-vs-deepseek',
+        leftId: 'google-gemini-2-5-flash',
+        rightId: 'deepseek-v4-flash',
+        titleLabel: 'Gemini vs DeepSeek',
+        descriptionLabel: '对比 Gemini 与 DeepSeek 主流模型的输入价格、输出价格、缓存价格、上下文长度和官方来源，帮助开发者评估 API 调用成本。'
+      }
+    ];
     const DEFAULT_LEFT_ID = 'deepseek-v4-flash';
     const DEFAULT_RIGHT_ID = 'anthropic-claude-3-7-sonnet';
+    const compareHeroTitle = document.getElementById('compareHeroTitle');
+    const compareHeroDescription = document.getElementById('compareHeroDescription');
+    const leftModelHint = document.getElementById('leftModelHint');
+    const rightModelHint = document.getElementById('rightModelHint');
     const leftModelSelect = document.getElementById('leftModelSelect');
     const rightModelSelect = document.getElementById('rightModelSelect');
     const compareTableBody = document.getElementById('compareTableBody');
@@ -568,10 +611,24 @@
     const updatedStat = document.getElementById('updatedStat');
     const compareStructuredData = document.getElementById('compareStructuredData');
     const query = new URLSearchParams(window.location.search);
+    const hasExplicitQuerySelection = query.has('left') || query.has('right');
+    const normalizedPathname = window.location.pathname.replace(/\/+$/, '') || '/';
+    const activeComparePage = getActiveComparePage(normalizedPathname);
     const state = {
       models: [],
-      payload: null
+      payload: null,
+      activeComparePage
     };
+
+    function getActiveComparePage(pathname) {
+      const match = pathname.match(/^\/compare\/([^/]+)$/);
+
+      if (!match) {
+        return null;
+      }
+
+      return FIXED_COMPARE_PAGES.find((page) => page.slug === match[1]) || null;
+    }
 
     function escapeHtml(value) {
       return String(value ?? '')
@@ -617,10 +674,62 @@
       return `/model?id=${encodeURIComponent(model.id)}`;
     }
 
+    function getComparePagePath(comparePage) {
+      return comparePage ? `/compare/${comparePage.slug}` : '/compare';
+    }
+
+    function canUseCleanLandingUrl(leftModel, rightModel) {
+      return Boolean(
+        state.activeComparePage &&
+          leftModel?.id === state.activeComparePage.leftId &&
+          rightModel?.id === state.activeComparePage.rightId
+      );
+    }
+
+    function buildQueryComparePath(leftModel, rightModel) {
+      return `/compare?left=${encodeURIComponent(leftModel.id)}&right=${encodeURIComponent(rightModel.id)}`;
+    }
+
+    function buildCanonicalUrl(leftModel, rightModel) {
+      const path = canUseCleanLandingUrl(leftModel, rightModel)
+        ? getComparePagePath(state.activeComparePage)
+        : buildQueryComparePath(leftModel, rightModel);
+      return `https://modelradar.cn${path}`;
+    }
+
+    function buildHeroCopy(leftModel, rightModel) {
+      if (canUseCleanLandingUrl(leftModel, rightModel)) {
+        return {
+          title: `${state.activeComparePage.titleLabel} 价格对比`,
+          description: state.activeComparePage.descriptionLabel
+        };
+      }
+
+      return {
+        title: `${leftModel.name} vs ${rightModel.name} 价格对比`,
+        description: GENERIC_COMPARE_DESCRIPTION
+      };
+    }
+
+    function buildSeoContent(leftModel, rightModel) {
+      if (canUseCleanLandingUrl(leftModel, rightModel)) {
+        return {
+          title: `${state.activeComparePage.titleLabel} 价格对比｜ModelRadar`,
+          description: state.activeComparePage.descriptionLabel,
+          canonicalUrl: buildCanonicalUrl(leftModel, rightModel)
+        };
+      }
+
+      return {
+        title: `${leftModel.name} vs ${rightModel.name} 价格对比｜ModelRadar`,
+        description: `对比 ${leftModel.name} 与 ${rightModel.name} 的输入价格、输出价格、缓存价格、上下文长度和官方来源，帮助开发者评估 API 调用成本。`,
+        canonicalUrl: buildCanonicalUrl(leftModel, rightModel)
+      };
+    }
+
     function updateCompareSeo(leftModel, rightModel) {
-      const title = `${leftModel.name} vs ${rightModel.name}｜AI 模型对比｜ModelRadar`;
-      const description = `比较 ${leftModel.name} 和 ${rightModel.name} 的输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源。`;
-      const canonicalUrl = `https://modelradar.cn/compare?left=${encodeURIComponent(leftModel.id)}&right=${encodeURIComponent(rightModel.id)}`;
+      const seo = buildSeoContent(leftModel, rightModel);
+      const heroCopy = buildHeroCopy(leftModel, rightModel);
       const descriptionMeta = document.querySelector('meta[name="description"]');
       const canonicalLink = document.querySelector('link[rel="canonical"]');
       const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -629,22 +738,24 @@
       const twitterTitle = document.querySelector('meta[name="twitter:title"]');
       const twitterDescription = document.querySelector('meta[name="twitter:description"]');
 
-      document.title = title;
-      if (descriptionMeta) descriptionMeta.setAttribute('content', description);
-      if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
-      if (ogTitle) ogTitle.setAttribute('content', title);
-      if (ogDescription) ogDescription.setAttribute('content', description);
-      if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
-      if (twitterTitle) twitterTitle.setAttribute('content', title);
-      if (twitterDescription) twitterDescription.setAttribute('content', description);
+      document.title = seo.title;
+      if (compareHeroTitle) compareHeroTitle.textContent = heroCopy.title;
+      if (compareHeroDescription) compareHeroDescription.innerHTML = `${escapeHtml(heroCopy.description)}`;
+      if (descriptionMeta) descriptionMeta.setAttribute('content', seo.description);
+      if (canonicalLink) canonicalLink.setAttribute('href', seo.canonicalUrl);
+      if (ogTitle) ogTitle.setAttribute('content', seo.title);
+      if (ogDescription) ogDescription.setAttribute('content', seo.description);
+      if (ogUrl) ogUrl.setAttribute('content', seo.canonicalUrl);
+      if (twitterTitle) twitterTitle.setAttribute('content', seo.title);
+      if (twitterDescription) twitterDescription.setAttribute('content', seo.description);
 
       if (compareStructuredData) {
         compareStructuredData.textContent = JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'WebPage',
-          name: title,
-          description: 'ModelRadar 的模型对比页面允许开发者选择两个 AI 模型，并基于 models.json 中的结构化数据比较输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源链接。该页面用于辅助模型选型、成本评估和 API 调用方案设计。',
-          url: canonicalUrl,
+          name: seo.title,
+          description: seo.description,
+          url: seo.canonicalUrl,
           dateModified: state.payload?.effectiveDate || state.payload?.generatedAt || undefined,
           isPartOf: {
             '@type': 'WebSite',
@@ -660,7 +771,13 @@
               '@type': 'Thing',
               name: rightModel.name
             }
-          ]
+          ],
+          mainEntity: {
+            '@type': 'Dataset',
+            name: `${leftModel.name} vs ${rightModel.name} pricing comparison`,
+            description: COMPARE_STRUCTURED_DESCRIPTION,
+            isBasedOn: 'https://modelradar.cn/data/models.json'
+          }
         }, null, 2);
       }
     }
@@ -878,11 +995,11 @@
       return nextModel ? nextModel.id : (state.models[0]?.id || '');
     }
 
-    function syncQuery(leftId, rightId) {
-      const nextUrl = new URL(window.location.href);
-      nextUrl.searchParams.set('left', leftId);
-      nextUrl.searchParams.set('right', rightId);
-      history.replaceState(null, '', `${nextUrl.pathname}?${nextUrl.searchParams.toString()}`);
+    function syncQuery(leftModel, rightModel) {
+      const nextUrl = canUseCleanLandingUrl(leftModel, rightModel)
+        ? getComparePagePath(state.activeComparePage)
+        : buildQueryComparePath(leftModel, rightModel);
+      history.replaceState(null, '', nextUrl);
     }
 
     function populateSelect(select, selectedId) {
@@ -891,6 +1008,19 @@
           ${escapeHtml(`${model.provider} · ${model.name}`)}
         </option>
       `).join('');
+    }
+
+    function updateDefaultHints(defaultLeftId, defaultRightId) {
+      const defaultLeftModel = getModelById(defaultLeftId);
+      const defaultRightModel = getModelById(defaultRightId);
+
+      if (leftModelHint) {
+        leftModelHint.textContent = `默认：${defaultLeftModel ? defaultLeftModel.name : defaultLeftId}`;
+      }
+
+      if (rightModelHint) {
+        rightModelHint.textContent = `默认：${defaultRightModel ? defaultRightModel.name : defaultRightId}`;
+      }
     }
 
     function renderComparison() {
@@ -906,7 +1036,7 @@
       compareCaption.textContent = `说明：当前对比基于 /data/models.json，比较 ${leftModel.name} 和 ${rightModel.name} 的核心计费字段与来源。`;
       renderSummary(leftModel, rightModel);
       renderCompareTable(leftModel, rightModel);
-      syncQuery(leftModel.id, rightModel.id);
+      syncQuery(leftModel, rightModel);
       updateCompareSeo(leftModel, rightModel);
     }
 
@@ -934,14 +1064,17 @@
         state.payload = payload;
 
         const providers = new Set(models.map((model) => model.provider).filter(Boolean));
-        const leftId = getPreferredSelection(query.get('left')?.trim() || DEFAULT_LEFT_ID, 0, '');
-        const rightId = getPreferredSelection(query.get('right')?.trim() || DEFAULT_RIGHT_ID, 1, leftId);
+        const defaultLeftId = state.activeComparePage?.leftId || DEFAULT_LEFT_ID;
+        const defaultRightId = state.activeComparePage?.rightId || DEFAULT_RIGHT_ID;
+        const leftId = getPreferredSelection(query.get('left')?.trim() || defaultLeftId, 0, '');
+        const rightId = getPreferredSelection(query.get('right')?.trim() || defaultRightId, 1, leftId);
 
         trackedModelsStat.textContent = `${models.length}`;
         trackedProvidersStat.textContent = `${providers.size}`;
         updatedStat.textContent = formatUpdatedLabel(payload.effectiveDate || payload.generatedAt);
         populateSelect(leftModelSelect, leftId);
         populateSelect(rightModelSelect, rightId);
+        updateDefaultHints(defaultLeftId, defaultRightId);
         renderComparison();
       } catch (error) {
         renderError(`模型数据读取失败：${error.message}`);

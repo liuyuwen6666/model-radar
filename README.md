@@ -68,6 +68,11 @@ These endpoints are intended for:
 - `/compare?left=deepseek-v4-flash&right=anthropic-claude-3-7-sonnet`
 - `/compare?left=deepseek-v4-flash&right=openai-gpt-5-5`
 - `/compare?left=anthropic-claude-3-7-sonnet&right=openai-gpt-5-5`
+- `/compare/deepseek-vs-claude`
+- `/compare/deepseek-vs-openai`
+- `/compare/claude-vs-openai`
+- `/compare/gemini-vs-claude`
+- `/compare/gemini-vs-deepseek`
 
 其中模型详情 URL 来自 `data/models.json` 的所有 `models[].id`；`YYYY-MM-DD` 使用 `data/models.json` 的 `effectiveDate`，同时所有条目的 `lastmod` 也统一使用该日期。
 
@@ -190,6 +195,9 @@ npm install
 
 - 运行时读取 `/data/models.json`
 - 提供左右两个模型选择器，默认比较 `deepseek-v4-flash` 和 `anthropic-claude-3-7-sonnet`
+- 同时支持固定对比落地页：`/compare/deepseek-vs-claude`、`/compare/deepseek-vs-openai`、`/compare/claude-vs-openai`、`/compare/gemini-vs-claude`、`/compare/gemini-vs-deepseek`
+- 固定对比页会自动设置默认 `left/right`，但如果 URL 显式传入 `?left=...&right=...`，则 query 参数优先
+- 固定对比页会动态更新 `document.title`、`meta description`、`canonical`、OpenGraph 和 JSON-LD
 - 展示厂商、输入价、输出价、缓存写价、缓存读价、上下文长度、更新时间和来源链接
 - 价格字段会自动高亮更便宜的一侧
 - 模型名会链接到 `/model?id=模型ID`
@@ -207,6 +215,7 @@ npm install
 - 用于 Cloudflare Worker 静态资源部署
 - 只包含 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
 - 额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html`
+- 还会额外生成 `public/compare/deepseek-vs-claude/index.html`、`public/compare/deepseek-vs-openai/index.html`、`public/compare/claude-vs-openai/index.html`、`public/compare/gemini-vs-claude/index.html`、`public/compare/gemini-vs-deepseek/index.html`
 - 还会按 `data/models.json` 中的每个模型 ID 生成 `public/model/模型ID/index.html`，支持 `/model/模型ID` clean route
 
 ## 自动更新链路
@@ -215,7 +224,7 @@ npm install
 2. `npm ci` 安装 `package-lock.json` 中锁定的依赖
 3. `npm run update` 读取 `data/sources.json` 和现有 `data/models.json`
 4. `update.js` 生成新的 `data/models.json`，并同步覆盖 `data/history/YYYY-MM-DD.json`
-5. `update.js` 会根据 `data/models.json` 自动重建 `sitemap.xml`，写入 `/history`、`/rankings`、`/compare`、数据 JSON、所有模型的 `/model?id=模型ID`、重点 `/compare?left=...&right=...` 对比页，以及当日快照 `/data/history/YYYY-MM-DD.json`
+5. `update.js` 会根据 `data/models.json` 自动重建 `sitemap.xml`，写入 `/history`、`/rankings`、`/compare`、数据 JSON、所有模型的 `/model?id=模型ID`、重点 `/compare?left=...&right=...` 对比页、固定 `/compare/...` 落地页，以及当日快照 `/data/history/YYYY-MM-DD.json`
 6. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
 7. 若 `data/` 或 `sitemap.xml` 发生变化，workflow 自动 commit 并 push
 
@@ -265,7 +274,7 @@ npm run diff
 2. 部署命令：`npm run deploy`
 3. 路径：`/`
 4. `npm run build` 会先根据 `data/models.json` 自动更新 `sitemap.xml`，再清空 `public/` 并复制 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-5. 构建时会额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html` 和所有 `public/model/模型ID/index.html`
+5. 构建时会额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、固定 `public/compare/.../index.html` 落地页、`public/model/index.html` 和所有 `public/model/模型ID/index.html`
 6. `wrangler.jsonc` 已配置：
    - `name: model-radar`
    - `compatibility_date: 2026-05-15`
