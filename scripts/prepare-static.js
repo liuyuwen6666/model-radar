@@ -2,6 +2,7 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 const { writeSitemapFromDatasetPath } = require("./lib/sitemap");
 const { FIXED_COMPARE_PAGES } = require("./lib/compare-pages");
+const { FIXED_PROVIDERS } = require("./lib/provider-pages");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
@@ -13,6 +14,7 @@ const STATIC_ENTRIES = [
   "model.html",
   "compare.html",
   "rankings.html",
+  "provider.html",
   "robots.txt",
   "sitemap.xml",
   "data"
@@ -33,6 +35,10 @@ const ROUTE_ALIASES = [
   {
     source: "compare.html",
     target: path.join("compare", "index.html")
+  },
+  {
+    source: "provider.html",
+    target: path.join("provider", "index.html")
   }
 ];
 
@@ -82,6 +88,14 @@ async function createCompareAliases() {
   console.log(`[build] generated ${FIXED_COMPARE_PAGES.length} fixed compare landing pages`);
 }
 
+async function createProviderAliases() {
+  for (const provider of FIXED_PROVIDERS) {
+    await copyEntry("provider.html", path.join("provider", provider.slug, "index.html"));
+  }
+
+  console.log(`[build] generated ${FIXED_PROVIDERS.length} provider landing pages`);
+}
+
 async function main() {
   console.log("[build] syncing sitemap.xml from data/models.json");
   const { dataset } = await writeSitemapFromDatasetPath({
@@ -103,6 +117,7 @@ async function main() {
 
   await createModelAliases(dataset);
   await createCompareAliases();
+  await createProviderAliases();
 
   const assetsPath = path.join(ROOT_DIR, "assets");
 

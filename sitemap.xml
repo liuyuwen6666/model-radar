@@ -111,4 +111,20 @@
     <loc>https://modelradar.cn/compare/gemini-vs-deepseek</loc>
     <lastmod>2026-05-16</lastmod>
   </url>
+  <url>
+    <loc>https://modelradar.cn/provider/openai</loc>
+    <lastmod>2026-05-16</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/provider/anthropic</loc>
+    <lastmod>2026-05-16</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/provider/deepseek</loc>
+    <lastmod>2026-05-16</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/provider/google</loc>
+    <lastmod>2026-05-16</lastmod>
+  </url>
 </urlset>

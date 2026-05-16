@@ -1,5 +1,6 @@
 const fs = require("node:fs/promises");
 const { FIXED_COMPARE_PAGES } = require("./compare-pages");
+const { FIXED_PROVIDERS } = require("./provider-pages");
 
 const DEFAULT_SITE_ORIGIN = "https://modelradar.cn";
 const SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
@@ -75,6 +76,10 @@ function buildSitemapEntries(dataset, siteOrigin = normalizeSiteOrigin()) {
 
   for (const page of FIXED_COMPARE_PAGES) {
     appendEntry(entries, seen, `${origin}/compare/${page.slug}`, effectiveDate);
+  }
+
+  for (const provider of FIXED_PROVIDERS) {
+    appendEntry(entries, seen, `${origin}/provider/${provider.slug}`, effectiveDate);
   }
 
   return entries;
