@@ -51,6 +51,19 @@ These endpoints are intended for:
 - AI agent consumption
 - downstream scripts and dataset reuse
 
+## AI-friendly / GEO
+
+ModelRadar is intentionally structured for both traditional SEO and AI retrieval systems:
+
+- each primary page has a unique `title`, `meta description`, `canonical`, `robots`, and OpenGraph metadata
+- homepage includes `WebSite` and `Dataset` JSON-LD
+- `history.html` includes `Dataset` JSON-LD for changelog data
+- `rankings.html` includes `Dataset` JSON-LD for ranking data
+- `compare.html` includes `WebPage` JSON-LD and updates its title from the selected `left` / `right` model ids
+- `model.html` updates `document.title`, canonical, OpenGraph, and inserts model-specific JSON-LD after loading `/data/models.json`
+- model detail links use stable IDs from `/data/models.json`, which makes them easier for AI systems and downstream tools to cite reliably
+- pages expose or render the latest update time from JSON payloads, so both users and crawlers can detect freshness
+
 ## License
 
 This project uses the MIT License.

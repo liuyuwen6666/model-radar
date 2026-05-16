@@ -4,19 +4,39 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI 模型价格变化历史｜ModelRadar</title>
-  <meta name="description" content="查看 OpenAI、DeepSeek、Claude、Gemini 等主流 AI 模型价格变化历史。" />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="description" content="查看 OpenAI、Claude、Gemini、DeepSeek 等主流 AI 模型的最新价格变化记录、变更字段和来源链接。" />
+  <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="canonical" href="https://modelradar.cn/history.html" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="AI 模型价格变化历史｜ModelRadar" />
-  <meta property="og:description" content="查看 OpenAI、DeepSeek、Claude、Gemini 等主流 AI 模型价格变化历史。" />
+  <meta property="og:description" content="查看 OpenAI、Claude、Gemini、DeepSeek 等主流 AI 模型的最新价格变化记录、变更字段和来源链接。" />
   <meta property="og:url" content="https://modelradar.cn/history.html" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AI 模型价格变化历史｜ModelRadar" />
-  <meta name="twitter:description" content="查看 OpenAI、DeepSeek、Claude、Gemini 等主流 AI 模型价格变化历史。" />
+  <meta name="twitter:description" content="查看 OpenAI、Claude、Gemini、DeepSeek 等主流 AI 模型的最新价格变化记录、变更字段和来源链接。" />
+
+  <script id="historyStructuredData" type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "AI 模型价格变化历史数据集",
+    "description": "ModelRadar 发布的主流 AI 模型价格变化历史、变更字段、旧值、新值和来源链接。",
+    "url": "https://modelradar.cn/history.html",
+    "creator": {
+      "@type": "Organization",
+      "name": "AI Model Price Radar"
+    },
+    "license": "https://opensource.org/license/mit",
+    "distribution": {
+      "@type": "DataDownload",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://modelradar.cn/data/changelog.json"
+    }
+  }
+  </script>
 
   <style>
     :root {
@@ -477,6 +497,7 @@
     const changeCountStat = document.getElementById('changeCountStat');
     const affectedModelsStat = document.getElementById('affectedModelsStat');
     const providersStat = document.getElementById('providersStat');
+    const historyStructuredData = document.getElementById('historyStructuredData');
 
     function escapeHtml(value) {
       return String(value ?? '')
@@ -634,6 +655,32 @@
       `;
     }
 
+    function updateHistoryStructuredData(payload, entries) {
+      if (!historyStructuredData || !payload) {
+        return;
+      }
+
+      historyStructuredData.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Dataset',
+        name: 'AI 模型价格变化历史数据集',
+        description: 'ModelRadar 发布的主流 AI 模型价格变化历史、变更字段、旧值、新值和来源链接。',
+        url: 'https://modelradar.cn/history.html',
+        creator: {
+          '@type': 'Organization',
+          name: 'AI Model Price Radar'
+        },
+        dateModified: payload.effectiveDate || payload.generatedAt || undefined,
+        license: 'https://opensource.org/license/mit',
+        distribution: {
+          '@type': 'DataDownload',
+          encodingFormat: 'application/json',
+          contentUrl: 'https://modelradar.cn/data/changelog.json'
+        },
+        size: `${entries.length} changes`
+      }, null, 2);
+    }
+
     async function fetchJson(url) {
       const response = await fetch(url, { cache: 'no-store' });
 
@@ -654,6 +701,7 @@
         renderStats(entries);
         renderSummary(entries);
         renderTable(entries);
+        updateHistoryStructuredData(payload, entries);
       } catch (error) {
         renderError(`变更数据读取失败：${error.message}`);
       }

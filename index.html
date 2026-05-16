@@ -4,61 +4,62 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI 模型价格雷达｜每日追踪主流大模型 API 价格、上下文与趋势</title>
-  <meta name="description" content="AI 模型价格雷达每日追踪 OpenAI、Claude、Gemini、DeepSeek、豆包、通义、Kimi、混元等主流大模型 API 价格、上下文长度、计费方式与变更趋势。" />
+  <meta name="description" content="ModelRadar 每日追踪 OpenAI、Claude、Gemini、DeepSeek、豆包、通义、Kimi、混元等主流 AI 模型的 API 价格、上下文长度与价格变化。" />
   <meta name="keywords" content="AI模型价格,大模型价格,LLM pricing,OpenAI价格,Claude价格,Gemini价格,DeepSeek价格,豆包价格,AI API价格" />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="robots" content="index,follow" />
   <meta name="author" content="AI Model Price Radar" />
   <meta name="theme-color" content="#0f172a" />
 
-  <link rel="canonical" href="https://example.com/" />
-  <link rel="alternate" hreflang="zh-CN" href="https://example.com/" />
-  <link rel="alternate" hreflang="en" href="https://example.com/en/" />
+  <link rel="canonical" href="https://modelradar.cn/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://modelradar.cn/" />
+  <link rel="alternate" hreflang="en" href="https://modelradar.cn/en/" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="AI 模型价格雷达" />
-  <meta property="og:description" content="每日追踪主流大模型 API 价格、上下文长度、计费方式与价格趋势。" />
-  <meta property="og:url" content="https://example.com/" />
-  <meta property="og:image" content="https://example.com/og-image.png" />
+  <meta property="og:title" content="AI 模型价格雷达｜每日追踪主流大模型 API 价格、上下文与趋势" />
+  <meta property="og:description" content="ModelRadar 每日追踪 OpenAI、Claude、Gemini、DeepSeek、豆包、通义、Kimi、混元等主流 AI 模型的 API 价格、上下文长度与价格变化。" />
+  <meta property="og:url" content="https://modelradar.cn/" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AI 模型价格雷达" />
-  <meta name="twitter:description" content="每日追踪主流大模型 API 价格、上下文长度、计费方式与价格趋势。" />
-  <meta name="twitter:image" content="https://example.com/og-image.png" />
+  <meta name="twitter:title" content="AI 模型价格雷达｜每日追踪主流大模型 API 价格、上下文与趋势" />
+  <meta name="twitter:description" content="ModelRadar 每日追踪 OpenAI、Claude、Gemini、DeepSeek、豆包、通义、Kimi、混元等主流 AI 模型的 API 价格、上下文长度与价格变化。" />
 
-  <script type="application/ld+json">
+  <script id="websiteStructuredData" type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "AI 模型价格雷达",
     "alternateName": "AI Model Price Radar",
-    "url": "https://example.com/",
-    "description": "每日追踪主流大模型 API 价格、上下文长度、计费方式与价格趋势。",
-    "inLanguage": "zh-CN",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://example.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "url": "https://modelradar.cn/",
+    "description": "ModelRadar 每日追踪主流 AI 模型的 API 价格、上下文长度、价格变化和机器可读 JSON 数据。",
+    "inLanguage": "zh-CN"
   }
   </script>
 
-  <script type="application/ld+json">
+  <script id="indexDatasetStructuredData" type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Dataset",
     "name": "主流 AI 模型 API 价格数据集",
     "description": "OpenAI、Anthropic、Google、DeepSeek、字节豆包、阿里通义、月之暗面 Kimi、腾讯混元等模型的价格、上下文长度、计费单位与历史变更记录。",
+    "url": "https://modelradar.cn/",
     "creator": {
       "@type": "Organization",
       "name": "AI Model Price Radar"
     },
     "temporalCoverage": "2026-01-01/..",
-    "license": "https://example.com/license",
-    "distribution": {
-      "@type": "DataDownload",
-      "encodingFormat": "application/json",
-      "contentUrl": "https://example.com/data/models.json"
-    }
+    "license": "https://opensource.org/license/mit",
+    "distribution": [
+      {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://modelradar.cn/data/models.json"
+      },
+      {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://modelradar.cn/data/changelog.json"
+      }
+    ]
   }
   </script>
 
@@ -713,6 +714,7 @@
     const changelogUpdated = document.getElementById('changelogUpdated');
     const trackedProvidersStat = document.getElementById('trackedProvidersStat');
     const trackedModelsStat = document.getElementById('trackedModelsStat');
+    const indexDatasetStructuredData = document.getElementById('indexDatasetStructuredData');
     const state = {
       models: []
     };
@@ -789,6 +791,55 @@
       const providers = new Set(models.map(model => model.provider));
       trackedProvidersStat.textContent = `${providers.size}`;
       trackedModelsStat.textContent = `${models.length}`;
+    }
+
+    function updateIndexDatasetStructuredData(modelsPayload, changelogPayload) {
+      if (!indexDatasetStructuredData || !modelsPayload) {
+        return;
+      }
+
+      const dataset = {
+        '@context': 'https://schema.org',
+        '@type': 'Dataset',
+        name: '主流 AI 模型 API 价格数据集',
+        description: 'ModelRadar 发布的主流 AI 模型价格、上下文长度、计费单位与价格变化记录。',
+        url: 'https://modelradar.cn/',
+        creator: {
+          '@type': 'Organization',
+          name: 'AI Model Price Radar'
+        },
+        dateModified: modelsPayload.effectiveDate || modelsPayload.generatedAt || undefined,
+        license: 'https://opensource.org/license/mit',
+        distribution: [
+          {
+            '@type': 'DataDownload',
+            encodingFormat: 'application/json',
+            contentUrl: 'https://modelradar.cn/data/models.json'
+          },
+          {
+            '@type': 'DataDownload',
+            encodingFormat: 'application/json',
+            contentUrl: 'https://modelradar.cn/data/changelog.json'
+          }
+        ],
+        variableMeasured: [
+          'inputPriceUsdPer1M',
+          'outputPriceUsdPer1M',
+          'cacheWritePriceUsdPer1M',
+          'cacheReadPriceUsdPer1M',
+          'contextWindow'
+        ]
+      };
+
+      if (Array.isArray(modelsPayload.models)) {
+        dataset.size = `${modelsPayload.models.length} models`;
+      }
+
+      if (changelogPayload?.effectiveDate || changelogPayload?.generatedAt) {
+        dataset.temporalCoverage = `${changelogPayload.effectiveDate || changelogPayload.generatedAt}/..`;
+      }
+
+      indexDatasetStructuredData.textContent = JSON.stringify(dataset, null, 2);
     }
 
     function renderModelRows(models) {
@@ -908,13 +959,15 @@
         fetchJson(MODELS_ENDPOINT),
         fetchJson(CHANGELOG_ENDPOINT)
       ]);
+      let modelsPayload = null;
+      let changelogPayload = null;
 
       if (modelsResult.status === 'fulfilled') {
-        const modelsPayload = modelsResult.value;
+        modelsPayload = modelsResult.value;
         state.models = Array.isArray(modelsPayload.models) ? modelsPayload.models : [];
         populateProviderFilter(state.models);
         updateStats(state.models);
-        tableCaption.textContent = `说明：${modelsPayload.disclaimer || '模型价格由 JSON 数据驱动，可直接替换为真实抓取结果。'}`;
+        tableCaption.textContent = `说明：${modelsPayload.disclaimer || '模型价格由 JSON 数据驱动，可直接替换为真实抓取结果。'} 最后更新：${formatUpdatedLabel(modelsPayload.effectiveDate || modelsPayload.generatedAt)}。`;
         filterRows();
       } else {
         renderDataError(`模型数据读取失败：${modelsResult.reason.message}`);
@@ -923,10 +976,13 @@
       }
 
       if (changelogResult.status === 'fulfilled') {
-        renderChangelog(changelogResult.value);
+        changelogPayload = changelogResult.value;
+        renderChangelog(changelogPayload);
       } else {
         renderChangelogError(`变更数据读取失败：${changelogResult.reason.message}`);
       }
+
+      updateIndexDatasetStructuredData(modelsPayload, changelogPayload);
     }
 
     search.addEventListener('input', filterRows);

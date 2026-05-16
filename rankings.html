@@ -4,19 +4,39 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI 模型排行榜｜ModelRadar</title>
-  <meta name="description" content="查看主流 AI 模型输入价格、输出价格、上下文长度和缓存价格排行榜。" />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="description" content="查看主流 AI 模型的输入价格、输出价格、上下文长度和缓存读取价格排行榜，快速找到更便宜或上下文更长的模型。" />
+  <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="canonical" href="https://modelradar.cn/rankings.html" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="AI 模型排行榜｜ModelRadar" />
-  <meta property="og:description" content="查看主流 AI 模型输入价格、输出价格、上下文长度和缓存价格排行榜。" />
+  <meta property="og:description" content="查看主流 AI 模型的输入价格、输出价格、上下文长度和缓存读取价格排行榜，快速找到更便宜或上下文更长的模型。" />
   <meta property="og:url" content="https://modelradar.cn/rankings.html" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AI 模型排行榜｜ModelRadar" />
-  <meta name="twitter:description" content="查看主流 AI 模型输入价格、输出价格、上下文长度和缓存价格排行榜。" />
+  <meta name="twitter:description" content="查看主流 AI 模型的输入价格、输出价格、上下文长度和缓存读取价格排行榜，快速找到更便宜或上下文更长的模型。" />
+
+  <script id="rankingStructuredData" type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "AI 模型排行榜数据集",
+    "description": "ModelRadar 根据 models.json 生成的 AI 模型输入价、输出价、上下文长度和缓存读取价格排行榜。",
+    "url": "https://modelradar.cn/rankings.html",
+    "creator": {
+      "@type": "Organization",
+      "name": "AI Model Price Radar"
+    },
+    "license": "https://opensource.org/license/mit",
+    "distribution": {
+      "@type": "DataDownload",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://modelradar.cn/data/models.json"
+    }
+  }
+  </script>
 
   <style>
     :root {
@@ -474,6 +494,7 @@
     const trackedModelsStat = document.getElementById('trackedModelsStat');
     const trackedProvidersStat = document.getElementById('trackedProvidersStat');
     const updatedStat = document.getElementById('updatedStat');
+    const rankingStructuredData = document.getElementById('rankingStructuredData');
 
     const RANKINGS = [
       {
@@ -631,6 +652,45 @@
       `;
     }
 
+    function updateRankingStructuredData(payload, rankingResults) {
+      if (!rankingStructuredData || !payload) {
+        return;
+      }
+
+      const topEntries = rankingResults
+        .flatMap((ranking) => ranking.models.slice(0, 3).map((model, index) => ({
+          ranking: ranking.title,
+          position: index + 1,
+          model: model.name
+        })));
+
+      rankingStructuredData.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Dataset',
+        name: 'AI 模型排行榜数据集',
+        description: 'ModelRadar 根据 models.json 生成的 AI 模型输入价、输出价、上下文长度和缓存读取价格排行榜。',
+        url: 'https://modelradar.cn/rankings.html',
+        creator: {
+          '@type': 'Organization',
+          name: 'AI Model Price Radar'
+        },
+        dateModified: payload.effectiveDate || payload.generatedAt || undefined,
+        license: 'https://opensource.org/license/mit',
+        distribution: {
+          '@type': 'DataDownload',
+          encodingFormat: 'application/json',
+          contentUrl: 'https://modelradar.cn/data/models.json'
+        },
+        variableMeasured: RANKINGS.map((ranking) => ranking.key),
+        hasPart: topEntries.map((entry) => ({
+          '@type': 'Observation',
+          name: `${entry.ranking} #${entry.position}`,
+          measuredProperty: entry.ranking,
+          measuredValue: entry.model
+        }))
+      }, null, 2);
+    }
+
     function renderRankings(payload) {
       const models = Array.isArray(payload.models) ? payload.models : [];
       const rankableModels = models.filter((model) =>
@@ -648,6 +708,7 @@
       rankingUpdated.textContent = `最后更新：${formatUpdatedLabel(payload.effectiveDate || payload.generatedAt)}`;
       renderSummary(payload, rankingResults);
       rankingGrid.innerHTML = rankingResults.map((ranking) => renderRankingTable(ranking, ranking.models)).join('');
+      updateRankingStructuredData(payload, rankingResults);
     }
 
     function renderError(message) {

@@ -4,19 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI 模型对比｜ModelRadar</title>
-  <meta name="description" content="比较主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度、更新时间和来源。" />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="description" content="比较两款主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源。" />
+  <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="canonical" href="https://modelradar.cn/compare" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="AI 模型对比｜ModelRadar" />
-  <meta property="og:description" content="比较主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度、更新时间和来源。" />
+  <meta property="og:description" content="比较两款主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源。" />
   <meta property="og:url" content="https://modelradar.cn/compare" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AI 模型对比｜ModelRadar" />
-  <meta name="twitter:description" content="比较主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度、更新时间和来源。" />
+  <meta name="twitter:description" content="比较两款主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源。" />
+
+  <script id="compareStructuredData" type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "AI 模型对比｜ModelRadar",
+    "description": "比较两款主流 AI 模型的输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源。",
+    "url": "https://modelradar.cn/compare",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "AI 模型价格雷达",
+      "url": "https://modelradar.cn/"
+    }
+  }
+  </script>
 
   <style>
     :root {
@@ -551,6 +566,7 @@
     const trackedModelsStat = document.getElementById('trackedModelsStat');
     const trackedProvidersStat = document.getElementById('trackedProvidersStat');
     const updatedStat = document.getElementById('updatedStat');
+    const compareStructuredData = document.getElementById('compareStructuredData');
     const query = new URLSearchParams(window.location.search);
     const state = {
       models: [],
@@ -599,6 +615,54 @@
 
     function getModelUrl(model) {
       return `/model?id=${encodeURIComponent(model.id)}`;
+    }
+
+    function updateCompareSeo(leftModel, rightModel) {
+      const title = `${leftModel.name} vs ${rightModel.name}｜AI 模型对比｜ModelRadar`;
+      const description = `比较 ${leftModel.name} 和 ${rightModel.name} 的输入价格、输出价格、缓存价格、上下文长度、更新时间和官方来源。`;
+      const canonicalUrl = `https://modelradar.cn/compare?left=${encodeURIComponent(leftModel.id)}&right=${encodeURIComponent(rightModel.id)}`;
+      const descriptionMeta = document.querySelector('meta[name="description"]');
+      const canonicalLink = document.querySelector('link[rel="canonical"]');
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      const ogDescription = document.querySelector('meta[property="og:description"]');
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+      const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+
+      document.title = title;
+      if (descriptionMeta) descriptionMeta.setAttribute('content', description);
+      if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
+      if (ogTitle) ogTitle.setAttribute('content', title);
+      if (ogDescription) ogDescription.setAttribute('content', description);
+      if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
+      if (twitterTitle) twitterTitle.setAttribute('content', title);
+      if (twitterDescription) twitterDescription.setAttribute('content', description);
+
+      if (compareStructuredData) {
+        compareStructuredData.textContent = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: title,
+          description,
+          url: canonicalUrl,
+          dateModified: state.payload?.effectiveDate || state.payload?.generatedAt || undefined,
+          isPartOf: {
+            '@type': 'WebSite',
+            name: 'AI 模型价格雷达',
+            url: 'https://modelradar.cn/'
+          },
+          about: [
+            {
+              '@type': 'Thing',
+              name: leftModel.name
+            },
+            {
+              '@type': 'Thing',
+              name: rightModel.name
+            }
+          ]
+        }, null, 2);
+      }
     }
 
     function buildModelHeading(model) {
@@ -843,6 +907,7 @@
       renderSummary(leftModel, rightModel);
       renderCompareTable(leftModel, rightModel);
       syncQuery(leftModel.id, rightModel.id);
+      updateCompareSeo(leftModel, rightModel);
     }
 
     async function fetchJson(url) {

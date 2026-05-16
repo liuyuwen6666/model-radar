@@ -4,19 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>模型详情｜ModelRadar</title>
-  <meta name="description" content="查看单个 AI 模型的输入价、输出价、缓存价格、上下文长度、更新时间和价格变化记录。" />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="description" content="查看单个 AI 模型的输入价、输出价、缓存价格、上下文长度、更新时间、官方来源和价格变化记录。" />
+  <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="canonical" href="https://modelradar.cn/model" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="模型详情｜ModelRadar" />
-  <meta property="og:description" content="查看单个 AI 模型的输入价、输出价、缓存价格、上下文长度、更新时间和价格变化记录。" />
+  <meta property="og:description" content="查看单个 AI 模型的输入价、输出价、缓存价格、上下文长度、更新时间、官方来源和价格变化记录。" />
   <meta property="og:url" content="https://modelradar.cn/model" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="模型详情｜ModelRadar" />
-  <meta name="twitter:description" content="查看单个 AI 模型的输入价、输出价、缓存价格、上下文长度、更新时间和价格变化记录。" />
+  <meta name="twitter:description" content="查看单个 AI 模型的输入价、输出价、缓存价格、上下文长度、更新时间、官方来源和价格变化记录。" />
 
   <style>
     :root {
@@ -614,6 +614,7 @@
     const cacheValue = document.getElementById('cacheValue');
     const statusValue = document.getElementById('statusValue');
     const changeCountValue = document.getElementById('changeCountValue');
+    let modelStructuredData = null;
 
     function escapeHtml(value) {
       return String(value ?? '')
@@ -718,7 +719,7 @@
 
     function updateSeo(model) {
       const title = `${model.name} 价格详情｜ModelRadar`;
-      const description = `${model.name}（${model.provider}）的输入价、输出价、缓存价格、上下文长度、更新时间和价格变化记录。`;
+      const description = `${model.name}（${model.provider}）的输入价、输出价、缓存价格、上下文长度、更新时间、官方来源和价格变化记录。`;
       const canonicalUrl = `https://modelradar.cn/model?id=${encodeURIComponent(model.id)}`;
       const descriptionMeta = document.querySelector('meta[name="description"]');
       const canonicalLink = document.querySelector('link[rel="canonical"]');
@@ -736,6 +737,60 @@
       if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
       if (twitterTitle) twitterTitle.setAttribute('content', title);
       if (twitterDescription) twitterDescription.setAttribute('content', description);
+    }
+
+    function updateModelStructuredData(model) {
+      if (!modelStructuredData) {
+        modelStructuredData = document.createElement('script');
+        modelStructuredData.id = 'modelStructuredData';
+        modelStructuredData.type = 'application/ld+json';
+        document.head.appendChild(modelStructuredData);
+      }
+
+      modelStructuredData.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: model.name,
+        provider: {
+          '@type': 'Organization',
+          name: model.provider
+        },
+        brand: {
+          '@type': 'Organization',
+          name: model.provider
+        },
+        description: model.description || `${model.provider} 模型详情页。`,
+        url: `https://modelradar.cn/model?id=${encodeURIComponent(model.id)}`,
+        sourceUrl: model.sourceUrl || undefined,
+        dateModified: model.updatedAt || undefined,
+        additionalProperty: [
+          {
+            '@type': 'PropertyValue',
+            name: 'input_price_usd_per_1m',
+            value: model.inputPriceUsdPer1M
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'output_price_usd_per_1m',
+            value: model.outputPriceUsdPer1M
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'cache_write_price_usd_per_1m',
+            value: model.cacheWritePriceUsdPer1M
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'cache_read_price_usd_per_1m',
+            value: model.cacheReadPriceUsdPer1M
+          },
+          {
+            '@type': 'PropertyValue',
+            name: 'context_window',
+            value: model.contextWindow
+          }
+        ]
+      }, null, 2);
     }
 
     function renderNotFound(title, message) {
@@ -836,6 +891,7 @@
       `).join('');
 
       updateSeo(model);
+      updateModelStructuredData(model);
       loadingState.hidden = true;
       notFoundState.hidden = true;
       modelView.hidden = false;
