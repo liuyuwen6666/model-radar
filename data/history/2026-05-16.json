@@ -144,35 +144,6 @@
       "updatedAt": "2026-05-16T00:00:00.000Z"
     },
     {
-      "id": "google-gemini-2-5-pro",
-      "name": "Gemini 2.5 Pro",
-      "provider": "Google",
-      "family": "Gemini",
-      "description": "适合长上下文和复杂多模态任务。",
-      "inputPriceUsdPer1M": 1.25,
-      "outputPriceUsdPer1M": 10,
-      "cacheWritePriceUsdPer1M": 0.343,
-      "cacheReadPriceUsdPer1M": 0.1,
-      "contextWindow": 1000000,
-      "maxOutputTokens": 16384,
-      "capabilities": [
-        "多模态",
-        "长上下文",
-        "推理"
-      ],
-      "recommendedFor": [
-        "长文档分析",
-        "图文理解",
-        "复杂工作流"
-      ],
-      "status": "stable",
-      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
-      "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/gemini-2-5-pro",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-05-16T00:00:00.000Z"
-    },
-    {
       "id": "google-gemini-2-5-flash",
       "name": "Gemini 2.5 Flash",
       "provider": "Google",
@@ -198,6 +169,35 @@
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
       "detailPath": "/model/gemini-2-5-flash",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-16T00:00:00.000Z"
+    },
+    {
+      "id": "google-gemini-2-5-pro",
+      "name": "Gemini 2.5 Pro",
+      "provider": "Google",
+      "family": "Gemini",
+      "description": "适合长上下文和复杂多模态任务。",
+      "inputPriceUsdPer1M": 1.25,
+      "outputPriceUsdPer1M": 10,
+      "cacheWritePriceUsdPer1M": 0.343,
+      "cacheReadPriceUsdPer1M": 0.1,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 16384,
+      "capabilities": [
+        "多模态",
+        "长上下文",
+        "推理"
+      ],
+      "recommendedFor": [
+        "长文档分析",
+        "图文理解",
+        "复杂工作流"
+      ],
+      "status": "stable",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/gemini-2-5-pro",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-16T00:00:00.000Z"
     },

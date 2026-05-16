@@ -23,7 +23,7 @@
     "@context": "https://schema.org",
     "@type": "Dataset",
     "name": "AI 模型价格变化历史数据集",
-    "description": "ModelRadar 的价格变化历史数据集记录主流 AI 模型 API 价格、缓存价格和上下文参数的变更情况，包含变更日期、模型名称、厂商、变更字段、旧值、新值、变化百分比和官方来源链接。该数据用于帮助开发者追踪模型成本变化、分析价格趋势，并与每日模型快照进行交叉验证。",
+    "description": "ModelRadar 的 AI 模型价格变化历史数据集记录 OpenAI、Anthropic、Google Gemini、DeepSeek、豆包、通义、Kimi、混元等主流模型的 API 输入价格、输出价格、缓存价格和上下文参数变更。每条记录包含变更日期、模型名称、厂商、变更字段、旧值、新值、变化百分比和官方来源链接，用于帮助开发者追踪模型调用成本变化、分析价格趋势，并与每日模型价格快照交叉验证。",
     "url": "https://modelradar.cn/history",
     "creator": {
       "@type": "Organization",
@@ -498,6 +498,7 @@
     const affectedModelsStat = document.getElementById('affectedModelsStat');
     const providersStat = document.getElementById('providersStat');
     const historyStructuredData = document.getElementById('historyStructuredData');
+    const HISTORY_DATASET_DESCRIPTION = 'ModelRadar 的 AI 模型价格变化历史数据集记录 OpenAI、Anthropic、Google Gemini、DeepSeek、豆包、通义、Kimi、混元等主流模型的 API 输入价格、输出价格、缓存价格和上下文参数变更。每条记录包含变更日期、模型名称、厂商、变更字段、旧值、新值、变化百分比和官方来源链接，用于帮助开发者追踪模型调用成本变化、分析价格趋势，并与每日模型价格快照交叉验证。';
 
     function escapeHtml(value) {
       return String(value ?? '')
@@ -664,7 +665,7 @@
         '@context': 'https://schema.org',
         '@type': 'Dataset',
         name: 'AI 模型价格变化历史数据集',
-        description: 'ModelRadar 的价格变化历史数据集记录主流 AI 模型 API 价格、缓存价格和上下文参数的变更情况，包含变更日期、模型名称、厂商、变更字段、旧值、新值、变化百分比和官方来源链接。该数据用于帮助开发者追踪模型成本变化、分析价格趋势，并与每日模型快照进行交叉验证。',
+        description: HISTORY_DATASET_DESCRIPTION,
         url: 'https://modelradar.cn/history',
         creator: {
           '@type': 'Organization',

@@ -5,11 +5,34 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const HTML_FILES = [
   "index.html",
   "history.html",
+  "model.html",
   "rankings.html",
   "compare.html"
 ];
 const DATASET_DESCRIPTION_MIN_LENGTH = 50;
 const DATASET_DESCRIPTION_MAX_LENGTH = 5000;
+const FORBIDDEN_SOURCE_PATTERNS = [
+  {
+    pattern: /['"]@type['"]\s*:\s*['"]Product['"]/,
+    message: "must not emit Product JSON-LD for model pricing pages"
+  },
+  {
+    pattern: /\boffers\b\s*:/,
+    message: "must not emit offers for AI model pricing data"
+  },
+  {
+    pattern: /\breview\b\s*:/,
+    message: "must not emit review for AI model pricing data"
+  },
+  {
+    pattern: /\baggregateRating\b\s*:/,
+    message: "must not emit aggregateRating for AI model pricing data"
+  },
+  {
+    pattern: /\bhasPart\b\s*:/,
+    message: "must not emit hasPart in Dataset JSON-LD"
+  }
+];
 
 function getCharacterLength(value) {
   return Array.from(String(value || "")).length;
@@ -42,6 +65,12 @@ async function checkHtmlFile(fileName) {
   let match;
   let index = 0;
 
+  for (const { pattern, message } of FORBIDDEN_SOURCE_PATTERNS) {
+    if (pattern.test(html)) {
+      errors.push(`${fileName}: ${message}`);
+    }
+  }
+
   while ((match = scriptPattern.exec(html))) {
     index += 1;
     const attributes = `${match[1] || ""} ${match[2] || ""}`;
@@ -68,6 +97,10 @@ async function checkHtmlFile(fileName) {
         errors.push(
           `${fileName} ${scriptId}: Dataset.description length is ${length}, expected ${DATASET_DESCRIPTION_MIN_LENGTH}-${DATASET_DESCRIPTION_MAX_LENGTH}`
         );
+      }
+
+      if (Object.prototype.hasOwnProperty.call(dataset, "hasPart")) {
+        errors.push(`${fileName} ${scriptId}: Dataset must not include hasPart`);
       }
     }
   }

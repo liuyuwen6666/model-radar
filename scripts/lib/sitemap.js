@@ -2,6 +2,11 @@ const fs = require("node:fs/promises");
 
 const DEFAULT_SITE_ORIGIN = "https://modelradar.cn";
 const SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
+const PRIORITY_COMPARE_PAIRS = [
+  ["deepseek-v4-flash", "anthropic-claude-3-7-sonnet"],
+  ["deepseek-v4-flash", "openai-gpt-5-5"],
+  ["anthropic-claude-3-7-sonnet", "openai-gpt-5-5"]
+];
 
 function normalizeSiteOrigin(siteOrigin = process.env.MODEL_RADAR_SITE_ORIGIN || DEFAULT_SITE_ORIGIN) {
   return String(siteOrigin || DEFAULT_SITE_ORIGIN).replace(/\/+$/, "");
@@ -59,7 +64,12 @@ function buildSitemapEntries(dataset, siteOrigin = normalizeSiteOrigin()) {
 
     const encodedId = encodeURIComponent(model.id.trim());
     appendEntry(entries, seen, `${origin}/model?id=${encodedId}`, effectiveDate);
-    appendEntry(entries, seen, `${origin}/model/${encodedId}`, effectiveDate);
+  }
+
+  for (const [leftId, rightId] of PRIORITY_COMPARE_PAIRS) {
+    const left = encodeURIComponent(leftId);
+    const right = encodeURIComponent(rightId);
+    appendEntry(entries, seen, `${origin}/compare?left=${left}&right=${right}`, effectiveDate);
   }
 
   return entries;

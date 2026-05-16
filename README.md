@@ -65,7 +65,11 @@ These endpoints are intended for:
 - `/data/changelog.json`
 - `/data/history/YYYY-MM-DD.json`
 - `/model?id=模型ID`
-- `/model/模型ID`
+- `/compare?left=deepseek-v4-flash&right=anthropic-claude-3-7-sonnet`
+- `/compare?left=deepseek-v4-flash&right=openai-gpt-5-5`
+- `/compare?left=anthropic-claude-3-7-sonnet&right=openai-gpt-5-5`
+
+其中模型详情 URL 来自 `data/models.json` 的所有 `models[].id`；`YYYY-MM-DD` 使用 `data/models.json` 的 `effectiveDate`，同时所有条目的 `lastmod` 也统一使用该日期。
 
 ## AI-friendly / GEO
 
@@ -211,7 +215,7 @@ npm install
 2. `npm ci` 安装 `package-lock.json` 中锁定的依赖
 3. `npm run update` 读取 `data/sources.json` 和现有 `data/models.json`
 4. `update.js` 生成新的 `data/models.json`，并同步覆盖 `data/history/YYYY-MM-DD.json`
-5. `update.js` 会根据 `data/models.json` 自动重建 `sitemap.xml`，写入 `/history`、`/rankings`、`/compare`、所有模型的 `/model?id=模型ID` 与 `/model/模型ID`，以及当日快照 `/data/history/YYYY-MM-DD.json`
+5. `update.js` 会根据 `data/models.json` 自动重建 `sitemap.xml`，写入 `/history`、`/rankings`、`/compare`、数据 JSON、所有模型的 `/model?id=模型ID`、重点 `/compare?left=...&right=...` 对比页，以及当日快照 `/data/history/YYYY-MM-DD.json`
 6. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
 7. 若 `data/` 或 `sitemap.xml` 发生变化，workflow 自动 commit 并 push
 
@@ -220,7 +224,7 @@ npm install
 - `scripts/update.js` 负责“抓取/归一化/落盘”
 - `scripts/diff.js` 负责“比对/生成变更记录”
 - `scripts/providers/anthropic.js` 已接入 `fetch + cheerio` 抓取 Anthropic 官方价格页
-- `scripts/providers/google.js` 已接入 `fetch + cheerio` 抓取 Google AI 官方价格页
+- `scripts/providers/google.js` 已接入 `fetch + cheerio` 抓取 Google AI 官方价格页，当前覆盖 `google-gemini-2-5-flash` 与 `google-gemini-2-5-pro`，页面结构变化时会打印 warning 并保留 fallback 价格
 - `scripts/providers/openai.js` 已接入 `fetch + cheerio` 抓取 OpenAI 官方价格页
 - `scripts/providers/deepseek.js` 已接入 `fetch + cheerio` 抓取 DeepSeek 官方价格页
 - 后续接真实爬虫时，只需要继续在 `scripts/providers/` 下扩展其他厂商模块

@@ -1,16 +1,20 @@
 const cheerio = require("cheerio");
 
-const GOOGLE_PRICING_URL = "https://ai.google.dev/gemini-api/docs/pricing";
+const GOOGLE_PRICING_URL = "https://ai.google.dev/gemini-api/docs/pricing?hl=en";
 const MODEL_CONFIGS = [
-  {
-    id: "google-gemini-2-5-pro",
-    name: "Gemini 2.5 Pro",
-    headingPattern: /^gemini 2\.5 pro$/i
-  },
   {
     id: "google-gemini-2-5-flash",
     name: "Gemini 2.5 Flash",
-    headingPattern: /^gemini 2\.5 flash$/i
+    headingId: "gemini-2.5-flash",
+    fallbackInputPrice: 0.3,
+    fallbackOutputPrice: 2.5
+  },
+  {
+    id: "google-gemini-2-5-pro",
+    name: "Gemini 2.5 Pro",
+    headingId: "gemini-2.5-pro",
+    fallbackInputPrice: 1.25,
+    fallbackOutputPrice: 10
   }
 ];
 
@@ -18,8 +22,15 @@ function normalizeWhitespace(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
 
+function normalizeMoneyText(value) {
+  return normalizeWhitespace(value)
+    .replace(/\u00a0/g, " ")
+    .replace(/\bUSD\s*/gi, "$")
+    .replace(/\s+/g, " ");
+}
+
 function parseUsdAmount(value, options = {}) {
-  const normalized = normalizeWhitespace(value);
+  const normalized = normalizeMoneyText(value);
 
   if (!normalized) {
     return null;
@@ -27,7 +38,7 @@ function parseUsdAmount(value, options = {}) {
 
   if (options.preferText) {
     const textMatch = normalized.match(
-      /\$([\d.,]+)\s*\((?:text(?:\s*\/\s*image(?:\s*\/\s*video)?)?|text\/image(?:\/video)?)\)/i
+      /\$([\d.,]+)\s*\((?:text|texto)(?:\s*[\/,]|(?:\s+or\s+)|(?:\s+o\s+))?(?:\s*(?:image|imagen))?(?:\s*[\/,]|(?:\s+or\s+)|(?:\s+o\s+))?(?:\s*(?:video|vídeo))?\)/i
     );
 
     if (textMatch) {
@@ -39,38 +50,34 @@ function parseUsdAmount(value, options = {}) {
   return firstMatch ? Number(firstMatch[1].replace(/,/g, "")) : null;
 }
 
-function findModelHeading($, modelConfig) {
-  return $("h2")
-    .filter((_, element) => modelConfig.headingPattern.test(normalizeWhitespace($(element).text())))
+function findModelSection($, modelConfig) {
+  const heading = $("h2")
+    .filter((_, element) => {
+      const id = $(element).attr("id");
+      const text = normalizeWhitespace($(element).text());
+      return id === modelConfig.headingId || text.toLowerCase() === modelConfig.name.toLowerCase();
+    })
     .first();
+
+  return heading.length ? heading.closest(".models-section") : null;
 }
 
-function findStandardPricingTable($, heading) {
-  let cursor = heading.closest(".models-section").next();
+function findStandardPricingTable($, modelSection) {
+  if (!modelSection || !modelSection.length) {
+    return null;
+  }
+
+  let cursor = modelSection.next();
 
   while (cursor.length) {
     if (cursor.hasClass("models-section")) {
-      break;
+      return null;
     }
 
-    const standardSection = cursor
-      .find("section")
-      .filter((_, section) => {
-        const title = normalizeWhitespace($(section).find("h3").first().text());
-        return /^standard$/i.test(title);
-      })
-      .first();
+    const table = cursor.find("table.pricing-table").first();
 
-    if (standardSection.length) {
-      const table = standardSection.find("table.pricing-table").first();
-
-      if (table.length) {
-        return table;
-      }
-    }
-
-    if (cursor.find("h2").length) {
-      break;
+    if (table.length) {
+      return table;
     }
 
     cursor = cursor.next();
@@ -90,36 +97,19 @@ function getPricingRows($, table) {
       .filter(Boolean);
 
     if (cells.length > 0) {
-      rows.set(cells[0], cells);
+      rows.set(cells[0].toLowerCase(), cells);
     }
   });
 
   return rows;
 }
 
-function extractModelFromTable($, modelConfig, table, options = {}) {
-  const rowMap = getPricingRows($, table);
-  const inputRowEntry =
-    Array.from(rowMap.entries()).find(([label]) => /^input price\b/i.test(label)) || null;
-  const outputRowEntry =
-    Array.from(rowMap.entries()).find(([label]) => /^output price\b/i.test(label)) || null;
+function findPricingRow(rowMap, pattern) {
+  return Array.from(rowMap.entries()).find(([label]) => pattern.test(label))?.[1] || null;
+}
 
-  if (!inputRowEntry || !outputRowEntry) {
-    console.warn(`[google] missing input/output rows for ${modelConfig.name}`);
-    return null;
-  }
-
-  const [, inputRow] = inputRowEntry;
-  const [, outputRow] = outputRowEntry;
-  const inputPrice = parseUsdAmount(inputRow[2], { preferText: true });
-  const outputPrice = parseUsdAmount(outputRow[2]);
-
-  if (inputPrice === null || outputPrice === null) {
-    console.warn(`[google] missing parsed prices for ${modelConfig.name}`);
-    return null;
-  }
-
-  const model = {
+function makeModel(modelConfig, inputPrice, outputPrice, options = {}) {
+  return {
     id: modelConfig.id,
     name: modelConfig.name,
     provider: "Google",
@@ -128,7 +118,36 @@ function extractModelFromTable($, modelConfig, table, options = {}) {
     source_url: options.sourceUrl || GOOGLE_PRICING_URL,
     updated_at: options.updatedAt || new Date().toISOString()
   };
+}
 
+function makeFallbackModel(modelConfig, options = {}) {
+  console.warn(
+    `[google] using fallback pricing for ${modelConfig.name}: input=${modelConfig.fallbackInputPrice} output=${modelConfig.fallbackOutputPrice}`
+  );
+  return makeModel(modelConfig, modelConfig.fallbackInputPrice, modelConfig.fallbackOutputPrice, options);
+}
+
+function extractModelFromTable($, modelConfig, table, options = {}) {
+  const rowMap = getPricingRows($, table);
+  const inputRow = findPricingRow(rowMap, /^(input price|precio de entrada)\b/i);
+  const outputRow = findPricingRow(rowMap, /^(output price|precio de salida)\b/i);
+
+  if (!inputRow || !outputRow) {
+    console.warn(`[google] missing input/output rows for ${modelConfig.name}`);
+    return null;
+  }
+
+  const paidInputCell = inputRow[inputRow.length - 1];
+  const paidOutputCell = outputRow[outputRow.length - 1];
+  const inputPrice = parseUsdAmount(paidInputCell, { preferText: true });
+  const outputPrice = parseUsdAmount(paidOutputCell);
+
+  if (inputPrice === null || outputPrice === null) {
+    console.warn(`[google] missing parsed prices for ${modelConfig.name}`);
+    return null;
+  }
+
+  const model = makeModel(modelConfig, inputPrice, outputPrice, options);
   console.log(
     `[google] parsed ${model.name} -> ${model.id} input=${model.input_price_usd_per_1m} output=${model.output_price_usd_per_1m}`
   );
@@ -141,29 +160,23 @@ function extractModelsFromHtml(html, options = {}) {
   const models = [];
 
   for (const modelConfig of MODEL_CONFIGS) {
-    const heading = findModelHeading($, modelConfig);
+    const modelSection = findModelSection($, modelConfig);
 
-    if (!heading.length) {
+    if (!modelSection || !modelSection.length) {
       console.warn(`[google] heading not found for ${modelConfig.name}`);
+      models.push(makeFallbackModel(modelConfig, options));
       continue;
     }
 
-    const table = findStandardPricingTable($, heading);
+    const table = findStandardPricingTable($, modelSection);
 
     if (!table) {
-      console.warn(`[google] Standard pricing table not found for ${modelConfig.name}`);
+      console.warn(`[google] pricing table not found for ${modelConfig.name}`);
+      models.push(makeFallbackModel(modelConfig, options));
       continue;
     }
 
-    const model = extractModelFromTable($, modelConfig, table, options);
-
-    if (model) {
-      models.push(model);
-    }
-  }
-
-  if (models.length === 0) {
-    console.warn("[google] extracted 0 models, update.js will keep fallback pricing");
+    models.push(extractModelFromTable($, modelConfig, table, options) || makeFallbackModel(modelConfig, options));
   }
 
   return models;
@@ -173,6 +186,7 @@ async function fetchHtml(url) {
   try {
     const response = await fetch(url, {
       headers: {
+        accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "accept-language": "en-US,en;q=0.9"
       }
     });
