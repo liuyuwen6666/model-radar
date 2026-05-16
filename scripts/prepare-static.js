@@ -1,8 +1,11 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
+const { writeSitemapFromDatasetPath } = require("./lib/sitemap");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
+const MODELS_PATH = path.join(ROOT_DIR, "data", "models.json");
+const SITEMAP_PATH = path.join(ROOT_DIR, "sitemap.xml");
 const STATIC_ENTRIES = [
   "index.html",
   "history.html",
@@ -14,6 +17,14 @@ const STATIC_ENTRIES = [
   "data"
 ];
 const ROUTE_ALIASES = [
+  {
+    source: "history.html",
+    target: path.join("history", "index.html")
+  },
+  {
+    source: "rankings.html",
+    target: path.join("rankings", "index.html")
+  },
   {
     source: "model.html",
     target: path.join("model", "index.html")
@@ -47,7 +58,28 @@ async function copyEntry(sourceRelativePath, targetRelativePath = sourceRelative
   console.log(`[build] copied ${sourceRelativePath} -> public/${targetRelativePath}`);
 }
 
+async function createModelAliases(dataset) {
+  const models = Array.isArray(dataset?.models) ? dataset.models : [];
+
+  for (const model of models) {
+    if (!model || typeof model.id !== "string" || !model.id.trim()) {
+      continue;
+    }
+
+    const encodedId = encodeURIComponent(model.id.trim());
+    await copyEntry("model.html", path.join("model", encodedId, "index.html"));
+  }
+
+  console.log(`[build] generated ${models.length} model clean-route aliases`);
+}
+
 async function main() {
+  console.log("[build] syncing sitemap.xml from data/models.json");
+  const { dataset } = await writeSitemapFromDatasetPath({
+    datasetPath: MODELS_PATH,
+    sitemapPath: SITEMAP_PATH
+  });
+
   console.log("[build] clearing public/");
   await fs.rm(PUBLIC_DIR, { recursive: true, force: true });
   await fs.mkdir(PUBLIC_DIR, { recursive: true });
@@ -59,6 +91,8 @@ async function main() {
   for (const alias of ROUTE_ALIASES) {
     await copyEntry(alias.source, alias.target);
   }
+
+  await createModelAliases(dataset);
 
   const assetsPath = path.join(ROOT_DIR, "assets");
 

@@ -1,8 +1,10 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const fetchAnthropicModels = require("./providers/anthropic");
+const fetchGoogleModels = require("./providers/google");
 const fetchOpenAIModels = require("./providers/openai");
 const fetchDeepSeekModels = require("./providers/deepseek");
+const { writeSitemapForDataset } = require("./lib/sitemap");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const DATA_DIR = process.env.MODEL_RADAR_DATA_DIR
@@ -21,13 +23,9 @@ const PREVIOUS_MODELS_PATH = path.join(CACHE_DIR, "models.previous.json");
 const HISTORY_DIR = path.join(DATA_DIR, "history");
 
 const DEFAULT_SOURCE_LABEL = "Official Pricing";
-const SITE_ORIGIN = (process.env.MODEL_RADAR_SITE_ORIGIN || "https://modelradar.cn").replace(
-  /\/+$/,
-  ""
-);
-const SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
 const PROVIDER_LOADERS = {
   Anthropic: fetchAnthropicModels,
+  Google: fetchGoogleModels,
   OpenAI: fetchOpenAIModels,
   DeepSeek: fetchDeepSeekModels
 };
@@ -302,18 +300,6 @@ async function readJson(filePath, fallback = null) {
   }
 }
 
-async function readText(filePath, fallback = "") {
-  try {
-    return await fs.readFile(filePath, "utf8");
-  } catch (error) {
-    if (error.code === "ENOENT") {
-      return fallback;
-    }
-
-    throw error;
-  }
-}
-
 function isDataset(dataset) {
   return Boolean(
     dataset &&
@@ -530,85 +516,18 @@ function getHistorySnapshotPath(targetDate) {
   return path.join(HISTORY_DIR, `${targetDate}.json`);
 }
 
-function escapeXml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
-
-function parseSitemapEntries(xml) {
-  const entries = [];
-
-  for (const match of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
-    const block = match[1];
-    const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1]?.trim();
-
-    if (!loc) {
-      continue;
-    }
-
-    const lastmod = block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1]?.trim() || null;
-    entries.push({ loc, lastmod });
-  }
-
-  return entries;
-}
-
-function buildManagedSitemapEntries(targetDate) {
-  return [
-    { loc: `${SITE_ORIGIN}/`, lastmod: targetDate },
-    { loc: `${SITE_ORIGIN}/history.html`, lastmod: targetDate },
-    { loc: `${SITE_ORIGIN}/model.html`, lastmod: targetDate },
-    { loc: `${SITE_ORIGIN}/compare`, lastmod: targetDate },
-    { loc: `${SITE_ORIGIN}/rankings.html`, lastmod: targetDate },
-    { loc: `${SITE_ORIGIN}/data/models.json`, lastmod: targetDate },
-    { loc: `${SITE_ORIGIN}/data/changelog.json`, lastmod: targetDate },
-    { loc: `${SITE_ORIGIN}/data/history/${targetDate}.json`, lastmod: targetDate }
-  ];
-}
-
-function mergeSitemapEntries(existingEntries, targetDate) {
-  const managedEntries = buildManagedSitemapEntries(targetDate);
-  const managedLocs = new Set(managedEntries.map((entry) => entry.loc));
-  const preservedEntries = existingEntries.filter((entry) => !managedLocs.has(entry.loc));
-
-  return [...managedEntries, ...preservedEntries];
-}
-
-function buildSitemapXml(entries) {
-  const lines = [`<urlset xmlns="${SITEMAP_NAMESPACE}">`];
-
-  for (const entry of entries) {
-    lines.push("  <url>");
-    lines.push(`    <loc>${escapeXml(entry.loc)}</loc>`);
-
-    if (entry.lastmod) {
-      lines.push(`    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`);
-    }
-
-    lines.push("  </url>");
-  }
-
-  lines.push("</urlset>", "");
-  return lines.join("\n");
-}
-
 async function writeJson(filePath, value) {
   await ensureDirectory(path.dirname(filePath));
   await fs.writeFile(filePath, stableJson(value), "utf8");
 }
 
-async function updateSitemap(targetDate) {
-  const currentXml = await readText(SITEMAP_PATH, "");
-  const existingEntries = parseSitemapEntries(currentXml);
-  const nextEntries = mergeSitemapEntries(existingEntries, targetDate);
-
-  await fs.writeFile(SITEMAP_PATH, buildSitemapXml(nextEntries), "utf8");
+async function updateSitemap(dataset) {
+  const entries = await writeSitemapForDataset({
+    dataset,
+    sitemapPath: SITEMAP_PATH
+  });
   console.log(
-    `[update] wrote sitemap ${path.relative(ROOT_DIR, SITEMAP_PATH) || path.basename(SITEMAP_PATH)}`
+    `[update] wrote sitemap ${path.relative(ROOT_DIR, SITEMAP_PATH) || path.basename(SITEMAP_PATH)} with ${entries.length} entries`
   );
 }
 
@@ -652,7 +571,7 @@ async function main() {
       path.relative(ROOT_DIR, historySnapshotPath) || path.basename(historySnapshotPath)
     }`
   );
-  await updateSitemap(targetDate);
+  await updateSitemap(nextDataset);
   console.log(`Updated ${nextModels.length} models for ${targetDate}`);
 }
 

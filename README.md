@@ -1,6 +1,6 @@
 # AI 模型价格雷达
 
-一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 把 changelog 渲染成人类可读的价格变化历史页面，提供 `model.html` 作为模型详情页源码并通过 `/model?id=模型ID` 展示单个模型详情与相关变更，提供 `rankings.html` 基于 `models.json` 生成模型排行榜，并提供 `compare.html` 让用户同屏对比两款模型，无需前端框架，也无需构建步骤。
+一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 作为 `/history` 页面源码，把 changelog 渲染成人类可读的价格变化历史页面，提供 `model.html` 作为模型详情页源码并通过 `/model?id=模型ID` 展示单个模型详情与相关变更，提供 `rankings.html` 作为 `/rankings` 页面源码，并提供 `compare.html` 作为 `/compare` 页面源码，让用户同屏对比两款模型，无需前端框架，也无需构建步骤。
 
 项目同时补齐了最小 Node.js 工程基础，用于后续接入真实抓取逻辑：
 
@@ -51,14 +51,30 @@ These endpoints are intended for:
 - AI agent consumption
 - downstream scripts and dataset reuse
 
+## Sitemap
+
+`sitemap.xml` 由 `data/models.json` 自动生成，并统一使用当前数据集的 `effectiveDate` 作为 `lastmod`。
+
+当前会生成这些 URL：
+
+- `/`
+- `/history`
+- `/rankings`
+- `/compare`
+- `/data/models.json`
+- `/data/changelog.json`
+- `/data/history/YYYY-MM-DD.json`
+- `/model?id=模型ID`
+- `/model/模型ID`
+
 ## AI-friendly / GEO
 
 ModelRadar is intentionally structured for both traditional SEO and AI retrieval systems:
 
 - each primary page has a unique `title`, `meta description`, `canonical`, `robots`, and OpenGraph metadata
 - homepage includes `WebSite` and `Dataset` JSON-LD
-- `history.html` includes `Dataset` JSON-LD for changelog data
-- `rankings.html` includes `Dataset` JSON-LD for ranking data
+- `history.html` includes `Dataset` JSON-LD for changelog data and is exposed on `/history`
+- `rankings.html` includes `Dataset` JSON-LD for ranking data and is exposed on `/rankings`
 - `compare.html` includes `WebPage` JSON-LD and updates its title from the selected `left` / `right` model ids
 - `model.html` updates `document.title`, canonical, OpenGraph, and inserts model-specific JSON-LD after loading `/data/models.json`
 - model detail links use stable IDs from `/data/models.json`, which makes them easier for AI systems and downstream tools to cite reliably
@@ -88,6 +104,7 @@ License files and metadata:
 |-- scripts/
 |   |-- providers/
 |   |   |-- anthropic.js          # Anthropic 官方价格页抓取与解析
+|   |   |-- google.js             # Google AI 官方价格页抓取与解析
 |   |   |-- openai.js             # OpenAI 官方价格页抓取与解析
 |   |   `-- deepseek.js           # DeepSeek 官方价格页抓取与解析
 |   |-- prepare-static.js          # 生成 Cloudflare Worker 静态资源目录 public/
@@ -140,7 +157,7 @@ npm install
 - 每次 `npm run update` 都会按 `effectiveDate` 覆盖写入当天快照
 - 便于回溯每日价格状态，也方便外部系统按日期抓取
 
-`history.html`：
+`history.html` / `/history`：
 
 - 运行时读取 `/data/changelog.json`
 - 把 `latest` 变化记录渲染成可读表格
@@ -162,7 +179,7 @@ npm install
 - 价格字段会自动高亮更便宜的一侧
 - 模型名会链接到 `/model?id=模型ID`
 
-`rankings.html`：
+`rankings.html` / `/rankings`：
 
 - 运行时读取 `/data/models.json`
 - 生成输入价格最低、输出价格最低、上下文最长、缓存读取价格最低四类 Top 10 榜单
@@ -174,7 +191,8 @@ npm install
 - 由 `npm run build` 自动生成
 - 用于 Cloudflare Worker 静态资源部署
 - 只包含 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-- 额外生成 `public/model/index.html` 和 `public/compare/index.html`，分别支持 `/model?id=模型ID` 和 `/compare` 这两个无扩展名路由
+- 额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html`
+- 还会按 `data/models.json` 中的每个模型 ID 生成 `public/model/模型ID/index.html`，支持 `/model/模型ID` clean route
 
 ## 自动更新链路
 
@@ -182,7 +200,7 @@ npm install
 2. `npm ci` 安装 `package-lock.json` 中锁定的依赖
 3. `npm run update` 读取 `data/sources.json` 和现有 `data/models.json`
 4. `update.js` 生成新的 `data/models.json`，并同步覆盖 `data/history/YYYY-MM-DD.json`
-5. `update.js` 同时更新 `sitemap.xml`，加入 `/history.html`、`/model.html`、`/compare`、`/rankings.html` 和当日快照 `/data/history/YYYY-MM-DD.json`
+5. `update.js` 会根据 `data/models.json` 自动重建 `sitemap.xml`，写入 `/history`、`/rankings`、`/compare`、所有模型的 `/model?id=模型ID` 与 `/model/模型ID`，以及当日快照 `/data/history/YYYY-MM-DD.json`
 6. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
 7. 若 `data/` 或 `sitemap.xml` 发生变化，workflow 自动 commit 并 push
 
@@ -191,6 +209,7 @@ npm install
 - `scripts/update.js` 负责“抓取/归一化/落盘”
 - `scripts/diff.js` 负责“比对/生成变更记录”
 - `scripts/providers/anthropic.js` 已接入 `fetch + cheerio` 抓取 Anthropic 官方价格页
+- `scripts/providers/google.js` 已接入 `fetch + cheerio` 抓取 Google AI 官方价格页
 - `scripts/providers/openai.js` 已接入 `fetch + cheerio` 抓取 OpenAI 官方价格页
 - `scripts/providers/deepseek.js` 已接入 `fetch + cheerio` 抓取 DeepSeek 官方价格页
 - 后续接真实爬虫时，只需要继续在 `scripts/providers/` 下扩展其他厂商模块
@@ -230,8 +249,8 @@ npm run diff
 1. 构建命令：`npm run build`
 2. 部署命令：`npm run deploy`
 3. 路径：`/`
-4. `npm run build` 会先清空 `public/`，再复制 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-5. 构建时还会额外生成 `public/model/index.html` 和 `public/compare/index.html`，让 Worker 静态资源可以直接响应 `/model?id=...` 和 `/compare`
+4. `npm run build` 会先根据 `data/models.json` 自动更新 `sitemap.xml`，再清空 `public/` 并复制 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+5. 构建时会额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html` 和所有 `public/model/模型ID/index.html`
 6. `wrangler.jsonc` 已配置：
    - `name: model-radar`
    - `compatibility_date: 2026-05-15`

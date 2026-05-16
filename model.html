@@ -439,8 +439,8 @@
       </a>
       <nav class="nav-links" aria-label="主导航">
         <a href="/">首页</a>
-        <a href="/history.html">价格历史</a>
-        <a href="/rankings.html">模型排行</a>
+        <a href="/history">价格历史</a>
+        <a href="/rankings">模型排行</a>
         <a href="/compare">模型对比</a>
         <a href="/data/models.json">Models JSON</a>
         <a href="/data/changelog.json">Changelog JSON</a>
@@ -470,7 +470,7 @@
           <p id="notFoundMessage">你请求的模型不存在，或者当前 URL 缺少有效的 <code>id</code> 参数。</p>
           <div class="hero-actions" style="justify-content: center; margin-bottom: 0;">
             <a class="btn primary" href="/">返回首页</a>
-            <a class="btn" href="/history.html">查看价格历史</a>
+            <a class="btn" href="/history">查看价格历史</a>
             <a class="btn" href="/data/models.json">打开 models.json</a>
           </div>
         </div>
@@ -486,7 +486,7 @@
             <p id="modelDescription">模型描述</p>
             <div class="hero-actions">
               <a class="btn primary" id="sourceButton" href="/data/models.json" target="_blank" rel="nofollow noopener">官方来源</a>
-              <a class="btn" id="historyButton" href="/history.html">价格历史</a>
+              <a class="btn" id="historyButton" href="/history">价格历史</a>
               <a class="btn" href="/">返回首页</a>
             </div>
             <div class="stats" aria-label="模型关键指标">
@@ -581,8 +581,8 @@
       </div>
       <div>
         <a href="/">首页</a> ·
-        <a href="/history.html">价格历史</a> ·
-        <a href="/rankings.html">模型排行</a> ·
+        <a href="/history">价格历史</a> ·
+        <a href="/rankings">模型排行</a> ·
         <a href="/compare">模型对比</a> ·
         <a href="/data/models.json">数据</a> ·
         <a href="/sitemap.xml">站点地图</a>
@@ -593,7 +593,7 @@
   <script>
     const MODELS_ENDPOINT = '/data/models.json';
     const CHANGELOG_ENDPOINT = '/data/changelog.json';
-    const requestedModelId = new URLSearchParams(window.location.search).get('id')?.trim() || '';
+    const requestedModelId = getRequestedModelId();
     const loadingState = document.getElementById('loadingState');
     const notFoundState = document.getElementById('notFoundState');
     const notFoundTitle = document.getElementById('notFoundTitle');
@@ -615,6 +615,26 @@
     const statusValue = document.getElementById('statusValue');
     const changeCountValue = document.getElementById('changeCountValue');
     let modelStructuredData = null;
+
+    function getRequestedModelId() {
+      const queryId = new URLSearchParams(window.location.search).get('id')?.trim();
+
+      if (queryId) {
+        return queryId;
+      }
+
+      const pathSegments = window.location.pathname.split('/').filter(Boolean);
+
+      if (pathSegments[0] === 'model' && pathSegments[1]) {
+        try {
+          return decodeURIComponent(pathSegments[1]).trim();
+        } catch {
+          return pathSegments[1].trim();
+        }
+      }
+
+      return '';
+    }
 
     function escapeHtml(value) {
       return String(value ?? '')
@@ -814,7 +834,7 @@
       statusValue.textContent = model.status || 'unknown';
       sourceButton.href = model.sourceUrl || '/data/models.json';
       sourceButton.textContent = model.sourceUrl ? '官方来源' : '查看 models.json';
-      historyButton.href = `/history.html`;
+      historyButton.href = `/history`;
 
       const detailItems = [
         {
@@ -982,7 +1002,7 @@
       if (!requestedModelId) {
         renderNotFound(
           '模型未找到',
-          '当前 URL 缺少 <code>?id=模型ID</code> 参数。模型详情页的 ID 来自 <code>/data/models.json</code> 的 <code>id</code> 字段。'
+          '当前 URL 缺少 <code>?id=模型ID</code> 参数，也没有匹配到 <code>/model/模型ID</code> 路径。模型详情页的 ID 来自 <code>/data/models.json</code> 的 <code>id</code> 字段。'
         );
         return;
       }
