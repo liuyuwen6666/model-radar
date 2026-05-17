@@ -397,6 +397,7 @@
         <a href="/calculator">成本计算器</a> ·
         <a href="/provider/">AI 厂商</a> ·
         <a href="/data/models.json">数据</a> ·
+                <a href="/data-schema">数据说明</a> ·
         <a href="/sitemap.xml">站点地图</a>
       </div>
     </div>
@@ -507,7 +508,7 @@
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "AI API 成本计算器｜ModelRadar",
-      "description": "基于主流 AI 模型的输入价格、输出价格和缓存价格估算每日、每月和每年的 API 调用成本。",
+      "description": "本 AI API 成本计算器直接基于 /data/models.json 数据，支持快速选择各大主流 AI 模型。只需自定义输入每日请求数、平均输入 tokens、平均输出 tokens 以及缓存命中比例，系统即可为您即时估算每日、每月和每年的 API 调用总成本，同时展示您的缓存节省。本工具致力于帮助开发者更好地进行预算规划和成本优化。敬请注意，当前计算结果仅供前期估算参考，实际产生的费用以各厂商的官方账单为准。",
       "url": "https://modelradar.cn/calculator"
     };
     const script = document.createElement('script');
