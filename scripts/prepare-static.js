@@ -15,6 +15,7 @@ const STATIC_ENTRIES = [
   "compare.html",
   "rankings.html",
   "provider.html",
+  "calculator.html",
   "robots.txt",
   "sitemap.xml",
   "data"
@@ -39,6 +40,10 @@ const ROUTE_ALIASES = [
   {
     source: "provider.html",
     target: path.join("provider", "index.html")
+  },
+  {
+    source: "calculator.html",
+    target: path.join("calculator", "index.html")
   }
 ];
 

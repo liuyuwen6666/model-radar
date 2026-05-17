@@ -467,8 +467,11 @@
         <a href="/history">价格历史</a> ·
         <a href="/rankings">模型排行</a> ·
         <a href="/compare">模型对比</a> ·
+        <a href="/calculator">成本计算器</a> ·
+        <a href="/provider/">AI 厂商</a> ·
         <a href="/data/models.json">数据</a> ·
-        <a href="/sitemap.xml">站点地图</a>
+        <a href="/sitemap.xml">站点地图</a> ·
+        <a href="/robots.txt">Robots</a>
       </div>
     </div>
   </footer>
@@ -556,7 +559,7 @@
             <td class="mono">${formatPrice(m.inputPriceUsdPer1M)}</td>
             <td class="mono">${formatPrice(m.outputPriceUsdPer1M)}</td>
             <td class="mono">${formatContext(m.contextWindow)}</td>
-            <td><span class="tag ${m.status === 'active' ? 'good' : 'warn'}">${m.status === 'active' ? '运行中' : '测试中'}</span></td>
+            <td><span class="tag ${['active', 'stable', 'live'].includes(m.status) ? 'good' : 'warn'}">${['active', 'stable', 'live'].includes(m.status) ? '运行中' : '测试中'}</span></td>
             <td><a href="${m.sourceUrl}" target="_blank" rel="nofollow noopener" style="color:var(--muted);text-decoration:underline;">官方链接</a></td>
           </tr>
         `).join('');

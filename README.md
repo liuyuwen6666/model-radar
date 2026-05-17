@@ -62,6 +62,7 @@ These endpoints are intended for:
 - `/rankings`
 - `/compare`
 - `/provider`
+- `/calculator`
 - `/data/models.json`
 - `/data/changelog.json`
 - `/data/history/YYYY-MM-DD.json`
@@ -141,6 +142,7 @@ License files and metadata:
 |-- compare.html                   # 模型对比页，读取 models.json 比较两款模型
 |-- rankings.html                  # 模型排行榜页，读取 models.json 动态排序
 |-- provider.html                  # 厂商详情页，读取 models.json 筛选厂商模型
+|-- calculator.html                # 成本计算器页，基于 models.json 估算 API 成本
 |-- wrangler.jsonc                 # Cloudflare Worker 静态资源部署配置
 |-- robots.txt
 `-- sitemap.xml
@@ -219,8 +221,8 @@ npm install
 
 - 由 `npm run build` 自动生成
 - 用于 Cloudflare Worker 静态资源部署
-- 只包含 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`provider.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-- 额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html`、`public/provider/index.html`
+- 只包含 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`provider.html`、`calculator.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+- 额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html`、`public/provider/index.html`、`public/calculator/index.html`
 - 还会额外生成 `public/compare/deepseek-vs-claude/index.html`、`public/compare/deepseek-vs-openai/index.html`、`public/compare/claude-vs-openai/index.html`、`public/compare/gemini-vs-claude/index.html`、`public/compare/gemini-vs-deepseek/index.html`
 - 还会按 `data/models.json` 中的每个模型 ID 生成 `public/model/模型ID/index.html`，支持 `/model/模型ID` clean route
 
