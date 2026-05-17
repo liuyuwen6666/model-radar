@@ -806,7 +806,7 @@
     function renderModel(model) {
       const credibilityBadge = model.sourceType === 'provider'
         ? '<span style="font-size: 14px; background: #ecfdf5; color: #059669; padding: 4px 10px; border-radius: 999px; margin-left: 10px; vertical-align: middle;">官方来源抓取</span>'
-        : '<span style="font-size: 14px; background: #fffbeb; color: #d97706; padding: 4px 10px; border-radius: 999px; margin-left: 10px; vertical-align: middle;">蓝图数据</span>';
+        : '<span style="font-size: 14px; background: #fffbeb; color: #d97706; padding: 4px 10px; border-radius: 999px; margin-left: 10px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>';
       modelNameEl.innerHTML = `${escapeHtml(model.name || model.id)} ${credibilityBadge}`;
       modelDescriptionEl.textContent = model.description || `${model.provider} 模型详情页。`;
       inputPriceStat.textContent = formatPrice(model.inputPriceUsdPer1M);
@@ -815,7 +815,7 @@
       updatedLabel.textContent = `最后更新：${formatUpdatedLabel(model.updatedAt)}`;
       providerValue.textContent = model.provider || '未知';
       cacheValue.textContent = buildCacheSummary(model);
-      statusValue.textContent = model.sourceType === 'provider' ? '官方来源抓取' : '蓝图数据';
+      statusValue.textContent = model.sourceType === 'provider' ? '官方来源抓取' : '待接入官方抓取 / 蓝图数据';
       sourceButton.href = model.sourceUrl || '/data/models.json';
       sourceButton.textContent = model.sourceUrl ? '官方来源' : '查看 models.json';
       historyButton.href = `/history`;
@@ -833,7 +833,7 @@
         },
         {
           label: '数据可信度',
-          value: model.sourceType === 'provider' ? '官方来源抓取' : '蓝图数据（待接入官方抓取）',
+          value: model.sourceType === 'provider' ? '官方来源抓取' : '待接入官方抓取 / 蓝图数据',
           helper: '指明当前价格是来自实时抓取还是初始备份/蓝图数据。'
         },
         {

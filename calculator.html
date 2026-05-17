@@ -491,7 +491,7 @@
       // Model info
       document.getElementById('infoProvider').textContent = model.provider;
       const credibilityEl = document.getElementById('infoCredibility');
-      credibilityEl.textContent = model.sourceType === 'provider' ? '官方来源抓取' : '蓝图数据（待接入官方抓取）';
+      credibilityEl.textContent = model.sourceType === 'provider' ? '官方来源抓取' : '待接入官方抓取 / 蓝图数据';
       credibilityEl.style.color = model.sourceType === 'provider' ? 'var(--good)' : 'var(--warn)';
       document.getElementById('infoContext').textContent = formatContext(model.contextWindow);
       document.getElementById('infoInputPrice').textContent = inPrice !== null ? `$${inPrice}/1M` : '待更新';

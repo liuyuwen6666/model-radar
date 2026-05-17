@@ -422,8 +422,10 @@ function simulateNextModels(baseModels, sourceIndex, targetDate) {
     .map((model) => {
       const nextModel = normalizeModel(model, sourceIndex, timestamp);
 
-      for (const field of PRICE_FIELDS) {
-        nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
+      if (nextModel.sourceType === "provider") {
+        for (const field of PRICE_FIELDS) {
+          nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
+        }
       }
 
       return nextModel;
@@ -491,7 +493,7 @@ function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate,
 
     const nextModel = normalizeModel(model, sourceIndex, timestamp);
 
-    if (shouldSimulateFallback) {
+    if (shouldSimulateFallback && nextModel.sourceType === "provider") {
       for (const field of PRICE_FIELDS) {
         nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
       }
@@ -521,7 +523,7 @@ function buildDataset(models, targetDate) {
     effectiveDate: targetDate,
     currency: "USD",
     billingUnit: "per_1m_tokens",
-    disclaimer: "当前为模拟数据，用于演示自动更新链路；后续可将 update.js 替换为真实抓取逻辑。",
+    disclaimer: "部分模型由 provider 抓取器从官方 pricing 页面解析得到，部分模型仍为 fallback 蓝图数据。请通过 sourceType、sourceUrl、pricingNotes 判断数据可信度，商业决策前请务必以厂商官方价格页和官方账单为准。",
     models
   };
 }

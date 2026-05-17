@@ -860,7 +860,7 @@
       tableBody.innerHTML = models.map(model => {
         const credibilityBadge = model.sourceType === 'provider'
           ? `<span style="font-size: 11px; background: #ecfdf5; color: #059669; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">官方来源抓取</span>`
-          : `<span style="font-size: 11px; background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">蓝图数据</span>`;
+          : `<span style="font-size: 11px; background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>`;
         const modelLink = model.id
           ? `<a class="model-name" href="/model?id=${encodeURIComponent(model.id)}">${escapeHtml(model.name)}</a>${credibilityBadge}`
           : `<span class="model-name">${escapeHtml(model.name)}</span>${credibilityBadge}`;
