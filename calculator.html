@@ -368,6 +368,7 @@
           <h2 style="margin: 0 0 16px; font-size: 18px;">所选模型详情</h2>
           <div class="info-grid">
             <div class="info-item"><span>厂商：</span><strong id="infoProvider">-</strong></div>
+            <div class="info-item"><span>数据源：</span><strong id="infoCredibility">-</strong></div>
             <div class="info-item"><span>上下文：</span><strong id="infoContext">-</strong></div>
             <div class="info-item"><span>输入价：</span><strong id="infoInputPrice">-</strong></div>
             <div class="info-item"><span>输出价：</span><strong id="infoOutputPrice">-</strong></div>
@@ -489,6 +490,9 @@
 
       // Model info
       document.getElementById('infoProvider').textContent = model.provider;
+      const credibilityEl = document.getElementById('infoCredibility');
+      credibilityEl.textContent = model.sourceType === 'provider' ? '官方来源抓取' : '蓝图数据（待接入官方抓取）';
+      credibilityEl.style.color = model.sourceType === 'provider' ? 'var(--good)' : 'var(--warn)';
       document.getElementById('infoContext').textContent = formatContext(model.contextWindow);
       document.getElementById('infoInputPrice').textContent = inPrice !== null ? `$${inPrice}/1M` : '待更新';
       document.getElementById('infoOutputPrice').textContent = outPrice !== null ? `$${outPrice}/1M` : '待更新';

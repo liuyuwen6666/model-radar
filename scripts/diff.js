@@ -114,7 +114,8 @@ function makeEntry({
     delta,
     deltaPercent,
     summary,
-    sourceUrl: model.sourceUrl || ""
+    sourceUrl: model.sourceUrl || "",
+    sourceType: model.sourceType || "fallback"
   };
 }
 

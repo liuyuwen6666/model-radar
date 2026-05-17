@@ -275,6 +275,7 @@
         <li><strong>contextWindow</strong>最大上下文长度（Token 数量，例如 <code>128000</code>）。</li>
         <li><strong>sourceUrl</strong>价格信息的官方来源 URL 页面，可用于数据校验。</li>
         <li><strong>updatedAt</strong>该条模型记录最近一次更新的日期时间（ISO 8601 格式）。</li>
+        <li><strong>sourceType</strong>数据源可信度类型，包含 <code>"provider"</code>（成功通过官方爬虫抓取获取的实时价格数据）和 <code>"fallback"</code>（使用预置蓝图数据，待接入官方抓取）。</li>
       </ul>
 
       <div class="tip-box">
@@ -300,7 +301,8 @@
       "cacheReadPriceUsdPer1M": 0.014,
       "contextWindow": 128000,
       "sourceUrl": "https://www.deepseek.com/pricing",
-      "updatedAt": "2026-05-17T00:00:00Z"
+      "updatedAt": "2026-05-17T00:00:00Z",
+      "sourceType": "provider"
     }
   ]
 }</code></pre>

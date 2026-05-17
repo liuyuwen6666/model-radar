@@ -858,9 +858,12 @@
       }
 
       tableBody.innerHTML = models.map(model => {
+        const credibilityBadge = model.sourceType === 'provider'
+          ? `<span style="font-size: 11px; background: #ecfdf5; color: #059669; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">官方来源抓取</span>`
+          : `<span style="font-size: 11px; background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">蓝图数据</span>`;
         const modelLink = model.id
-          ? `<a class="model-name" href="/model?id=${encodeURIComponent(model.id)}">${escapeHtml(model.name)}</a>`
-          : `<span class="model-name">${escapeHtml(model.name)}</span>`;
+          ? `<a class="model-name" href="/model?id=${encodeURIComponent(model.id)}">${escapeHtml(model.name)}</a>${credibilityBadge}`
+          : `<span class="model-name">${escapeHtml(model.name)}</span>${credibilityBadge}`;
         const sourceLink = model.sourceUrl
           ? `<a href="${escapeHtml(model.sourceUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(model.sourceLabel || '官方价格页')}</a>`
           : '-';
@@ -910,7 +913,9 @@
 
       changelogUpdated.textContent = `最后更新：${formatUpdatedLabel(payload.effectiveDate || payload.generatedAt)}`;
 
-      if (!payload || !Array.isArray(payload.latest) || !payload.latest.length) {
+      const providerChanges = (payload.latest || []).filter(item => item.sourceType === 'provider');
+
+      if (!providerChanges.length) {
         changelogList.innerHTML = `
           <li>
             <span class="tag">无变化</span>
@@ -921,7 +926,7 @@
         return;
       }
 
-      changelogList.innerHTML = payload.latest.slice(0, 3).map(item => `
+      changelogList.innerHTML = providerChanges.slice(0, 3).map(item => `
         <li>
           <span class="tag ${formatChangeTypeClass(item.type)}">${escapeHtml(formatChangeTypeLabel(item.type))}</span>
           <div><strong>${escapeHtml(item.modelName)}</strong><br><span class="updated">${escapeHtml(item.summary || item.fieldLabel || '价格发生变化')}</span></div>

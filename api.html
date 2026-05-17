@@ -351,6 +351,7 @@ fetchCheapestModel();</code></pre>
         <li><strong>数据仅供参考：</strong>所有价格数据通过爬虫或自动化脚本从各厂商公开 pricing 页面采集。在做出关键业务或商业部署决策前，<strong>务必通过数据中的 <code>sourceUrl</code> 前往官方页面核对</strong>。</li>
         <li><strong>计费单位标准：</strong>数据内的所有货币单位目前统一为 <strong>USD（美元）</strong>，默认计费数量标准为 <strong>每 100 万 Tokens（per_1m_tokens）</strong>。</li>
         <li><strong>合理缓存：</strong>由于 API 实际是静态文件，且更新频率通常为一天一次，强烈建议在您的系统中增加合理时间的本地缓存（例如 1 小时或更久），以提升拉取速度并降低不必要的网络开销。</li>
+        <li><strong>数据来源可信度 (sourceType)：</strong>在 <code>models.json</code> 中，每个模型对象均包含 <code>sourceType</code> 属性，用以标明数据可信度。<code>"provider"</code> 表示该价格已成功通过官方接口或文档的实时爬虫抓取（如 OpenAI、DeepSeek、Anthropic、Google）；<code>"fallback"</code> 表示使用硬编码的初始蓝图备份数据，尚未接入实时抓取（如中文的部分模型）。在筛选官方实时数据时可基于此字段过滤。</li>
         <li><strong>处理 Null 值：</strong>在解析时需留意部分计费字段（例如 <code>cacheWritePriceUsdPer1M</code> 或 <code>contextWindow</code>）可能是 <code>null</code>，请在代码逻辑中做好兜底处理。</li>
       </ul>
     </div>

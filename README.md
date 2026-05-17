@@ -31,6 +31,18 @@ Primary source rule:
 
 - official pricing pages
 
+### 数据可信度说明 (Data Credibility)
+
+为避免外部系统或 AI Agent 误将部分厂商的兜底/备份数据视作实时官方价格，ModelRadar 在 `models.json` 中的每个模型记录中引入了 `sourceType` 属性，用于区分数据源的真实性与可信度：
+
+1. **实时官方数据 (`sourceType: "provider"`)**
+   - **适用厂商**：OpenAI, Anthropic, Google, DeepSeek。
+   - **机制**：由系统后台的官方爬虫模块（`scripts/providers/*.js`）实时抓取自厂商官方价格页，并完成自动归一化处理。数据可信度极高，在页面标记为 `官方来源抓取`。
+   
+2. **兜底蓝图数据 (`sourceType: "fallback"`)**
+   - **适用厂商**：字节豆包, 腾讯混元, 月之暗面, 阿里通义（中文模型）。
+   - **机制**：当前尚未接入实时抓取爬虫，使用 `MODEL_BLUEPRINTS` 提供的备份/蓝图模拟数据。在页面标记为 `蓝图数据`，提醒用户及下游 Agent 数据可能存在更新延迟，应前往官方价格页最终确认。
+
 ## Update Frequency
 
 Updated every 12 hours.
