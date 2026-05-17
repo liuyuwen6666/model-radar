@@ -260,7 +260,7 @@
         <li><strong>generatedAt</strong>数据抓取或生成完成的具体时间（ISO 8601 格式）。</li>
         <li><strong>effectiveDate</strong>当前价格的生效日期（通常取 <code>generatedAt</code> 的年月日）。</li>
         <li><strong>currency</strong>全局价格货币单位，当前固定为 <code>"USD"</code>。</li>
-        <li><strong>billingUnit</strong>全局计费单位基准，当前固定为 <code>"1M tokens"</code>。</li>
+        <li><strong>billingUnit</strong>全局计费单位基准，当前固定为 <code>"per_1m_tokens"</code>。</li>
       </ul>
 
       <h3><code>models</code> 数组字段 (单个模型对象)</h3>
@@ -284,11 +284,11 @@
 
       <h3>JSON 结构示例</h3>
 <pre><code>{
-  "schemaVersion": "1.0.0",
+  "schemaVersion": 1,
   "generatedAt": "2026-05-17T00:00:00Z",
   "effectiveDate": "2026-05-17",
   "currency": "USD",
-  "billingUnit": "1M tokens",
+  "billingUnit": "per_1m_tokens",
   "models": [
     {
       "id": "deepseek-v4-flash",
@@ -352,6 +352,7 @@
         <a href="/provider/">AI 厂商</a> ·
         <a href="/data/models.json">数据</a> ·
         <a href="/data-schema">数据说明</a> ·
+        <a href="/api">API</a> ·
         <a href="/sitemap.xml">站点地图</a>
       </div>
     </div>

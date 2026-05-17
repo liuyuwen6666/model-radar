@@ -57,6 +57,7 @@ function buildSitemapEntries(dataset, siteOrigin = normalizeSiteOrigin()) {
   appendEntry(entries, seen, `${origin}/compare`, effectiveDate);
   appendEntry(entries, seen, `${origin}/calculator`, effectiveDate);
   appendEntry(entries, seen, `${origin}/data-schema`, effectiveDate);
+  appendEntry(entries, seen, `${origin}/api`, effectiveDate);
   appendEntry(entries, seen, `${origin}/data/models.json`, effectiveDate);
   appendEntry(entries, seen, `${origin}/data/changelog.json`, effectiveDate);
   appendEntry(entries, seen, `${origin}/data/history/${effectiveDate}.json`, effectiveDate);

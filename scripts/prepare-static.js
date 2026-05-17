@@ -17,6 +17,7 @@ const STATIC_ENTRIES = [
   "provider.html",
   "calculator.html",
   "data-schema.html",
+  "api.html",
   "robots.txt",
   "sitemap.xml",
   "data"
@@ -49,6 +50,10 @@ const ROUTE_ALIASES = [
   {
     source: "data-schema.html",
     target: path.join("data-schema", "index.html")
+  },
+  {
+    source: "api.html",
+    target: path.join("api", "index.html")
   }
 ];
 
