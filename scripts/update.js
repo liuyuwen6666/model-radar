@@ -52,7 +52,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "分类", "代码"],
     recommendedFor: ["批量处理", "摘要", "轻量客服"],
     status: "stable",
-    detailPath: "/model/claude-3-5-haiku"
+    detailPath: "/model/claude-3-5-haiku",
+    sourceType: "provider"
   },
   {
     id: "anthropic-claude-3-7-sonnet",
@@ -69,7 +70,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["长文本", "推理", "代码"],
     recommendedFor: ["复杂 Agent", "代码审查", "长文档分析"],
     status: "stable",
-    detailPath: "/model/claude-3-7-sonnet"
+    detailPath: "/model/claude-3-7-sonnet",
+    sourceType: "provider"
   },
   {
     id: "deepseek-v4-flash",
@@ -86,7 +88,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "文本", "低成本"],
     recommendedFor: ["通用问答", "内容生成", "中文助手"],
     status: "stable",
-    detailPath: "/model/deepseek-v4-flash"
+    detailPath: "/model/deepseek-v4-flash",
+    sourceType: "provider"
   },
   {
     id: "deepseek-v4-pro",
@@ -103,7 +106,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["推理", "代码", "中文"],
     recommendedFor: ["复杂推理", "代码生成", "分析任务"],
     status: "stable",
-    detailPath: "/model/deepseek-v4-pro"
+    detailPath: "/model/deepseek-v4-pro",
+    sourceType: "provider"
   },
   {
     id: "doubao-1-5-pro-32k",
@@ -120,7 +124,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "多模态", "企业"],
     recommendedFor: ["企业 Copilot", "中文内容", "客服助手"],
     status: "stable",
-    detailPath: "/model/doubao-1-5-pro-32k"
+    detailPath: "/model/doubao-1-5-pro-32k",
+    sourceType: "fallback"
   },
   {
     id: "google-gemini-2-5-flash",
@@ -137,7 +142,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["多模态", "长上下文", "低成本"],
     recommendedFor: ["批量摘要", "多模态分类", "低成本应用"],
     status: "stable",
-    detailPath: "/model/gemini-2-5-flash"
+    detailPath: "/model/gemini-2-5-flash",
+    sourceType: "provider"
   },
   {
     id: "google-gemini-2-5-pro",
@@ -154,7 +160,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["多模态", "长上下文", "推理"],
     recommendedFor: ["长文档分析", "图文理解", "复杂工作流"],
     status: "stable",
-    detailPath: "/model/gemini-2-5-pro"
+    detailPath: "/model/gemini-2-5-pro",
+    sourceType: "provider"
   },
   {
     id: "hunyuan-turbo-s",
@@ -171,7 +178,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "企业", "Agent"],
     recommendedFor: ["企业应用", "客服系统", "微信生态"],
     status: "stable",
-    detailPath: "/model/hunyuan-turbo-s"
+    detailPath: "/model/hunyuan-turbo-s",
+    sourceType: "fallback"
   },
   {
     id: "kimi-latest-128k",
@@ -188,7 +196,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "长文本", "检索"],
     recommendedFor: ["知识库问答", "文档解读", "中文写作"],
     status: "stable",
-    detailPath: "/model/kimi-latest-128k"
+    detailPath: "/model/kimi-latest-128k",
+    sourceType: "fallback"
   },
   {
     id: "openai-gpt-4-1",
@@ -205,7 +214,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "工具调用", "多模态"],
     recommendedFor: ["通用 Agent", "代码生成", "复杂问答"],
     status: "stable",
-    detailPath: "/model/openai-gpt-4-1"
+    detailPath: "/model/openai-gpt-4-1",
+    sourceType: "provider"
   },
   {
     id: "openai-gpt-4-1-mini",
@@ -222,7 +232,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "多模态", "低成本"],
     recommendedFor: ["在线客服", "内容生成", "批量 Agent"],
     status: "stable",
-    detailPath: "/model/openai-gpt-4-1-mini"
+    detailPath: "/model/openai-gpt-4-1-mini",
+    sourceType: "provider"
   },
   {
     id: "qwen-max",
@@ -239,7 +250,8 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "企业", "开源生态"],
     recommendedFor: ["企业知识库", "中文应用", "私有化方案"],
     status: "stable",
-    detailPath: "/model/qwen-max"
+    detailPath: "/model/qwen-max",
+    sourceType: "fallback"
   }
 ];
 
@@ -347,7 +359,8 @@ function normalizeModel(model, sourceIndex, timestamp) {
     sourceLabel: model.sourceLabel || source.label || DEFAULT_SOURCE_LABEL,
     detailPath: model.detailPath || "",
     pricingNotes: model.pricingNotes || "模拟数据，字段结构可直接切换到真实抓取结果。",
-    updatedAt: timestamp
+    updatedAt: timestamp,
+    sourceType: model.sourceType || "fallback"
   };
 }
 
@@ -375,7 +388,8 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
       sourceLabel: baseModel?.sourceLabel,
       detailPath: baseModel?.detailPath || `/model/${providerModel.id}`,
       pricingNotes: "由 provider 抓取器从官方定价页解析得到。",
-      updatedAt: timestamp
+      updatedAt: timestamp,
+      sourceType: "provider"
     },
     sourceIndex,
     timestamp
@@ -408,8 +422,10 @@ function simulateNextModels(baseModels, sourceIndex, targetDate) {
     .map((model) => {
       const nextModel = normalizeModel(model, sourceIndex, timestamp);
 
-      for (const field of PRICE_FIELDS) {
-        nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
+      if (nextModel.sourceType === "provider") {
+        for (const field of PRICE_FIELDS) {
+          nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
+        }
       }
 
       return nextModel;
@@ -477,7 +493,7 @@ function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate,
 
     const nextModel = normalizeModel(model, sourceIndex, timestamp);
 
-    if (shouldSimulateFallback) {
+    if (shouldSimulateFallback && nextModel.sourceType === "provider") {
       for (const field of PRICE_FIELDS) {
         nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
       }
@@ -507,7 +523,7 @@ function buildDataset(models, targetDate) {
     effectiveDate: targetDate,
     currency: "USD",
     billingUnit: "per_1m_tokens",
-    disclaimer: "当前为模拟数据，用于演示自动更新链路；后续可将 update.js 替换为真实抓取逻辑。",
+    disclaimer: "部分模型由 provider 抓取器从官方 pricing 页面解析得到，部分模型仍为 fallback 蓝图数据。请通过 sourceType、sourceUrl、pricingNotes 判断数据可信度，商业决策前请务必以厂商官方价格页和官方账单为准。",
     models
   };
 }

@@ -442,7 +442,9 @@
         <a href="/history">价格历史</a>
         <a href="/rankings">模型排行</a>
         <a href="/compare">模型对比</a>
-        <a href="/data/models.json">Models JSON</a>
+        
+        <a href="/calculator">成本计算器</a> ·
+        <a href="/provider/">AI 厂商</a> ·<a href="/data/models.json">Models JSON</a>
         <a href="/data/changelog.json">Changelog JSON</a>
       </nav>
     </div>
@@ -585,6 +587,8 @@
         <a href="/rankings">模型排行</a> ·
         <a href="/compare">模型对比</a> ·
         <a href="/data/models.json">数据</a> ·
+                <a href="/data-schema">数据说明</a> ·
+        <a href="/api">API</a> ·
         <a href="/sitemap.xml">站点地图</a>
       </div>
     </div>
@@ -800,7 +804,10 @@
     }
 
     function renderModel(model) {
-      modelNameEl.textContent = model.name || model.id;
+      const credibilityBadge = model.sourceType === 'provider'
+        ? '<span style="font-size: 14px; background: #ecfdf5; color: #059669; padding: 4px 10px; border-radius: 999px; margin-left: 10px; vertical-align: middle;">官方来源抓取</span>'
+        : '<span style="font-size: 14px; background: #fffbeb; color: #d97706; padding: 4px 10px; border-radius: 999px; margin-left: 10px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>';
+      modelNameEl.innerHTML = `${escapeHtml(model.name || model.id)} ${credibilityBadge}`;
       modelDescriptionEl.textContent = model.description || `${model.provider} 模型详情页。`;
       inputPriceStat.textContent = formatPrice(model.inputPriceUsdPer1M);
       outputPriceStat.textContent = formatPrice(model.outputPriceUsdPer1M);
@@ -808,7 +815,7 @@
       updatedLabel.textContent = `最后更新：${formatUpdatedLabel(model.updatedAt)}`;
       providerValue.textContent = model.provider || '未知';
       cacheValue.textContent = buildCacheSummary(model);
-      statusValue.textContent = model.status || 'unknown';
+      statusValue.textContent = model.sourceType === 'provider' ? '官方来源抓取' : '待接入官方抓取 / 蓝图数据';
       sourceButton.href = model.sourceUrl || '/data/models.json';
       sourceButton.textContent = model.sourceUrl ? '官方来源' : '查看 models.json';
       historyButton.href = `/history`;
@@ -823,6 +830,11 @@
           label: '厂商',
           value: model.provider || '未知',
           helper: model.family ? `模型族：${model.family}` : '模型厂商信息。'
+        },
+        {
+          label: '数据可信度',
+          value: model.sourceType === 'provider' ? '官方来源抓取' : '待接入官方抓取 / 蓝图数据',
+          helper: '指明当前价格是来自实时抓取还是初始备份/蓝图数据。'
         },
         {
           label: '输入价格',

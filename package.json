@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node scripts/prepare-static.js",
     "deploy": "wrangler deploy",
+    "schema:check": "node scripts/check-structured-data.js",
     "update": "node scripts/update.js",
     "diff": "node scripts/diff.js"
   },

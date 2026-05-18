@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ModelRadar 数据结构说明｜AI 模型价格数据字段文档</title>
+  <meta name="description" content="了解 ModelRadar 的 models.json、changelog.json 和 history 快照字段含义、价格单位、数据来源和更新时间规则。" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="canonical" href="https://modelradar.cn/data-schema" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ModelRadar 数据结构说明｜AI 模型价格数据字段文档" />
+  <meta property="og:description" content="了解 ModelRadar 的 models.json、changelog.json 和 history 快照字段含义、价格单位、数据来源和更新时间规则。" />
+  <meta property="og:url" content="https://modelradar.cn/data-schema" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ModelRadar 数据结构说明｜AI 模型价格数据字段文档" />
+  <meta name="twitter:description" content="了解 ModelRadar 的 models.json、changelog.json 和 history 快照字段含义、价格单位、数据来源和更新时间规则。" />
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --brand: #2563eb;
+      --brand-dark: #1d4ed8;
+      --chip: #eff6ff;
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: radial-gradient(circle at top left, #dbeafe 0, transparent 32rem), var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 14px;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    pre code {
+      display: block;
+      padding: 16px;
+      overflow-x: auto;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .container {
+      width: min(900px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(248, 250, 252, 0.82);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 18px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+      align-items: center;
+    }
+
+    .nav-links a:hover { color: var(--brand); }
+
+    .hero {
+      padding: 60px 0 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--brand);
+      background: var(--chip);
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin: 20px 0 18px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0 0 28px;
+    }
+
+    .content-section {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .content-section h2 {
+      margin-top: 0;
+      font-size: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+
+    .content-section h3 {
+      font-size: 18px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    .field-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .field-list li {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .field-list li:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .field-list strong {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--brand-dark);
+      background: var(--chip);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .tip-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--brand);
+      padding: 16px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 34px 0;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .content-section { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="/" aria-label="AI 模型价格雷达首页">
+        <span class="logo-mark">AI</span>
+        <span>模型价格雷达</span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="/">首页</a>
+        <a href="/history">价格历史</a>
+        <a href="/rankings">模型排行</a>
+        <a href="/compare">模型对比</a>
+        <a href="/calculator">成本计算器</a>
+        <a href="/provider/openai">AI 厂商</a>
+        <a href="/data-schema">数据说明</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow">文档 · Schema · JSON-LD</span>
+      <h1>ModelRadar 数据结构说明</h1>
+      <p>为确保外部系统、AI Agent 及开发者能够更好地理解并复用本站的 JSON 数据源，特此提供以下字段定义及数据机制说明。</p>
+    </section>
+
+    <div class="content-section">
+      <h2>核心数据源 <code>/data/models.json</code></h2>
+      <p>这是驱动 ModelRadar 的最核心文件，包含所有当前追踪的 AI 模型的最新价格、上下文限制等信息。</p>
+      
+      <h3>全局属性</h3>
+      <ul class="field-list">
+        <li><strong>schemaVersion</strong>当前 JSON 的结构版本（如 <code>"1.0.0"</code>）。</li>
+        <li><strong>generatedAt</strong>数据抓取或生成完成的具体时间（ISO 8601 格式）。</li>
+        <li><strong>effectiveDate</strong>当前价格的生效日期（通常取 <code>generatedAt</code> 的年月日）。</li>
+        <li><strong>currency</strong>全局价格货币单位，当前固定为 <code>"USD"</code>。</li>
+        <li><strong>billingUnit</strong>全局计费单位基准，当前固定为 <code>"per_1m_tokens"</code>。</li>
+      </ul>
+
+      <h3><code>models</code> 数组字段 (单个模型对象)</h3>
+      <ul class="field-list">
+        <li><strong>id</strong>模型唯一标识（URL 友好格式，如 <code>"openai-gpt-4o"</code>）。</li>
+        <li><strong>name</strong>模型展示名称（如 <code>"GPT-4o"</code>）。</li>
+        <li><strong>provider</strong>归属的 AI 厂商名称。</li>
+        <li><strong>inputPriceUsdPer1M</strong>每百万 Tokens 的输入（Prompt）价格，单位为 USD。</li>
+        <li><strong>outputPriceUsdPer1M</strong>每百万 Tokens 的输出（Completion）价格，单位为 USD。</li>
+        <li><strong>cacheWritePriceUsdPer1M</strong>每百万 Tokens 的缓存写入价格（部分厂商支持）。</li>
+        <li><strong>cacheReadPriceUsdPer1M</strong>每百万 Tokens 的缓存读取价格（部分厂商支持）。</li>
+        <li><strong>contextWindow</strong>最大上下文长度（Token 数量，例如 <code>128000</code>）。</li>
+        <li><strong>sourceUrl</strong>价格信息的官方来源 URL 页面，可用于数据校验。</li>
+        <li><strong>updatedAt</strong>该条模型记录最近一次更新的日期时间（ISO 8601 格式）。</li>
+        <li><strong>sourceType</strong>数据源可信度类型，包含 <code>"provider"</code>（成功通过官方爬虫抓取获取的实时价格数据）和 <code>"fallback"</code>（使用预置蓝图数据，待接入官方抓取）。</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>关于 null 值的说明：</strong><br>
+        如果 <code>inputPriceUsdPer1M</code> 或其他数值字段为 <code>null</code>，表示厂商官方未公开该字段的价格、暂时无法解析，或该模型不适用此计费维度。建议下游解析器做好防空处理。
+      </div>
+
+      <h3>JSON 结构示例</h3>
+<pre><code>{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-17T00:00:00Z",
+  "effectiveDate": "2026-05-17",
+  "currency": "USD",
+  "billingUnit": "per_1m_tokens",
+  "models": [
+    {
+      "id": "deepseek-v4-flash",
+      "name": "DeepSeek-V4-Flash",
+      "provider": "DeepSeek",
+      "inputPriceUsdPer1M": 0.14,
+      "outputPriceUsdPer1M": 0.28,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": 0.014,
+      "contextWindow": 128000,
+      "sourceUrl": "https://www.deepseek.com/pricing",
+      "updatedAt": "2026-05-17T00:00:00Z",
+      "sourceType": "provider"
+    }
+  ]
+}</code></pre>
+    </div>
+
+    <div class="content-section">
+      <h2>变更日志 <code>/data/changelog.json</code></h2>
+      <p>记录每次价格更新的增量变动，主要用于渲染历史记录页面。</p>
+      <ul class="field-list">
+        <li><strong>latest</strong>最近一次更新周期内发生的所有字段变动（包含涨价、降价、新模型等）。</li>
+        <li><strong>history</strong>历史记录快照（按更新时间归档）。</li>
+        <li><strong>summary</strong>统计摘要，如降价次数、新增模型数等。</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2>历史快照 <code>/data/history/YYYY-MM-DD.json</code></h2>
+      <p>每次自动抓取更新完成后，系统都会将当次的 <code>models.json</code> 按 <code>effectiveDate</code> 作为文件名，额外保存一份静态快照（例如 <code>2026-05-17.json</code>）。这允许研究者和开发者回溯过去的具体价格状态。</p>
+    </div>
+
+    <div class="content-section">
+      <h2>站点地图 <code>/sitemap.xml</code></h2>
+      <p>站点地图是根据 <code>/data/models.json</code> 动态生成的。它不仅包含了所有的 HTML 页面（包括所有模型和对比的动态落地页），还将 <code>models.json</code>、<code>changelog.json</code> 及当日生成的历史快照直接列在 sitemap 中。所有条目的 <code>lastmod</code> 均与 <code>effectiveDate</code> 保持一致。</p>
+    </div>
+
+    <div class="content-section">
+      <h2>数据使用建议</h2>
+      <p>您可以直接请求本站的 <code>/data/models.json</code> 并用于您自己的 AI 应用或成本监控中。但请注意：</p>
+      <ul>
+        <li>我们尽力确保价格的及时性，但在做出重大商业规划前，<strong>建议通过数据中的 <code>sourceUrl</code> 访问各厂商的官方价格页以进行最终核对</strong>。</li>
+        <li>实际产生的计费和扣费标准应始终以您所在厂商的官方账单系统为准。</li>
+        <li>建议同时读取并解析 <code>schemaVersion</code> 以便应对未来的字段演进。</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>AI 模型价格雷达</strong><br>
+        <span>帮助开发者追踪模型价格、选择模型、优化 AI 成本。</span>
+      </div>
+      <div>
+        <a href="/">首页</a> ·
+        <a href="/history">价格历史</a> ·
+        <a href="/rankings">模型排行</a> ·
+        <a href="/compare">模型对比</a> ·
+        <a href="/calculator">成本计算器</a> ·
+        <a href="/provider/">AI 厂商</a> ·
+        <a href="/data/models.json">数据</a> ·
+        <a href="/data-schema">数据说明</a> ·
+        <a href="/api">API</a> ·
+        <a href="/sitemap.xml">站点地图</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // JSON-LD
+    const ld = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "ModelRadar 数据结构说明｜AI 模型价格数据字段文档",
+      "description": "了解 ModelRadar 的 models.json、changelog.json 和 history 快照字段含义、价格单位、数据来源和更新时间规则。",
+      "url": "https://modelradar.cn/data-schema"
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(ld);
+    document.head.appendChild(script);
+  </script>
+</body>
+</html>

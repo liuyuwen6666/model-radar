@@ -31,6 +31,18 @@ Primary source rule:
 
 - official pricing pages
 
+### 数据可信度说明 (Data Credibility)
+
+为避免外部系统或 AI Agent 误将部分厂商的兜底/备份数据视作实时官方价格，ModelRadar 在 `models.json` 中的每个模型记录中引入了 `sourceType` 属性，用于区分数据源的真实性与可信度：
+
+1. **实时官方数据 (`sourceType: "provider"`)**
+   - **适用厂商**：OpenAI, Anthropic, Google, DeepSeek。
+   - **机制**：由系统后台的官方爬虫模块（`scripts/providers/*.js`）实时抓取自厂商官方价格页，并完成自动归一化处理。数据可信度极高，在页面标记为 `官方来源抓取`。
+   
+2. **兜底蓝图数据 (`sourceType: "fallback"`)**
+   - **适用厂商**：字节豆包, 腾讯混元, 月之暗面, 阿里通义（中文模型）。
+   - **机制**：当前尚未接入实时抓取爬虫，使用 `MODEL_BLUEPRINTS` 提供的备份/蓝图模拟数据。在页面标记为 `蓝图数据`，提醒用户及下游 Agent 数据可能存在更新延迟，应前往官方价格页最终确认。
+
 ## Update Frequency
 
 Updated every 12 hours.
@@ -61,11 +73,28 @@ These endpoints are intended for:
 - `/history`
 - `/rankings`
 - `/compare`
+- `/provider`
+- `/calculator`
+- `/data-schema`
+- `/api`
 - `/data/models.json`
 - `/data/changelog.json`
 - `/data/history/YYYY-MM-DD.json`
 - `/model?id=模型ID`
-- `/model/模型ID`
+- `/compare?left=deepseek-v4-flash&right=anthropic-claude-3-7-sonnet`
+- `/compare?left=deepseek-v4-flash&right=openai-gpt-5-5`
+- `/compare?left=anthropic-claude-3-7-sonnet&right=openai-gpt-5-5`
+- `/compare/deepseek-vs-claude`
+- `/compare/deepseek-vs-openai`
+- `/compare/claude-vs-openai`
+- `/compare/gemini-vs-claude`
+- `/compare/gemini-vs-deepseek`
+- `/provider/openai`
+- `/provider/anthropic`
+- `/provider/deepseek`
+- `/provider/google`
+
+其中模型详情 URL 来自 `data/models.json` 的所有 `models[].id`；`YYYY-MM-DD` 使用 `data/models.json` 的 `effectiveDate`，同时所有条目的 `lastmod` 也统一使用该日期。
 
 ## AI-friendly / GEO
 
@@ -126,6 +155,10 @@ License files and metadata:
 |-- model.html                     # 模型详情页，读取 models.json 与 changelog.json
 |-- compare.html                   # 模型对比页，读取 models.json 比较两款模型
 |-- rankings.html                  # 模型排行榜页，读取 models.json 动态排序
+|-- provider.html                  # 厂商详情页，读取 models.json 筛选厂商模型
+|-- calculator.html                # 成本计算器页，基于 models.json 估算 API 成本
+|-- data-schema.html               # 数据说明页，解释数据结构与字段含义
+|-- api.html                       # 静态 JSON API 文档页
 |-- wrangler.jsonc                 # Cloudflare Worker 静态资源部署配置
 |-- robots.txt
 `-- sitemap.xml
@@ -186,6 +219,9 @@ npm install
 
 - 运行时读取 `/data/models.json`
 - 提供左右两个模型选择器，默认比较 `deepseek-v4-flash` 和 `anthropic-claude-3-7-sonnet`
+- 同时支持固定对比落地页：`/compare/deepseek-vs-claude`、`/compare/deepseek-vs-openai`、`/compare/claude-vs-openai`、`/compare/gemini-vs-claude`、`/compare/gemini-vs-deepseek`
+- 固定对比页会自动设置默认 `left/right`，但如果 URL 显式传入 `?left=...&right=...`，则 query 参数优先
+- 固定对比页会动态更新 `document.title`、`meta description`、`canonical`、OpenGraph 和 JSON-LD
 - 展示厂商、输入价、输出价、缓存写价、缓存读价、上下文长度、更新时间和来源链接
 - 价格字段会自动高亮更便宜的一侧
 - 模型名会链接到 `/model?id=模型ID`
@@ -201,8 +237,9 @@ npm install
 
 - 由 `npm run build` 自动生成
 - 用于 Cloudflare Worker 静态资源部署
-- 只包含 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-- 额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html`
+- 只包含 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`provider.html`、`calculator.html`、`data-schema.html`、`api.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
+- 额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html`、`public/provider/index.html`、`public/calculator/index.html`、`public/data-schema/index.html`、`public/api/index.html`
+- 还会额外生成 `public/compare/deepseek-vs-claude/index.html`、`public/compare/deepseek-vs-openai/index.html`、`public/compare/claude-vs-openai/index.html`、`public/compare/gemini-vs-claude/index.html`、`public/compare/gemini-vs-deepseek/index.html`
 - 还会按 `data/models.json` 中的每个模型 ID 生成 `public/model/模型ID/index.html`，支持 `/model/模型ID` clean route
 
 ## 自动更新链路
@@ -211,7 +248,7 @@ npm install
 2. `npm ci` 安装 `package-lock.json` 中锁定的依赖
 3. `npm run update` 读取 `data/sources.json` 和现有 `data/models.json`
 4. `update.js` 生成新的 `data/models.json`，并同步覆盖 `data/history/YYYY-MM-DD.json`
-5. `update.js` 会根据 `data/models.json` 自动重建 `sitemap.xml`，写入 `/history`、`/rankings`、`/compare`、所有模型的 `/model?id=模型ID` 与 `/model/模型ID`，以及当日快照 `/data/history/YYYY-MM-DD.json`
+5. `update.js` 会根据 `data/models.json` 自动重建 `sitemap.xml`，写入 `/history`、`/rankings`、`/compare`、数据 JSON、所有模型的 `/model?id=模型ID`、重点 `/compare?left=...&right=...` 对比页、固定 `/compare/...` 落地页，以及当日快照 `/data/history/YYYY-MM-DD.json`
 6. `npm run diff` 比较 `.cache/models.previous.json` 与新的 `data/models.json`
 7. 若 `data/` 或 `sitemap.xml` 发生变化，workflow 自动 commit 并 push
 
@@ -220,7 +257,7 @@ npm install
 - `scripts/update.js` 负责“抓取/归一化/落盘”
 - `scripts/diff.js` 负责“比对/生成变更记录”
 - `scripts/providers/anthropic.js` 已接入 `fetch + cheerio` 抓取 Anthropic 官方价格页
-- `scripts/providers/google.js` 已接入 `fetch + cheerio` 抓取 Google AI 官方价格页
+- `scripts/providers/google.js` 已接入 `fetch + cheerio` 抓取 Google AI 官方价格页，当前覆盖 `google-gemini-2-5-flash` 与 `google-gemini-2-5-pro`，页面结构变化时会打印 warning 并保留 fallback 价格
 - `scripts/providers/openai.js` 已接入 `fetch + cheerio` 抓取 OpenAI 官方价格页
 - `scripts/providers/deepseek.js` 已接入 `fetch + cheerio` 抓取 DeepSeek 官方价格页
 - 后续接真实爬虫时，只需要继续在 `scripts/providers/` 下扩展其他厂商模块
@@ -261,7 +298,7 @@ npm run diff
 2. 部署命令：`npm run deploy`
 3. 路径：`/`
 4. `npm run build` 会先根据 `data/models.json` 自动更新 `sitemap.xml`，再清空 `public/` 并复制 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-5. 构建时会额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html` 和所有 `public/model/模型ID/index.html`
+5. 构建时会额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、固定 `public/compare/.../index.html` 落地页、`public/model/index.html` 和所有 `public/model/模型ID/index.html`
 6. `wrangler.jsonc` 已配置：
    - `name: model-radar`
    - `compatibility_date: 2026-05-15`

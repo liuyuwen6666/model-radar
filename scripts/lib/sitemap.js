@@ -1,7 +1,14 @@
 const fs = require("node:fs/promises");
+const { FIXED_COMPARE_PAGES } = require("./compare-pages");
+const { FIXED_PROVIDERS } = require("./provider-pages");
 
 const DEFAULT_SITE_ORIGIN = "https://modelradar.cn";
 const SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
+const PRIORITY_COMPARE_PAIRS = [
+  ["deepseek-v4-flash", "anthropic-claude-3-7-sonnet"],
+  ["deepseek-v4-flash", "openai-gpt-5-5"],
+  ["anthropic-claude-3-7-sonnet", "openai-gpt-5-5"]
+];
 
 function normalizeSiteOrigin(siteOrigin = process.env.MODEL_RADAR_SITE_ORIGIN || DEFAULT_SITE_ORIGIN) {
   return String(siteOrigin || DEFAULT_SITE_ORIGIN).replace(/\/+$/, "");
@@ -48,6 +55,9 @@ function buildSitemapEntries(dataset, siteOrigin = normalizeSiteOrigin()) {
   appendEntry(entries, seen, `${origin}/history`, effectiveDate);
   appendEntry(entries, seen, `${origin}/rankings`, effectiveDate);
   appendEntry(entries, seen, `${origin}/compare`, effectiveDate);
+  appendEntry(entries, seen, `${origin}/calculator`, effectiveDate);
+  appendEntry(entries, seen, `${origin}/data-schema`, effectiveDate);
+  appendEntry(entries, seen, `${origin}/api`, effectiveDate);
   appendEntry(entries, seen, `${origin}/data/models.json`, effectiveDate);
   appendEntry(entries, seen, `${origin}/data/changelog.json`, effectiveDate);
   appendEntry(entries, seen, `${origin}/data/history/${effectiveDate}.json`, effectiveDate);
@@ -59,7 +69,20 @@ function buildSitemapEntries(dataset, siteOrigin = normalizeSiteOrigin()) {
 
     const encodedId = encodeURIComponent(model.id.trim());
     appendEntry(entries, seen, `${origin}/model?id=${encodedId}`, effectiveDate);
-    appendEntry(entries, seen, `${origin}/model/${encodedId}`, effectiveDate);
+  }
+
+  for (const [leftId, rightId] of PRIORITY_COMPARE_PAIRS) {
+    const left = encodeURIComponent(leftId);
+    const right = encodeURIComponent(rightId);
+    appendEntry(entries, seen, `${origin}/compare?left=${left}&right=${right}`, effectiveDate);
+  }
+
+  for (const page of FIXED_COMPARE_PAGES) {
+    appendEntry(entries, seen, `${origin}/compare/${page.slug}`, effectiveDate);
+  }
+
+  for (const provider of FIXED_PROVIDERS) {
+    appendEntry(entries, seen, `${origin}/provider/${provider.slug}`, effectiveDate);
   }
 
   return entries;
