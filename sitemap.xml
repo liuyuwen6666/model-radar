@@ -1,142 +1,142 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://modelradar.cn/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/history</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/rankings</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/calculator</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/data-schema</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/api</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/data/models.json</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/data/changelog.json</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/data/history/2026-05-17.json</loc>
-    <lastmod>2026-05-17</lastmod>
+    <loc>https://modelradar.cn/data/history/2026-05-18.json</loc>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=anthropic-claude-3-7-sonnet</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=anthropic-claude-3-5-haiku</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=deepseek-v4-flash</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=deepseek-v4-pro</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=doubao-1-5-pro-32k</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=google-gemini-2-5-flash</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=google-gemini-2-5-pro</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=hunyuan-turbo-s</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=kimi-latest-128k</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=openai-gpt-5-5</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=openai-gpt-5-4</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=openai-gpt-5-4-mini</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model?id=qwen-max</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare?left=deepseek-v4-flash&amp;right=anthropic-claude-3-7-sonnet</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare?left=deepseek-v4-flash&amp;right=openai-gpt-5-5</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare?left=anthropic-claude-3-7-sonnet&amp;right=openai-gpt-5-5</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare/deepseek-vs-claude</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare/deepseek-vs-openai</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare/claude-vs-openai</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare/gemini-vs-claude</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/compare/gemini-vs-deepseek</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/provider/openai</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/provider/anthropic</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/provider/deepseek</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/provider/google</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-05-18</lastmod>
   </url>
 </urlset>
