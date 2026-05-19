@@ -52,6 +52,7 @@ function buildSitemapEntries(dataset, siteOrigin = normalizeSiteOrigin()) {
   const seen = new Set();
 
   appendEntry(entries, seen, `${origin}/`, effectiveDate);
+  appendEntry(entries, seen, `${origin}/en/`, effectiveDate);
   appendEntry(entries, seen, `${origin}/history`, effectiveDate);
   appendEntry(entries, seen, `${origin}/rankings`, effectiveDate);
   appendEntry(entries, seen, `${origin}/compare`, effectiveDate);

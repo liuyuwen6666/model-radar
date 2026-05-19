@@ -1,6 +1,6 @@
 # AI 模型价格雷达
 
-一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 作为 `/history` 页面源码，把 changelog 渲染成人类可读的价格变化历史页面，提供 `model.html` 作为模型详情页源码并通过 `/model?id=模型ID` 展示单个模型详情与相关变更，提供 `rankings.html` 作为 `/rankings` 页面源码，并提供 `compare.html` 作为 `/compare` 页面源码，让用户同屏对比两款模型，无需前端框架，也无需构建步骤。
+一个可直接部署到 Cloudflare Pages 的静态站，用纯 HTML、CSS、原生 JavaScript 展示 AI 模型价格、上下文和价格变更记录。首页数据来自 `data/models.json` 和 `data/changelog.json`，并且每次更新都会额外落一份 `data/history/YYYY-MM-DD.json` 历史快照；同时提供 `history.html` 作为 `/history` 页面源码，把 changelog 渲染成人类可读的价格变化历史页面，提供 `model.html` 作为模型详情页源码并通过 `/model?id=模型ID` 展示单个模型详情与相关变更，提供 `rankings.html` 作为 `/rankings` 页面源码，并提供 `compare.html` 作为 `/compare` 页面源码，让用户同屏对比两款模型；另外提供 `en.html` 作为 `/en/` 英文入口页源码，避免英文路径返回 404，无需前端框架，也无需构建步骤。
 
 项目同时补齐了最小 Node.js 工程基础，用于后续接入真实抓取逻辑：
 
@@ -26,6 +26,12 @@ Current and planned sources are official pricing pages from:
 - 阿里通义
 - 月之暗面
 - 腾讯混元
+
+## English Entry Page
+
+当前英文版仅提供 `/en/` 入口页，用英文概览 ModelRadar 的核心能力，并链接到 `/rankings`、`/compare`、`/calculator`、`/api` 和 `/data/models.json`。
+
+完整英文内容页、英文详情页和更细粒度的英文信息架构后续再补充；目前 `/en/` 的主要目标是提供稳定可索引入口，并避免 Search Console 将英文路径识别为 404。
 
 Primary source rule:
 
@@ -70,6 +76,7 @@ These endpoints are intended for:
 当前会生成这些 URL：
 
 - `/`
+- `/en/`
 - `/history`
 - `/rankings`
 - `/compare`
@@ -108,6 +115,7 @@ ModelRadar is intentionally structured for both traditional SEO and AI retrieval
 - `model.html` updates `document.title`, canonical, OpenGraph, and inserts model-specific JSON-LD after loading `/data/models.json`
 - model detail links use stable IDs from `/data/models.json`, which makes them easier for AI systems and downstream tools to cite reliably
 - pages expose or render the latest update time from JSON payloads, so both users and crawlers can detect freshness
+- `/en/` provides an English entry page with its own canonical and `hreflang`, while full English content will be expanded later
 
 ### 结构化数据策略
 
@@ -154,6 +162,7 @@ License files and metadata:
 |-- history.html                   # 价格变化历史页，运行时读取 changelog.json
 |-- model.html                     # 模型详情页，读取 models.json 与 changelog.json
 |-- compare.html                   # 模型对比页，读取 models.json 比较两款模型
+|-- en.html                        # 英文入口页源码，构建后产出 /en/
 |-- rankings.html                  # 模型排行榜页，读取 models.json 动态排序
 |-- provider.html                  # 厂商详情页，读取 models.json 筛选厂商模型
 |-- calculator.html                # 成本计算器页，基于 models.json 估算 API 成本
@@ -238,7 +247,7 @@ npm install
 - 由 `npm run build` 自动生成
 - 用于 Cloudflare Worker 静态资源部署
 - 只包含 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`provider.html`、`calculator.html`、`data-schema.html`、`api.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-- 额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html`、`public/provider/index.html`、`public/calculator/index.html`、`public/data-schema/index.html`、`public/api/index.html`
+- 额外生成 `public/en/index.html`、`public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、`public/model/index.html`、`public/provider/index.html`、`public/calculator/index.html`、`public/data-schema/index.html`、`public/api/index.html`
 - 还会额外生成 `public/compare/deepseek-vs-claude/index.html`、`public/compare/deepseek-vs-openai/index.html`、`public/compare/claude-vs-openai/index.html`、`public/compare/gemini-vs-claude/index.html`、`public/compare/gemini-vs-deepseek/index.html`
 - 还会按 `data/models.json` 中的每个模型 ID 生成 `public/model/模型ID/index.html`，支持 `/model/模型ID` clean route
 
@@ -298,7 +307,7 @@ npm run diff
 2. 部署命令：`npm run deploy`
 3. 路径：`/`
 4. `npm run build` 会先根据 `data/models.json` 自动更新 `sitemap.xml`，再清空 `public/` 并复制 `index.html`、`history.html`、`model.html`、`compare.html`、`rankings.html`、`robots.txt`、`sitemap.xml`、`data/`，以及存在时的 `assets/`
-5. 构建时会额外生成 `public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、固定 `public/compare/.../index.html` 落地页、`public/model/index.html` 和所有 `public/model/模型ID/index.html`
+5. 构建时会额外生成 `public/en/index.html`、`public/history/index.html`、`public/rankings/index.html`、`public/compare/index.html`、固定 `public/compare/.../index.html` 落地页、`public/model/index.html` 和所有 `public/model/模型ID/index.html`
 6. `wrangler.jsonc` 已配置：
    - `name: model-radar`
    - `compatibility_date: 2026-05-15`

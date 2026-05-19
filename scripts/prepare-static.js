@@ -24,6 +24,10 @@ const STATIC_ENTRIES = [
 ];
 const ROUTE_ALIASES = [
   {
+    source: "en.html",
+    target: path.join("en", "index.html")
+  },
+  {
     source: "history.html",
     target: path.join("history", "index.html")
   },

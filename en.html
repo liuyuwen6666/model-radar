@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ModelRadar｜AI Model Pricing Radar</title>
+  <meta name="description" content="ModelRadar tracks API pricing, context windows, cache pricing and historical changes for mainstream AI models." />
+  <meta name="robots" content="index,follow" />
+  <meta name="author" content="AI Model Price Radar" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="canonical" href="https://modelradar.cn/en/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://modelradar.cn/" />
+  <link rel="alternate" hreflang="en" href="https://modelradar.cn/en/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ModelRadar｜AI Model Pricing Radar" />
+  <meta property="og:description" content="ModelRadar tracks API pricing, context windows, cache pricing and historical changes for mainstream AI models." />
+  <meta property="og:url" content="https://modelradar.cn/en/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ModelRadar｜AI Model Pricing Radar" />
+  <meta name="twitter:description" content="ModelRadar tracks API pricing, context windows, cache pricing and historical changes for mainstream AI models." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "ModelRadar | AI Model Pricing Radar",
+    "url": "https://modelradar.cn/en/",
+    "description": "ModelRadar tracks API pricing, context windows, cache pricing and historical changes for mainstream AI models.",
+    "inLanguage": "en"
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: rgba(255, 255, 255, 0.84);
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --brand: #2563eb;
+      --brand-dark: #1d4ed8;
+      --chip: #eff6ff;
+      --shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.16) 0, transparent 32rem),
+        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.12) 0, transparent 28rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 12px;
+      background: var(--text);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      z-index: 100;
+    }
+
+    .skip-link:focus { left: 12px; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(248, 250, 252, 0.82);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 18px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, #2563eb, #0ea5e9);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover { color: var(--brand); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .btn.primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+
+    .btn.primary:hover { background: var(--brand-dark); }
+
+    main { padding: 34px 0 56px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 28px;
+      align-items: stretch;
+      padding: 40px 0 26px;
+    }
+
+    .hero-copy,
+    .hero-panel,
+    .section-card,
+    .link-card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: var(--chip);
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 18px 0 16px;
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.04;
+      letter-spacing: -0.06em;
+    }
+
+    .hero-copy p,
+    .section-card p,
+    .link-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .hero-note {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-panel {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-panel h2,
+    .section-card h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .resource-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .resource-item {
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .resource-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .resource-item code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      color: var(--brand-dark);
+    }
+
+    .section-card {
+      padding: 28px;
+      margin-top: 16px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-header code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      color: var(--brand-dark);
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .link-card {
+      padding: 22px;
+    }
+
+    .link-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .link-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      color: var(--brand);
+      font-weight: 800;
+    }
+
+    footer {
+      padding: 16px 0 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .link-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header>
+    <div class="container nav">
+      <a class="logo" href="/en/" aria-label="ModelRadar English home">
+        <span class="logo-mark">AI</span>
+        <span>ModelRadar</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/rankings">Rankings</a>
+        <a href="/compare">Compare</a>
+        <a href="/calculator">Calculator</a>
+        <a href="/api">API</a>
+        <a href="/">Chinese home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <span class="eyebrow">English entry page</span>
+          <h1 id="hero-title">AI model pricing, context windows, cache costs, and change history in one place.</h1>
+          <p>ModelRadar tracks API pricing, context windows, cache pricing and historical changes for mainstream AI models.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="/rankings">Browse rankings</a>
+            <a class="btn" href="/compare">Compare models</a>
+            <a class="btn" href="/data/models.json">Open JSON data</a>
+          </div>
+          <div class="hero-note">
+            This English page is currently a landing page for key ModelRadar sections. Full English content will be added later.
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-labelledby="start-title">
+          <h2 id="start-title">Start here</h2>
+          <p>Use these entry points to explore pricing data, compare models, calculate API cost, or consume the machine-readable dataset.</p>
+          <div class="resource-list">
+            <a class="resource-item" href="/rankings">
+              <strong>Rankings</strong>
+              <code>/rankings</code>
+            </a>
+            <a class="resource-item" href="/compare">
+              <strong>Compare</strong>
+              <code>/compare</code>
+            </a>
+            <a class="resource-item" href="/calculator">
+              <strong>Calculator</strong>
+              <code>/calculator</code>
+            </a>
+            <a class="resource-item" href="/api">
+              <strong>API reference</strong>
+              <code>/api</code>
+            </a>
+            <a class="resource-item" href="/data/models.json">
+              <strong>Model dataset</strong>
+              <code>/data/models.json</code>
+            </a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section-card" aria-labelledby="links-title">
+        <div class="section-header">
+          <div>
+            <h2 id="links-title">Core pages and data endpoints</h2>
+            <p>ModelRadar already exposes the main pages and the raw dataset. The English route currently works as a stable entry page into those sections.</p>
+          </div>
+          <code>canonical: https://modelradar.cn/en/</code>
+        </div>
+        <div class="link-grid">
+          <article class="link-card">
+            <h3>Model rankings</h3>
+            <p>View price-based and context-based rankings across tracked models.</p>
+            <a href="/rankings">Open /rankings</a>
+          </article>
+          <article class="link-card">
+            <h3>Model comparison</h3>
+            <p>Compare two models side by side across price, cache, and context fields.</p>
+            <a href="/compare">Open /compare</a>
+          </article>
+          <article class="link-card">
+            <h3>Cost calculator</h3>
+            <p>Estimate monthly API cost from daily requests and token usage.</p>
+            <a href="/calculator">Open /calculator</a>
+          </article>
+          <article class="link-card">
+            <h3>API page</h3>
+            <p>Read the current JSON endpoint summary and integration notes.</p>
+            <a href="/api">Open /api</a>
+          </article>
+          <article class="link-card">
+            <h3>Raw model data</h3>
+            <p>Consume the live machine-readable dataset directly from the static JSON endpoint.</p>
+            <a href="/data/models.json">Open /data/models.json</a>
+          </article>
+          <article class="link-card">
+            <h3>Chinese homepage</h3>
+            <p>Go back to the full Chinese homepage for the current primary editorial experience.</p>
+            <a href="/">Open /</a>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-bar">
+      <div>
+        <strong>ModelRadar</strong><br />
+        <span>English landing page for AI model pricing data.</span>
+      </div>
+      <div>
+        <a href="/">Chinese</a> ·
+        <a href="/en/">en</a> ·
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
