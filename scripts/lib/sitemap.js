@@ -52,7 +52,7 @@ function buildSitemapEntries(dataset, siteOrigin = normalizeSiteOrigin()) {
   const seen = new Set();
 
   appendEntry(entries, seen, `${origin}/`, effectiveDate);
-  appendEntry(entries, seen, `${origin}/en/`, effectiveDate);
+  appendEntry(entries, seen, `${origin}/en`, effectiveDate);
   appendEntry(entries, seen, `${origin}/history`, effectiveDate);
   appendEntry(entries, seen, `${origin}/rankings`, effectiveDate);
   appendEntry(entries, seen, `${origin}/compare`, effectiveDate);
@@ -69,7 +69,7 @@ function buildSitemapEntries(dataset, siteOrigin = normalizeSiteOrigin()) {
     }
 
     const encodedId = encodeURIComponent(model.id.trim());
-    appendEntry(entries, seen, `${origin}/model?id=${encodedId}`, effectiveDate);
+    appendEntry(entries, seen, `${origin}/model/${encodedId}`, effectiveDate);
   }
 
   for (const [leftId, rightId] of PRIORITY_COMPARE_PAIRS) {

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -444,7 +444,7 @@
         <a href="/compare">模型对比</a>
         
         <a href="/calculator">成本计算器</a> ·
-        <a href="/provider/">AI 厂商</a> ·<a href="/data/models.json">Models JSON</a>
+        <a href="/provider">AI 厂商</a> ·<a href="/data/models.json">Models JSON</a>
         <a href="/data/changelog.json">Changelog JSON</a>
       </nav>
     </div>
@@ -744,7 +744,7 @@
     function updateSeo(model) {
       const title = `${model.name} 价格详情｜ModelRadar`;
       const description = `${model.name}（${model.provider}）的输入价、输出价、缓存价格、上下文长度、更新时间、官方来源和价格变化记录。`;
-      const canonicalUrl = `https://modelradar.cn/model?id=${encodeURIComponent(model.id)}`;
+      const canonicalUrl = `https://modelradar.cn/model/${encodeURIComponent(model.id)}`;
       const descriptionMeta = document.querySelector('meta[name="description"]');
       const canonicalLink = document.querySelector('link[rel="canonical"]');
       const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -778,7 +778,7 @@
         '@type': 'Dataset',
         name: `${model.name} API pricing data`,
         description: description,
-        url: `https://modelradar.cn/model?id=${encodeURIComponent(model.id)}`,
+        url: `https://modelradar.cn/model/${encodeURIComponent(model.id)}`,
         creator: {
           '@type': 'Organization',
           name: 'ModelRadar',
@@ -824,7 +824,7 @@
         {
           label: '模型 ID',
           value: model.id,
-          helper: '用于 /model?id=模型ID 路由参数。'
+          helper: '用于 /model/{modelId} 路由路径。'
         },
         {
           label: '厂商',

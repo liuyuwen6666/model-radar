@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -468,7 +468,7 @@
         <a href="/rankings">模型排行</a> ·
         <a href="/compare">模型对比</a> ·
         <a href="/calculator">成本计算器</a> ·
-        <a href="/provider/">AI 厂商</a> ·
+        <a href="/provider">AI 厂商</a> ·
         <a href="/data/models.json">数据</a> ·
                 <a href="/data-schema">数据说明</a> ·
         <a href="/api">API</a> ·
@@ -558,7 +558,7 @@
         tbody.innerHTML = models.map(m => `
           <tr>
             <td>
-              <a href="/model?id=${encodeURIComponent(m.id)}" style="color:var(--brand);font-weight:700;">${escapeHtml(m.name)}</a>
+              <a href="/model/${encodeURIComponent(m.id)}" style="color:var(--brand);font-weight:700;">${escapeHtml(m.name)}</a>
               ${m.sourceType === 'provider'
                 ? '<span style="font-size: 11px; background: #ecfdf5; color: #059669; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">官方来源抓取</span>'
                 : '<span style="font-size: 11px; background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>'
@@ -597,7 +597,7 @@
             "itemListElement": models.map((m, i) => ({
               "@type": "ListItem",
               "position": i + 1,
-              "url": `https://modelradar.cn/model?id=${encodeURIComponent(m.id)}`,
+              "url": `https://modelradar.cn/model/${encodeURIComponent(m.id)}`,
               "name": m.name
             }))
           }

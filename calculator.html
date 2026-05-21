@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -396,7 +396,7 @@
         <a href="/rankings">模型排行</a> ·
         <a href="/compare">模型对比</a> ·
         <a href="/calculator">成本计算器</a> ·
-        <a href="/provider/">AI 厂商</a> ·
+        <a href="/provider">AI 厂商</a> ·
         <a href="/data/models.json">数据</a> ·
                 <a href="/data-schema">数据说明</a> ·
         <a href="/api">API</a> ·
@@ -499,7 +499,7 @@
       document.getElementById('infoCachePrice').textContent = cacheReadPrice !== null ? `$${cacheReadPrice}/1M` : '无';
       document.getElementById('infoUpdated').textContent = model.updatedAt ? model.updatedAt.slice(0, 10) : '未知';
       
-      document.getElementById('linkModel').href = `/model?id=${encodeURIComponent(model.id)}`;
+      document.getElementById('linkModel').href = `/model/${encodeURIComponent(model.id)}`;
       document.getElementById('linkSource').href = model.sourceUrl || '#';
     }
 
