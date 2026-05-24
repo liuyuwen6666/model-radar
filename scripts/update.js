@@ -4,6 +4,10 @@ const fetchAnthropicModels = require("./providers/anthropic");
 const fetchGoogleModels = require("./providers/google");
 const fetchOpenAIModels = require("./providers/openai");
 const fetchDeepSeekModels = require("./providers/deepseek");
+const fetchKimiModels = require("./providers/kimi");
+const fetchQwenModels = require("./providers/qwen");
+const fetchDoubaoModels = require("./providers/doubao");
+const fetchHunyuanModels = require("./providers/hunyuan");
 const { writeSitemapForDataset } = require("./lib/sitemap");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
@@ -27,7 +31,11 @@ const PROVIDER_LOADERS = {
   Anthropic: fetchAnthropicModels,
   Google: fetchGoogleModels,
   OpenAI: fetchOpenAIModels,
-  DeepSeek: fetchDeepSeekModels
+  DeepSeek: fetchDeepSeekModels,
+  "月之暗面": fetchKimiModels,
+  "阿里通义": fetchQwenModels,
+  "字节豆包": fetchDoubaoModels,
+  "腾讯混元": fetchHunyuanModels
 };
 const PRICE_FIELDS = [
   "inputPriceUsdPer1M",
@@ -115,17 +123,17 @@ const MODEL_BLUEPRINTS = [
     provider: "字节豆包",
     family: "Doubao",
     description: "偏中文企业应用的主力模型。",
-    inputPriceUsdPer1M: 0.8,
-    outputPriceUsdPer1M: 2.4,
-    cacheWritePriceUsdPer1M: 0.2,
-    cacheReadPriceUsdPer1M: 0.08,
+    inputPriceUsdPer1M: 0.80 / 7.25,  // ¥0.80 -> $0.1103
+    outputPriceUsdPer1M: 2.00 / 7.25, // ¥2.00 -> $0.2759
+    cacheWritePriceUsdPer1M: 0.20 / 7.25, // ¥0.20 -> $0.0276
+    cacheReadPriceUsdPer1M: 0.08 / 7.25,  // ¥0.08 -> $0.0110
     contextWindow: 32000,
     maxOutputTokens: 8192,
     capabilities: ["中文", "多模态", "企业"],
     recommendedFor: ["企业 Copilot", "中文内容", "客服助手"],
     status: "stable",
     detailPath: "/model/doubao-1-5-pro-32k",
-    sourceType: "fallback"
+    sourceType: "provider"
   },
   {
     id: "google-gemini-2-5-flash",
@@ -169,17 +177,53 @@ const MODEL_BLUEPRINTS = [
     provider: "腾讯混元",
     family: "Hunyuan",
     description: "面向腾讯生态和企业集成。",
-    inputPriceUsdPer1M: 0.65,
-    outputPriceUsdPer1M: 2.15,
-    cacheWritePriceUsdPer1M: 0.15,
-    cacheReadPriceUsdPer1M: 0.06,
+    inputPriceUsdPer1M: 0.80 / 7.25,  // ¥0.80 -> $0.1103
+    outputPriceUsdPer1M: 2.00 / 7.25, // ¥2.00 -> $0.2759
+    cacheWritePriceUsdPer1M: 0.15 / 7.25, // ¥0.15 -> $0.0207
+    cacheReadPriceUsdPer1M: 0.06 / 7.25,  // ¥0.06 -> $0.0083
     contextWindow: 128000,
     maxOutputTokens: 8192,
     capabilities: ["中文", "企业", "Agent"],
     recommendedFor: ["企业应用", "客服系统", "微信生态"],
     status: "stable",
     detailPath: "/model/hunyuan-turbo-s",
-    sourceType: "fallback"
+    sourceType: "provider"
+  },
+  {
+    id: "kimi-k2-6",
+    name: "Kimi K2.6",
+    provider: "月之暗面",
+    family: "Kimi",
+    description: "最新旗舰多模态大模型，长程代码与自我纠错能力卓越。",
+    inputPriceUsdPer1M: 6.50 / 7.25,   // ¥6.50 -> $0.8966
+    outputPriceUsdPer1M: 27.00 / 7.25, // ¥27.00 -> $3.7241
+    cacheWritePriceUsdPer1M: 1.10 / 7.25, // ¥1.10 -> $0.1517
+    cacheReadPriceUsdPer1M: 0.1517,
+    contextWindow: 262144,
+    maxOutputTokens: 16384,
+    capabilities: ["中文", "长文本", "多模态", "推理"],
+    recommendedFor: ["长程代码", "智能对话", "自我纠错"],
+    status: "stable",
+    detailPath: "/model/kimi-k2-6",
+    sourceType: "provider"
+  },
+  {
+    id: "kimi-k2-5",
+    name: "Kimi K2.5",
+    provider: "月之暗面",
+    family: "Kimi",
+    description: "支持长思考与多模态的深度推理模型。",
+    inputPriceUsdPer1M: 4.00 / 7.25,   // ¥4.00 -> $0.5517
+    outputPriceUsdPer1M: 21.00 / 7.25, // ¥21.00 -> $2.8966
+    cacheWritePriceUsdPer1M: 0.70 / 7.25, // ¥0.70 -> $0.0966
+    cacheReadPriceUsdPer1M: 0.0966,
+    contextWindow: 262144,
+    maxOutputTokens: 16384,
+    capabilities: ["中文", "多模态", "推理"],
+    recommendedFor: ["对话系统", "Agent任务", "多模态分析"],
+    status: "stable",
+    detailPath: "/model/kimi-k2-5",
+    sourceType: "provider"
   },
   {
     id: "kimi-latest-128k",
@@ -187,17 +231,17 @@ const MODEL_BLUEPRINTS = [
     provider: "月之暗面",
     family: "Kimi",
     description: "长文本处理和中文知识问答。",
-    inputPriceUsdPer1M: 1.35,
-    outputPriceUsdPer1M: 4.8,
+    inputPriceUsdPer1M: 10.00 / 7.25, // ¥10.00 -> $1.3793
+    outputPriceUsdPer1M: 30.00 / 7.25, // ¥30.00 -> $4.1379
     cacheWritePriceUsdPer1M: null,
     cacheReadPriceUsdPer1M: null,
-    contextWindow: 128000,
+    contextWindow: 131072,
     maxOutputTokens: 8192,
     capabilities: ["中文", "长文本", "检索"],
     recommendedFor: ["知识库问答", "文档解读", "中文写作"],
     status: "stable",
     detailPath: "/model/kimi-latest-128k",
-    sourceType: "fallback"
+    sourceType: "provider"
   },
   {
     id: "openai-gpt-4-1",
@@ -241,17 +285,17 @@ const MODEL_BLUEPRINTS = [
     provider: "阿里通义",
     family: "Qwen",
     description: "适合中文企业应用与混合部署。",
-    inputPriceUsdPer1M: 1.1,
-    outputPriceUsdPer1M: 4.2,
-    cacheWritePriceUsdPer1M: 0.28,
-    cacheReadPriceUsdPer1M: 0.1,
+    inputPriceUsdPer1M: 12.00 / 7.25,  // ¥12.00 -> $1.6552
+    outputPriceUsdPer1M: 36.00 / 7.25, // ¥36.00 -> $4.9655
+    cacheWritePriceUsdPer1M: 0.30 / 7.25, // ¥0.30 -> $0.0414
+    cacheReadPriceUsdPer1M: 0.10 / 7.25,  // ¥0.10 -> $0.0138
     contextWindow: 32000,
     maxOutputTokens: 8192,
     capabilities: ["中文", "企业", "开源生态"],
     recommendedFor: ["企业知识库", "中文应用", "私有化方案"],
     status: "stable",
     detailPath: "/model/qwen-max",
-    sourceType: "fallback"
+    sourceType: "provider"
   }
 ];
 

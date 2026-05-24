@@ -56,6 +56,8 @@
     "label": "Moonshot Pricing",
     "url": "https://platform.moonshot.cn/docs/pricing/chat",
     "models": [
+      "kimi-k2-6",
+      "kimi-k2-5",
       "kimi-latest-128k"
     ]
   },
