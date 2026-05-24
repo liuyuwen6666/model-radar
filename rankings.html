@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -540,12 +540,29 @@
         .replace(/'/g, '&#39;');
     }
 
-    function formatPrice(value) {
+    function formatPrice(value, currency = 'USD') {
       if (typeof value !== 'number' || !Number.isFinite(value)) {
         return '待更新';
       }
+      const symbol = currency === 'CNY' ? '¥' : '$';
+      let formatted = value.toFixed(4);
+      while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
+        formatted = formatted.slice(0, -1);
+      }
+      return `${symbol}${formatted}`;
+    }
 
-      return value < 1 ? `$${value.toFixed(4)}` : `$${value.toFixed(2)}`;
+    function getNativeKeyAndValue(model, key) {
+      if (key === 'inputPriceUsdPer1M') {
+        return { value: model.inputPricePer1M, currency: model.currency || 'USD' };
+      }
+      if (key === 'outputPriceUsdPer1M') {
+        return { value: model.outputPricePer1M, currency: model.currency || 'USD' };
+      }
+      if (key === 'cacheReadPriceUsdPer1M') {
+        return { value: model.cacheReadPricePer1M, currency: model.currency || 'USD' };
+      }
+      return { value: model[key], currency: 'USD' };
     }
 
     function formatContext(value) {
@@ -597,15 +614,17 @@
         return;
       }
 
-      rankingSummaryList.innerHTML = firstItems.map((item) => `
+      rankingSummaryList.innerHTML = firstItems.map((item) => {
+        const { value, currency } = getNativeKeyAndValue(item.model, item.ranking.key);
+        return `
         <li>
           <span class="tag good">No.1</span>
           <div>
             <strong>${escapeHtml(item.ranking.title)}</strong><br>
-            <span class="updated">${escapeHtml(item.model.name)} · ${escapeHtml(item.ranking.formatter(item.model[item.ranking.key]))}</span>
+            <span class="updated">${escapeHtml(item.model.name)} · ${escapeHtml(item.ranking.formatter(value, currency))}</span>
           </div>
         </li>
-      `).join('');
+      `; }).join('');
     }
 
     function renderRankingTable(ranking, models) {
@@ -638,7 +657,9 @@
                 </tr>
               </thead>
               <tbody>
-                ${models.map((model, index) => `
+                ${models.map((model, index) => {
+                  const { value, currency } = getNativeKeyAndValue(model, ranking.key);
+                  return `
                   <tr>
                     <td class="mono">#${index + 1}</td>
                     <td>
@@ -650,9 +671,9 @@
                       <span class="provider">${escapeHtml(model.description || model.family || '')}</span>
                     </td>
                     <td>${escapeHtml(model.provider)}</td>
-                    <td class="mono">${escapeHtml(ranking.formatter(model[ranking.key]))}</td>
+                    <td class="mono">${escapeHtml(ranking.formatter(value, currency))}</td>
                   </tr>
-                `).join('')}
+                `; }).join('')}
               </tbody>
             </table>
           </div>

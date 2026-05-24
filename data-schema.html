@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -259,7 +259,7 @@
         <li><strong>schemaVersion</strong>当前 JSON 的结构版本（如 <code>"1.0.0"</code>）。</li>
         <li><strong>generatedAt</strong>数据抓取或生成完成的具体时间（ISO 8601 格式）。</li>
         <li><strong>effectiveDate</strong>当前价格的生效日期（通常取 <code>generatedAt</code> 的年月日）。</li>
-        <li><strong>currency</strong>全局价格货币单位，当前固定为 <code>"USD"</code>。</li>
+        <li><strong>currency</strong>全局价格比较与排序基准货币单位，当前固定为 <code>"USD"</code>。</li>
         <li><strong>billingUnit</strong>全局计费单位基准，当前固定为 <code>"per_1m_tokens"</code>。</li>
       </ul>
 
@@ -268,10 +268,15 @@
         <li><strong>id</strong>模型唯一标识（URL 友好格式，如 <code>"openai-gpt-4o"</code>）。</li>
         <li><strong>name</strong>模型展示名称（如 <code>"GPT-4o"</code>）。</li>
         <li><strong>provider</strong>归属的 AI 厂商名称。</li>
-        <li><strong>inputPriceUsdPer1M</strong>每百万 Tokens 的输入（Prompt）价格，单位为 USD。</li>
-        <li><strong>outputPriceUsdPer1M</strong>每百万 Tokens 的输出（Completion）价格，单位为 USD。</li>
-        <li><strong>cacheWritePriceUsdPer1M</strong>每百万 Tokens 的缓存写入价格（部分厂商支持）。</li>
-        <li><strong>cacheReadPriceUsdPer1M</strong>每百万 Tokens 的缓存读取价格（部分厂商支持）。</li>
+        <li><strong>currency</strong>模型的官方原始计费货币单位（如 <code>"USD"</code> 或 <code>"CNY"</code>）。为了实现 100% 数据精准，避免汇率波动造成的误差，本字段记录了该模型在官网上的实际结算币种。</li>
+        <li><strong>inputPricePer1M</strong>每百万 Tokens 的输入价格，以模型的官方原始结算币种（<code>currency</code>）为单位。与官网标价完全一致，绝对精准。</li>
+        <li><strong>outputPricePer1M</strong>每百万 Tokens 的输出价格，以模型的官方原始结算币种（<code>currency</code>）为单位。与官网标价完全一致，绝对精准。</li>
+        <li><strong>cacheWritePricePer1M</strong>每百万 Tokens 的缓存写入价格，以模型的官方原始结算币种（<code>currency</code>）为单位。</li>
+        <li><strong>cacheReadPricePer1M</strong>每百万 Tokens 的缓存读取价格，以模型的官方原始结算币种（<code>currency</code>）为单位。</li>
+        <li><strong>inputPriceUsdPer1M</strong>每百万 Tokens 的输入（Prompt）价格，单位为统一的 USD，通常用于多国模型进行跨汇率比较和排序。</li>
+        <li><strong>outputPriceUsdPer1M</strong>每百万 Tokens 的输出（Completion）价格，单位为统一的 USD，通常用于多国模型进行跨汇率比较和排序。</li>
+        <li><strong>cacheWritePriceUsdPer1M</strong>每百万 Tokens 的缓存写入价格（USD 单位）。</li>
+        <li><strong>cacheReadPriceUsdPer1M</strong>每百万 Tokens 的缓存读取价格（USD 单位）。</li>
         <li><strong>contextWindow</strong>最大上下文长度（Token 数量，例如 <code>128000</code>）。</li>
         <li><strong>sourceUrl</strong>价格信息的官方来源 URL 页面，可用于数据校验。</li>
         <li><strong>updatedAt</strong>该条模型记录最近一次更新的日期时间（ISO 8601 格式）。</li>
@@ -284,24 +289,29 @@
       </div>
 
       <h3>JSON 结构示例</h3>
-<pre><code>{
+      <pre><code>{
   "schemaVersion": 1,
-  "generatedAt": "2026-05-17T00:00:00Z",
-  "effectiveDate": "2026-05-17",
+  "generatedAt": "2026-05-24T00:00:00Z",
+  "effectiveDate": "2026-05-24",
   "currency": "USD",
   "billingUnit": "per_1m_tokens",
   "models": [
     {
-      "id": "deepseek-v4-flash",
-      "name": "DeepSeek-V4-Flash",
-      "provider": "DeepSeek",
-      "inputPriceUsdPer1M": 0.14,
-      "outputPriceUsdPer1M": 0.28,
-      "cacheWritePriceUsdPer1M": null,
-      "cacheReadPriceUsdPer1M": 0.014,
-      "contextWindow": 128000,
-      "sourceUrl": "https://www.deepseek.com/pricing",
-      "updatedAt": "2026-05-17T00:00:00Z",
+      "id": "doubao-1-5-pro-32k",
+      "name": "豆包 1.5 Pro 32K",
+      "provider": "字节豆包",
+      "currency": "CNY",
+      "inputPricePer1M": 0.8,
+      "outputPricePer1M": 2.0,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.1103,
+      "outputPriceUsdPer1M": 0.2759,
+      "cacheWritePriceUsdPer1M": 0.1954,
+      "cacheReadPriceUsdPer1M": 0.0832,
+      "contextWindow": 32000,
+      "sourceUrl": "https://www.volcengine.com/docs/82379/1547233",
+      "updatedAt": "2026-05-24T00:00:00Z",
       "sourceType": "provider"
     }
   ]

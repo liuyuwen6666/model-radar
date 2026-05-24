@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -498,9 +498,14 @@
       return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    function formatPrice(value) {
+    function formatPrice(value, currency = 'USD') {
       if (typeof value !== 'number' || !Number.isFinite(value)) return '待更新';
-      return value < 1 ? `$${value.toFixed(4)}` : `$${value.toFixed(2)}`;
+      const symbol = currency === 'CNY' ? '¥' : '$';
+      let formatted = value.toFixed(4);
+      while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
+        formatted = formatted.slice(0, -1);
+      }
+      return `${symbol}${formatted}`;
     }
 
     function formatContext(value) {
@@ -564,8 +569,8 @@
                 : '<span style="font-size: 11px; background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>'
               }
             </td>
-            <td class="mono">${formatPrice(m.inputPriceUsdPer1M)}</td>
-            <td class="mono">${formatPrice(m.outputPriceUsdPer1M)}</td>
+            <td class="mono">${formatPrice(m.inputPricePer1M, m.currency)}</td>
+            <td class="mono">${formatPrice(m.outputPricePer1M, m.currency)}</td>
             <td class="mono">${formatContext(m.contextWindow)}</td>
             <td><span class="tag ${['active', 'stable', 'live'].includes(m.status) ? 'good' : 'warn'}">${['active', 'stable', 'live'].includes(m.status) ? '运行中' : '测试中'}</span></td>
             <td><a href="${m.sourceUrl}" target="_blank" rel="nofollow noopener" style="color:var(--muted);text-decoration:underline;">官方链接</a></td>

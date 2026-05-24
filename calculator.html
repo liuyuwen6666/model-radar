@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -410,9 +410,14 @@
     const modelSelect = document.getElementById('modelSelect');
     const inputs = ['dailyRequests', 'inputTokens', 'outputTokens', 'cacheHitRatio'];
 
-    function formatCurrency(val) {
+    function formatCurrency(val, currency = 'USD') {
       if (val === null || val === undefined) return '待更新';
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(val);
+      return new Intl.NumberFormat(currency === 'CNY' ? 'zh-CN' : 'en-US', {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 4
+      }).format(val);
     }
 
     function formatContext(val) {
@@ -454,9 +459,10 @@
       const outputTokens = Number(document.getElementById('outputTokens').value) || 0;
       const cacheHitRatio = (Number(document.getElementById('cacheHitRatio').value) || 0) / 100;
 
-      const inPrice = model.inputPriceUsdPer1M;
-      const outPrice = model.outputPriceUsdPer1M;
-      const cacheReadPrice = model.cacheReadPriceUsdPer1M;
+      const currency = model.currency || 'USD';
+      const inPrice = model.inputPricePer1M;
+      const outPrice = model.outputPricePer1M;
+      const cacheReadPrice = model.cacheReadPricePer1M;
 
       let dailyInCost = 0;
       let dailyOutCost = 0;
@@ -481,12 +487,12 @@
 
       const dailyTotal = dailyInCost + dailyOutCost;
 
-      document.getElementById('dailyInput').textContent = inPrice !== null ? formatCurrency(dailyInCost) : '待更新';
-      document.getElementById('dailyOutput').textContent = outPrice !== null ? formatCurrency(dailyOutCost) : '待更新';
-      document.getElementById('dailySavings').textContent = dailySavings > 0 ? formatCurrency(dailySavings) : '$0.00';
-      document.getElementById('dailyTotal').textContent = formatCurrency(dailyTotal);
-      document.getElementById('monthlyTotal').textContent = formatCurrency(dailyTotal * 30);
-      document.getElementById('yearlyTotal').textContent = formatCurrency(dailyTotal * 365);
+      document.getElementById('dailyInput').textContent = inPrice !== null ? formatCurrency(dailyInCost, currency) : '待更新';
+      document.getElementById('dailyOutput').textContent = outPrice !== null ? formatCurrency(dailyOutCost, currency) : '待更新';
+      document.getElementById('dailySavings').textContent = dailySavings > 0 ? formatCurrency(dailySavings, currency) : (currency === 'CNY' ? '¥0.00' : '$0.00');
+      document.getElementById('dailyTotal').textContent = formatCurrency(dailyTotal, currency);
+      document.getElementById('monthlyTotal').textContent = formatCurrency(dailyTotal * 30, currency);
+      document.getElementById('yearlyTotal').textContent = formatCurrency(dailyTotal * 365, currency);
 
       // Model info
       document.getElementById('infoProvider').textContent = model.provider;
@@ -494,9 +500,20 @@
       credibilityEl.textContent = model.sourceType === 'provider' ? '官方来源抓取' : '待接入官方抓取 / 蓝图数据';
       credibilityEl.style.color = model.sourceType === 'provider' ? 'var(--good)' : 'var(--warn)';
       document.getElementById('infoContext').textContent = formatContext(model.contextWindow);
-      document.getElementById('infoInputPrice').textContent = inPrice !== null ? `$${inPrice}/1M` : '待更新';
-      document.getElementById('infoOutputPrice').textContent = outPrice !== null ? `$${outPrice}/1M` : '待更新';
-      document.getElementById('infoCachePrice').textContent = cacheReadPrice !== null ? `$${cacheReadPrice}/1M` : '无';
+
+      function formatDetailPrice(price, curr) {
+        if (price === null || price === undefined) return '待更新';
+        const symbol = curr === 'CNY' ? '¥' : '$';
+        let formatted = price.toFixed(4);
+        while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
+          formatted = formatted.slice(0, -1);
+        }
+        return `${symbol}${formatted}/1M`;
+      }
+
+      document.getElementById('infoInputPrice').textContent = formatDetailPrice(inPrice, currency);
+      document.getElementById('infoOutputPrice').textContent = formatDetailPrice(outPrice, currency);
+      document.getElementById('infoCachePrice').textContent = cacheReadPrice !== null ? formatDetailPrice(cacheReadPrice, currency) : '无';
       document.getElementById('infoUpdated').textContent = model.updatedAt ? model.updatedAt.slice(0, 10) : '未知';
       
       document.getElementById('linkModel').href = `/model/${encodeURIComponent(model.id)}`;

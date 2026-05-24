@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -649,12 +649,16 @@
         .replace(/'/g, '&#39;');
     }
 
-    function formatPrice(value) {
+    function formatPrice(value, currency = 'USD') {
       if (typeof value !== 'number' || !Number.isFinite(value)) {
         return '待更新';
       }
-
-      return value < 1 ? `$${value.toFixed(4)}` : `$${value.toFixed(2)}`;
+      const symbol = currency === 'CNY' ? '¥' : '$';
+      let formatted = value.toFixed(4);
+      while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
+        formatted = formatted.slice(0, -1);
+      }
+      return `${symbol}${formatted}`;
     }
 
     function formatContext(value) {
@@ -730,12 +734,12 @@
     function buildCacheSummary(model) {
       const parts = [];
 
-      if (typeof model.cacheWritePriceUsdPer1M === 'number') {
-        parts.push(`写入 ${formatPrice(model.cacheWritePriceUsdPer1M)}`);
+      if (typeof model.cacheWritePricePer1M === 'number') {
+        parts.push(`写入 ${formatPrice(model.cacheWritePricePer1M, model.currency)}`);
       }
 
-      if (typeof model.cacheReadPriceUsdPer1M === 'number') {
-        parts.push(`读取 ${formatPrice(model.cacheReadPriceUsdPer1M)}`);
+      if (typeof model.cacheReadPricePer1M === 'number') {
+        parts.push(`读取 ${formatPrice(model.cacheReadPricePer1M, model.currency)}`);
       }
 
       return parts.length ? parts.join(' / ') : '待更新';
@@ -809,8 +813,8 @@
         : '<span style="font-size: 14px; background: #fffbeb; color: #d97706; padding: 4px 10px; border-radius: 999px; margin-left: 10px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>';
       modelNameEl.innerHTML = `${escapeHtml(model.name || model.id)} ${credibilityBadge}`;
       modelDescriptionEl.textContent = model.description || `${model.provider} 模型详情页。`;
-      inputPriceStat.textContent = formatPrice(model.inputPriceUsdPer1M);
-      outputPriceStat.textContent = formatPrice(model.outputPriceUsdPer1M);
+      inputPriceStat.textContent = formatPrice(model.inputPricePer1M, model.currency);
+      outputPriceStat.textContent = formatPrice(model.outputPricePer1M, model.currency);
       contextStat.textContent = formatContext(model.contextWindow);
       updatedLabel.textContent = `最后更新：${formatUpdatedLabel(model.updatedAt)}`;
       providerValue.textContent = model.provider || '未知';
@@ -838,22 +842,22 @@
         },
         {
           label: '输入价格',
-          value: formatPrice(model.inputPriceUsdPer1M),
+          value: formatPrice(model.inputPricePer1M, model.currency),
           helper: '单位为每 100 万 tokens。'
         },
         {
           label: '输出价格',
-          value: formatPrice(model.outputPriceUsdPer1M),
+          value: formatPrice(model.outputPricePer1M, model.currency),
           helper: '单位为每 100 万 tokens。'
         },
         {
           label: '缓存写价',
-          value: formatPrice(model.cacheWritePriceUsdPer1M),
+          value: formatPrice(model.cacheWritePricePer1M, model.currency),
           helper: '如果厂商未公开，则显示待更新。'
         },
         {
           label: '缓存读价',
-          value: formatPrice(model.cacheReadPriceUsdPer1M),
+          value: formatPrice(model.cacheReadPricePer1M, model.currency),
           helper: '如果厂商未公开，则显示待更新。'
         },
         {

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -643,12 +643,16 @@
         .replace(/'/g, '&#39;');
     }
 
-    function formatPrice(value) {
+    function formatPrice(value, currency = 'USD') {
       if (typeof value !== 'number' || !Number.isFinite(value)) {
         return '待更新';
       }
-
-      return value < 1 ? `$${value.toFixed(4)}` : `$${value.toFixed(2)}`;
+      const symbol = currency === 'CNY' ? '¥' : '$';
+      let formatted = value.toFixed(4);
+      while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
+        formatted = formatted.slice(0, -1);
+      }
+      return `${symbol}${formatted}`;
     }
 
     function formatContext(value) {
@@ -854,7 +858,7 @@
             : inputWinner === 'right'
               ? `${rightModel.name} 更低`
               : '输入价持平或待更新',
-          `${formatPrice(leftModel.inputPriceUsdPer1M)} vs ${formatPrice(rightModel.inputPriceUsdPer1M)}`,
+          `${formatPrice(leftModel.inputPricePer1M, leftModel.currency)} vs ${formatPrice(rightModel.inputPricePer1M, rightModel.currency)}`,
           inputWinner ? 'good' : 'warn'
         )
       );
@@ -867,7 +871,7 @@
             : outputWinner === 'right'
               ? `${rightModel.name} 更低`
               : '输出价持平或待更新',
-          `${formatPrice(leftModel.outputPriceUsdPer1M)} vs ${formatPrice(rightModel.outputPriceUsdPer1M)}`,
+          `${formatPrice(leftModel.outputPricePer1M, leftModel.currency)} vs ${formatPrice(rightModel.outputPricePer1M, rightModel.currency)}`,
           outputWinner ? 'good' : 'warn'
         )
       );
@@ -880,7 +884,7 @@
             : cacheReadWinner === 'right'
               ? `${rightModel.name} 更低`
               : '缓存读价持平或待更新',
-          `${formatPrice(leftModel.cacheReadPriceUsdPer1M)} vs ${formatPrice(rightModel.cacheReadPriceUsdPer1M)}`,
+          `${formatPrice(leftModel.cacheReadPricePer1M, leftModel.currency)} vs ${formatPrice(rightModel.cacheReadPricePer1M, rightModel.currency)}`,
           cacheReadWinner ? 'good' : 'warn'
         )
       );
@@ -918,29 +922,29 @@
         },
         {
           label: '输入价 / 1M tokens',
-          leftHtml: formatPrice(leftModel.inputPriceUsdPer1M),
-          rightHtml: formatPrice(rightModel.inputPriceUsdPer1M),
+          leftHtml: formatPrice(leftModel.inputPricePer1M, leftModel.currency),
+          rightHtml: formatPrice(rightModel.inputPricePer1M, rightModel.currency),
           leftClass: getPriceCellClass('left', leftModel.inputPriceUsdPer1M, rightModel.inputPriceUsdPer1M),
           rightClass: getPriceCellClass('right', leftModel.inputPriceUsdPer1M, rightModel.inputPriceUsdPer1M)
         },
         {
           label: '输出价 / 1M tokens',
-          leftHtml: formatPrice(leftModel.outputPriceUsdPer1M),
-          rightHtml: formatPrice(rightModel.outputPriceUsdPer1M),
+          leftHtml: formatPrice(leftModel.outputPricePer1M, leftModel.currency),
+          rightHtml: formatPrice(rightModel.outputPricePer1M, rightModel.currency),
           leftClass: getPriceCellClass('left', leftModel.outputPriceUsdPer1M, rightModel.outputPriceUsdPer1M),
           rightClass: getPriceCellClass('right', leftModel.outputPriceUsdPer1M, rightModel.outputPriceUsdPer1M)
         },
         {
           label: '缓存写价',
-          leftHtml: formatPrice(leftModel.cacheWritePriceUsdPer1M),
-          rightHtml: formatPrice(rightModel.cacheWritePriceUsdPer1M),
+          leftHtml: formatPrice(leftModel.cacheWritePricePer1M, leftModel.currency),
+          rightHtml: formatPrice(rightModel.cacheWritePricePer1M, rightModel.currency),
           leftClass: getPriceCellClass('left', leftModel.cacheWritePriceUsdPer1M, rightModel.cacheWritePriceUsdPer1M),
           rightClass: getPriceCellClass('right', leftModel.cacheWritePriceUsdPer1M, rightModel.cacheWritePriceUsdPer1M)
         },
         {
           label: '缓存读价',
-          leftHtml: formatPrice(leftModel.cacheReadPriceUsdPer1M),
-          rightHtml: formatPrice(rightModel.cacheReadPriceUsdPer1M),
+          leftHtml: formatPrice(leftModel.cacheReadPricePer1M, leftModel.currency),
+          rightHtml: formatPrice(rightModel.cacheReadPricePer1M, rightModel.currency),
           leftClass: getPriceCellClass('left', leftModel.cacheReadPriceUsdPer1M, rightModel.cacheReadPriceUsdPer1M),
           rightClass: getPriceCellClass('right', leftModel.cacheReadPriceUsdPer1M, rightModel.cacheReadPriceUsdPer1M)
         },

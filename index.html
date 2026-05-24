@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -733,8 +733,14 @@
         .replace(/'/g, '&#39;');
     }
 
-    function formatPrice(value) {
-      return typeof value === 'number' ? `$${value.toFixed(2)}` : '待更新';
+    function formatPrice(value, currency = 'USD') {
+      if (typeof value !== 'number') return '待更新';
+      const symbol = currency === 'CNY' ? '¥' : '$';
+      let formatted = value.toFixed(4);
+      while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
+        formatted = formatted.slice(0, -1);
+      }
+      return `${symbol}${formatted}`;
     }
 
     function formatContext(value) {
@@ -872,8 +878,8 @@
           <tr data-provider="${escapeHtml(model.provider)}">
             <td>${modelLink}<br><span class="provider">${escapeHtml(model.description || model.family || '')}</span></td>
             <td>${escapeHtml(model.provider)}</td>
-            <td class="mono">${formatPrice(model.inputPriceUsdPer1M)}</td>
-            <td class="mono">${formatPrice(model.outputPriceUsdPer1M)}</td>
+            <td class="mono">${formatPrice(model.inputPricePer1M, model.currency)}</td>
+            <td class="mono">${formatPrice(model.outputPricePer1M, model.currency)}</td>
             <td>${formatContext(model.contextWindow)}</td>
             <td>${buildTags(model.capabilities)}</td>
             <td>${escapeHtml((model.recommendedFor || []).join('、') || '待补充')}</td>

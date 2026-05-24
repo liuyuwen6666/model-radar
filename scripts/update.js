@@ -383,6 +383,47 @@ function buildBaseIndex(models) {
 
 function normalizeModel(model, sourceIndex, timestamp) {
   const source = sourceIndex.get(model.provider) || {};
+  const isDomestic = ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(model.provider);
+  const currency = isDomestic ? "CNY" : "USD";
+
+  // 获取高精度官方价格
+  let inputPricePer1M = model.inputPricePer1M;
+  let outputPricePer1M = model.outputPricePer1M;
+  let cacheWritePricePer1M = model.cacheWritePricePer1M;
+  let cacheReadPricePer1M = model.cacheReadPricePer1M;
+
+  if (inputPricePer1M === undefined || inputPricePer1M === null) {
+    if (isDomestic) {
+      inputPricePer1M = model.inputPriceUsdPer1M ? roundPrice(model.inputPriceUsdPer1M * 7.25) : null;
+      outputPricePer1M = model.outputPriceUsdPer1M ? roundPrice(model.outputPriceUsdPer1M * 7.25) : null;
+      cacheWritePricePer1M = model.cacheWritePriceUsdPer1M ? roundPrice(model.cacheWritePriceUsdPer1M * 7.25) : null;
+      cacheReadPricePer1M = model.cacheReadPriceUsdPer1M ? roundPrice(model.cacheReadPriceUsdPer1M * 7.25) : null;
+    } else {
+      inputPricePer1M = model.inputPriceUsdPer1M;
+      outputPricePer1M = model.outputPriceUsdPer1M;
+      cacheWritePricePer1M = model.cacheWritePriceUsdPer1M;
+      cacheReadPricePer1M = model.cacheReadPriceUsdPer1M;
+    }
+  }
+
+  let inputPriceUsdPer1M = model.inputPriceUsdPer1M;
+  let outputPriceUsdPer1M = model.outputPriceUsdPer1M;
+  let cacheWritePriceUsdPer1M = model.cacheWritePriceUsdPer1M;
+  let cacheReadPriceUsdPer1M = model.cacheReadPriceUsdPer1M;
+
+  if (inputPriceUsdPer1M === undefined || inputPriceUsdPer1M === null) {
+    if (isDomestic) {
+      inputPriceUsdPer1M = inputPricePer1M ? roundPrice(inputPricePer1M / 7.25) : null;
+      outputPriceUsdPer1M = outputPricePer1M ? roundPrice(outputPricePer1M / 7.25) : null;
+      cacheWritePriceUsdPer1M = cacheWritePricePer1M ? roundPrice(cacheWritePricePer1M / 7.25) : null;
+      cacheReadPriceUsdPer1M = cacheReadPricePer1M ? roundPrice(cacheReadPricePer1M / 7.25) : null;
+    } else {
+      inputPriceUsdPer1M = inputPricePer1M;
+      outputPriceUsdPer1M = outputPricePer1M;
+      cacheWritePriceUsdPer1M = cacheWritePricePer1M;
+      cacheReadPriceUsdPer1M = cacheReadPricePer1M;
+    }
+  }
 
   return {
     id: model.id,
@@ -390,10 +431,15 @@ function normalizeModel(model, sourceIndex, timestamp) {
     provider: model.provider,
     family: model.family || model.provider,
     description: model.description || "",
-    inputPriceUsdPer1M: isNumber(model.inputPriceUsdPer1M) ? roundPrice(model.inputPriceUsdPer1M) : null,
-    outputPriceUsdPer1M: isNumber(model.outputPriceUsdPer1M) ? roundPrice(model.outputPriceUsdPer1M) : null,
-    cacheWritePriceUsdPer1M: isNumber(model.cacheWritePriceUsdPer1M) ? roundPrice(model.cacheWritePriceUsdPer1M) : null,
-    cacheReadPriceUsdPer1M: isNumber(model.cacheReadPriceUsdPer1M) ? roundPrice(model.cacheReadPriceUsdPer1M) : null,
+    currency,
+    inputPricePer1M: isNumber(inputPricePer1M) ? roundPrice(inputPricePer1M) : null,
+    outputPricePer1M: isNumber(outputPricePer1M) ? roundPrice(outputPricePer1M) : null,
+    cacheWritePricePer1M: isNumber(cacheWritePricePer1M) ? roundPrice(cacheWritePricePer1M) : null,
+    cacheReadPricePer1M: isNumber(cacheReadPricePer1M) ? roundPrice(cacheReadPricePer1M) : null,
+    inputPriceUsdPer1M: isNumber(inputPriceUsdPer1M) ? roundPrice(inputPriceUsdPer1M) : null,
+    outputPriceUsdPer1M: isNumber(outputPriceUsdPer1M) ? roundPrice(outputPriceUsdPer1M) : null,
+    cacheWritePriceUsdPer1M: isNumber(cacheWritePriceUsdPer1M) ? roundPrice(cacheWritePriceUsdPer1M) : null,
+    cacheReadPriceUsdPer1M: isNumber(cacheReadPriceUsdPer1M) ? roundPrice(cacheReadPriceUsdPer1M) : null,
     contextWindow: Number.isFinite(model.contextWindow) ? model.contextWindow : null,
     maxOutputTokens: Number.isFinite(model.maxOutputTokens) ? model.maxOutputTokens : null,
     capabilities: Array.isArray(model.capabilities) ? model.capabilities : [],
@@ -402,7 +448,7 @@ function normalizeModel(model, sourceIndex, timestamp) {
     sourceUrl: model.sourceUrl || source.url || "",
     sourceLabel: model.sourceLabel || source.label || DEFAULT_SOURCE_LABEL,
     detailPath: model.detailPath || "",
-    pricingNotes: model.pricingNotes || "模拟数据，字段结构可直接切换到真实抓取结果。",
+    pricingNotes: model.pricingNotes || "由 JSON 数据驱动，自适应官方币种价格展示。",
     updatedAt: timestamp,
     sourceType: model.sourceType || "fallback"
   };
@@ -410,6 +456,10 @@ function normalizeModel(model, sourceIndex, timestamp) {
 
 function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDate) {
   const timestamp = providerModel.updated_at || buildTimestamp(targetDate);
+  const isDomestic = ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(providerModel.provider);
+
+  const inputPrice = providerModel.input_price_usd_per_1m;
+  const outputPrice = providerModel.output_price_usd_per_1m;
 
   return normalizeModel(
     {
@@ -419,10 +469,14 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
       provider: providerModel.provider,
       family: baseModel?.family || providerModel.name.split(/\s+/)[0] || providerModel.provider,
       description: baseModel?.description || `抓取自 ${providerModel.provider} 官方定价页。`,
-      inputPriceUsdPer1M: providerModel.input_price_usd_per_1m,
-      outputPriceUsdPer1M: providerModel.output_price_usd_per_1m,
+      inputPricePer1M: isDomestic ? roundPrice(inputPrice * 7.25) : inputPrice,
+      outputPricePer1M: isDomestic ? roundPrice(outputPrice * 7.25) : outputPrice,
+      inputPriceUsdPer1M: isDomestic ? inputPrice : inputPrice,
+      outputPriceUsdPer1M: isDomestic ? outputPrice : outputPrice,
       cacheWritePriceUsdPer1M: baseModel?.cacheWritePriceUsdPer1M ?? null,
       cacheReadPriceUsdPer1M: baseModel?.cacheReadPriceUsdPer1M ?? null,
+      cacheWritePricePer1M: baseModel?.cacheWritePricePer1M ?? null,
+      cacheReadPricePer1M: baseModel?.cacheReadPricePer1M ?? null,
       contextWindow: baseModel?.contextWindow ?? null,
       maxOutputTokens: baseModel?.maxOutputTokens ?? null,
       capabilities: baseModel?.capabilities || ["文本"],
