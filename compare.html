@@ -655,6 +655,29 @@
       return `${symbol}${formatted}`;
     }
 
+    function formatModelPrice(model, type) {
+      const keyMap = {
+        input: { native: 'inputPricePer1M', usd: 'inputPriceUsdPer1M' },
+        output: { native: 'outputPricePer1M', usd: 'outputPriceUsdPer1M' },
+        cacheWrite: { native: 'cacheWritePricePer1M', usd: 'cacheWritePriceUsdPer1M' },
+        cacheRead: { native: 'cacheReadPricePer1M', usd: 'cacheReadPriceUsdPer1M' }
+      };
+
+      const keys = keyMap[type];
+      if (!keys) return '待更新';
+
+      const nativeVal = model[keys.native];
+      const usdVal = model[keys.usd];
+
+      if (nativeVal === null || nativeVal === undefined) return '待更新';
+
+      if (model.hasOfficialDualCurrency && usdVal !== null && usdVal !== undefined) {
+        return `${formatPrice(nativeVal, 'CNY')} / ${formatPrice(usdVal, 'USD')}`;
+      }
+
+      return formatPrice(nativeVal, model.currency);
+    }
+
     function formatContext(value) {
       return Number.isFinite(value) ? `${value.toLocaleString('en-US')} tokens` : '待更新';
     }
@@ -922,29 +945,29 @@
         },
         {
           label: '输入价 / 1M tokens',
-          leftHtml: formatPrice(leftModel.inputPricePer1M, leftModel.currency),
-          rightHtml: formatPrice(rightModel.inputPricePer1M, rightModel.currency),
+          leftHtml: formatModelPrice(leftModel, 'input'),
+          rightHtml: formatModelPrice(rightModel, 'input'),
           leftClass: getPriceCellClass('left', leftModel.inputPriceUsdPer1M, rightModel.inputPriceUsdPer1M),
           rightClass: getPriceCellClass('right', leftModel.inputPriceUsdPer1M, rightModel.inputPriceUsdPer1M)
         },
         {
           label: '输出价 / 1M tokens',
-          leftHtml: formatPrice(leftModel.outputPricePer1M, leftModel.currency),
-          rightHtml: formatPrice(rightModel.outputPricePer1M, rightModel.currency),
+          leftHtml: formatModelPrice(leftModel, 'output'),
+          rightHtml: formatModelPrice(rightModel, 'output'),
           leftClass: getPriceCellClass('left', leftModel.outputPriceUsdPer1M, rightModel.outputPriceUsdPer1M),
           rightClass: getPriceCellClass('right', leftModel.outputPriceUsdPer1M, rightModel.outputPriceUsdPer1M)
         },
         {
           label: '缓存写价',
-          leftHtml: formatPrice(leftModel.cacheWritePricePer1M, leftModel.currency),
-          rightHtml: formatPrice(rightModel.cacheWritePricePer1M, rightModel.currency),
+          leftHtml: formatModelPrice(leftModel, 'cacheWrite'),
+          rightHtml: formatModelPrice(rightModel, 'cacheWrite'),
           leftClass: getPriceCellClass('left', leftModel.cacheWritePriceUsdPer1M, rightModel.cacheWritePriceUsdPer1M),
           rightClass: getPriceCellClass('right', leftModel.cacheWritePriceUsdPer1M, rightModel.cacheWritePriceUsdPer1M)
         },
         {
           label: '缓存读价',
-          leftHtml: formatPrice(leftModel.cacheReadPricePer1M, leftModel.currency),
-          rightHtml: formatPrice(rightModel.cacheReadPricePer1M, rightModel.currency),
+          leftHtml: formatModelPrice(leftModel, 'cacheRead'),
+          rightHtml: formatModelPrice(rightModel, 'cacheRead'),
           leftClass: getPriceCellClass('left', leftModel.cacheReadPriceUsdPer1M, rightModel.cacheReadPriceUsdPer1M),
           rightClass: getPriceCellClass('right', leftModel.cacheReadPriceUsdPer1M, rightModel.cacheReadPriceUsdPer1M)
         },

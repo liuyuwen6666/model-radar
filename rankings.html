@@ -552,6 +552,29 @@
       return `${symbol}${formatted}`;
     }
 
+    function formatModelPrice(model, type) {
+      const keyMap = {
+        input: { native: 'inputPricePer1M', usd: 'inputPriceUsdPer1M' },
+        output: { native: 'outputPricePer1M', usd: 'outputPriceUsdPer1M' },
+        cacheWrite: { native: 'cacheWritePricePer1M', usd: 'cacheWritePriceUsdPer1M' },
+        cacheRead: { native: 'cacheReadPricePer1M', usd: 'cacheReadPriceUsdPer1M' }
+      };
+
+      const keys = keyMap[type];
+      if (!keys) return '待更新';
+
+      const nativeVal = model[keys.native];
+      const usdVal = model[keys.usd];
+
+      if (nativeVal === null || nativeVal === undefined) return '待更新';
+
+      if (model.hasOfficialDualCurrency && usdVal !== null && usdVal !== undefined) {
+        return `${formatPrice(nativeVal, 'CNY')} / ${formatPrice(usdVal, 'USD')}`;
+      }
+
+      return formatPrice(nativeVal, model.currency);
+    }
+
     function getNativeKeyAndValue(model, key) {
       if (key === 'inputPriceUsdPer1M') {
         return { value: model.inputPricePer1M, currency: model.currency || 'USD' };
@@ -599,6 +622,19 @@
         .slice(0, 10);
     }
 
+    function getFormattedValue(model, ranking) {
+      if (ranking.key === 'inputPriceUsdPer1M') {
+        return formatModelPrice(model, 'input');
+      }
+      if (ranking.key === 'outputPriceUsdPer1M') {
+        return formatModelPrice(model, 'output');
+      }
+      if (ranking.key === 'cacheReadPriceUsdPer1M') {
+        return formatModelPrice(model, 'cacheRead');
+      }
+      return ranking.formatter(model[ranking.key]);
+    }
+
     function renderSummary(payload, rankingResults) {
       const firstItems = rankingResults
         .map((ranking) => ranking.models[0] ? { ranking, model: ranking.models[0] } : null)
@@ -615,13 +651,12 @@
       }
 
       rankingSummaryList.innerHTML = firstItems.map((item) => {
-        const { value, currency } = getNativeKeyAndValue(item.model, item.ranking.key);
         return `
         <li>
           <span class="tag good">No.1</span>
           <div>
             <strong>${escapeHtml(item.ranking.title)}</strong><br>
-            <span class="updated">${escapeHtml(item.model.name)} · ${escapeHtml(item.ranking.formatter(value, currency))}</span>
+            <span class="updated">${escapeHtml(item.model.name)} · ${escapeHtml(getFormattedValue(item.model, item.ranking))}</span>
           </div>
         </li>
       `; }).join('');
@@ -658,7 +693,6 @@
               </thead>
               <tbody>
                 ${models.map((model, index) => {
-                  const { value, currency } = getNativeKeyAndValue(model, ranking.key);
                   return `
                   <tr>
                     <td class="mono">#${index + 1}</td>
@@ -671,7 +705,7 @@
                       <span class="provider">${escapeHtml(model.description || model.family || '')}</span>
                     </td>
                     <td>${escapeHtml(model.provider)}</td>
-                    <td class="mono">${escapeHtml(ranking.formatter(value, currency))}</td>
+                    <td class="mono">${escapeHtml(getFormattedValue(model, ranking))}</td>
                   </tr>
                 `; }).join('')}
               </tbody>

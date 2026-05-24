@@ -501,19 +501,28 @@
       credibilityEl.style.color = model.sourceType === 'provider' ? 'var(--good)' : 'var(--warn)';
       document.getElementById('infoContext').textContent = formatContext(model.contextWindow);
 
-      function formatDetailPrice(price, curr) {
-        if (price === null || price === undefined) return '待更新';
-        const symbol = curr === 'CNY' ? '¥' : '$';
-        let formatted = price.toFixed(4);
-        while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
-          formatted = formatted.slice(0, -1);
+      function formatDetailPrice(nativeVal, usdVal, curr) {
+        if (nativeVal === null || nativeVal === undefined) return '待更新';
+        
+        function formatSingle(val, c) {
+          const symbol = c === 'CNY' ? '¥' : '$';
+          let formatted = val.toFixed(4);
+          while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
+            formatted = formatted.slice(0, -1);
+          }
+          return `${symbol}${formatted}`;
         }
-        return `${symbol}${formatted}/1M`;
+
+        if (model.hasOfficialDualCurrency && usdVal !== null && usdVal !== undefined) {
+          return `${formatSingle(nativeVal, 'CNY')} / ${formatSingle(usdVal, 'USD')}/1M`;
+        }
+
+        return `${formatSingle(nativeVal, curr)}/1M`;
       }
 
-      document.getElementById('infoInputPrice').textContent = formatDetailPrice(inPrice, currency);
-      document.getElementById('infoOutputPrice').textContent = formatDetailPrice(outPrice, currency);
-      document.getElementById('infoCachePrice').textContent = cacheReadPrice !== null ? formatDetailPrice(cacheReadPrice, currency) : '无';
+      document.getElementById('infoInputPrice').textContent = formatDetailPrice(inPrice, model.inputPriceUsdPer1M, currency);
+      document.getElementById('infoOutputPrice').textContent = formatDetailPrice(outPrice, model.outputPriceUsdPer1M, currency);
+      document.getElementById('infoCachePrice').textContent = cacheReadPrice !== null ? formatDetailPrice(cacheReadPrice, model.cacheReadPriceUsdPer1M, currency) : '无';
       document.getElementById('infoUpdated').textContent = model.updatedAt ? model.updatedAt.slice(0, 10) : '未知';
       
       document.getElementById('linkModel').href = `/model/${encodeURIComponent(model.id)}`;

@@ -661,6 +661,29 @@
       return `${symbol}${formatted}`;
     }
 
+    function formatModelPrice(model, type) {
+      const keyMap = {
+        input: { native: 'inputPricePer1M', usd: 'inputPriceUsdPer1M' },
+        output: { native: 'outputPricePer1M', usd: 'outputPriceUsdPer1M' },
+        cacheWrite: { native: 'cacheWritePricePer1M', usd: 'cacheWritePriceUsdPer1M' },
+        cacheRead: { native: 'cacheReadPricePer1M', usd: 'cacheReadPriceUsdPer1M' }
+      };
+
+      const keys = keyMap[type];
+      if (!keys) return '待更新';
+
+      const nativeVal = model[keys.native];
+      const usdVal = model[keys.usd];
+
+      if (nativeVal === null || nativeVal === undefined) return '待更新';
+
+      if (model.hasOfficialDualCurrency && usdVal !== null && usdVal !== undefined) {
+        return `${formatPrice(nativeVal, 'CNY')} / ${formatPrice(usdVal, 'USD')}`;
+      }
+
+      return formatPrice(nativeVal, model.currency);
+    }
+
     function formatContext(value) {
       return Number.isFinite(value) ? `${value.toLocaleString('en-US')} tokens` : '待更新';
     }
@@ -735,11 +758,11 @@
       const parts = [];
 
       if (typeof model.cacheWritePricePer1M === 'number') {
-        parts.push(`写入 ${formatPrice(model.cacheWritePricePer1M, model.currency)}`);
+        parts.push(`写入 ${formatModelPrice(model, 'cacheWrite')}`);
       }
 
       if (typeof model.cacheReadPricePer1M === 'number') {
-        parts.push(`读取 ${formatPrice(model.cacheReadPricePer1M, model.currency)}`);
+        parts.push(`读取 ${formatModelPrice(model, 'cacheRead')}`);
       }
 
       return parts.length ? parts.join(' / ') : '待更新';
@@ -750,21 +773,24 @@
       const description = `${model.name}（${model.provider}）的输入价、输出价、缓存价格、上下文长度、更新时间、官方来源和价格变化记录。`;
       const canonicalUrl = `https://modelradar.cn/model/${encodeURIComponent(model.id)}`;
       const descriptionMeta = document.querySelector('meta[name="description"]');
-      const canonicalLink = document.querySelector('link[rel="canonical"]');
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      const ogDescription = document.querySelector('meta[property="og:description"]');
-      const ogUrl = document.querySelector('meta[property="og:url"]');
-      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-      const twitterDescription = document.querySelector('meta[name="twitter:description"]');
-
+      if (descriptionMeta) {
+        descriptionMeta.setAttribute('content', description);
+      }
       document.title = title;
-      if (descriptionMeta) descriptionMeta.setAttribute('content', description);
-      if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
+      
+      const canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (canonicalLink) {
+        canonicalLink.setAttribute('href', canonicalUrl);
+      }
+
+      const ogTitle = document.querySelector('meta[property="og:title"]');
       if (ogTitle) ogTitle.setAttribute('content', title);
-      if (ogDescription) ogDescription.setAttribute('content', description);
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', description);
+      const ogUrl = document.querySelector('meta[property="og:url"]');
       if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
-      if (twitterTitle) twitterTitle.setAttribute('content', title);
-      if (twitterDescription) twitterDescription.setAttribute('content', description);
+      
+      updateModelStructuredData(model);
     }
 
     function updateModelStructuredData(model) {
@@ -788,10 +814,6 @@
           name: 'ModelRadar',
           url: 'https://modelradar.cn/'
         },
-        provider: {
-          '@type': 'Organization',
-          name: model.provider
-        },
         dateModified: model.updatedAt || undefined,
         isBasedOn: model.sourceUrl || undefined,
         license: 'https://modelradar.cn/'
@@ -813,8 +835,8 @@
         : '<span style="font-size: 14px; background: #fffbeb; color: #d97706; padding: 4px 10px; border-radius: 999px; margin-left: 10px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>';
       modelNameEl.innerHTML = `${escapeHtml(model.name || model.id)} ${credibilityBadge}`;
       modelDescriptionEl.textContent = model.description || `${model.provider} 模型详情页。`;
-      inputPriceStat.textContent = formatPrice(model.inputPricePer1M, model.currency);
-      outputPriceStat.textContent = formatPrice(model.outputPricePer1M, model.currency);
+      inputPriceStat.textContent = formatModelPrice(model, 'input');
+      outputPriceStat.textContent = formatModelPrice(model, 'output');
       contextStat.textContent = formatContext(model.contextWindow);
       updatedLabel.textContent = `最后更新：${formatUpdatedLabel(model.updatedAt)}`;
       providerValue.textContent = model.provider || '未知';
@@ -842,22 +864,22 @@
         },
         {
           label: '输入价格',
-          value: formatPrice(model.inputPricePer1M, model.currency),
+          value: formatModelPrice(model, 'input'),
           helper: '单位为每 100 万 tokens。'
         },
         {
           label: '输出价格',
-          value: formatPrice(model.outputPricePer1M, model.currency),
+          value: formatModelPrice(model, 'output'),
           helper: '单位为每 100 万 tokens。'
         },
         {
           label: '缓存写价',
-          value: formatPrice(model.cacheWritePricePer1M, model.currency),
+          value: formatModelPrice(model, 'cacheWrite'),
           helper: '如果厂商未公开，则显示待更新。'
         },
         {
           label: '缓存读价',
-          value: formatPrice(model.cacheReadPricePer1M, model.currency),
+          value: formatModelPrice(model, 'cacheRead'),
           helper: '如果厂商未公开，则显示待更新。'
         },
         {

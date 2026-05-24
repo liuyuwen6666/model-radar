@@ -508,6 +508,29 @@
       return `${symbol}${formatted}`;
     }
 
+    function formatModelPrice(model, type) {
+      const keyMap = {
+        input: { native: 'inputPricePer1M', usd: 'inputPriceUsdPer1M' },
+        output: { native: 'outputPricePer1M', usd: 'outputPriceUsdPer1M' },
+        cacheWrite: { native: 'cacheWritePricePer1M', usd: 'cacheWritePriceUsdPer1M' },
+        cacheRead: { native: 'cacheReadPricePer1M', usd: 'cacheReadPriceUsdPer1M' }
+      };
+
+      const keys = keyMap[type];
+      if (!keys) return '待更新';
+
+      const nativeVal = model[keys.native];
+      const usdVal = model[keys.usd];
+
+      if (nativeVal === null || nativeVal === undefined) return '待更新';
+
+      if (model.hasOfficialDualCurrency && usdVal !== null && usdVal !== undefined) {
+        return `${formatPrice(nativeVal, 'CNY')} / ${formatPrice(usdVal, 'USD')}`;
+      }
+
+      return formatPrice(nativeVal, model.currency);
+    }
+
     function formatContext(value) {
       return Number.isFinite(value) ? `${(value / 1000).toFixed(0)}K` : '待更新';
     }
@@ -569,8 +592,8 @@
                 : '<span style="font-size: 11px; background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>'
               }
             </td>
-            <td class="mono">${formatPrice(m.inputPricePer1M, m.currency)}</td>
-            <td class="mono">${formatPrice(m.outputPricePer1M, m.currency)}</td>
+            <td class="mono">${formatModelPrice(m, 'input')}</td>
+            <td class="mono">${formatModelPrice(m, 'output')}</td>
             <td class="mono">${formatContext(m.contextWindow)}</td>
             <td><span class="tag ${['active', 'stable', 'live'].includes(m.status) ? 'good' : 'warn'}">${['active', 'stable', 'live'].includes(m.status) ? '运行中' : '测试中'}</span></td>
             <td><a href="${m.sourceUrl}" target="_blank" rel="nofollow noopener" style="color:var(--muted);text-decoration:underline;">官方链接</a></td>

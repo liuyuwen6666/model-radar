@@ -384,7 +384,7 @@ function buildBaseIndex(models) {
 function normalizeModel(model, sourceIndex, timestamp) {
   const source = sourceIndex.get(model.provider) || {};
   const isDomestic = ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(model.provider);
-  const currency = isDomestic ? "CNY" : "USD";
+  const currency = model.currency || (isDomestic ? "CNY" : "USD");
 
   // 获取高精度官方价格
   let inputPricePer1M = model.inputPricePer1M;
@@ -432,6 +432,7 @@ function normalizeModel(model, sourceIndex, timestamp) {
     family: model.family || model.provider,
     description: model.description || "",
     currency,
+    hasOfficialDualCurrency: model.hasOfficialDualCurrency || false,
     inputPricePer1M: isNumber(inputPricePer1M) ? roundPrice(inputPricePer1M) : null,
     outputPricePer1M: isNumber(outputPricePer1M) ? roundPrice(outputPricePer1M) : null,
     cacheWritePricePer1M: isNumber(cacheWritePricePer1M) ? roundPrice(cacheWritePricePer1M) : null,
@@ -455,11 +456,20 @@ function normalizeModel(model, sourceIndex, timestamp) {
 }
 
 function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDate) {
-  const timestamp = providerModel.updated_at || buildTimestamp(targetDate);
+  const timestamp = providerModel.updatedAt || providerModel.updated_at || buildTimestamp(targetDate);
   const isDomestic = ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(providerModel.provider);
 
-  const inputPrice = providerModel.input_price_usd_per_1m;
-  const outputPrice = providerModel.output_price_usd_per_1m;
+  const hasRawPrices = providerModel.inputPricePer1M !== undefined;
+  const currency = providerModel.currency || (isDomestic ? "CNY" : "USD");
+
+  const inputPrice = hasRawPrices ? providerModel.inputPricePer1M : providerModel.input_price_usd_per_1m;
+  const outputPrice = hasRawPrices ? providerModel.outputPricePer1M : providerModel.output_price_usd_per_1m;
+
+  const inputPriceUsd = hasRawPrices ? providerModel.inputPriceUsdPer1M : (isDomestic ? inputPrice : inputPrice);
+  const outputPriceUsd = hasRawPrices ? providerModel.outputPriceUsdPer1M : (isDomestic ? outputPrice : outputPrice);
+
+  const cacheReadPrice = hasRawPrices ? providerModel.cacheReadPricePer1M : (baseModel?.cacheReadPricePer1M ?? null);
+  const cacheReadPriceUsd = hasRawPrices ? providerModel.cacheReadPriceUsdPer1M : (baseModel?.cacheReadPriceUsdPer1M ?? null);
 
   return normalizeModel(
     {
@@ -469,23 +479,25 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
       provider: providerModel.provider,
       family: baseModel?.family || providerModel.name.split(/\s+/)[0] || providerModel.provider,
       description: baseModel?.description || `抓取自 ${providerModel.provider} 官方定价页。`,
-      inputPricePer1M: isDomestic ? roundPrice(inputPrice * 7.25) : inputPrice,
-      outputPricePer1M: isDomestic ? roundPrice(outputPrice * 7.25) : outputPrice,
-      inputPriceUsdPer1M: isDomestic ? inputPrice : inputPrice,
-      outputPriceUsdPer1M: isDomestic ? outputPrice : outputPrice,
+      currency,
+      hasOfficialDualCurrency: providerModel.hasOfficialDualCurrency || false,
+      inputPricePer1M: inputPrice,
+      outputPricePer1M: outputPrice,
+      inputPriceUsdPer1M: inputPriceUsd,
+      outputPriceUsdPer1M: outputPriceUsd,
       cacheWritePriceUsdPer1M: baseModel?.cacheWritePriceUsdPer1M ?? null,
-      cacheReadPriceUsdPer1M: baseModel?.cacheReadPriceUsdPer1M ?? null,
+      cacheReadPriceUsdPer1M: cacheReadPriceUsd,
       cacheWritePricePer1M: baseModel?.cacheWritePricePer1M ?? null,
-      cacheReadPricePer1M: baseModel?.cacheReadPricePer1M ?? null,
+      cacheReadPricePer1M: cacheReadPrice,
       contextWindow: baseModel?.contextWindow ?? null,
       maxOutputTokens: baseModel?.maxOutputTokens ?? null,
       capabilities: baseModel?.capabilities || ["文本"],
       recommendedFor: baseModel?.recommendedFor || ["待补充"],
       status: baseModel?.status || "live",
-      sourceUrl: providerModel.source_url,
+      sourceUrl: providerModel.sourceUrl || providerModel.source_url,
       sourceLabel: baseModel?.sourceLabel,
       detailPath: baseModel?.detailPath || `/model/${providerModel.id}`,
-      pricingNotes: "由 provider 抓取器从官方定价页解析得到。",
+      pricingNotes: providerModel.pricingNotes || "由 provider 抓取器从官方定价页解析得到。",
       updatedAt: timestamp,
       sourceType: "provider"
     },

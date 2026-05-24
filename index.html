@@ -743,6 +743,29 @@
       return `${symbol}${formatted}`;
     }
 
+    function formatModelPrice(model, type) {
+      const keyMap = {
+        input: { native: 'inputPricePer1M', usd: 'inputPriceUsdPer1M' },
+        output: { native: 'outputPricePer1M', usd: 'outputPriceUsdPer1M' },
+        cacheWrite: { native: 'cacheWritePricePer1M', usd: 'cacheWritePriceUsdPer1M' },
+        cacheRead: { native: 'cacheReadPricePer1M', usd: 'cacheReadPriceUsdPer1M' }
+      };
+
+      const keys = keyMap[type];
+      if (!keys) return '待更新';
+
+      const nativeVal = model[keys.native];
+      const usdVal = model[keys.usd];
+
+      if (nativeVal === null || nativeVal === undefined) return '待更新';
+
+      if (model.hasOfficialDualCurrency && usdVal !== null && usdVal !== undefined) {
+        return `${formatPrice(nativeVal, 'CNY')} / ${formatPrice(usdVal, 'USD')}`;
+      }
+
+      return formatPrice(nativeVal, model.currency);
+    }
+
     function formatContext(value) {
       return Number.isFinite(value) ? `${value.toLocaleString('en-US')} tokens` : '待更新';
     }
@@ -878,8 +901,8 @@
           <tr data-provider="${escapeHtml(model.provider)}">
             <td>${modelLink}<br><span class="provider">${escapeHtml(model.description || model.family || '')}</span></td>
             <td>${escapeHtml(model.provider)}</td>
-            <td class="mono">${formatPrice(model.inputPricePer1M, model.currency)}</td>
-            <td class="mono">${formatPrice(model.outputPricePer1M, model.currency)}</td>
+            <td class="mono">${formatModelPrice(model, 'input')}</td>
+            <td class="mono">${formatModelPrice(model, 'output')}</td>
             <td>${formatContext(model.contextWindow)}</td>
             <td>${buildTags(model.capabilities)}</td>
             <td>${escapeHtml((model.recommendedFor || []).join('、') || '待补充')}</td>
