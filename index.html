@@ -75,15 +75,12 @@
         <span>模型价格雷达</span>
       </a>
       <nav class="nav-links" aria-label="主导航">
-        <a href="#models">模型价格</a>
+        <a href="/" aria-current="page">首页</a>
         <a href="/history">价格历史</a>
         <a href="/rankings">模型排行</a>
         <a href="/compare">模型对比</a>
-        
-        <a href="/calculator">成本计算器</a> ·
-        <a href="/provider">AI 厂商</a> ·<a href="#calculator">成本计算器</a>
-        <a href="#changelog">价格变更</a>
-        <a href="#workflow">玩法工作流</a>
+        <a href="/calculator">成本计算器</a>
+        <a href="/api">API</a>
         <a href="/en/">English</a>
       </nav>
     </div>
@@ -229,7 +226,7 @@
       </div>
     </section>
 
-    <section class="faq" aria-labelledby="faq-title">
+    <section class="faq" id="faq" aria-labelledby="faq-title">
       <div class="container">
         <div class="section-title">
           <div>
@@ -615,6 +612,77 @@
 
     calculateCost();
     loadData();
+  </script>
+
+  <!-- 右侧悬浮竖向锚点导航 (仅在宽屏显示，避免遮挡内容) -->
+  <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden min-[1320px]:flex flex-col gap-4 p-3 bg-white/[0.68] backdrop-blur-lg border border-slate-200/80 rounded-full shadow-[0_12px_36px_rgba(15,23,42,0.06)]" aria-label="页面快速导览">
+    <a href="#main" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="回到顶部">
+      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">回到顶部</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    </a>
+    <a href="#changelog" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="今日变更">
+      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">今日变更</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    </a>
+    <a href="#models" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="模型价格表">
+      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">模型价格表</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    </a>
+    <a href="#calculator" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="成本计算器">
+      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">成本计算器</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    </a>
+    <a href="#workflow" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="未来规划">
+      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">未来规划</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    </a>
+    <a href="#faq" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="常见问题">
+      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">常见问题</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    </a>
+  </nav>
+
+  <!-- ScrollSpy 交互逻辑 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = [
+        document.querySelector('#main'),
+        document.querySelector('#changelog'),
+        document.querySelector('#models'),
+        document.querySelector('#calculator'),
+        document.querySelector('#workflow'),
+        document.querySelector('#faq')
+      ];
+      const navLinks = document.querySelectorAll('nav[aria-label="页面快速导览"] a');
+
+      const observerOptions = {
+        root: null,
+        rootMargin: '-30% 0px -45% 0px', // 精准判定当前可见区域所在的主体板块
+        threshold: 0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              const dot = link.querySelector('span:last-child');
+              if (link.getAttribute('href') === `#${id}`) {
+                dot.classList.remove('bg-slate-400');
+                dot.classList.add('bg-blue-600', 'scale-125', 'ring-4', 'ring-blue-600/20');
+              } else {
+                dot.classList.remove('bg-blue-600', 'scale-125', 'ring-4', 'ring-blue-600/20');
+                dot.classList.add('bg-slate-400');
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => {
+        if (section) observer.observe(section);
+      });
+    });
   </script>
 </body>
 </html>
