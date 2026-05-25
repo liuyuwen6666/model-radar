@@ -693,6 +693,98 @@ async function updateSitemap(dataset) {
   );
 }
 
+function sortModels(models) {
+  return [...models].sort((left, right) => {
+    const providerWeights = {
+      "OpenAI": 100,
+      "Anthropic": 90,
+      "Google": 80,
+      "DeepSeek": 70,
+      "月之暗面": 60,
+      "阿里通义": 50,
+      "字节豆包": 40,
+      "腾讯混元": 30
+    };
+    const weightL = providerWeights[left.provider] || 0;
+    const weightR = providerWeights[right.provider] || 0;
+    
+    if (weightL !== weightR) {
+      return weightR - weightL; // Priority provider first
+    }
+    
+    const checkLegacy = (model) => {
+      const status = String(model.status || '').toLowerCase();
+      if (status === 'legacy' || status === 'deprecated' || status === 'inactive') {
+        return true;
+      }
+      const desc = String(model.description || '').toLowerCase();
+      const name = String(model.name || '').toLowerCase();
+      const id = String(model.id || '').toLowerCase();
+      return desc.includes('废弃') || desc.includes('旧版') || desc.includes('legacy') || desc.includes('deprecated') || desc.includes('inactive') || desc.includes('停用') ||
+             name.includes('废弃') || name.includes('旧版') || name.includes('legacy') || name.includes('deprecated') || name.includes('inactive') || name.includes('停用') ||
+             id.includes('legacy') || id.includes('deprecated') || id.includes('inactive');
+    };
+    
+    const isLegacyL = checkLegacy(left);
+    const isLegacyR = checkLegacy(right);
+    
+    if (isLegacyL !== isLegacyR) {
+      return isLegacyL ? 1 : -1; // Inactive/Legacy models to the bottom
+    }
+    
+    function getModelRank(model) {
+      const id = model.id.toLowerCase();
+      
+      // OpenAI flagship ranking
+      if (id.includes('gpt-5-5-pro')) return 100;
+      if (id.includes('gpt-5-5')) return 99;
+      if (id.includes('gpt-5-4-pro')) return 95;
+      if (id.includes('gpt-5-4-mini')) return 92;
+      if (id.includes('gpt-5-4-nano')) return 91;
+      if (id.includes('gpt-5-4')) return 94;
+      if (id.includes('gpt-5-3-codex')) return 80;
+      
+      // Anthropic flagship ranking
+      if (id.includes('opus')) return 100;
+      if (id.includes('sonnet')) return 90;
+      if (id.includes('haiku')) return 80;
+      
+      // Gemini flagship ranking
+      if (id.includes('gemini-2-5-pro')) return 100;
+      if (id.includes('gemini-2-5-flash')) return 90;
+      
+      // Kimi flagship ranking
+      if (id.includes('kimi-k2-6')) return 100;
+      if (id.includes('kimi-k2-5')) return 90;
+      if (id.includes('kimi-latest-128k')) return 80;
+      
+      // DeepSeek flagship ranking
+      if (id.includes('deepseek-v4-pro')) return 100;
+      if (id.includes('deepseek-v4-flash')) return 90;
+
+      // Extract version decimal float from name or id
+      const nameMatch = model.name.match(/(\d+\.\d+)/);
+      if (nameMatch) {
+        return Number(nameMatch[1]) * 10;
+      }
+      const idMatch = model.id.match(/(\d+-\d+)/);
+      if (idMatch) {
+        return Number(idMatch[1].replace('-', '.')) * 10;
+      }
+      return 0;
+    }
+    
+    const rankL = getModelRank(left);
+    const rankR = getModelRank(right);
+    
+    if (rankL !== rankR) {
+      return rankR - rankL; // Higher rank first
+    }
+    
+    return left.name.localeCompare(right.name, "zh-CN");
+  });
+}
+
 async function main() {
   const targetDate = getTargetDate();
   const currentDataset = await readJson(MODELS_PATH, null);
@@ -724,15 +816,33 @@ async function main() {
     targetDate,
     shouldSimulateFallback
   );
-  const nextDataset = buildDataset(nextModels, targetDate);
+  
+  // Sort models elegantly based on priority, version, and legacy status
+  const sortedModels = sortModels(nextModels);
+  const nextDataset = buildDataset(sortedModels, targetDate);
+  
+  // Synchronize sources.json's models list with newly parsed and current models dynamically
+  for (const source of sourceList) {
+    const providerModelIds = sortedModels
+      .filter((model) => model.provider === source.provider)
+      .map((model) => model.id);
+    source.models = providerModelIds;
+  }
+  
   const historySnapshotPath = getHistorySnapshotPath(targetDate);
 
-  await Promise.all([writeJson(MODELS_PATH, nextDataset), writeJson(historySnapshotPath, nextDataset)]);
+  await Promise.all([
+    writeJson(MODELS_PATH, nextDataset),
+    writeJson(historySnapshotPath, nextDataset),
+    writeJson(SOURCES_PATH, sourceList)
+  ]);
+  
   console.log(
     `[update] wrote history snapshot ${
       path.relative(ROOT_DIR, historySnapshotPath) || path.basename(historySnapshotPath)
     }`
   );
+  console.log(`[update] dynamically synchronized ${sourceList.length} sources inside sources.json`);
   await updateSitemap(nextDataset);
   console.log(`Updated ${nextModels.length} models for ${targetDate}`);
 }
