@@ -1,7 +1,8 @@
 const cheerio = require("cheerio");
 
-const ANTHROPIC_PRICING_URL = "https://www.anthropic.com/pricing";
+const ANTHROPIC_PRICING_URL = "https://claude.com/pricing";
 const MODEL_ID_MAP = {
+  opus: "anthropic-claude-3-opus",
   sonnet: "anthropic-claude-3-7-sonnet",
   haiku: "anthropic-claude-3-5-haiku"
 };
@@ -33,6 +34,14 @@ function parseUsdPerMTok(value, label) {
 
 function resolveModelIdentity(title) {
   const normalized = normalizeWhitespace(title);
+
+  if (/\bopus\b/i.test(normalized)) {
+    return {
+      family: "opus",
+      id: MODEL_ID_MAP.opus,
+      name: normalizeModelName(normalized)
+    };
+  }
 
   if (/\bsonnet\b/i.test(normalized)) {
     return {
@@ -102,6 +111,10 @@ function extractModelsFromHtml(html, options = {}) {
     const cardText = normalizeWhitespace(priceCard.text());
     const inputPrice = parseUsdPerMTok(cardText, "Input");
     const outputPrice = parseUsdPerMTok(cardText, "Output");
+    
+    // Parse prompt caching prices
+    const cacheWrite = parseUsdPerMTok(cardText, "Write");
+    const cacheRead = parseUsdPerMTok(cardText, "Read");
 
     if (inputPrice === null || outputPrice === null) {
       console.log(`[anthropic] missing input/output price for ${rawTitle}`);
@@ -114,13 +127,15 @@ function extractModelsFromHtml(html, options = {}) {
       provider: "Anthropic",
       input_price_usd_per_1m: inputPrice,
       output_price_usd_per_1m: outputPrice,
+      cache_write_price_usd_per_1m: cacheWrite,
+      cache_read_price_usd_per_1m: cacheRead,
       source_url: sourceUrl,
       updated_at: updatedAt
     };
 
     seenIds.add(model.id);
     console.log(
-      `[anthropic] parsed ${model.name} -> ${model.id} input=${model.input_price_usd_per_1m} output=${model.output_price_usd_per_1m}`
+      `[anthropic] parsed ${model.name} -> ${model.id} input=${model.input_price_usd_per_1m} output=${model.output_price_usd_per_1m} cacheWrite=${model.cache_write_price_usd_per_1m} cacheRead=${model.cache_read_price_usd_per_1m}`
     );
     results.push(model);
   });

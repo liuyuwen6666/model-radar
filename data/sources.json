@@ -15,8 +15,9 @@
   {
     "provider": "Anthropic",
     "label": "Anthropic Pricing",
-    "url": "https://www.anthropic.com/pricing",
+    "url": "https://claude.com/pricing",
     "models": [
+      "anthropic-claude-3-opus",
       "anthropic-claude-3-7-sonnet",
       "anthropic-claude-3-5-haiku"
     ]
