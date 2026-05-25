@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 
-const OPENAI_PRICING_URL = "https://openai.com/api/pricing/";
+const OPENAI_PRICING_URL = "https://developers.openai.com/api/docs/pricing";
 
 function normalizeWhitespace(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -13,64 +13,20 @@ function slugify(value) {
     .replace(/^-+|-+$/g, "");
 }
 
-function parseUsdPer1M(line) {
-  const match = normalizeWhitespace(line).match(/\$([\d.,]+)\s*\/\s*1M\s*tokens/i);
-
-  if (!match) {
-    return null;
-  }
-
-  return Number(match[1].replace(/,/g, ""));
+function cleanPrice(priceStr) {
+  if (!priceStr || priceStr === '-' || priceStr === '—') return null;
+  const match = priceStr.match(/\$([\d.,]+)/);
+  if (!match) return null;
+  return Number(match[1].replace(/,/g, ''));
 }
 
-function splitTextLines(text) {
-  return String(text || "")
-    .split("\n")
-    .map((line) => normalizeWhitespace(line))
-    .filter(Boolean);
-}
-
-function findPriceBlock(heading) {
-  const titleBlock = heading.parent();
-  let cursor = titleBlock.next();
-
-  while (cursor.length) {
-    const headingCount = cursor.find("h2").length;
-    const hasPriceHeading = normalizeWhitespace(cursor.find("h3").first().text()) === "Price";
-
-    if (hasPriceHeading) {
-      return cursor;
-    }
-
-    if (headingCount > 0) {
-      return null;
-    }
-    cursor = cursor.next();
-  }
-
-  return null;
-}
-
-function extractPriceMap($, priceBlock) {
-  const priceMap = {};
-
-  priceBlock.find("div").each((_, row) => {
-    const rowText = normalizeWhitespace($(row).text());
-    const match = rowText.match(/^(Input|Cached input|Output|Audio|Text|Image):\s*(.+)$/i);
-
-    if (!match) {
-      return;
-    }
-
-    const label = normalizeWhitespace(match[1]).toLowerCase();
-    const price = parseUsdPer1M(match[2]);
-
-    if (price !== null) {
-      priceMap[label] = price;
-    }
-  });
-
-  return priceMap;
+function formatDisplayName(name) {
+  let formatted = name.replace(/^gpt/i, 'GPT');
+  formatted = formatted.replace(/-mini/i, ' mini');
+  formatted = formatted.replace(/-nano/i, ' nano');
+  formatted = formatted.replace(/-pro/i, ' pro');
+  formatted = formatted.replace(/-codex/i, ' Codex');
+  return formatted;
 }
 
 function extractModelsFromHtml(html, options = {}) {
@@ -79,42 +35,63 @@ function extractModelsFromHtml(html, options = {}) {
   const sourceUrl = options.url || OPENAI_PRICING_URL;
   const results = [];
 
-  $("h2").each((_, element) => {
-    const name = normalizeWhitespace($(element).text());
+  $('table').each((_, tableElement) => {
+    $(tableElement).find('tbody tr').each((_, tr) => {
+      const tds = $(tr).find('td');
+      if (tds.length < 4) return;
 
-    if (!name || !/^gpt/i.test(name)) {
-      return;
-    }
+      const cells = [];
+      tds.each((_, td) => {
+        cells.push(normalizeWhitespace($(td).text()));
+      });
 
-    const priceBlock = findPriceBlock($(element));
+      let modelIndex = 0;
+      if (!/^gpt/i.test(cells[0]) && /^gpt/i.test(cells[1])) {
+        modelIndex = 1;
+      }
 
-    if (!priceBlock) {
-      return;
-    }
+      const rawName = cells[modelIndex];
+      if (!rawName || !/^gpt/i.test(rawName)) return;
 
-    const priceMap = extractPriceMap($, priceBlock);
-    const hasMixedModalities = ["audio", "image", "text"].some((label) => label in priceMap);
-    const inputPrice = priceMap.input ?? null;
-    const outputPrice = priceMap.output ?? null;
+      let shortInput = null;
+      let shortOutput = null;
+      let longInput = null;
+      let longOutput = null;
 
-    if (hasMixedModalities || inputPrice === null || outputPrice === null) {
-      return;
-    }
+      if (cells.length - modelIndex >= 7) {
+        shortInput = cleanPrice(cells[modelIndex + 1]);
+        shortOutput = cleanPrice(cells[modelIndex + 3]);
+        longInput = cleanPrice(cells[modelIndex + 4]);
+        longOutput = cleanPrice(cells[modelIndex + 6]);
+      } else if (cells.length - modelIndex >= 4) {
+        shortInput = cleanPrice(cells[modelIndex + 1]);
+        shortOutput = cleanPrice(cells[modelIndex + 3]);
+      }
 
-    const model = {
-      id: `openai-${slugify(name)}`,
-      name,
-      provider: "OpenAI",
-      input_price_usd_per_1m: inputPrice,
-      output_price_usd_per_1m: outputPrice,
-      source_url: sourceUrl,
-      updated_at: updatedAt
-    };
+      if (shortInput === null || shortOutput === null) return;
 
-    console.log(
-      `[openai] parsed ${model.name} input=${model.input_price_usd_per_1m} output=${model.output_price_usd_per_1m}`
-    );
-    results.push(model);
+      const name = formatDisplayName(rawName);
+      const modelId = `openai-${slugify(rawName)}`;
+
+      if (results.some(m => m.id === modelId)) return;
+
+      const model = {
+        id: modelId,
+        name,
+        provider: "OpenAI",
+        input_price_usd_per_1m: shortInput,
+        output_price_usd_per_1m: shortOutput,
+        long_context_input_price_usd_per_1m: longInput,
+        long_context_output_price_usd_per_1m: longOutput,
+        source_url: sourceUrl,
+        updated_at: updatedAt
+      };
+
+      console.log(
+        `[openai] parsed ${model.name} input=${model.input_price_usd_per_1m} output=${model.output_price_usd_per_1m} (long input=${model.long_context_input_price_usd_per_1m})`
+      );
+      results.push(model);
+    });
   });
 
   return results;

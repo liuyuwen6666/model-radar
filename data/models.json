@@ -411,9 +411,41 @@
         "待补充"
       ],
       "status": "live",
-      "sourceUrl": "https://openai.com/api/pricing/",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
       "detailPath": "/model/openai-gpt-5-5",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-25T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-5-5-pro",
+      "name": "GPT-5.5 pro",
+      "provider": "OpenAI",
+      "family": "GPT-5.5",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 30,
+      "outputPricePer1M": 180,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 30,
+      "outputPriceUsdPer1M": 180,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-5-5-pro",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-25T00:00:00.000Z",
       "sourceType": "provider"
@@ -443,7 +475,7 @@
         "待补充"
       ],
       "status": "live",
-      "sourceUrl": "https://openai.com/api/pricing/",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
       "detailPath": "/model/openai-gpt-5-4",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
@@ -475,9 +507,105 @@
         "待补充"
       ],
       "status": "live",
-      "sourceUrl": "https://openai.com/api/pricing/",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
       "detailPath": "/model/openai-gpt-5-4-mini",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-25T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-5-4-nano",
+      "name": "GPT-5.4 nano",
+      "provider": "OpenAI",
+      "family": "GPT-5.4",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.2,
+      "outputPricePer1M": 1.25,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.2,
+      "outputPriceUsdPer1M": 1.25,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-5-4-nano",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-25T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-5-4-pro",
+      "name": "GPT-5.4 pro",
+      "provider": "OpenAI",
+      "family": "GPT-5.4",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 30,
+      "outputPricePer1M": 180,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 30,
+      "outputPriceUsdPer1M": 180,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-5-4-pro",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-05-25T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-5-3-codex",
+      "name": "GPT-5.3 Codex",
+      "provider": "OpenAI",
+      "family": "GPT-5.3",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 1.75,
+      "outputPricePer1M": 14,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 1.75,
+      "outputPriceUsdPer1M": 14,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-5-3-codex",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-25T00:00:00.000Z",
       "sourceType": "provider"
