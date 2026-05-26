@@ -1,73 +1,193 @@
 const cheerio = require("cheerio");
 
-const DOUBAO_PRICING_URL = "https://www.volcengine.com/docs/82379/1547233";
+const DOUBAO_PRICING_URL = "https://www.volcengine.com/docs/82379/1544106?lang=zh";
 
-// 汇率常数 (CNY -> USD)
+// Exchange rate CNY -> USD
 const CNY_TO_USD = 1 / 7.25;
 
-function normalizeWhitespace(value) {
-  return String(value || "").replace(/\s+/g, " ").trim();
+function slugify(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/\u00a0/g, " ")
+    .replace(/\bUSD\s*/gi, "$")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
-function resolveModelId(name) {
-  const norm = name.toLowerCase();
-  if (norm.includes("1.5-pro-32k") || norm.includes("pro-32k")) return "doubao-1-5-pro-32k";
-  return `doubao-${norm.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}`;
+function extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt) {
+  const lines = mdContent.split("\n");
+  let inSection = false;
+  let tableLines = [];
+  
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.includes("## 在线推理（常规）")) {
+      inSection = true;
+      continue;
+    }
+    if (inSection && trimmed.startsWith("##") && !trimmed.includes("在线推理（常规）")) {
+      break;
+    }
+    if (inSection) {
+      if (trimmed.startsWith("|")) {
+        tableLines.push(trimmed);
+      }
+    }
+  }
+  
+  if (tableLines.length < 2) {
+    console.error("[doubao] could not find pricing table in markdown");
+    return [];
+  }
+  
+  const results = [];
+  let currentModelName = "";
+  
+  for (let i = 2; i < tableLines.length; i++) {
+    const cells = tableLines[i].split("|").map(c => c.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
+    if (cells.length < 5) continue;
+    
+    let nameCell = cells[0].replace(/\\-/g, "-");
+    if (nameCell) {
+      currentModelName = nameCell;
+    }
+    
+    const contextCell = cells[1];
+    const inputStr = cells[2];
+    const cacheStorageStr = cells[3];
+    const cacheReadStr = cells[4];
+    const outputStr = cells[5] || cells[4];
+    
+    const inputPriceCny = parseFloat(inputStr);
+    const outputPriceCny = parseFloat(outputStr);
+    const cacheReadPriceCny = parseFloat(cacheReadStr);
+    
+    if (isNaN(inputPriceCny) || isNaN(outputPriceCny)) {
+      continue;
+    }
+    
+    if (!currentModelName.includes("doubao")) {
+      continue;
+    }
+    
+    let displayName = currentModelName;
+    if (currentModelName.startsWith("doubao-")) {
+      const parts = currentModelName.split("-");
+      displayName = "豆包 " + parts.slice(1).map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+    }
+    
+    let idSuffix = "";
+    let nameSuffix = "";
+    if (contextCell.includes("[0, 32]")) {
+      idSuffix = "-32k";
+      nameSuffix = " (32K)";
+    } else if (contextCell.includes("(32, 128]")) {
+      idSuffix = "-128k";
+      nameSuffix = " (128K)";
+    } else if (contextCell.includes("(128, 256]")) {
+      idSuffix = "-256k";
+      nameSuffix = " (256K)";
+    }
+    
+    const modelId = `${currentModelName}${idSuffix}`;
+    const modelName = `${displayName}${nameSuffix}`;
+    
+    const inputPriceUsd = inputPriceCny * CNY_TO_USD;
+    const outputPriceUsd = outputPriceCny * CNY_TO_USD;
+    const cacheReadPriceUsd = isNaN(cacheReadPriceCny) ? null : cacheReadPriceCny * CNY_TO_USD;
+    const cacheWritePriceCny = isNaN(cacheReadPriceCny) ? null : parseFloat(cacheStorageStr);
+    
+    if (results.some(r => r.id === modelId)) continue;
+    
+    results.push({
+      id: modelId,
+      name: modelName,
+      provider: "字节豆包",
+      currency: "CNY",
+      hasOfficialDualCurrency: false,
+      inputPricePer1M: inputPriceCny,
+      outputPricePer1M: outputPriceCny,
+      cacheReadPricePer1M: isNaN(cacheReadPriceCny) ? null : cacheReadPriceCny,
+      cacheWritePricePer1M: cacheWritePriceCny,
+      input_price_usd_per_1m: Math.round(inputPriceUsd * 10000) / 10000,
+      output_price_usd_per_1m: Math.round(outputPriceUsd * 10000) / 10000,
+      cache_read_price_usd_per_1m: cacheReadPriceUsd ? Math.round(cacheReadPriceUsd * 10000) / 10000 : null,
+      cache_write_price_usd_per_1m: cacheWritePriceCny ? Math.round(cacheWritePriceCny * CNY_TO_USD * 10000) / 10000 : null,
+      source_url: sourceUrl,
+      updated_at: updatedAt
+    });
+  }
+  
+  return results;
 }
 
 function extractModelsFromHtml(html, options = {}) {
   const $ = cheerio.load(html);
   const updatedAt = options.updatedAt || new Date().toISOString();
   const sourceUrl = options.url || DOUBAO_PRICING_URL;
-  const results = [];
-
-  $("table tr").each((_, row) => {
-    const cells = $(row)
-      .find("th,td")
-      .toArray()
-      .map((cell) => normalizeWhitespace($(cell).text()))
-      .filter(Boolean);
-
-    if (cells.length >= 3 && (cells[0].toLowerCase().includes("doubao") || cells[0].includes("豆包"))) {
-      const modelName = cells[0];
-      const modelId = resolveModelId(modelName);
-
-      const inputMatch = cells[1].match(/[¥$]?([\d.]+)/);
-      const outputMatch = cells[2].match(/[¥$]?([\d.]+)/);
-
-      if (inputMatch && outputMatch) {
-        const isRmb = cells[1].includes("¥") || !cells[1].includes("$");
-        const inputRmb = Number(inputMatch[1]);
-        const outputRmb = Number(outputMatch[1]);
-
-        const inputPriceUsd = isRmb ? inputRmb * CNY_TO_USD : inputRmb;
-        const outputPriceUsd = isRmb ? outputRmb * CNY_TO_USD : outputRmb;
-
-        results.push({
-          id: modelId,
-          name: modelName,
-          provider: "字节豆包",
-          input_price_usd_per_1m: inputPriceUsd,
-          output_price_usd_per_1m: outputPriceUsd,
-          source_url: sourceUrl,
-          updated_at: updatedAt
-        });
-      }
+  
+  let routerDataText = "";
+  $("script").each((_, script) => {
+    const text = $(script).text();
+    if (text.includes("window._ROUTER_DATA")) {
+      routerDataText = text;
     }
   });
-
-  return results;
+  
+  if (!routerDataText) {
+    console.error("[doubao] could not find window._ROUTER_DATA script tag");
+    return [];
+  }
+  
+  const startIndex = routerDataText.indexOf("window._ROUTER_DATA = ");
+  if (startIndex === -1) return [];
+  
+  let jsonText = routerDataText.substring(startIndex + "window._ROUTER_DATA = ".length).trim();
+  const lastBraceIndex = jsonText.lastIndexOf("}");
+  if (lastBraceIndex !== -1) {
+    jsonText = jsonText.substring(0, lastBraceIndex + 1);
+  }
+  
+  try {
+    const data = JSON.parse(jsonText);
+    let mdContent = "";
+    const docsData = data.loaderData;
+    
+    for (const key of Object.keys(docsData)) {
+      if (key.includes("docid") && docsData[key] && docsData[key].curDoc) {
+        mdContent = docsData[key].curDoc.MDContent;
+        break;
+      }
+    }
+    
+    if (!mdContent) {
+      console.error("[doubao] could not find MDContent dynamically in router data");
+      return [];
+    }
+    
+    return extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt);
+  } catch (err) {
+    console.error("[doubao] failed to parse router data JSON:", err.message);
+    return [];
+  }
 }
 
-// 极其精准的 2026 最新官方模型价格数据集，作为防挂 Fallback 蓝图
+// Highly reliable fallback models blueprint
 const FALLBACK_DOUBAO_MODELS = [
   {
     id: "doubao-1-5-pro-32k",
     name: "豆包 1.5 Pro 32K",
     provider: "字节豆包",
-    input_price_usd_per_1m: 0.80 * CNY_TO_USD,  // ¥0.80 / 1M tokens -> $0.1103
-    output_price_usd_per_1m: 2.00 * CNY_TO_USD, // ¥2.00 / 1M tokens -> $0.2759
-    source_url: "https://www.volcengine.com/docs/82379/1547233"
+    currency: "CNY",
+    inputPricePer1M: 0.80,
+    outputPricePer1M: 2.00,
+    cacheReadPricePer1M: 0.16,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: Math.round(0.80 * CNY_TO_USD * 1000) / 1000,
+    output_price_usd_per_1m: Math.round(2.00 * CNY_TO_USD * 1000) / 1000,
+    cache_read_price_usd_per_1m: Math.round(0.16 * CNY_TO_USD * 1000) / 1000,
+    cache_write_price_usd_per_1m: Math.round(0.017 * CNY_TO_USD * 1000) / 1000,
+    source_url: DOUBAO_PRICING_URL
   }
 ];
 
@@ -106,7 +226,6 @@ async function fetchDoubaoModels(options = {}) {
     console.warn(`[doubao] dynamic fetch failed, using fallback pricing data: ${err.message}`);
   }
 
-  // 兜底返回高可信度的 2026 实时数据集
   console.log(`[doubao] using robust 2026 fallback dataset`);
   return FALLBACK_DOUBAO_MODELS.map(model => ({
     ...model,
