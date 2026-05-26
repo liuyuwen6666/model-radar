@@ -215,8 +215,8 @@ const MODEL_BLUEPRINTS = [
     description: "最新旗舰多模态大模型，长程代码与自我纠错能力卓越。",
     inputPriceUsdPer1M: 6.50 / 7.25,   // ¥6.50 -> $0.8966
     outputPriceUsdPer1M: 27.00 / 7.25, // ¥27.00 -> $3.7241
-    cacheWritePriceUsdPer1M: 1.10 / 7.25, // ¥1.10 -> $0.1517
-    cacheReadPriceUsdPer1M: 0.1517,
+    cacheWritePriceUsdPer1M: 6.50 / 7.25, // ¥6.50 -> $0.8966
+    cacheReadPriceUsdPer1M: 1.10 / 7.25,  // ¥1.10 -> $0.1517
     contextWindow: 262144,
     maxOutputTokens: 16384,
     capabilities: ["中文", "长文本", "多模态", "推理"],
@@ -233,8 +233,8 @@ const MODEL_BLUEPRINTS = [
     description: "支持长思考与多模态的深度推理模型。",
     inputPriceUsdPer1M: 4.00 / 7.25,   // ¥4.00 -> $0.5517
     outputPriceUsdPer1M: 21.00 / 7.25, // ¥21.00 -> $2.8966
-    cacheWritePriceUsdPer1M: 0.70 / 7.25, // ¥0.70 -> $0.0966
-    cacheReadPriceUsdPer1M: 0.0966,
+    cacheWritePriceUsdPer1M: 4.00 / 7.25, // ¥4.00 -> $0.5517
+    cacheReadPriceUsdPer1M: 0.70 / 7.25,  // ¥0.70 -> $0.0966
     contextWindow: 262144,
     maxOutputTokens: 16384,
     capabilities: ["中文", "多模态", "推理"],
@@ -496,14 +496,37 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
   const hasRawPrices = providerModel.inputPricePer1M !== undefined;
   const currency = providerModel.currency || (isDomestic ? "CNY" : "USD");
 
-  const inputPrice = hasRawPrices ? providerModel.inputPricePer1M : providerModel.input_price_usd_per_1m;
-  const outputPrice = hasRawPrices ? providerModel.outputPricePer1M : providerModel.output_price_usd_per_1m;
+  const inputPrice = hasRawPrices
+    ? providerModel.inputPricePer1M
+    : (isDomestic && providerModel.input_price_usd_per_1m !== undefined ? providerModel.input_price_usd_per_1m * 7.25 : providerModel.input_price_usd_per_1m);
 
-  const inputPriceUsd = hasRawPrices ? providerModel.inputPriceUsdPer1M : (isDomestic ? inputPrice : inputPrice);
-  const outputPriceUsd = hasRawPrices ? providerModel.outputPriceUsdPer1M : (isDomestic ? outputPrice : outputPrice);
+  const outputPrice = hasRawPrices
+    ? providerModel.outputPricePer1M
+    : (isDomestic && providerModel.output_price_usd_per_1m !== undefined ? providerModel.output_price_usd_per_1m * 7.25 : providerModel.output_price_usd_per_1m);
 
-  const cacheReadPrice = hasRawPrices ? providerModel.cacheReadPricePer1M : (baseModel?.cacheReadPricePer1M ?? null);
-  const cacheReadPriceUsd = hasRawPrices ? providerModel.cacheReadPriceUsdPer1M : (baseModel?.cacheReadPriceUsdPer1M ?? null);
+  const inputPriceUsd = hasRawPrices
+    ? providerModel.inputPriceUsdPer1M
+    : providerModel.input_price_usd_per_1m;
+
+  const outputPriceUsd = hasRawPrices
+    ? providerModel.outputPriceUsdPer1M
+    : providerModel.output_price_usd_per_1m;
+
+  const cacheReadPriceUsd = hasRawPrices
+    ? providerModel.cacheReadPriceUsdPer1M
+    : (providerModel.cache_read_price_usd_per_1m ?? (baseModel?.cacheReadPriceUsdPer1M ?? null));
+
+  const cacheReadPrice = hasRawPrices
+    ? providerModel.cacheReadPricePer1M
+    : (isDomestic && cacheReadPriceUsd !== null ? cacheReadPriceUsd * 7.25 : cacheReadPriceUsd);
+
+  const cacheWritePriceUsd = hasRawPrices
+    ? providerModel.cacheWritePriceUsdPer1M
+    : (providerModel.cache_write_price_usd_per_1m ?? (baseModel?.cacheWritePriceUsdPer1M ?? null));
+
+  const cacheWritePrice = hasRawPrices
+    ? providerModel.cacheWritePricePer1M
+    : (isDomestic && cacheWritePriceUsd !== null ? cacheWritePriceUsd * 7.25 : cacheWritePriceUsd);
 
   return normalizeModel(
     {
@@ -521,14 +544,14 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
       outputPriceUsdPer1M: outputPriceUsd,
       longContextInputPriceUsdPer1M: providerModel.long_context_input_price_usd_per_1m ?? (baseModel?.longContextInputPriceUsdPer1M ?? null),
       longContextOutputPriceUsdPer1M: providerModel.long_context_output_price_usd_per_1m ?? (baseModel?.longContextOutputPriceUsdPer1M ?? null),
-      cacheWritePriceUsdPer1M: providerModel.cache_write_price_usd_per_1m ?? (baseModel?.cacheWritePriceUsdPer1M ?? null),
-      cacheReadPriceUsdPer1M: providerModel.cache_read_price_usd_per_1m ?? cacheReadPriceUsd,
-      cacheWritePricePer1M: providerModel.cache_write_price_usd_per_1m ?? (baseModel?.cacheWritePricePer1M ?? null),
-      cacheReadPricePer1M: providerModel.cache_read_price_usd_per_1m ?? cacheReadPrice,
-      contextWindow: baseModel?.contextWindow ?? null,
-      maxOutputTokens: baseModel?.maxOutputTokens ?? null,
-      capabilities: baseModel?.capabilities || ["文本"],
-      recommendedFor: baseModel?.recommendedFor || ["待补充"],
+      cacheWritePriceUsdPer1M: cacheWritePriceUsd,
+      cacheReadPriceUsdPer1M: cacheReadPriceUsd,
+      cacheWritePricePer1M: cacheWritePrice,
+      cacheReadPricePer1M: cacheReadPrice,
+      contextWindow: baseModel?.contextWindow ?? providerModel.contextWindow ?? null,
+      maxOutputTokens: baseModel?.maxOutputTokens ?? providerModel.maxOutputTokens ?? null,
+      capabilities: baseModel?.capabilities || providerModel.capabilities || ["文本"],
+      recommendedFor: baseModel?.recommendedFor || providerModel.recommendedFor || ["待补充"],
       status: baseModel?.status || "live",
       sourceUrl: providerModel.sourceUrl || providerModel.source_url,
       sourceLabel: baseModel?.sourceLabel,
