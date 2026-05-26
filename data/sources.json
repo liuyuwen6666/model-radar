@@ -89,10 +89,10 @@
       "doubao-seed-1.6-lite-256k",
       "doubao-seed-1.6-lite-32k",
       "doubao-1.5-pro-32k",
-      "doubao-1.5-vision-pro",
       "doubao-1.5-lite-32k",
-      "doubao-seed-translation",
-      "doubao-1-5-pro-32k"
+      "doubao-1-5-pro-32k",
+      "doubao-1.5-vision-pro",
+      "doubao-seed-translation"
     ]
   },
   {
