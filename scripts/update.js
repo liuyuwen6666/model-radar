@@ -624,10 +624,22 @@ function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate,
   for (const model of baseModels) {
     if (loadedProviders.has(model.provider) && !injectedProviders.has(model.provider)) {
       const providerModels = providerSnapshots.get(model.provider) || [];
+      const crawledModelIds = new Set(providerModels.map(pm => pm.id));
 
       for (const providerModel of providerModels) {
         const baseProviderModel = baseIndex.get(providerModel.id);
         nextModels.push(normalizeProviderModel(providerModel, baseProviderModel, sourceIndex, targetDate));
+      }
+
+      // Preserving previous models of the provider as legacy instead of deleting them
+      const obsoleteModels = baseModels.filter(bm => bm.provider === model.provider && !crawledModelIds.has(bm.id));
+      for (const obsoleteModel of obsoleteModels) {
+        const legacyModel = {
+          ...obsoleteModel,
+          status: "legacy",
+          pricingNotes: obsoleteModel.pricingNotes ? `${obsoleteModel.pricingNotes} (已升级/旧版，官方价格页已不再展示，保留作历史参考。)` : "已升级/旧版，官方价格页已不再展示，保留作历史参考。"
+        };
+        nextModels.push(normalizeModel(legacyModel, sourceIndex, timestamp));
       }
 
       injectedProviders.add(model.provider);
@@ -734,44 +746,49 @@ function sortModels(models) {
     
     function getModelRank(model) {
       const id = model.id.toLowerCase();
+      const name = model.name.toLowerCase();
       
-      // OpenAI flagship ranking
-      if (id.includes('gpt-5-5-pro')) return 100;
-      if (id.includes('gpt-5-5')) return 99;
-      if (id.includes('gpt-5-4-pro')) return 95;
-      if (id.includes('gpt-5-4-mini')) return 92;
-      if (id.includes('gpt-5-4-nano')) return 91;
-      if (id.includes('gpt-5-4')) return 94;
-      if (id.includes('gpt-5-3-codex')) return 80;
+      // 1. Check custom overrides first for absolute flagship prioritization
+      const overrides = {
+        // OpenAI overrides
+        "openai-gpt-5-5-pro": 1000,
+        "openai-gpt-5-5": 990,
+        "openai-gpt-5-4-pro": 980,
+        "openai-gpt-5-4": 970,
+        "openai-gpt-5-4-mini": 960,
+        "openai-gpt-5-4-nano": 950,
+        "openai-gpt-5-3-codex": 900,
+        // Anthropic overrides
+        "anthropic-claude-3-opus": 850,
+        "anthropic-claude-3-7-sonnet": 840,
+        "anthropic-claude-3-5-haiku": 830,
+      };
       
-      // Anthropic flagship ranking
-      if (id.includes('opus')) return 100;
-      if (id.includes('sonnet')) return 90;
-      if (id.includes('haiku')) return 80;
-      
-      // Gemini flagship ranking
-      if (id.includes('gemini-2-5-pro')) return 100;
-      if (id.includes('gemini-2-5-flash')) return 90;
-      
-      // Kimi flagship ranking
-      if (id.includes('kimi-k2-6')) return 100;
-      if (id.includes('kimi-k2-5')) return 90;
-      if (id.includes('kimi-latest-128k')) return 80;
-      
-      // DeepSeek flagship ranking
-      if (id.includes('deepseek-v4-pro')) return 100;
-      if (id.includes('deepseek-v4-flash')) return 90;
-
-      // Extract version decimal float from name or id
-      const nameMatch = model.name.match(/(\d+\.\d+)/);
-      if (nameMatch) {
-        return Number(nameMatch[1]) * 10;
+      if (overrides[id] !== undefined) {
+        return overrides[id];
       }
-      const idMatch = model.id.match(/(\d+-\d+)/);
-      if (idMatch) {
-        return Number(idMatch[1].replace('-', '.')) * 10;
+      
+      // 2. Parse generation version (e.g. 3.5, 3.1, 2.5, 2.0)
+      let version = 0;
+      const versionMatch = id.match(/(\d+)[-\.](\d+)/) || name.match(/(\d+)\.(\d+)/);
+      if (versionMatch) {
+        version = Number(`${versionMatch[1]}.${versionMatch[2]}`);
+      } else {
+        const singleMatch = id.match(/-(\d+)(?:-|$)/) || name.match(/(\d+)/);
+        if (singleMatch) {
+          version = Number(singleMatch[1]);
+        }
       }
-      return 0;
+      
+      // 3. Determine tier weight
+      let tierWeight = 0.5; // default standard tier
+      if (id.includes('pro') || id.includes('opus') || id.includes('max') || id.includes('ultra') || id.includes('turbo') || id.includes('preview')) {
+        tierWeight = 0.9;
+      } else if (id.includes('haiku') || id.includes('mini') || id.includes('lite') || id.includes('nano') || id.includes('small') || id.includes('codex') || id.includes('fast')) {
+        tierWeight = 0.1;
+      }
+      
+      return (version * 100) + (tierWeight * 10);
     }
     
     const rankL = getModelRank(left);
