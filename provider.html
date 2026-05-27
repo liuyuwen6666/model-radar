@@ -62,7 +62,7 @@
               <a class="btn primary" href="/">返回首页</a>
               <a class="btn" href="/rankings">查看排行</a>
             </div>
-            <div class="stats" aria-label="厂商关键指标">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6" aria-label="厂商关键指标">
               <div class="stat"><strong id="modelCountStat">0</strong><span>模型数量</span></div>
               <div class="stat"><strong id="maxContextStat">-</strong><span>最长上下文</span></div>
               <div class="stat"><strong id="minInputPriceStat">-</strong><span>最低输入价 / 1M</span></div>
@@ -94,19 +94,22 @@
           <div class="section-title">
             <div>
               <h2 id="models-title">旗下模型列表</h2>
-              <p>实时从 <code>models.json</code> 中筛选出该厂商的所有在售模型。</p>
+              <p>实时从 <code>models.json</code> 中筛选出该厂商的所有在售模型及深度技术细节（支持缓存计费、支持能力和推荐场景）。</p>
             </div>
           </div>
 
           <div class="table-wrap">
-            <table>
+            <table style="min-width: auto; width: 100%;">
               <thead>
                 <tr>
-                  <th>模型名称</th>
+                  <th style="min-width: 160px;">模型名称</th>
                   <th>输入价格 (1M)</th>
                   <th>输出价格 (1M)</th>
-                  <th>上下文长度</th>
-                  <th>状态</th>
+                  <th>缓存写入 (1M)</th>
+                  <th>缓存读取 (1M)</th>
+                  <th>上下文 / 输出限制</th>
+                  <th>模型特性</th>
+                  <th style="min-width: 150px;">推荐适用场景</th>
                   <th>官方来源</th>
                 </tr>
               </thead>
@@ -238,17 +241,20 @@
         }
 
         // Stats
-        const minInput = Math.min(...models.map(m => m.inputPriceUsdPer1M).filter(v => typeof v === 'number'));
-        const minOutput = Math.min(...models.map(m => m.outputPriceUsdPer1M).filter(v => typeof v === 'number'));
+        const nativeInputPrices = models.map(m => m.inputPricePer1M).filter(v => typeof v === 'number');
+        const nativeOutputPrices = models.map(m => m.outputPricePer1M).filter(v => typeof v === 'number');
+        const minInput = nativeInputPrices.length ? Math.min(...nativeInputPrices) : null;
+        const minOutput = nativeOutputPrices.length ? Math.min(...nativeOutputPrices) : null;
         const maxContext = Math.max(...models.map(m => m.contextWindow).filter(v => typeof v === 'number'));
         const latestUpdate = models.reduce((a, b) => (!a || (b.updatedAt && b.updatedAt > a)) ? b.updatedAt : a, '');
+        const currency = models[0]?.currency || 'USD';
 
         document.getElementById('providerName').textContent = providerName;
         document.getElementById('providerTitleValue').textContent = providerName;
         document.getElementById('modelCountStat').textContent = models.length;
         document.getElementById('maxContextStat').textContent = formatContext(maxContext);
-        document.getElementById('minInputPriceStat').textContent = formatPrice(minInput);
-        document.getElementById('minOutputPriceStat').textContent = formatPrice(minOutput);
+        document.getElementById('minInputPriceStat').textContent = minInput !== null ? formatPrice(minInput, currency) : '待更新';
+        document.getElementById('minOutputPriceStat').textContent = minOutput !== null ? formatPrice(minOutput, currency) : '待更新';
         document.getElementById('updatedLabel').textContent = `最后更新：${latestUpdate.slice(0, 10)}`;
 
         // Table
@@ -256,17 +262,28 @@
         tbody.innerHTML = models.map(m => `
           <tr>
             <td>
-              <a href="/model/${encodeURIComponent(m.id)}" style="color:var(--brand);font-weight:700;">${escapeHtml(m.name)}</a>
+              <a href="/model/${encodeURIComponent(m.id)}" style="color:var(--brand);font-weight:700;font-size:15px;">${escapeHtml(m.name)}</a>
               ${m.sourceType === 'provider'
-                ? '<span style="font-size: 11px; background: #ecfdf5; color: #059669; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">官方来源抓取</span>'
-                : '<span style="font-size: 11px; background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle;">待接入官方抓取 / 蓝图数据</span>'
-              }
+                ? '<span style="font-size: 10px; background: #ecfdf5; color: #059669; padding: 1px 4px; border-radius: 4px; font-weight: 700; margin-left: 4px; display: inline-block; vertical-align: middle;">官方</span>'
+                : '<span style="font-size: 10px; background: #fffbeb; color: #d97706; padding: 1px 4px; border-radius: 4px; font-weight: 700; margin-left: 4px; display: inline-block; vertical-align: middle;">自备</span>'
+              }<br>
+              <span style="font-size: 11px; color: var(--muted);">${escapeHtml(m.id)}</span>
             </td>
             <td class="mono">${formatModelPrice(m, 'input')}</td>
             <td class="mono">${formatModelPrice(m, 'output')}</td>
-            <td class="mono">${formatContext(m.contextWindow)}</td>
-            <td><span class="tag ${['active', 'stable', 'live'].includes(m.status) ? 'good' : 'warn'}">${['active', 'stable', 'live'].includes(m.status) ? '运行中' : '测试中'}</span></td>
-            <td><a href="${m.sourceUrl}" target="_blank" rel="nofollow noopener" style="color:var(--muted);text-decoration:underline;">官方链接</a></td>
+            <td class="mono">${formatModelPrice(m, 'cacheWrite')}</td>
+            <td class="mono">${formatModelPrice(m, 'cacheRead')}</td>
+            <td class="mono">
+              ${formatContext(m.contextWindow)}
+              ${m.maxOutputTokens ? `<br><span style="font-size: 11px; color: var(--muted); font-weight: normal;">限制: ${m.maxOutputTokens >= 1000 ? (m.maxOutputTokens / 1000).toFixed(0) + 'K' : m.maxOutputTokens}</span>` : ''}
+            </td>
+            <td>
+              ${(m.capabilities || []).map(cap => `<span class="tag text-xs" style="margin:2px 0;background:#f1f5f9;color:#475569;">${escapeHtml(cap)}</span>`).join(' ') || '-'}
+            </td>
+            <td style="font-size: 13px; color: #334155; line-height: 1.4;">
+              ${(m.recommendedFor || []).join('、') || '待补充'}
+            </td>
+            <td><a href="${m.sourceUrl || '#'}" target="_blank" rel="nofollow noopener" style="color:var(--brand);text-decoration:underline;font-size:13px;font-weight:600;">官方链接 &nearr;</a></td>
           </tr>
         `).join('');
 
