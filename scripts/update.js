@@ -417,7 +417,7 @@ function buildBaseIndex(models) {
 
 function normalizeModel(model, sourceIndex, timestamp) {
   const source = sourceIndex.get(model.provider) || {};
-  const isDomestic = ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(model.provider);
+  const isDomestic = model.currency === "CNY" || ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(model.provider);
   const currency = model.currency || (isDomestic ? "CNY" : "USD");
 
   // 获取高精度官方价格
@@ -491,7 +491,7 @@ function normalizeModel(model, sourceIndex, timestamp) {
 
 function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDate) {
   const timestamp = providerModel.updatedAt || providerModel.updated_at || buildTimestamp(targetDate);
-  const isDomestic = ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(providerModel.provider);
+  const isDomestic = providerModel.currency === "CNY" || ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(providerModel.provider);
 
   const hasRawPrices = providerModel.inputPricePer1M !== undefined;
   const currency = providerModel.currency || (isDomestic ? "CNY" : "USD");
