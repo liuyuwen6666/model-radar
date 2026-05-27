@@ -10,6 +10,7 @@ const MODELS_PATH = path.join(ROOT_DIR, "data", "models.json");
 const SITEMAP_PATH = path.join(ROOT_DIR, "sitemap.xml");
 const STATIC_ENTRIES = [
   "index.html",
+  "about.html",
   "history.html",
   "model.html",
   "compare.html",
@@ -26,6 +27,10 @@ const ROUTE_ALIASES = [
   {
     source: "en.html",
     target: path.join("en", "index.html")
+  },
+  {
+    source: "about.html",
+    target: path.join("about", "index.html")
   },
   {
     source: "history.html",
