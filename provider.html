@@ -55,11 +55,7 @@
       <section class="hero" style="padding-top: 40px; padding-bottom: 24px;">
         <div class="container">
           <div style="max-width: 800px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 8px;">
-              <span class="eyebrow" id="providerEyebrow">厂商落地页 · 官方数据</span>
-              <span class="updated" id="updatedLabel" style="font-size: 13px; color: var(--muted); font-weight: 600;">最后更新：未知</span>
-            </div>
-            <h1 id="providerName" style="margin-top: 12px; margin-bottom: 8px; font-size: clamp(30px, 4vw, 42px);">厂商名称</h1>
+            <h1 id="providerName" style="margin-top: 0; margin-bottom: 8px; font-size: clamp(30px, 4vw, 42px);">厂商名称</h1>
             <p id="providerDescription" style="margin-bottom: 16px; font-size: 15px; color: var(--muted);">查看该厂商的所有模型价格详情与对比。</p>
             <div class="hero-actions" style="margin-bottom: 24px;">
               <a class="btn primary" href="/">返回首页</a>
@@ -70,7 +66,11 @@
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" aria-label="厂商关键指标">
             <div class="stat"><strong id="modelCountStat">0</strong><span>模型数量</span></div>
             <div class="stat"><strong id="maxContextStat">-</strong><span>最长上下文</span></div>
-            <div class="stat"><strong id="minInputPriceStat">-</strong><span>最低输入价 / 1M</span></div>
+            <div class="stat">
+              <span id="updatedLabel" style="font-size: 11px; color: var(--muted); font-weight: 600; display: block; margin-bottom: 4px; line-height: 1.2;">最后更新：未知</span>
+              <strong id="minInputPriceStat">-</strong>
+              <span>最低输入价 / 1M</span>
+            </div>
             <div class="stat"><strong id="minOutputPriceStat">-</strong><span>最低输出价 / 1M</span></div>
           </div>
         </div>
