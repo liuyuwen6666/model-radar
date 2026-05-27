@@ -40,12 +40,46 @@ function extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt) {
     return [];
   }
   
+  const headers = tableLines[0].split("|").map(c => c.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
+  let inputIdx = -1;
+  let cacheStorageIdx = -1;
+  let cacheReadIdx = -1;
+  let outputIdx = -1;
+
+  for (let idx = 0; idx < headers.length; idx++) {
+    const h = headers[idx];
+    if (h.includes("输入")) {
+      if (h.includes("非音频")) {
+        inputIdx = idx;
+      } else if (inputIdx === -1 && !h.includes("音频")) {
+        inputIdx = idx;
+      }
+    } else if (h.includes("缓存存储")) {
+      cacheStorageIdx = idx;
+    } else if (h.includes("缓存命中")) {
+      if (h.includes("非音频")) {
+        cacheReadIdx = idx;
+      } else if (cacheReadIdx === -1 && !h.includes("音频")) {
+        cacheReadIdx = idx;
+      }
+    } else if (h.includes("输出")) {
+      outputIdx = idx;
+    }
+  }
+
+  // Fallbacks if not found dynamically
+  if (inputIdx === -1) inputIdx = 2;
+  if (cacheStorageIdx === -1) cacheStorageIdx = headers.length > 6 ? 4 : 3;
+  if (cacheReadIdx === -1) cacheReadIdx = headers.length > 6 ? 5 : 4;
+  if (outputIdx === -1) outputIdx = headers.length > 6 ? 7 : 5;
+
   const results = [];
   let currentModelName = "";
+  const maxIdx = Math.max(inputIdx, cacheStorageIdx, cacheReadIdx, outputIdx);
   
   for (let i = 2; i < tableLines.length; i++) {
     const cells = tableLines[i].split("|").map(c => c.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
-    if (cells.length < 5) continue;
+    if (cells.length <= maxIdx) continue;
     
     let nameCell = cells[0].replace(/\\-/g, "-");
     if (nameCell) {
@@ -53,10 +87,10 @@ function extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt) {
     }
     
     const contextCell = cells[1];
-    const inputStr = cells[2];
-    const cacheStorageStr = cells[3];
-    const cacheReadStr = cells[4];
-    const outputStr = cells[5] || cells[4];
+    const inputStr = cells[inputIdx];
+    const cacheStorageStr = cells[cacheStorageIdx];
+    const cacheReadStr = cells[cacheReadIdx];
+    const outputStr = cells[outputIdx];
     
     const inputPriceCny = parseFloat(inputStr);
     const outputPriceCny = parseFloat(outputStr);
