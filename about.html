@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>关于我们｜AI 模型价格雷达</title>
+  <meta name="description" content="了解 AI 模型价格雷达 (ModelRadar) 的愿景、工作原理与数据可靠性说明。" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="canonical" href="https://modelradar.cn/about" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="关于我们｜AI 模型价格雷达" />
+  <meta property="og:description" content="了解 AI 模型价格雷达 (ModelRadar) 的愿景、工作原理与数据可靠性说明。" />
+  <meta property="og:url" content="https://modelradar.cn/about" />
+
+  <link href="/dist/styles.css" rel="stylesheet" />
+  <style>
+    .about-content {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .about-content h2 {
+      margin-top: 40px;
+      margin-bottom: 16px;
+      color: #0f172a;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+    .about-content p {
+      margin-bottom: 16px;
+      color: #475569;
+      line-height: 1.75;
+    }
+    .about-content ul {
+      margin-bottom: 24px;
+      padding-left: 20px;
+      list-style-type: disc;
+    }
+    .about-content li {
+      margin-bottom: 8px;
+      color: #475569;
+      line-height: 1.6;
+    }
+    .about-hero {
+      text-align: center;
+      padding: 80px 20px 40px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+    }
+    .about-hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .about-hero p {
+      font-size: 1.125rem;
+      color: #94a3b8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header>
+    <div class="container nav">
+      <a class="logo" href="/" aria-label="AI 模型价格雷达首页">
+        <span class="logo-mark">AI</span>
+        <span>模型价格雷达</span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="/">首页</a>
+        <a href="/history">价格历史</a>
+        <a href="/rankings">模型排行</a>
+        <a href="/compare">模型对比</a>
+        <a href="/calculator">成本计算器</a>
+        <a href="/api">API</a>
+        <a href="/en/">English</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="about-hero">
+      <h1>关于 AI 模型价格雷达</h1>
+      <p>追踪每日主流大模型 API 价格、上下文与价格趋势，助开发者更低成本地打造 AI 应用。</p>
+    </section>
+
+    <section class="about-content">
+      <h2>我们的愿景</h2>
+      <p>在 AI 时代，大模型的 API 价格、计费模式和上下文窗口大小每天都在发生翻天覆地的变化。各厂商为了市场竞争不断调整售价，并新增了类似上下文缓存（Session Cache）等高级计费策略。这使得开发者和企业在做架构与成本选型时面临巨大的信息壁垒。</p>
+      <p><strong>AI 模型价格雷达 (ModelRadar)</strong> 旨在打破这个壁垒。我们致力于打造一个高可用、高度结构化、机器可读且每日实时更新的价格雷达，帮助全球开发者同屏比较模型调用成本，透明展示各大模型厂商的历史调价细节，帮助企业做出更有前瞻性的 AI 技术选型决策。</p>
+
+      <h2>数据是如何获取的？</h2>
+      <ul>
+        <li><strong>动态抓取</strong>：平台自主开发了针对各大主流云厂商及模型提供商（如 OpenAI, Anthropic, Google, DeepSeek, 字节跳动, 腾讯, 阿里巴巴, 月之暗面等）定价页面的动态解析脚本。</li>
+        <li><strong>每日自动同步</strong>：每日通过自动化流程定期抓取官网最新的价格表，经过结构化映射与汇率换算后，自动生成全网统一的 <code>models.json</code> 与 <code>changelog.json</code> 数据。</li>
+        <li><strong>防挂兜底机制</strong>：为了应对云厂商页面结构突变引起的解析挂死，爬虫内置了极其稳健的最新实时 Fallback 蓝图数据集，确保在极端解析失败的情况下，依然能保障数据服务的连续性。</li>
+      </ul>
+
+      <h2>联系我们</h2>
+      <p>如果您发现我们的数据有任何出入、厂商最新的调价公告未被及时收录，或者您希望与我们进行商务、开源技术合作，欢迎通过 GitHub 提交 PR 与 Issue 或直接联系我们。</p>
+      <p>感谢每一位陪伴并支持 AI 模型价格雷达的开发者。祝每一位在 AI 浪潮中搏击的创业者与工程师都能更低成本、高效率地构建出颠覆性的大模型应用！</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>AI 模型价格雷达</strong><br>
+        <span>帮助开发者追踪模型价格、选择模型、优化 AI 成本。</span>
+      </div>
+      <div>
+        <a href="/" aria-current="page">首页</a> ·
+        <a href="/history">价格历史</a> ·
+        <a href="/rankings">模型排行</a> ·
+        <a href="/compare">模型对比</a> ·
+        <a href="/data/models.json">数据</a> ·
+        <a href="/data-schema">数据说明</a> ·
+        <a href="/api">API</a> ·
+        <a href="/sitemap.xml">站点地图</a> ·
+        <a href="/robots.txt">Robots</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

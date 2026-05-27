@@ -615,30 +615,31 @@
   </script>
 
   <!-- 右侧悬浮竖向锚点导航 (仅在宽屏显示，避免遮挡内容) -->
-  <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden min-[1320px]:flex flex-col gap-4 p-3 bg-white/[0.68] backdrop-blur-lg border border-slate-200/80 rounded-full shadow-[0_12px_36px_rgba(15,23,42,0.06)]" aria-label="页面快速导览">
-    <a href="#main" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="回到顶部">
-      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">回到顶部</span>
-      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+  <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden min-[1320px]:flex flex-col gap-3.5 p-4 bg-white/[0.72] backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-[0_12px_40px_rgba(15,23,42,0.06)]" aria-label="页面快速导览">
+    <div class="text-[10px] font-bold text-slate-400/80 tracking-wider uppercase mb-1 text-right pr-1">页面导览</div>
+    <a href="#main" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="回到顶部">
+      <span class="nav-label text-xs font-semibold text-slate-400 transition-all duration-200 group-hover:text-blue-600">回到顶部</span>
+      <span class="nav-dot w-2 h-2 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600 group-hover:scale-125"></span>
     </a>
-    <a href="#changelog" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="今日变更">
-      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">今日变更</span>
-      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    <a href="#changelog" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="今日变更">
+      <span class="nav-label text-xs font-semibold text-slate-400 transition-all duration-200 group-hover:text-blue-600">今日变更</span>
+      <span class="nav-dot w-2 h-2 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600 group-hover:scale-125"></span>
     </a>
-    <a href="#models" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="模型价格表">
-      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">模型价格表</span>
-      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    <a href="#models" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="模型价格表">
+      <span class="nav-label text-xs font-semibold text-slate-400 transition-all duration-200 group-hover:text-blue-600">模型价格表</span>
+      <span class="nav-dot w-2 h-2 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600 group-hover:scale-125"></span>
     </a>
-    <a href="#calculator" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="成本计算器">
-      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">成本计算器</span>
-      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    <a href="#calculator" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="成本计算器">
+      <span class="nav-label text-xs font-semibold text-slate-400 transition-all duration-200 group-hover:text-blue-600">成本计算器</span>
+      <span class="nav-dot w-2 h-2 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600 group-hover:scale-125"></span>
     </a>
-    <a href="#workflow" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="未来规划">
-      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">未来规划</span>
-      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    <a href="#workflow" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="未来规划">
+      <span class="nav-label text-xs font-semibold text-slate-400 transition-all duration-200 group-hover:text-blue-600">未来规划</span>
+      <span class="nav-dot w-2 h-2 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600 group-hover:scale-125"></span>
     </a>
-    <a href="#faq" class="group relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110" aria-label="常见问题">
-      <span class="absolute right-10 px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">常见问题</span>
-      <span class="w-2.5 h-2.5 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600"></span>
+    <a href="#faq" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="常见问题">
+      <span class="nav-label text-xs font-semibold text-slate-400 transition-all duration-200 group-hover:text-blue-600">常见问题</span>
+      <span class="nav-dot w-2 h-2 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600 group-hover:scale-125"></span>
     </a>
   </nav>
 
@@ -666,13 +667,18 @@
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id');
             navLinks.forEach(link => {
-              const dot = link.querySelector('span:last-child');
+              const dot = link.querySelector('.nav-dot');
+              const label = link.querySelector('.nav-label');
               if (link.getAttribute('href') === `#${id}`) {
                 dot.classList.remove('bg-slate-400');
                 dot.classList.add('bg-blue-600', 'scale-125', 'ring-4', 'ring-blue-600/20');
+                label.classList.remove('text-slate-400');
+                label.classList.add('text-blue-600', 'font-bold');
               } else {
                 dot.classList.remove('bg-blue-600', 'scale-125', 'ring-4', 'ring-blue-600/20');
                 dot.classList.add('bg-slate-400');
+                label.classList.remove('text-blue-600', 'font-bold');
+                label.classList.add('text-slate-400');
               }
             });
           }
