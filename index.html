@@ -99,7 +99,10 @@
             <a class="btn" href="/data/models.json">下载 JSON 数据</a>
           </div>
           <div class="stats" aria-label="站点统计">
-            <div class="stat"><strong id="trackedProvidersStat">载入中</strong><span>已追踪厂商</span></div>
+            <a href="/provider" class="stat block transition-all duration-200 hover:border-blue-500 hover:shadow-[0_8px_30px_rgba(37,99,235,0.06)] hover:-translate-y-0.5">
+              <strong id="trackedProvidersStat">载入中</strong>
+              <span class="flex items-center gap-1">已追踪厂商 <span class="transition-transform group-hover:translate-x-0.5">&rarr;</span></span>
+            </a>
             <div class="stat"><strong id="trackedModelsStat">载入中</strong><span>当前模型数</span></div>
             <div class="stat"><strong id="updateFrequencyStat">每 12 小时</strong><span>自动抓取与更新</span></div>
           </div>

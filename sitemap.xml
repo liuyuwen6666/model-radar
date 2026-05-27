@@ -827,4 +827,20 @@
     <loc>https://modelradar.cn/provider/google</loc>
     <lastmod>2026-05-27</lastmod>
   </url>
+  <url>
+    <loc>https://modelradar.cn/provider/kimi</loc>
+    <lastmod>2026-05-27</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/provider/qwen</loc>
+    <lastmod>2026-05-27</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/provider/doubao</loc>
+    <lastmod>2026-05-27</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/provider/hunyuan</loc>
+    <lastmod>2026-05-27</lastmod>
+  </url>
 </urlset>
