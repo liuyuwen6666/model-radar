@@ -122,7 +122,22 @@
     "label": "腾讯云混元 Pricing",
     "url": "https://cloud.tencent.com/document/product/1729/97731",
     "models": [
-      "hunyuan-turbo-s"
+      "hunyuan-a13b",
+      "hunyuan-2-0-instruct-128k",
+      "hunyuan-2-0-instruct-32k",
+      "hunyuan-2-0-think-128k",
+      "hunyuan-2-0-think-32k",
+      "hunyuan-vision-1-5-instruct",
+      "hunyuan-t1",
+      "hunyuan-t1-vision",
+      "hunyuan-turbo-s",
+      "hunyuan-turbos-vision",
+      "hunyuan-turbos-vision-video",
+      "hunyuan-yuanqi",
+      "hunyuan-embedding",
+      "hunyuan-large-role",
+      "hunyuan-translation",
+      "hunyuan-translation-lite"
     ]
   }
 ]
