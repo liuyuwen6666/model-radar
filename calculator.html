@@ -37,7 +37,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main class="container px-4 sm:px-6 lg:px-8 pb-16">
     <section class="hero">
       <span class="eyebrow">工具 · 成本估算 · 实时数据</span>
       <h1>AI API 成本计算器</h1>
@@ -45,7 +45,7 @@
     </section>
 
     <div class="calc-grid">
-      <div class="card">
+      <div class="card p-6 md:p-8 space-y-6">
         <div class="field">
           <label for="modelSelect">选择模型</label>
           <select id="modelSelect"></select>
@@ -68,9 +68,9 @@
 
         <div class="field">
           <label for="cacheHitRatio">缓存读取命中比例 (0-100%)</label>
-          <div class="input-group">
-            <input type="number" id="cacheHitRatio" value="0" min="0" max="100" />
-            <span>%</span>
+          <div class="relative flex items-center">
+            <input type="number" id="cacheHitRatio" value="0" min="0" max="100" style="padding-right: 32px;" />
+            <span class="absolute right-4 text-slate-400 text-sm font-bold">%</span>
           </div>
         </div>
 
@@ -82,7 +82,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card p-6 md:p-8">
         <div class="results">
           <div class="result-card primary">
             <span>预估月成本 (30天)</span>

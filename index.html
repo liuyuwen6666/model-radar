@@ -95,7 +95,7 @@
           <p>追踪 OpenAI、Claude、Gemini、DeepSeek、豆包、通义、Kimi、混元等模型的 API 输入价、输出价、缓存价、上下文长度与历史变更，帮助开发者更低成本地选择模型。</p>
           <div class="hero-actions">
             <a class="btn primary" href="#models">查看价格表</a>
-            <a class="btn" href="#calculator">计算 API 成本</a>
+            <a class="btn" href="/calculator">计算 API 成本</a>
             <a class="btn" href="/data/models.json">下载 JSON 数据</a>
           </div>
           <div class="stats" aria-label="站点统计">
@@ -163,42 +163,6 @@
       </div>
     </section>
 
-    <section id="calculator" aria-labelledby="calculator-title">
-      <div class="container">
-        <div class="section-title">
-          <div>
-            <h2 id="calculator-title">AI API 成本计算器</h2>
-            <p>输入每日调用量和平均 token 使用量，估算月度 API 成本。第一版用静态 JS 计算，后续可接真实模型价格。</p>
-          </div>
-        </div>
-
-        <form class="calculator" onsubmit="return false;">
-          <div class="field">
-            <label for="inputPrice">输入价格 / 1M tokens（美元）</label>
-            <input id="inputPrice" type="number" step="0.01" value="1" />
-          </div>
-          <div class="field">
-            <label for="outputPrice">输出价格 / 1M tokens（美元）</label>
-            <input id="outputPrice" type="number" step="0.01" value="3" />
-          </div>
-          <div class="field">
-            <label for="dailyRequests">每日请求数</label>
-            <input id="dailyRequests" type="number" value="1000" />
-          </div>
-          <div class="field">
-            <label for="avgTokens">单次平均输入/输出 tokens</label>
-            <input id="avgTokens" type="number" value="1000" />
-          </div>
-          <div class="result-box" aria-live="polite">
-            <div>
-              <span class="updated">估算月成本</span><br>
-              <strong id="monthlyCost">$120.00</strong>
-            </div>
-            <span class="updated">公式：30 × 每日请求数 × 平均 tokens ×（输入价 + 输出价）/ 1,000,000</span>
-          </div>
-        </form>
-      </div>
-    </section>
 
     <section id="workflow" aria-labelledby="workflow-title">
       <div class="container">
@@ -591,26 +555,6 @@
     search.addEventListener('input', filterRows);
     providerFilter.addEventListener('change', filterRows);
 
-    const inputPrice = document.getElementById('inputPrice');
-    const outputPrice = document.getElementById('outputPrice');
-    const dailyRequests = document.getElementById('dailyRequests');
-    const avgTokens = document.getElementById('avgTokens');
-    const monthlyCost = document.getElementById('monthlyCost');
-
-    function calculateCost() {
-      const inPrice = Number(inputPrice.value || 0);
-      const outPrice = Number(outputPrice.value || 0);
-      const requests = Number(dailyRequests.value || 0);
-      const tokens = Number(avgTokens.value || 0);
-      const cost = 30 * requests * tokens * (inPrice + outPrice) / 1000000;
-      monthlyCost.textContent = `$${cost.toFixed(2)}`;
-    }
-
-    [inputPrice, outputPrice, dailyRequests, avgTokens].forEach(el => {
-      el.addEventListener('input', calculateCost);
-    });
-
-    calculateCost();
     loadData();
   </script>
 
@@ -627,10 +571,6 @@
     </a>
     <a href="#models" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="模型价格表">
       <span class="nav-label text-xs font-semibold text-slate-400 transition-all duration-200 group-hover:text-blue-600">模型价格表</span>
-      <span class="nav-dot w-2 h-2 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600 group-hover:scale-125"></span>
-    </a>
-    <a href="#calculator" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="成本计算器">
-      <span class="nav-label text-xs font-semibold text-slate-400 transition-all duration-200 group-hover:text-blue-600">成本计算器</span>
       <span class="nav-dot w-2 h-2 rounded-full bg-slate-400 transition-all duration-200 group-hover:bg-blue-600 group-hover:scale-125"></span>
     </a>
     <a href="#workflow" class="group flex items-center justify-end gap-3 text-right transition-all duration-200" aria-label="未来规划">
@@ -650,7 +590,6 @@
         document.querySelector('#main'),
         document.querySelector('#changelog'),
         document.querySelector('#models'),
-        document.querySelector('#calculator'),
         document.querySelector('#workflow'),
         document.querySelector('#faq')
       ];
