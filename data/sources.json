@@ -98,7 +98,7 @@
   {
     "provider": "阿里通义",
     "label": "通义千问 Pricing",
-    "url": "https://help.aliyun.com/document_detail/2987148.html",
+    "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
     "models": [
       "qwen3-8b",
       "qwen3-7-max",

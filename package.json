@@ -8,7 +8,8 @@
     "deploy": "wrangler deploy",
     "schema:check": "node scripts/check-structured-data.js",
     "update": "node scripts/update.js",
-    "diff": "node scripts/diff.js"
+    "diff": "node scripts/diff.js",
+    "save-raw": "node scripts/save-raw.js"
   },
   "keywords": [
     "ai",
