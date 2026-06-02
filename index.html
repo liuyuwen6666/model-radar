@@ -129,7 +129,7 @@
         <div class="section-title">
           <div>
             <h2 id="models-title">主流模型价格表</h2>
-            <p>价格单位统一换算为“每 100 万 token”。页面启动后会从 <code>/data/models.json</code> 动态读取。</p>
+            <p>价格单位统一换算为“每 100 万 token”。为保持页面整洁，首页各厂商最多展示 6 个模型，您可以<strong>点击厂商名称</strong>查看该厂商的全部模型。</p>
           </div>
           <a class="btn" href="/data/models.json">查看 JSON 数据</a>
         </div>
@@ -251,6 +251,16 @@
     const trackedModelsStat = document.getElementById('trackedModelsStat');
     const indexDatasetStructuredData = document.getElementById('indexDatasetStructuredData');
     const INDEX_DATASET_DESCRIPTION = 'ModelRadar 提供主流 AI 模型 API 价格数据集，覆盖 OpenAI、Anthropic、Google Gemini、DeepSeek、豆包、通义、Kimi、混元等模型的输入价格、输出价格、缓存价格、上下文长度、计费单位、来源链接和价格变化记录。数据来自各厂商公开的官方 pricing 页面，并通过自动化流程定期更新，方便开发者比较模型调用成本、查看历史变化并下载机器可读 JSON 数据。';
+    const PROVIDER_SLUGS = {
+      'OpenAI': 'openai',
+      'Anthropic': 'anthropic',
+      'DeepSeek': 'deepseek',
+      'Google': 'google',
+      '月之暗面': 'kimi',
+      '阿里通义': 'qwen',
+      '字节豆包': 'doubao',
+      '腾讯混元': 'hunyuan'
+    };
     const state = {
       models: []
     };
@@ -428,10 +438,15 @@
           ? `<a href="${escapeHtml(model.sourceUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(model.sourceLabel || '官方价格页')}</a>`
           : '-';
 
+        const providerSlug = PROVIDER_SLUGS[model.provider];
+        const providerLink = providerSlug
+          ? `<a href="/provider/${providerSlug}" class="text-blue-600 hover:text-blue-800 hover:underline font-semibold transition-colors" title="查看该厂商的所有模型">${escapeHtml(model.provider)}</a>`
+          : escapeHtml(model.provider);
+
         return `
           <tr data-provider="${escapeHtml(model.provider)}">
             <td>${modelLink}<br><span class="provider">${escapeHtml(model.description || model.family || '')}</span></td>
-            <td>${escapeHtml(model.provider)}</td>
+            <td>${providerLink}</td>
             <td class="mono">${formatModelPrice(model, 'input')}</td>
             <td class="mono">${formatModelPrice(model, 'output')}</td>
             <td>${formatContext(model.contextWindow)}</td>
@@ -462,7 +477,21 @@
         return keywordMatch && providerMatch;
       });
 
-      renderModelRows(filteredModels);
+      // 对于模型较多的厂商，在首页最多保留 6 条，并提供跳转链接查看完整列表
+      const providerCounts = {};
+      const limitedModels = [];
+      for (const model of filteredModels) {
+        const p = model.provider;
+        if (!providerCounts[p]) {
+          providerCounts[p] = 0;
+        }
+        if (providerCounts[p] < 6) {
+          limitedModels.push(model);
+          providerCounts[p]++;
+        }
+      }
+
+      renderModelRows(limitedModels);
     }
 
     function renderChangelog(payload) {

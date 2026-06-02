@@ -127,8 +127,17 @@ async function main() {
     sitemapPath: SITEMAP_PATH
   });
 
-  console.log("[build] clearing public/");
-  await fs.rm(PUBLIC_DIR, { recursive: true, force: true });
+  console.log("[build] clearing public/ contents");
+  try {
+    const entries = await fs.readdir(PUBLIC_DIR);
+    for (const entry of entries) {
+      await fs.rm(path.join(PUBLIC_DIR, entry), { recursive: true, force: true });
+    }
+  } catch (error) {
+    if (error.code !== 'ENOENT') {
+      throw error;
+    }
+  }
   await fs.mkdir(PUBLIC_DIR, { recursive: true });
 
   for (const entry of STATIC_ENTRIES) {

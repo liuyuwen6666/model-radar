@@ -729,6 +729,8 @@ async function updateSitemap(dataset) {
 }
 
 function sortModels(models) {
+  const originalIndexes = new Map(models.map((model, idx) => [model.id, idx]));
+
   return [...models].sort((left, right) => {
     const providerWeights = {
       "OpenAI": 100,
@@ -767,61 +769,10 @@ function sortModels(models) {
       return isLegacyL ? 1 : -1; // Inactive/Legacy models to the bottom
     }
     
-    function getModelRank(model) {
-      const id = model.id.toLowerCase();
-      const name = model.name.toLowerCase();
-      
-      // 1. Check custom overrides first for absolute flagship prioritization
-      const overrides = {
-        // OpenAI overrides
-        "openai-gpt-5-5-pro": 1000,
-        "openai-gpt-5-5": 990,
-        "openai-gpt-5-4-pro": 980,
-        "openai-gpt-5-4": 970,
-        "openai-gpt-5-4-mini": 960,
-        "openai-gpt-5-4-nano": 950,
-        "openai-gpt-5-3-codex": 900,
-        // Anthropic overrides
-        "anthropic-claude-3-opus": 850,
-        "anthropic-claude-3-7-sonnet": 840,
-        "anthropic-claude-3-5-haiku": 830,
-      };
-      
-      if (overrides[id] !== undefined) {
-        return overrides[id];
-      }
-      
-      // 2. Parse generation version (e.g. 3.5, 3.1, 2.5, 2.0)
-      let version = 0;
-      const versionMatch = id.match(/(\d+)[-\.](\d+)/) || name.match(/(\d+)\.(\d+)/);
-      if (versionMatch) {
-        version = Number(`${versionMatch[1]}.${versionMatch[2]}`);
-      } else {
-        const singleMatch = id.match(/-(\d+)(?:-|$)/) || name.match(/(\d+)/);
-        if (singleMatch) {
-          version = Number(singleMatch[1]);
-        }
-      }
-      
-      // 3. Determine tier weight
-      let tierWeight = 0.5; // default standard tier
-      if (id.includes('pro') || id.includes('opus') || id.includes('max') || id.includes('ultra') || id.includes('turbo') || id.includes('preview')) {
-        tierWeight = 0.9;
-      } else if (id.includes('haiku') || id.includes('mini') || id.includes('lite') || id.includes('nano') || id.includes('small') || id.includes('codex') || id.includes('fast')) {
-        tierWeight = 0.1;
-      }
-      
-      return (version * 100) + (tierWeight * 10);
-    }
-    
-    const rankL = getModelRank(left);
-    const rankR = getModelRank(right);
-    
-    if (rankL !== rankR) {
-      return rankR - rankL; // Higher rank first
-    }
-    
-    return left.name.localeCompare(right.name, "zh-CN");
+    // Within the same provider and active/legacy status, preserve the exact original sequence (blueprint/crawled order)
+    const idxL = originalIndexes.get(left.id);
+    const idxR = originalIndexes.get(right.id);
+    return idxL - idxR;
   });
 }
 
