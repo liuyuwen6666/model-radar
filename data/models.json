@@ -25,7 +25,8 @@
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "文本",
+        "旗舰模型"
       ],
       "recommendedFor": [
         "待补充"
@@ -57,7 +58,8 @@
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "文本",
+        "旗舰模型"
       ],
       "recommendedFor": [
         "待补充"
@@ -89,7 +91,8 @@
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "文本",
+        "旗舰模型"
       ],
       "recommendedFor": [
         "待补充"
@@ -121,7 +124,8 @@
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "文本",
+        "旗舰模型"
       ],
       "recommendedFor": [
         "待补充"
@@ -153,7 +157,8 @@
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "文本",
+        "旗舰模型"
       ],
       "recommendedFor": [
         "待补充"
@@ -185,7 +190,8 @@
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "文本",
+        "旗舰模型"
       ],
       "recommendedFor": [
         "待补充"
@@ -335,21 +341,21 @@
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-1-5-audio",
-      "name": "GPT Realtime-1.5 (Audio)",
+      "id": "openai-gpt-realtime-whisper-audio",
+      "name": "GPT Realtime-whisper (Audio)",
       "provider": "OpenAI",
       "family": "GPT",
       "description": "抓取自 OpenAI 官方定价页。",
       "currency": "USD",
       "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 32,
-      "outputPricePer1M": 64,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.017,
       "cacheWritePricePer1M": null,
-      "cacheReadPricePer1M": 0.4,
-      "inputPriceUsdPer1M": 32,
-      "outputPriceUsdPer1M": 64,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.017,
       "cacheWritePriceUsdPer1M": null,
-      "cacheReadPriceUsdPer1M": 0.4,
+      "cacheReadPriceUsdPer1M": null,
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
@@ -363,178 +369,8 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-1-5-audio",
-      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-03T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "openai-gpt-realtime-1-5-text",
-      "name": "GPT Realtime-1.5 (Text)",
-      "provider": "OpenAI",
-      "family": "GPT",
-      "description": "抓取自 OpenAI 官方定价页。",
-      "currency": "USD",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 4,
-      "outputPricePer1M": 16,
-      "cacheWritePricePer1M": null,
-      "cacheReadPricePer1M": 0.4,
-      "inputPriceUsdPer1M": 4,
-      "outputPriceUsdPer1M": 16,
-      "cacheWritePriceUsdPer1M": null,
-      "cacheReadPriceUsdPer1M": 0.4,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "多模态",
-        "实时与语音生成模型",
-        "Text"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
-      "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-1-5-text",
-      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-03T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "openai-gpt-realtime-1-5-image",
-      "name": "GPT Realtime-1.5 (Image)",
-      "provider": "OpenAI",
-      "family": "GPT",
-      "description": "抓取自 OpenAI 官方定价页。",
-      "currency": "USD",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 5,
-      "outputPricePer1M": null,
-      "cacheWritePricePer1M": null,
-      "cacheReadPricePer1M": 0.5,
-      "inputPriceUsdPer1M": 5,
-      "outputPriceUsdPer1M": null,
-      "cacheWritePriceUsdPer1M": null,
-      "cacheReadPriceUsdPer1M": 0.5,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "多模态",
-        "实时与语音生成模型",
-        "Image"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
-      "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-1-5-image",
-      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-03T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "openai-gpt-realtime-mini-audio",
-      "name": "GPT Realtime mini (Audio)",
-      "provider": "OpenAI",
-      "family": "GPT",
-      "description": "抓取自 OpenAI 官方定价页。",
-      "currency": "USD",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 10,
-      "outputPricePer1M": 20,
-      "cacheWritePricePer1M": null,
-      "cacheReadPricePer1M": 0.3,
-      "inputPriceUsdPer1M": 10,
-      "outputPriceUsdPer1M": 20,
-      "cacheWritePriceUsdPer1M": null,
-      "cacheReadPriceUsdPer1M": 0.3,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "多模态",
-        "实时与语音生成模型",
-        "Audio"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
-      "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-mini-audio",
-      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-03T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "openai-gpt-realtime-mini-text",
-      "name": "GPT Realtime mini (Text)",
-      "provider": "OpenAI",
-      "family": "GPT",
-      "description": "抓取自 OpenAI 官方定价页。",
-      "currency": "USD",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 0.6,
-      "outputPricePer1M": 2.4,
-      "cacheWritePricePer1M": null,
-      "cacheReadPricePer1M": 0.06,
-      "inputPriceUsdPer1M": 0.6,
-      "outputPriceUsdPer1M": 2.4,
-      "cacheWritePriceUsdPer1M": null,
-      "cacheReadPriceUsdPer1M": 0.06,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "多模态",
-        "实时与语音生成模型",
-        "Text"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
-      "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-mini-text",
-      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-03T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "openai-gpt-realtime-mini-image",
-      "name": "GPT Realtime mini (Image)",
-      "provider": "OpenAI",
-      "family": "GPT",
-      "description": "抓取自 OpenAI 官方定价页。",
-      "currency": "USD",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 0.8,
-      "outputPricePer1M": null,
-      "cacheWritePricePer1M": null,
-      "cacheReadPricePer1M": 0.08,
-      "inputPriceUsdPer1M": 0.8,
-      "outputPriceUsdPer1M": null,
-      "cacheWritePriceUsdPer1M": null,
-      "cacheReadPriceUsdPer1M": 0.08,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "多模态",
-        "实时与语音生成模型",
-        "Image"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
-      "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-mini-image",
-      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
+      "detailPath": "/model/openai-gpt-realtime-whisper-audio",
+      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。 音频输出计费：$0.017 / minute。",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -996,7 +832,8 @@
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "专用模型",
+        "Codex"
       ],
       "recommendedFor": [
         "待补充"
@@ -1208,6 +1045,210 @@
       "sourceType": "provider"
     },
     {
+      "id": "openai-gpt-realtime-1-5-audio",
+      "name": "GPT Realtime-1.5 (Audio)",
+      "provider": "OpenAI",
+      "family": "GPT",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 32,
+      "outputPricePer1M": 64,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": 0.4,
+      "inputPriceUsdPer1M": 32,
+      "outputPriceUsdPer1M": 64,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": 0.4,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态",
+        "实时与语音生成模型",
+        "Audio"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "legacy",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-realtime-1-5-audio",
+      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-realtime-1-5-text",
+      "name": "GPT Realtime-1.5 (Text)",
+      "provider": "OpenAI",
+      "family": "GPT",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 4,
+      "outputPricePer1M": 16,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": 0.4,
+      "inputPriceUsdPer1M": 4,
+      "outputPriceUsdPer1M": 16,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": 0.4,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态",
+        "实时与语音生成模型",
+        "Text"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "legacy",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-realtime-1-5-text",
+      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-realtime-1-5-image",
+      "name": "GPT Realtime-1.5 (Image)",
+      "provider": "OpenAI",
+      "family": "GPT",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 5,
+      "outputPricePer1M": null,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": 0.5,
+      "inputPriceUsdPer1M": 5,
+      "outputPriceUsdPer1M": null,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": 0.5,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态",
+        "实时与语音生成模型",
+        "Image"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "legacy",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-realtime-1-5-image",
+      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-realtime-mini-audio",
+      "name": "GPT Realtime mini (Audio)",
+      "provider": "OpenAI",
+      "family": "GPT",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 10,
+      "outputPricePer1M": 20,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": 0.3,
+      "inputPriceUsdPer1M": 10,
+      "outputPriceUsdPer1M": 20,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": 0.3,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态",
+        "实时与语音生成模型",
+        "Audio"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "legacy",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-realtime-mini-audio",
+      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-realtime-mini-text",
+      "name": "GPT Realtime mini (Text)",
+      "provider": "OpenAI",
+      "family": "GPT",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.6,
+      "outputPricePer1M": 2.4,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": 0.06,
+      "inputPriceUsdPer1M": 0.6,
+      "outputPriceUsdPer1M": 2.4,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": 0.06,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态",
+        "实时与语音生成模型",
+        "Text"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "legacy",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-realtime-mini-text",
+      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "openai-gpt-realtime-mini-image",
+      "name": "GPT Realtime mini (Image)",
+      "provider": "OpenAI",
+      "family": "GPT",
+      "description": "抓取自 OpenAI 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.8,
+      "outputPricePer1M": null,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": 0.08,
+      "inputPriceUsdPer1M": 0.8,
+      "outputPriceUsdPer1M": null,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": 0.08,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态",
+        "实时与语音生成模型",
+        "Image"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "legacy",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceLabel": "OpenAI API Pricing",
+      "detailPath": "/model/openai-gpt-realtime-mini-image",
+      "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
       "id": "anthropic-claude-3-opus",
       "name": "Claude Opus 4.8",
       "provider": "Anthropic",
@@ -1313,7 +1354,7 @@
     },
     {
       "id": "google-gemini-3-5-flash",
-      "name": "Gemini 3.5 Flash",
+      "name": "gemini-3.5-flash",
       "provider": "Google",
       "family": "Gemini",
       "description": "抓取自 Google 官方定价页。",
@@ -1321,16 +1362,16 @@
       "hasOfficialDualCurrency": false,
       "inputPricePer1M": 1.5,
       "outputPricePer1M": 9,
-      "cacheWritePricePer1M": 0.375,
+      "cacheWritePricePer1M": 1.5,
       "cacheReadPricePer1M": 0.15,
       "inputPriceUsdPer1M": 1.5,
       "outputPriceUsdPer1M": 9,
-      "cacheWritePriceUsdPer1M": 0.375,
+      "cacheWritePriceUsdPer1M": 1.5,
       "cacheReadPriceUsdPer1M": 0.15,
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "多模态"
       ],
       "recommendedFor": [
         "待补充"
@@ -1345,7 +1386,7 @@
     },
     {
       "id": "google-gemini-3-1-flash-lite",
-      "name": "Gemini 3.1 Flash-Lite",
+      "name": "gemini-3.1-flash-lite",
       "provider": "Google",
       "family": "Gemini",
       "description": "抓取自 Google 官方定价页。",
@@ -1353,16 +1394,16 @@
       "hasOfficialDualCurrency": false,
       "inputPricePer1M": 0.25,
       "outputPricePer1M": 1.5,
-      "cacheWritePricePer1M": 0.0625,
+      "cacheWritePricePer1M": 0.25,
       "cacheReadPricePer1M": 0.025,
       "inputPriceUsdPer1M": 0.25,
       "outputPriceUsdPer1M": 1.5,
-      "cacheWritePriceUsdPer1M": 0.0625,
+      "cacheWritePriceUsdPer1M": 0.25,
       "cacheReadPriceUsdPer1M": 0.025,
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "多模态"
       ],
       "recommendedFor": [
         "待补充"
@@ -1377,24 +1418,25 @@
     },
     {
       "id": "google-gemini-3-1-pro-preview",
-      "name": "Gemini 3.1 Pro Preview",
+      "name": "gemini-3.1-pro-preview",
       "provider": "Google",
       "family": "Gemini",
       "description": "抓取自 Google 官方定价页。",
       "currency": "USD",
       "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 2,
-      "outputPricePer1M": 12,
+      "inputPricePer1M": null,
+      "outputPricePer1M": null,
       "cacheWritePricePer1M": 0.5,
       "cacheReadPricePer1M": 0.2,
-      "inputPriceUsdPer1M": 2,
-      "outputPriceUsdPer1M": 12,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": null,
       "cacheWritePriceUsdPer1M": 0.5,
       "cacheReadPriceUsdPer1M": 0.2,
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "多模态",
+        "推理"
       ],
       "recommendedFor": [
         "待补充"
@@ -1408,8 +1450,41 @@
       "sourceType": "provider"
     },
     {
+      "id": "google-gemini-3-1-pro-preview-customtools",
+      "name": "gemini-3.1-pro-preview-customtools",
+      "provider": "Google",
+      "family": "gemini-3.1-pro-preview-customtools",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": null,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": null,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-3-1-pro-preview-customtools",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
       "id": "google-gemini-3-1-flash-live-preview",
-      "name": "Gemini 3.1 Flash Live Preview",
+      "name": "gemini-3.1-flash-live-preview",
       "provider": "Google",
       "family": "Gemini",
       "description": "抓取自 Google 官方定价页。",
@@ -1426,7 +1501,9 @@
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "语音",
+        "多模态",
+        "推理"
       ],
       "recommendedFor": [
         "待补充"
@@ -1440,8 +1517,75 @@
       "sourceType": "provider"
     },
     {
+      "id": "google-gemini-3-1-flash-image",
+      "name": "gemini-3.1-flash-image",
+      "provider": "Google",
+      "family": "gemini-3.1-flash-image",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.5,
+      "outputPricePer1M": 3,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.5,
+      "outputPriceUsdPer1M": 3,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "图片",
+        "多模态"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-3-1-flash-image",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-3-1-flash-tts-preview",
+      "name": "gemini-3.1-flash-tts-preview",
+      "provider": "Google",
+      "family": "gemini-3.1-flash-tts-preview",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 1,
+      "outputPricePer1M": 20,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 1,
+      "outputPriceUsdPer1M": 20,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "语音",
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-3-1-flash-tts-preview",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
       "id": "google-gemini-3-flash-preview",
-      "name": "Gemini 3 Flash Preview",
+      "name": "gemini-3-flash-preview",
       "provider": "Google",
       "family": "Gemini",
       "description": "抓取自 Google 官方定价页。",
@@ -1449,16 +1593,17 @@
       "hasOfficialDualCurrency": false,
       "inputPricePer1M": 0.5,
       "outputPricePer1M": 3,
-      "cacheWritePricePer1M": 0.125,
+      "cacheWritePricePer1M": 0.5,
       "cacheReadPricePer1M": 0.05,
       "inputPriceUsdPer1M": 0.5,
       "outputPriceUsdPer1M": 3,
-      "cacheWritePriceUsdPer1M": 0.125,
+      "cacheWritePriceUsdPer1M": 0.5,
       "cacheReadPriceUsdPer1M": 0.05,
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "多模态",
+        "推理"
       ],
       "recommendedFor": [
         "待补充"
@@ -1472,8 +1617,42 @@
       "sourceType": "provider"
     },
     {
+      "id": "google-gemini-3-pro-image",
+      "name": "gemini-3-pro-image",
+      "provider": "Google",
+      "family": "gemini-3-pro-image",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 2,
+      "outputPricePer1M": 12,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 2,
+      "outputPriceUsdPer1M": 12,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "图片",
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-3-pro-image",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
       "id": "google-gemini-2-5-pro",
-      "name": "Gemini 2.5 Pro",
+      "name": "gemini-2.5-pro",
       "provider": "Google",
       "family": "Gemini",
       "description": "适合长上下文和复杂多模态任务。",
@@ -1481,17 +1660,16 @@
       "hasOfficialDualCurrency": false,
       "inputPricePer1M": 1.25,
       "outputPricePer1M": 10,
-      "cacheWritePricePer1M": 0.3125,
+      "cacheWritePricePer1M": 1.25,
       "cacheReadPricePer1M": 0.125,
       "inputPriceUsdPer1M": 1.25,
       "outputPriceUsdPer1M": 10,
-      "cacheWritePriceUsdPer1M": 0.3125,
+      "cacheWritePriceUsdPer1M": 1.25,
       "cacheReadPriceUsdPer1M": 0.125,
       "contextWindow": 1000000,
       "maxOutputTokens": 16384,
       "capabilities": [
         "多模态",
-        "长上下文",
         "推理"
       ],
       "recommendedFor": [
@@ -1509,7 +1687,7 @@
     },
     {
       "id": "google-gemini-2-5-flash",
-      "name": "Gemini 2.5 Flash",
+      "name": "gemini-2.5-flash",
       "provider": "Google",
       "family": "Gemini",
       "description": "面向高吞吐与低成本推理。",
@@ -1517,18 +1695,16 @@
       "hasOfficialDualCurrency": false,
       "inputPricePer1M": 0.3,
       "outputPricePer1M": 2.5,
-      "cacheWritePricePer1M": 0.075,
+      "cacheWritePricePer1M": 0.3,
       "cacheReadPricePer1M": 0.03,
       "inputPriceUsdPer1M": 0.3,
       "outputPriceUsdPer1M": 2.5,
-      "cacheWritePriceUsdPer1M": 0.075,
+      "cacheWritePriceUsdPer1M": 0.3,
       "cacheReadPriceUsdPer1M": 0.03,
       "contextWindow": 1000000,
       "maxOutputTokens": 8192,
       "capabilities": [
-        "多模态",
-        "长上下文",
-        "低成本"
+        "多模态"
       ],
       "recommendedFor": [
         "批量摘要",
@@ -1545,7 +1721,7 @@
     },
     {
       "id": "google-gemini-2-5-flash-lite",
-      "name": "Gemini 2.5 Flash-Lite",
+      "name": "gemini-2.5-flash-lite",
       "provider": "Google",
       "family": "Gemini",
       "description": "抓取自 Google 官方定价页。",
@@ -1553,16 +1729,16 @@
       "hasOfficialDualCurrency": false,
       "inputPricePer1M": 0.1,
       "outputPricePer1M": 0.4,
-      "cacheWritePricePer1M": 0.025,
+      "cacheWritePricePer1M": 0.1,
       "cacheReadPricePer1M": 0.01,
       "inputPriceUsdPer1M": 0.1,
       "outputPriceUsdPer1M": 0.4,
-      "cacheWritePriceUsdPer1M": 0.025,
+      "cacheWritePriceUsdPer1M": 0.1,
       "cacheReadPriceUsdPer1M": 0.01,
       "contextWindow": null,
       "maxOutputTokens": null,
       "capabilities": [
-        "文本"
+        "多模态"
       ],
       "recommendedFor": [
         "待补充"
@@ -1571,6 +1747,767 @@
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
       "detailPath": "/model/google-gemini-2-5-flash-lite",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-2-5-flash-lite-preview-09-2025",
+      "name": "gemini-2.5-flash-lite-preview-09-2025",
+      "provider": "Google",
+      "family": "gemini-2.5-flash-lite-preview-09-2025",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.1,
+      "outputPricePer1M": 0.4,
+      "cacheWritePricePer1M": 0.1,
+      "cacheReadPricePer1M": 0.01,
+      "inputPriceUsdPer1M": 0.1,
+      "outputPriceUsdPer1M": 0.4,
+      "cacheWritePriceUsdPer1M": 0.1,
+      "cacheReadPriceUsdPer1M": 0.01,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-2-5-flash-lite-preview-09-2025",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-2-5-flash-native-audio-preview-12-2025",
+      "name": "gemini-2.5-flash-native-audio-preview-12-2025",
+      "provider": "Google",
+      "family": "gemini-2.5-flash-native-audio-preview-12-2025",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.5,
+      "outputPricePer1M": 2,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.5,
+      "outputPriceUsdPer1M": 2,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "语音",
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-2-5-flash-native-audio-preview-12-2025",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-2-5-flash-image",
+      "name": "gemini-2.5-flash-image",
+      "provider": "Google",
+      "family": "gemini-2.5-flash-image",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.3,
+      "outputPricePer1M": 0.039,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.3,
+      "outputPriceUsdPer1M": 0.039,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "图片",
+        "多模态"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-2-5-flash-image",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-2-5-flash-preview-tts",
+      "name": "gemini-2.5-flash-preview-tts",
+      "provider": "Google",
+      "family": "gemini-2.5-flash-preview-tts",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.5,
+      "outputPricePer1M": 10,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.5,
+      "outputPriceUsdPer1M": 10,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "语音",
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-2-5-flash-preview-tts",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-2-5-pro-preview-tts",
+      "name": "gemini-2.5-pro-preview-tts",
+      "provider": "Google",
+      "family": "gemini-2.5-pro-preview-tts",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 1,
+      "outputPricePer1M": 20,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 1,
+      "outputPriceUsdPer1M": 20,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "语音",
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-2-5-pro-preview-tts",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-2-0-flash",
+      "name": "gemini-2.0-flash",
+      "provider": "Google",
+      "family": "Gemini",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.1,
+      "outputPricePer1M": 0.4,
+      "cacheWritePricePer1M": 0.1,
+      "cacheReadPricePer1M": 0.025,
+      "inputPriceUsdPer1M": 0.1,
+      "outputPriceUsdPer1M": 0.4,
+      "cacheWritePriceUsdPer1M": 0.1,
+      "cacheReadPriceUsdPer1M": 0.025,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-2-0-flash",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-2-0-flash-lite",
+      "name": "gemini-2.0-flash-lite",
+      "provider": "Google",
+      "family": "Gemini",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.075,
+      "outputPricePer1M": 0.3,
+      "cacheWritePricePer1M": 0.075,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.075,
+      "outputPriceUsdPer1M": 0.3,
+      "cacheWritePriceUsdPer1M": 0.075,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-2-0-flash-lite",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-imagen-4-0-generate-001",
+      "name": "imagen-4.0-generate-001",
+      "provider": "Google",
+      "family": "imagen-4.0-generate-001",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.04,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.04,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "图片",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-imagen-4-0-generate-001",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-imagen-4-0-ultra-generate-001",
+      "name": "imagen-4.0-ultra-generate-001",
+      "provider": "Google",
+      "family": "imagen-4.0-ultra-generate-001",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.06,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.06,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "图片",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-imagen-4-0-ultra-generate-001",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-imagen-4-0-fast-generate-001",
+      "name": "imagen-4.0-fast-generate-001",
+      "provider": "Google",
+      "family": "imagen-4.0-fast-generate-001",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.02,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.02,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "图片",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-imagen-4-0-fast-generate-001",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-veo-3-1-generate-preview",
+      "name": "veo-3.1-generate-preview",
+      "provider": "Google",
+      "family": "veo-3.1-generate-preview",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.4,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.4,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "视频",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-veo-3-1-generate-preview",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-veo-3-1-fast-generate-preview",
+      "name": "veo-3.1-fast-generate-preview",
+      "provider": "Google",
+      "family": "veo-3.1-fast-generate-preview",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.1,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.1,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "视频",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-veo-3-1-fast-generate-preview",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-veo-3-1-lite-generate-preview",
+      "name": "veo-3.1-lite-generate-preview",
+      "provider": "Google",
+      "family": "veo-3.1-lite-generate-preview",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.05,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.05,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "视频",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-veo-3-1-lite-generate-preview",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-veo-3-0-generate-001",
+      "name": "veo-3.0-generate-001",
+      "provider": "Google",
+      "family": "veo-3.0-generate-001",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.4,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.4,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "视频",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-veo-3-0-generate-001",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-veo-3-0-fast-generate-001",
+      "name": "veo-3.0-fast-generate-001",
+      "provider": "Google",
+      "family": "veo-3.0-fast-generate-001",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.1,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.1,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "视频",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-veo-3-0-fast-generate-001",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-veo-2-0-generate-001",
+      "name": "veo-2.0-generate-001",
+      "provider": "Google",
+      "family": "veo-2.0-generate-001",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.35,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.35,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "视频",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-veo-2-0-generate-001",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-lyria-3-clip-preview",
+      "name": "lyria-3-clip-preview",
+      "provider": "Google",
+      "family": "lyria-3-clip-preview",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.04,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.04,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "语音",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-lyria-3-clip-preview",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-lyria-3-pro-preview",
+      "name": "lyria-3-pro-preview",
+      "provider": "Google",
+      "family": "lyria-3-pro-preview",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": null,
+      "outputPricePer1M": 0.08,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": null,
+      "outputPriceUsdPer1M": 0.08,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "语音",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-lyria-3-pro-preview",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-embedding-2",
+      "name": "gemini-embedding-2",
+      "provider": "Google",
+      "family": "gemini-embedding-2",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.2,
+      "outputPricePer1M": null,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.2,
+      "outputPriceUsdPer1M": null,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "嵌入",
+        "多模态"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-embedding-2",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-embedding-001",
+      "name": "gemini-embedding-001",
+      "provider": "Google",
+      "family": "gemini-embedding-001",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0.15,
+      "outputPricePer1M": null,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0.15,
+      "outputPriceUsdPer1M": null,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "嵌入",
+        "多模态"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-embedding-001",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-robotics-er-1-6-preview",
+      "name": "gemini-robotics-er-1.6-preview",
+      "provider": "Google",
+      "family": "gemini-robotics-er-1.6-preview",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 1,
+      "outputPricePer1M": 5,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 1,
+      "outputPriceUsdPer1M": 5,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "机器人学",
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-robotics-er-1-6-preview",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemini-2-5-computer-use-preview-10-2025",
+      "name": "gemini-2.5-computer-use-preview-10-2025",
+      "provider": "Google",
+      "family": "gemini-2.5-computer-use-preview-10-2025",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 1.25,
+      "outputPricePer1M": 10,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 1.25,
+      "outputPriceUsdPer1M": 10,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "计算机使用",
+        "多模态",
+        "推理"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemini-2-5-computer-use-preview-10-2025",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "google-gemma-4",
+      "name": "Gemma 4",
+      "provider": "Google",
+      "family": "Gemma",
+      "description": "抓取自 Google 官方定价页。",
+      "currency": "USD",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 0,
+      "outputPricePer1M": 0,
+      "cacheWritePricePer1M": null,
+      "cacheReadPricePer1M": null,
+      "inputPriceUsdPer1M": 0,
+      "outputPriceUsdPer1M": 0,
+      "cacheWritePriceUsdPer1M": null,
+      "cacheReadPriceUsdPer1M": null,
+      "contextWindow": null,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "多模态"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceLabel": "Google AI Pricing",
+      "detailPath": "/model/google-gemma-4",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
@@ -1599,75 +2536,11 @@
       "recommendedFor": [
         "待补充"
       ],
-      "status": "live",
+      "status": "legacy",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
       "detailPath": "/model/google-gemini-2-5-flash-lite-preview",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-03T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "google-gemini-2-0-flash",
-      "name": "Gemini 2.0 Flash",
-      "provider": "Google",
-      "family": "Gemini",
-      "description": "抓取自 Google 官方定价页。",
-      "currency": "USD",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 0.1,
-      "outputPricePer1M": 0.4,
-      "cacheWritePricePer1M": 0.025,
-      "cacheReadPricePer1M": 0.025,
-      "inputPriceUsdPer1M": 0.1,
-      "outputPriceUsdPer1M": 0.4,
-      "cacheWritePriceUsdPer1M": 0.025,
-      "cacheReadPriceUsdPer1M": 0.025,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "文本"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
-      "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-2-0-flash",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-03T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "google-gemini-2-0-flash-lite",
-      "name": "Gemini 2.0 Flash-Lite",
-      "provider": "Google",
-      "family": "Gemini",
-      "description": "抓取自 Google 官方定价页。",
-      "currency": "USD",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 0.075,
-      "outputPricePer1M": 0.3,
-      "cacheWritePricePer1M": 0.0188,
-      "cacheReadPricePer1M": null,
-      "inputPriceUsdPer1M": 0.075,
-      "outputPriceUsdPer1M": 0.3,
-      "cacheWritePriceUsdPer1M": 0.0188,
-      "cacheReadPriceUsdPer1M": null,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "文本"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
-      "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-2-0-flash-lite",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -1699,7 +2572,7 @@
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
       "detailPath": "/model/google-gemini-3-1-flash-lite-preview",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -1763,6 +2636,38 @@
       "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
       "sourceLabel": "DeepSeek Pricing",
       "detailPath": "/model/deepseek-v4-pro",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-03T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
+      "id": "kimi-k2-5",
+      "name": "kimi-k2.5",
+      "provider": "月之暗面",
+      "family": "Kimi",
+      "description": "抓取自 月之暗面 官方定价页。",
+      "currency": "CNY",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 4,
+      "outputPricePer1M": 21,
+      "cacheWritePricePer1M": 4,
+      "cacheReadPricePer1M": 0.7,
+      "inputPriceUsdPer1M": 0.5517,
+      "outputPriceUsdPer1M": 2.8966,
+      "cacheWritePriceUsdPer1M": 0.5517,
+      "cacheReadPriceUsdPer1M": 0.0966,
+      "contextWindow": 262144,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-k25",
+      "sourceLabel": "Moonshot Pricing",
+      "detailPath": "/model/kimi-k2-5",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
@@ -1891,38 +2796,6 @@
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-v1",
       "sourceLabel": "Moonshot Pricing",
       "detailPath": "/model/kimi-moonshot-v1-32k-vision-preview",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-03T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "kimi-k2-5",
-      "name": "kimi-k2.5",
-      "provider": "月之暗面",
-      "family": "Kimi",
-      "description": "抓取自 月之暗面 官方定价页。",
-      "currency": "CNY",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 4,
-      "outputPricePer1M": 21,
-      "cacheWritePricePer1M": 4,
-      "cacheReadPricePer1M": 0.7,
-      "inputPriceUsdPer1M": 0.5517,
-      "outputPriceUsdPer1M": 2.8966,
-      "cacheWritePriceUsdPer1M": 0.5517,
-      "cacheReadPriceUsdPer1M": 0.0966,
-      "contextWindow": 262144,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "文本"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-k25",
-      "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-k2-5",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
@@ -4523,7 +5396,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen3-4b",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4555,7 +5428,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen3-1-7b",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4587,7 +5460,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen3-0-6b",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4619,7 +5492,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-14b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4651,7 +5524,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-14b-instruct-1m",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4683,7 +5556,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-32b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4715,7 +5588,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-3b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4747,7 +5620,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-72b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4779,7 +5652,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-7b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4811,7 +5684,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-7b-instruct-1m",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4843,7 +5716,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-coder-14b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4875,7 +5748,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-coder-32b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4907,7 +5780,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-coder-7b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4939,7 +5812,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-math-72b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -4971,7 +5844,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-math-7b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -5003,7 +5876,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-vl-32b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -5035,7 +5908,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-vl-3b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -5067,7 +5940,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-vl-72b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -5099,7 +5972,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen2-5-vl-7b-instruct",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -5131,7 +6004,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen-coder-turbo-latest",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -5163,7 +6036,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen-vl-max-latest",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -5195,7 +6068,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen-coder-plus-latest",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -5227,7 +6100,7 @@
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
       "detailPath": "/model/qwen-vl-plus-latest",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
@@ -6415,7 +7288,7 @@
       "sourceUrl": "https://www.volcengine.com/docs/82379/1547233",
       "sourceLabel": "豆包 Pricing",
       "detailPath": "/model/doubao-1-5-pro-32k",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-03T00:00:00.000Z",
       "sourceType": "provider"
     },
