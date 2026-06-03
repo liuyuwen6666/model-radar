@@ -393,9 +393,9 @@ async function readJson(filePath, fallback = null) {
 function isDataset(dataset) {
   return Boolean(
     dataset &&
-      typeof dataset === "object" &&
-      Array.isArray(dataset.models) &&
-      typeof dataset.effectiveDate === "string"
+    typeof dataset === "object" &&
+    Array.isArray(dataset.models) &&
+    typeof dataset.effectiveDate === "string"
   );
 }
 
@@ -550,7 +550,7 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
       cacheReadPricePer1M: cacheReadPrice,
       contextWindow: baseModel?.contextWindow ?? providerModel.contextWindow ?? null,
       maxOutputTokens: baseModel?.maxOutputTokens ?? providerModel.maxOutputTokens ?? null,
-      capabilities: baseModel?.capabilities || providerModel.capabilities || ["文本"],
+      capabilities: providerModel.capabilities || baseModel?.capabilities || ["文本"],
       recommendedFor: baseModel?.recommendedFor || providerModel.recommendedFor || ["待补充"],
       status: baseModel?.status || "live",
       sourceUrl: providerModel.sourceUrl || providerModel.source_url,
@@ -744,11 +744,11 @@ function sortModels(models) {
     };
     const weightL = providerWeights[left.provider] || 0;
     const weightR = providerWeights[right.provider] || 0;
-    
+
     if (weightL !== weightR) {
       return weightR - weightL; // Priority provider first
     }
-    
+
     const checkLegacy = (model) => {
       const status = String(model.status || '').toLowerCase();
       if (status === 'legacy' || status === 'deprecated' || status === 'inactive') {
@@ -758,17 +758,17 @@ function sortModels(models) {
       const name = String(model.name || '').toLowerCase();
       const id = String(model.id || '').toLowerCase();
       return desc.includes('废弃') || desc.includes('旧版') || desc.includes('legacy') || desc.includes('deprecated') || desc.includes('inactive') || desc.includes('停用') ||
-             name.includes('废弃') || name.includes('旧版') || name.includes('legacy') || name.includes('deprecated') || name.includes('inactive') || name.includes('停用') ||
-             id.includes('legacy') || id.includes('deprecated') || id.includes('inactive');
+        name.includes('废弃') || name.includes('旧版') || name.includes('legacy') || name.includes('deprecated') || name.includes('inactive') || name.includes('停用') ||
+        id.includes('legacy') || id.includes('deprecated') || id.includes('inactive');
     };
-    
+
     const isLegacyL = checkLegacy(left);
     const isLegacyR = checkLegacy(right);
-    
+
     if (isLegacyL !== isLegacyR) {
       return isLegacyL ? 1 : -1; // Inactive/Legacy models to the bottom
     }
-    
+
     // Within the same provider and active/legacy status, preserve the exact original sequence (blueprint/crawled order)
     const idxL = originalIndexes.get(left.id);
     const idxR = originalIndexes.get(right.id);
@@ -807,11 +807,11 @@ async function main() {
     targetDate,
     shouldSimulateFallback
   );
-  
+
   // Sort models elegantly based on priority, version, and legacy status
   const sortedModels = sortModels(nextModels);
   const nextDataset = buildDataset(sortedModels, targetDate);
-  
+
   // Synchronize sources.json's models list with newly parsed and current models dynamically
   for (const source of sourceList) {
     const providerModelIds = sortedModels
@@ -819,7 +819,7 @@ async function main() {
       .map((model) => model.id);
     source.models = providerModelIds;
   }
-  
+
   const historySnapshotPath = getHistorySnapshotPath(targetDate);
 
   await Promise.all([
@@ -827,10 +827,9 @@ async function main() {
     writeJson(historySnapshotPath, nextDataset),
     writeJson(SOURCES_PATH, sourceList)
   ]);
-  
+
   console.log(
-    `[update] wrote history snapshot ${
-      path.relative(ROOT_DIR, historySnapshotPath) || path.basename(historySnapshotPath)
+    `[update] wrote history snapshot ${path.relative(ROOT_DIR, historySnapshotPath) || path.basename(historySnapshotPath)
     }`
   );
   console.log(`[update] dynamically synchronized ${sourceList.length} sources inside sources.json`);
