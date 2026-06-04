@@ -1,0 +1,4907 @@
+<article class="devsite-article"><style>
+      /* Styles inlined from /site-assets/css/style.css */
+body[theme="googledevai-theme"] {
+  --devsite-background-0: var(--devsite-background-1);
+  --devsite-button-border: 1px solid #747775;
+  --devsite-button-border-radius: 20rem;
+  --devsite-button-font: 500 14px/36px 'Google Sans Text', Roboto, sans-serif;
+  --devsite-code-font-family: 'Google Sans Mono', Roboto Mono, monospace;
+  --devsite-primary-font-family: 'Google Sans Text', Roboto, sans-serif;
+  --devsite-table-heading-font: 500 14px/20px 'Google Sans Text', Roboto, sans-serif;
+  --googledevai-border-color: #c4c7c5;
+  --googledevai-blue-light: #d7e6ff;
+  --googledevai-blue-dark: #2e64de;
+  --googledevai-cyan-light: #c7e4ff;
+  --googledevai-cyan-dark: #3c8fe3;
+  --googledevai-purple-light: #dce2ff;
+  --googledevai-purple-dark: #987be9;
+  --googledevai-purple: #ac87eb;
+  --googledevai-red: #ee4d5d;
+  --googledevai-secondary-text: #001d35;
+  --googledevai-button-gradient-light: linear-gradient(90deg, var(--googledevai-blue-light), var(--googledevai-cyan-light), var(--googledevai-purple-light));
+  --googledevai-button-gradient-dark: linear-gradient(90deg, var(--googledevai-blue), var(--googledevai-cyan), var(--googledevai-purple));
+}
+
+body[theme="googledevai-theme"]:not([type="reference"]){
+  --googledevai-page-width: 1100px;
+}
+
+body[layout=docs][theme="googledevai-theme"]:not([type="reference"]) .devsite-main-content,
+body[layout=docs][theme="googledevai-theme"]:not([type="reference"]) .devsite-main-content[has-book-nav][has-sidebar] {
+  grid-template-columns: minmax(269px, 1fr) minmax(752px, var(--googledevai-page-width)) minmax(160px, 1fr);
+  grid-gap: 3rem;
+}
+
+body[layout=docs][theme="googledevai-theme"] devsite-content {
+  max-width: var(--googledevai-page-width);
+}
+
+body[layout=docs][theme="googledevai-theme"] .devsite-article {
+  box-shadow: unset;
+}
+
+body[theme="googledevai-theme"] {
+  --googledevai-header-gradient: linear-gradient(90deg, var(--googledevai-blue) 50%, var(--googledevai-cyan), var(--googledevai-purple), var(--googledevai-red));
+}
+
+body[theme="googledevai-theme"].color-scheme--dark {
+  --googledevai-header-gradient: linear-gradient(90deg, var(--googledevai-blue) 75%, var(--googledevai-cyan), var(--googledevai-purple));
+  --googledevai-border-color: #444746;
+}
+
+/* Ensure that full-bleed pages get the full width. */
+body[theme="googledevai-theme"][layout="full"] .devsite-main-content {
+  max-width: none;
+  padding: 0;
+}
+
+/* And ensure that any site banners/ACL warnings/etc don't get hidden on
+ * full-bleed pages. */
+body[theme="googledevai-theme"][layout="full"] .devsite-banner {
+  margin: 0;
+}
+
+tab:has(> a.hidden-tab) {
+  display: none;
+}
+
+body[theme="googledevai-theme"] devsite-toc > .devsite-nav-list {
+  border-inline-start: unset;
+}
+
+/* Banner notice */
+[layout=docs] .devsite-banner:first-of-type {
+  background: var(--googledevai-cyan-light);
+  border-radius: 10px;
+  color: var(--googledevai-secondary-text);
+  margin: -2.5rem -0.25rem 2.5rem;
+  display: flex;
+}
+
+/* Banner notice smaller screens */
+@media (max-width: 840px) {
+  [layout=docs] .devsite-banner:first-of-type {
+    margin: -0.25rem -0.25rem 2.5rem;
+  }
+}
+
+/* Asides */
+.devsite-article-body>aside:not([class*=attempt])  {
+  border-radius: 2px;
+}
+
+/* Tables */
+table:not(.tfo-notebook-buttons) {
+  border: 1px solid var(--googledevai-border-color);
+  border-collapse: unset;
+  border-radius: 9px;
+  margin: auto;
+  width: 100%;
+}
+
+.gemini-api-model-table tr:not(:last-child) td:not(:first-child),
+.gemini-api-model-table tr:not(:last-child) th,
+th,
+table:not(.gemini-api-model-table):not(.tfo-notebook-buttons) tr:not(:last-child) td {
+  border-bottom: 1px solid var(--googledevai-border-color);
+}
+
+th,
+td {
+  background: transparent;
+  padding: 1rem;
+}
+
+/* Notebooks */
+devsite-code .tfo-notebook-code-cell-output {
+  max-height: 300px;
+  overflow: auto;
+  background: rgba(237, 247, 255, 1);  /* blue bg to distinguish from input code cells */
+}
+
+devsite-code .tfo-notebook-code-cell-output + .devsite-code-buttons-container button {
+  background: rgba(237, 247, 255, .7);  /* blue bg to distinguish from input code cells */
+}
+
+.color-scheme--dark devsite-code .tfo-notebook-code-cell-output {
+  background: rgba(var(--devsite-background-2), 1);
+}
+
+.color-scheme--dark devsite-code .tfo-notebook-code-cell-output + .devsite-code-buttons-container button {
+  background: rgba(var(--devsite-background-2), .7);
+}
+
+devsite-code[dark-code] .tfo-notebook-code-cell-output {
+  background: rgba(64, 78, 103, 1);  /* medium slate */
+}
+
+devsite-code[dark-code] .tfo-notebook-code-cell-output + .devsite-code-buttons-container button {
+  background: rgba(64, 78, 103, .7);  /* medium slate */
+}
+
+.devsite-article-body>devsite-code {
+  --devsite-code-buttons-container-right: 0;
+  --devsite-code-margin: 0 0;
+  --devsite-code-padding-block: 14px;
+  border-radius: 8px;
+}
+
+.devsite-article-body>.beta:not([class*=attempt]),
+.devsite-article-body>.caution:not([class*=attempt]),
+.devsite-article-body>.deprecated:not([class*=attempt]),
+.devsite-article-body>.dogfood:not([class*=attempt]),
+.devsite-article-body>.experimental:not([class*=attempt]),
+.devsite-article-body>.key-point:not([class*=attempt]),
+.devsite-article-body>.key-term:not([class*=attempt]),
+.devsite-article-body>.note:not([class*=attempt]),
+.devsite-article-body>.objective:not([class*=attempt]),
+.devsite-article-body>.preview:not([class*=attempt]),
+.devsite-article-body>.special:not([class*=attempt]),
+.devsite-article-body>.success:not([class*=attempt]),
+.devsite-article-body>.tip:not([class*=attempt]),
+.devsite-article-body>.warning:not([class*=attempt]),
+.devsite-article-body>aside:not([class*=attempt]) {
+  --devsite-notice-margin: 0 0;
+  border-radius: 8px;
+}
+
+/* override default table styles for notebook buttons */
+.devsite-table-wrapper .tfo-notebook-buttons {
+  display: block;
+  width: auto;
+}
+
+.tfo-notebook-buttons td {
+  display: inline-block;
+  padding: 0 16px 16px 0;
+}
+
+/* from DevSite's buttons.scss */
+.tfo-notebook-buttons a,
+.tfo-notebook-buttons :link,
+.tfo-notebook-buttons :visited {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  align-self: var(--devsite-button-align-self);
+  background: var(--devsite-button-background, var(--devsite-background-1));
+  border: var(--devsite-button-border, 0);
+  border-radius: var(--devsite-button-border-radius, 2px);
+  box-sizing: border-box;
+  color: var(--devsite-button-color);
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font: var(--devsite-button-font, 500 14px/36px var(--devsite-primary-font-family));
+  height: var(--devsite-button-height, 36px);
+  letter-spacing: var(--devsite-button-letter-spacing, 0);
+  line-height: var(--devsite-button-line-height, 36px);
+  margin: var(--devsite-button-margin, 0);
+  margin-inline-end: var(--devsite-button-margin-x-end);
+  max-width: var(--devsite-button-max-width, none);
+  min-width: 36px;
+  outline: 0;
+  overflow: hidden;
+  padding: var(--devsite-button-with-icon-padding, 0 16px);
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: var(--devsite-button-text-transform, uppercase);
+  transition:
+    background-color .2s,
+    border .2s;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: var(--devsite-button-width, auto);
+}
+
+.tfo-notebook-buttons a:hover,
+.tfo-notebook-buttons a:focus {
+  background: var(--devsite-button-background-hover);
+  border: var(--devsite-button-border-hover, 0);
+  color: var(--devsite-button-color-hover, var(--devsite-button-color));
+  text-decoration: var(--devsite-button-text-decoration-hover, none);
+}
+
+.tfo-notebook-buttons a:active {
+  background: var(--devsite-button-background-active);
+  border: var(--devsite-button-border-active, 0);
+  transform: var(--devsite-button-transform-active, none);
+}
+
+.tfo-notebook-buttons tr {
+  background: 0;
+  border: 0;
+}
+
+/* on rendered notebook page,
+   remove link to webpage since we're already here */
+.tfo-notebook-buttons:not(.tfo-api) td:first-child {
+  display: none;
+}
+
+.tfo-notebook-buttons td > a > img {
+  margin: 0 8px 0 -4px;
+  height: 20px;
+}
+
+[appearance='dark'] .tfo-notebook-buttons td > a > img {
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+  [appearance='device'] .tfo-notebook-buttons td > a > img {
+    filter: invert(1);
+  }
+  .sub-heading {
+    background-color: #333;
+    color: #bdbdbd;
+  }
+}
+
+[appearance='dark'] .sub-heading {
+  background-color: #333;
+  color: #bdbdbd;
+}
+
+.sub-heading {
+  background-color: #f2f2f2;
+  color: #5f6368;
+}
+
+@media screen and (max-width: 600px) {
+  .tfo-notebook-buttons td {
+    display: block;
+  }
+}
+
+devsite-nav-buttons button {
+  margin-left: 0;
+  margin-top: 5px;
+}
+
+code {
+  border-radius: 6px
+}
+
+devsite-book-nav .devsite-nav-list>.devsite-nav-heading:not(.devsite-nav-divider) {
+  border-top: 0;
+  padding-bottom: 0.9rem;
+  font-size: 1rem;
+}
+
+/*
+ * TODO(b/439059414): Remove this workaround in favor of a project-level
+ * body_class when possible.
+ */
+.ais-theme-marker {
+  display: none;
+}
+
+/*
+ * Gemini API body class.
+ * https://source.corp.google.com/piper///depot/google3/third_party/devsite/googledevai/en/gemini-api/_project.yaml;l=7
+ */
+.gemini-api devsite-thumb-rating[position="header"],
+.gemini-api devsite-feedback[position="header"] {
+  /* Hide the thumb rating and feedback widgets at the top of the page. */
+  display: none;
+}
+
+/*
+ * Shaded table styles look like a .pricing-table but are more flexible around
+ * content sizes in each column.
+ */
+.shaded-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.shaded-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 8px;
+}
+
+/* These should use theme colours for light too, so we don't
+ * need an override. */
+.color-scheme--dark .shaded-table th {
+  background-color: var(--devsite-ref-palette--grey800);
+}
+
+.shaded-table td {
+    padding: 8px;
+}
+
+.shaded-table th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.shaded-table th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.shaded-table tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.shaded-table tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+.devsite-nav {
+    font-size: var(--devsite-nav-font-size, 14px);
+}
+
+.devsite-nav-item {
+    line-height: var(--devsite-nav-item-line-height, 20px);
+}
+
+.devsite-book-nav-bg, devsite-book-nav {
+    width: 210px;
+    scrollbar-width: thin;
+}
+
+/* Hide the old toggle button immediately */
+.devsite-expandable-nav > .devsite-nav-toggle {
+    display: none !important;
+}
+
+/* Ion setup: Default State (Chevron Right) */
+.devsite-expandable-nav > .devsite-nav-title::after {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1;
+    color: #888;
+    /* Default: Chevron Right */
+    content: "\e5cc";
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+/* Down state logic */
+.devsite-expandable-nav.expanded > .devsite-nav-title::after,
+.devsite-expandable-nav:has(.devsite-nav-active) > .devsite-nav-title::after,
+.devsite-expandable-nav > .devsite-nav-title[aria-expanded="true"]::after {
+    content: "\e313";
+}
+
+/* Close state logic */
+.devsite-expandable-nav > .devsite-nav-title[aria-expanded="false"]::after {
+    content: "\e5cc" !important;
+}
+
+/* Hovercard styling */
+.gemini-api .heading:has(devsite-gemini-api-hovercard-button) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gemini-api .heading:has(devsite-gemini-api-hovercard-button) h1 {
+  margin-bottom: 0;
+}
+
+devsite-gemini-api-hovercard,
+devsite-gemini-api-hovercard-button {
+  /* Render above any code blocks on the page */
+  z-index: 1;
+}
+
+.devsite-nav-icon[data-icon="beta"], .devsite-nav-icon[data-icon="preview"],
+.devsite-nav-icon[data-icon="experimental"] {
+  margin: -5px 0 -1px 4px;
+}
+      </style><style>
+      /* Styles inlined from /site-assets/css/overview.css */
+.button-primary {
+  border-radius: 0.375rem;
+}
+
+.code-snippet {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+.code-snippet code {
+  font-family: monospace;
+}
+
+.quickstart {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 1rem;
+}
+
+.quickstart p {
+  margin: 0;
+}
+
+.quickstart-blurb {
+  margin-left: 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--googledevai-border-color);
+}
+
+.gemini-api-card-overview {
+  background: var(--devsite-background-1);
+  border: 1px solid var(--googledevai-border-color);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  color: var(--devsite-primary-text-color);
+  padding: 1rem;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.gemini-api-card-overview:active,
+.gemini-api-card-overview:focus {
+  text-decoration: none;
+  border-color: var(--devsite-primary-color);
+}
+
+.gemini-api-card-overview:hover {
+  box-shadow: var(--gemini-api-elevation-3dp);
+}
+
+.gemini-api-card-title {
+  align-items: center;
+  display: flex;
+  font-size: 1rem;
+  height: auto; /* Override the setting for now in models.css */
+  margin: 0 0 0.75rem 0;
+}
+
+.gemini-api-card-overview .google-symbols {
+  font-size: 18px;
+}
+
+.gemini-api-card-overview .google-symbols.spark {
+  font-size: 16px;
+}
+
+.gemini-api-card-overview .ais-logo {
+  height: 16px;
+  user-select: none;
+}
+
+.gemini-api-card-overview .ais-logo,
+.gemini-api-card-overview .google-symbols,
+.gemini-api-card-overview .nano-banana {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.gemini-api-card-overview.with-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gemini-api-card-description {
+  margin: 0;
+  height: auto; /* Override the setting for now in models.css */
+}
+
+.gemini-api-card-description-cta {
+  color: var(--devsite-link-color);
+  margin: 1rem 0 0 0;
+}
+
+.blue-bold-card {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.icon-background {
+  display: flex;
+  border-radius: 8px;
+  padding: 0.5rem;
+  background-color: rgb(from var(--devsite-link-background) r g b / 40%);
+}
+
+.icon-background .google-symbols {
+  margin: 0;
+}
+
+/* Add this to prevent the button from getting squashed on any screen size */
+.quickstart .button-primary {
+  flex-shrink: 0;      /* Critical: Never let this element shrink */
+  white-space: nowrap; /* Critical: Keep text on one line */
+  min-width: max-content; /* Ensure it takes up as much space as the text needs */
+}
+
+
+@media only screen and (min-width: 625px) {
+  .gemini-api-recommended {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 625px) {
+  /* 1. Standard Card Resets for Mobile */
+  .gemini-api-card-overview {
+    display: block;
+    margin: 1rem 0;
+  }
+
+  .gemini-api-card-title {
+    margin: 0 0 0.25rem 0;
+  }
+
+  .blue-bold-card {
+    display: flex;
+  }
+
+  /* 2. Quickstart Split Layout (Text -> Button -> Text) */
+  .quickstart {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  /* "Unwrap" the text container so we can reorder paragraphs individually */
+  .quickstart-blurb {
+    display: contents;
+  }
+
+  /* Order 1: The first paragraph ("Follow our Quickstart...") */
+  .quickstart-blurb p:first-child {
+    order: 1;
+  }
+
+  /* Order 2: The Button */
+  .quickstart .button-primary {
+    order: 2;
+  }
+
+  /* Order 3: The second paragraph ("For most models...") */
+  .quickstart-blurb p:last-child {
+    order: 3;
+  }
+}
+
+/* Resources Footer Section */
+.gemini-api-header-with-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.gemini-api-header-with-cta h2 {
+  margin: 0;
+}
+
+.gemini-api-cta-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #5f6368;
+}
+
+.gemini-api-cta-link:hover {
+  text-decoration: underline;
+  color: var(--devsite-link-color);
+}
+
+.color-scheme--dark .gemini-api-cta-link {
+  color: #9aa0a6;
+}
+
+.gemini-api-resources-footer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 4rem 0 2rem;
+  padding-top: 0;
+}
+
+.gemini-api-resource-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 0 1rem;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.gemini-api-resource-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.gemini-api-resource-item:hover {
+  text-decoration: none;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  background-color: var(--devsite-background-1);
+}
+
+.color-scheme--dark .gemini-api-resource-item:hover {
+  background-color: #1f1f1f;
+  box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.gemini-api-resource-item .icon-container {
+  margin-bottom: 1rem;
+  color: var(--devsite-primary-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+}
+
+.gemini-api-resource-item .google-symbols {
+  font-size: 24px;
+}
+
+.gemini-api-resource-item .ais-logo {
+  height: 24px;
+  width: auto;
+}
+
+.gemini-api-resource-item .resource-title {
+  font-family: "Google Sans", Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--devsite-primary-text-color);
+}
+
+.gemini-api-resource-item .resource-description {
+  font-size: 0.875rem;
+  color: #5f6368;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.color-scheme--dark .gemini-api-resource-item .resource-description {
+  color: #9aa0a6;
+}
+
+@media (max-width: 900px) {
+  .gemini-api-resources-footer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .gemini-api-resources-footer {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+      </style><style>
+      /* Styles inlined from /site-assets/css/models.css */
+:root {
+  --gemini-api-table-font-color: #3c4043;
+  --gemini-api-model-font: 'Google Sans Text', Roboto, sans-serif;
+  --gemini-api-card-width: 17rem;
+  --gemini-api-elevation-1dp: 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+                              0 2px 1px -1px rgba(0, 0, 0, 0.12),
+                              0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  --gemini-api-elevation-3dp: 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+                              0 3px 3px -2px rgba(0, 0, 0, 0.12),
+                              0 1px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+body[theme="googledevai-theme"] {
+  --googledevai-button-gradient: var(--googledevai-button-gradient-light);
+}
+
+body[theme="googledevai-theme"].color-scheme--dark {
+  --googledevai-button-gradient: var(--googledevai-button-gradient-dark);
+}
+
+.google-symbols {
+  background: -webkit-linear-gradient(45deg, var(--googledevai-blue), var(--googledevai-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+  vertical-align: bottom;
+}
+
+
+/* Cards */
+@media only screen and (min-width: 625px) {
+  .gemini-api-recommended {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* Three equal-width columns */
+    grid-column-gap: 3rem;  /* Keep the gap between columns */
+  }
+}
+
+.gemini-api-recommended {
+  width: 100%;  /* Take full width of parent */
+  margin: 0 auto;
+}
+
+.gemini-api-card {
+  background: var(--devsite-background-1);
+  border: 1px solid var(--googledevai-border-color);
+  border-radius: 9px;
+  box-shadow: var(--gemini-api-elevation-1dp);
+  height: 23rem;
+  margin: 1rem .5rem;
+  padding: 1rem;
+  transition: box-shadow 0.3s ease-in-out;
+  width: var(--gemini-api-card-width);
+}
+
+.color-scheme--dark .gemini-api-card {
+  background: #131314;
+  border-color: #444746;
+}
+
+.gemini-api-card:hover {
+  box-shadow: var(--gemini-api-elevation-3dp);
+}
+
+.gemini-api-card a:empty {
+  display: block;
+  position: relative;
+  height: 23rem;
+  width: var(--gemini-api-card-width);
+  top: -22.8rem;
+  left: -1rem;
+}
+
+.gemini-api-card a:empty:focus {
+  border: 2px solid var(--devsite-primary-color);
+  border-radius: 9px;
+}
+
+.gemini-api-card-title {
+  font-family: "Google Sans", Roboto, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  height: 1.5rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.3rem;
+}
+
+.gemini-api-card-description {
+  font-size: .9rem;
+  height: 7.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.gemini-api-card-bulletpoints {
+  color: #757575;
+  font-size: .8rem;
+  height: 8.2rem;
+  margin-left: 1rem;
+  padding: 0;
+}
+
+.color-scheme--dark .gemini-api-card-bulletpoints {
+  color: var(--devsite-primary-text-color);
+}
+
+.gemini-api-card-description,
+.gemini-api-card-bulletpoints {
+  font-family: var(--gemini-api-model-font);
+}
+
+.gemini-api-card-bulletpoints li {
+  line-height: 1rem;
+  margin: .3rem 0;
+}
+
+/* Tables */
+.gemini-api-model-table,
+.gemini-api-model-table th {
+  color: var(--gemini-api-table-font-color);
+  font: .95rem var(--gemini-api-model-font);
+}
+
+.color-scheme--dark .gemini-api-model-table,
+.color-scheme--dark .gemini-api-model-table th {
+  color: var(--devsite-primary-text-color);
+}
+
+.gemini-api-model-table th {
+  font-weight: 500;
+}
+
+.gemini-api-model-table td:first-child {
+  max-width: 0;
+}
+
+.gemini-api-model-table-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-gap: 1rem .5rem;
+}
+
+.gemini-api-model-table section {
+  display: inline-grid;
+}
+
+.gemini-api-model-table p {
+  margin: 0 0 .5rem;
+}
+
+.gemini-api-model-table li {
+  margin: 0;
+}
+
+.gemini-api-model-table ul {
+  margin-top: .5rem;
+}
+
+.gemini-api-model-table .google-symbols {
+  margin-right: .7rem;
+  vertical-align: middle;
+}
+
+.gemini-api-supported,
+.gemini-api-not-supported,
+.gemini-api-experimental,
+.gemini-api-new {
+  border-radius: 8px;
+  display: inline-block;
+  font-size: .9rem;
+  font-weight: 500;
+  line-height: 1rem;
+  padding: .3rem 0.5em;
+}
+
+.gemini-api-supported {
+  background: #e6f4ea; /* GM3 Green 50 */
+  color: #177d37; /* GM3 Green 700 */
+}
+
+.gemini-api-not-supported {
+  background: #fce8e6; /* GM3 Red 50 */
+  color: #c5221f; /* GM3 Red 700 */
+}
+
+.gemini-api-experimental {
+  background: #e8def8;
+  color: #4a4458;
+}
+
+.gemini-api-new {
+  background: #c2e7ff; /* GM3 Blue 100 */
+  color: #001d35; /* GM3 Blue 900 */
+  margin-left: 0.5rem;
+  white-space: nowrap;
+}
+
+.color-scheme--dark .gemini-api-supported {
+  background: #177d37; /* GM3 Green 700 */
+  color: #e6f4ea; /* GM3 Green 50 */
+}
+
+.color-scheme--dark .gemini-api-not-supported {
+  background: #c5221f; /* GM3 Red 700 */
+  color: #fce8e6; /* GM3 Red 50 */
+}
+
+.color-scheme--dark .gemini-api-new {
+  background: #004a77; /* GM3 Blue 800 */
+  color: #c2e7ff; /* GM3 Blue 100 */
+}
+
+/* Buttons */
+.gemini-api-model-button {
+  background: var(--googledevai-button-gradient);
+  background-size: 300% 300%;
+  border-radius: 20rem;
+  color: #001d35;
+  font-family: var(--gemini-api-model-font);
+  font-size: .9rem;
+  font-weight: 500;
+  padding: .6rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: filter .2s ease-in-out,
+              box-shadow .2s ease-in-out;
+}
+
+.gemini-api-model-button:hover{
+  animation: gradient 5s ease infinite;
+  filter: brightness(.98);
+  box-shadow: var(--gemini-api-elevation-1dp);
+}
+
+.gemini-api-model-button:focus {
+  filter: brightness(.95);
+  outline: #00639b solid 3px;
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+.gemini-api-model-button::before {
+  content: 'spark';
+  font-family: 'Google Symbols';
+  padding-right: 0.5rem;
+  vertical-align: middle;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.model-card {
+    display: flex;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.color-scheme--dark .model-card {
+  background-color: #3c4043;
+}
+
+.model-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+    padding: 2.5rem;
+    flex: 1;
+}
+
+.sub-heading-model {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 0.5rem 0;
+}
+
+.color-scheme--dark .sub-heading-model {
+  color: var(--devsite-primary-text-color);
+}
+
+.card-content h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+}
+
+.description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #3c4043;
+    margin: 0 0 1.5rem 0;
+}
+
+.color-scheme--dark .description {
+  color: var(--devsite-primary-text-color);
+}
+
+.card-content a:not(.gemini-api-model-button) {
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.card-content a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .model-card {
+        flex-direction: column;
+    }
+
+    .card-content {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .card-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* --- COMPACT MODEL GRID (2 Columns) --- */
+
+/* Grid container to create the two-column layout */
+.gemini-model-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  grid-column-gap: 2rem;
+  grid-row-gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* Individual row styling with stretched-link support */
+.gemini-model-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative; /* Essential for containing the stretched link */
+  padding: 0.75rem;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+}
+
+/* Row hover effect to indicate clickability */
+.gemini-model-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.color-scheme--dark .gemini-model-row:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* The small square icon card with gradient background */
+.gemini-icon-card-small {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--googledevai-button-gradient-light); /* [cite: 77] */
+  border-radius: 12px;
+  box-shadow: var(--gemini-api-elevation-1dp); /* [cite: 120] */
+  z-index: 2; /* Keeps icon above the clickable link layer */
+}
+
+.color-scheme--dark .gemini-icon-card-small {
+  background: var(--googledevai-button-gradient-dark); /* [cite: 77] */
+}
+
+/* Icon styling */
+.gemini-icon-card-small .google-symbols {
+  font-size: 20px;
+  color: #001d35; /* Dark text for contrast against gradient */
+  -webkit-text-fill-color: initial; /* Override transparent fill [cite: 123] */
+}
+
+/* Text details container */
+.gemini-model-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.gemini-model-name {
+  font-family: var(--gemini-api-model-font); /* [cite: 119] */
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0 0 2px 0;
+}
+
+/* Stretched Link Logic */
+.gemini-model-name a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.gemini-model-name a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1; /* Expands click area to the entire .gemini-model-row */
+}
+
+/* Style for optional status text (e.g., experimental, preview) */
+.gemini-model-name .model-status,
+.title-large h3 .model-status {
+  color: #bdc1c6; /* Very light gray */
+  font-style: italic;
+  margin-left: 0.4rem;
+}
+
+/* Dark mode adjustment to ensure it stays "light" relative to the background */
+.color-scheme--dark .gemini-model-name .model-status {
+  color: #70757a;
+}
+
+.gemini-model-desc {
+  font-family: var(--gemini-api-model-font); /* [cite: 133] */
+  font-size: 0.85rem;
+  line-height: 1.3;
+  color: #5f6368;
+  margin: 0;
+}
+
+.color-scheme--dark .gemini-model-desc {
+  color: var(--devsite-primary-text-color); /* [cite: 54] */
+}
+
+/* --- CENTERED MODEL GRID (3 Cards) --- */
+
+.gemini-centered-model-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.gemini-card-centered {
+  background: var(--devsite-background-1); /* [cite: 53] */
+  border: 1px solid var(--googledevai-border-color); /* [cite: 76] */
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease-in-out; /* [cite: 54] */
+  flex: 0 1 calc(33.333% - 1rem);
+  box-sizing: border-box;
+}
+
+.gemini-card-centered:hover {
+  box-shadow: var(--gemini-api-elevation-3dp); /* [cite: 121] */
+}
+
+.gemini-card-centered:active,
+.gemini-card-centered:focus {
+  text-decoration: none;
+}
+
+.gemini-card-centered .title-large {
+  font-family: var(--devsite-primary-font-family); /* [cite: 75] */
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--devsite-primary-text-color);
+  margin: 0.5rem 0 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Prevents the double-bananas from stacking */
+.gemini-card-centered .title-large span.nano-banana {
+  flex-shrink: 0;
+}
+
+.gemini-card-centered .description-centered {
+  font-family: var(--gemini-api-model-font); /* [cite: 133] */
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #3c4043;
+  margin: 0;
+}
+
+.color-scheme--dark .gemini-card-centered .description-centered {
+  color: var(--devsite-primary-text-color);
+}
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+@media (max-width: 840px) {
+  .gemini-card-centered {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .gemini-model-grid-compact {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ensure H3 tags within the model row don't use default large heading styles */
+.gemini-model-details h3.gemini-model-name {
+  font-family: var(--gemini-api-model-font);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0 0 0 0;
+  border: none; /* Removes default devsite heading borders if any */
+  padding: 0;
+  line-height: 1.3;
+}
+
+/* Maintain clickability for the heading */
+.gemini-model-details h3.gemini-model-name a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Normalizes the H3 within centered cards to match your existing design */
+.gemini-card-centered .title-large h3 {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  margin: 0;
+  display: inline; /* Keeps it on the same line as the icon */
+  border: none;
+  padding: 0;
+}
+
+.status-subtext {
+  font-family: var(--gemini-api-model-font);
+  font-style: italic;
+  color: #bdc1c6; /* Light gray to match model-status */
+  text-align: center;
+  margin: 0.25rem 0 0 0; /* Minimal top margin to stay close to description */
+}
+
+/* Dark mode adjustment */
+.color-scheme--dark .status-subtext {
+  color: #70757a;
+}
+      </style><style>
+      /* Styles inlined from /site-assets/css/pricing.css */
+/* Pricing table styles */
+
+.pricing-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pricing-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 8px;
+}
+
+/* Set the second and after (of three total) columns to 35% width. */
+.pricing-table th:nth-child(n+2) {
+  width: 35%;
+}
+
+/* These should use theme colours for light too, so we don't
+ * need an override. */
+.color-scheme--dark .pricing-table th {
+  background-color: var(--devsite-ref-palette--grey800);
+}
+
+.pricing-table td {
+    padding: 8px;
+}
+
+.free-tier {
+  background-color: none;
+}
+
+.paid-tier {
+  background-color: #eff5ff;
+}
+
+.color-scheme--dark .paid-tier {
+  background-color: var(--devsite-background-5);
+}
+
+.pricing-table th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.pricing-table th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.pricing-table tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.pricing-table tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+.pricing-container {
+    max-width: 1100px;
+    width: 100%;
+}
+
+.pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+}
+
+.pricing-card {
+    background-color: #ffffff;
+    border-radius: 16px; 
+    border: 1px solid #dadce0;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column; 
+    transition: all 0.3s ease;
+    position: relative; 
+}
+
+.color-scheme--dark .pricing-card {
+  background-color: var(--devsite-ref-palette--grey800);
+}
+
+.plan-name {
+    font-size: 1.75rem;
+    font-weight: 700; 
+    margin: 0 0 0.5rem 0;
+}
+
+.plan-description {
+    font-size: 1rem;
+    color: #5f6368;
+    margin: 0 0 2.5rem 0;
+    line-height: 1.5;
+    min-height: 80px;
+}
+
+.color-scheme--dark .plan-description {
+  color: var(--devsite-primary-text-color);
+}
+
+.plan-description a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+.plan-description a:hover {
+    text-decoration: underline;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+}
+
+.features li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #3c4043;
+}
+
+.features li.feature-description {
+    display: block;
+    color: #5f6368;
+}
+
+.features li a {
+    color: #1a73e8;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.features li .material-symbols-outlined {
+    font-size: 24px;
+    margin-right: 0.75rem;
+    color: #3c4043;
+    margin-top: 2px;
+}
+
+.color-scheme--dark .features li,
+.features li .material-symbols-outlined {
+  color: var(--devsite-primary-text-color);
+}
+
+.cta-button {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-sizing: border-box;
+    border: 1px solid #dadce0;
+    background-color: #fff;
+    color: #1a73e8;
+    margin-top: auto;
+}
+
+.cta-button:hover {
+    background-color: rgba(66, 133, 244, 0.05); 
+}
+
+.pricing-card.recommended {
+    border: 2px solid #1a73e8;
+    overflow: hidden; 
+}
+
+.pricing-card.recommended::before {
+    position: absolute;
+    top: 22px;
+    right: -32px;
+    width: 120px;
+    height: 30px;
+    background-color: #1a73e8;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transform: rotate(45deg);
+    z-index: 1; 
+}
+
+.heading-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.heading-group h2 {
+    margin-bottom: 0;
+}
+
+.heading-group em {
+    margin-top: 0;
+}
+
+.row-gray {
+  background-color: #f2f2f2; /* Light gray */
+  color: #666666;
+  font-style: italic;
+}
+
+.row-gray code {
+  font-style: italic;
+}
+
+      </style>
+  
+  
+  
+    <div class="devsite-banner devsite-banner-announcement nocontent" data-nosnippet="" background="google-blue">
+      <div class="devsite-banner-message">
+        <div class="devsite-banner-message-text">
+          
+    <a href="https://ai.google.dev/gemini-api/docs/deep-research?hl=zh-cn" style="color: black;">Gemini Deep Research</a> 现已推出预览版，支持协作规划、可视化、MCP 等功能。
+
+  
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  <div class="devsite-banner devsite-banner-translated nocontent">
+      <div class="devsite-banner-message">
+        <div class="devsite-banner-message-text">
+          <img src="https://ai.google.dev/_static/images/translated.svg?hl=zh-cn" class="devsite-banner-translated-image invert" alt="">
+          <span class="devsite-banner-translated-text">
+            
+            Google uses AI technology to translate content into your preferred language. AI translations can contain errors.
+          </span>
+        </div>
+        <devsite-switch-to-english-button></devsite-switch-to-english-button>
+      </div>
+    </div>
+  
+
+  <div class="devsite-article-meta nocontent" role="navigation" data-nosnippet="">
+    
+    
+    <ul class="devsite-breadcrumb-list" aria-label="面包屑导航">
+  
+  <li class="devsite-breadcrumb-item
+             ">
+    
+    
+    
+      
+        
+  <a href="https://ai.google.dev/?hl=zh-cn" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Breadcrumbs" data-value="1" track-type="globalNav" track-name="breadcrumb" track-metadata-position="1" track-metadata-eventdetail="">
+    
+          首页
+        
+  </a>
+  
+      
+    
+  </li>
+  
+  <li class="devsite-breadcrumb-item
+             ">
+    
+      
+      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
+    
+    
+    
+      
+        
+  <a href="https://ai.google.dev/gemini-api?hl=zh-cn" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Breadcrumbs" data-value="2" track-type="globalNav" track-name="breadcrumb" track-metadata-position="2" track-metadata-eventdetail="Gemini API">
+    
+          Gemini API
+        
+  </a>
+  
+      
+    
+  </li>
+  
+  <li class="devsite-breadcrumb-item
+             ">
+    
+      
+      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
+    
+    
+    
+      
+        
+  <a href="https://ai.google.dev/gemini-api/docs?hl=zh-cn" class="devsite-breadcrumb-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Breadcrumbs" data-value="3" track-type="globalNav" track-name="breadcrumb" track-metadata-position="3" track-metadata-eventdetail="">
+    
+          文档
+        
+  </a>
+  
+      
+    
+  </li>
+  
+</ul>
+    
+    <devsite-gemini-api-switcher class="nocontent"></devsite-gemini-api-switcher>
+  </div>
+  
+    <h1 class="devsite-page-title" tabindex="-1">
+      Gemini Developer API 价格<devsite-actions hidden="" data-nosnippet="">
+    <devsite-llm-tools></devsite-llm-tools></devsite-actions>
+  
+      
+    </h1>
+  <div class="devsite-page-title-meta"><devsite-view-release-notes></devsite-view-release-notes></div>
+  
+
+  <devsite-toc class="devsite-nav" depth="2" devsite-toc-embedded="">
+  </devsite-toc>
+  
+    
+  <div class="devsite-article-body clearfix
+  ">
+
+  
+    
+    
+    
+<p>
+</p>
+
+<p>
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>免费开始构建，享受宽裕的限额，然后根据正式版应用的预付费和随用随付定价模式进行扩容。</p>
+
+<div class="pricing-container">
+  <div class="pricing-cards">
+      <div class="pricing-card">
+          <h3 class="plan-name hide-from-toc" data-text="免费" id="free" tabindex="-1">免费</h3>
+          <p class="plan-description">面向刚开始使用 Gemini API 的开发者和小项目。</p>
+          <ul class="features">
+              <li><span class="material-symbols-outlined">check_circle</span>对某些模型的访问权限有限</li>
+              <li><span class="material-symbols-outlined">check_circle</span>免费输入和输出 token</li>
+              <li><span class="material-symbols-outlined">check_circle</span>Google AI Studio 访问权限</li>
+              <li><span class="material-symbols-outlined">check_circle</span>用于改进我们产品的内容<a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">*</a></li>
+          </ul>
+          <a class="cta-button btn-secondary" href="https://aistudio.google.com?hl=zh-cn">免费开始使用</a>
+      </div>
+      <div class="pricing-card recommended">
+          <h3 class="plan-name hide-from-toc" data-text="付费" id="paid" tabindex="-1">付费</h3>
+          <p class="plan-description">适用于需要更大量数据和高级功能的生产应用。</p>
+          <ul class="features">
+              <li><span class="material-symbols-outlined">check_circle</span> 生产部署的速率限制更高</li>
+              <li><span class="material-symbols-outlined">check_circle</span>访问上下文缓存</li>
+              <li><span class="material-symbols-outlined">check_circle</span> 批处理 API（成本降低 50%）</li>
+              <li><span class="material-symbols-outlined">check_circle</span> 获享 Google 最先进模型的使用权限</li>
+              <li><span class="material-symbols-outlined">check_circle</span><span>内容<strong>不会</strong>用于改进我们的产品</span><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">*</a></li>
+          </ul>
+          <a class="cta-button btn-secondary" href="https://aistudio.google.com/api-keys?hl=zh-cn">升级为付费账号</a>
+      </div>
+      <div class="pricing-card">
+          <h3 class="plan-name hide-from-toc" data-text="企业" id="enterprise" tabindex="-1">企业</h3>
+          <p class="plan-description">适合大规模部署，在安全性、支持和合规性方面有自定义需求，由 <a href="https://cloud.google.com/gemini-enterprise-agent-platform?hl=zh-cn">Gemini Enterprise Agent Platform</a> 提供支持。</p>
+          <ul class="features">
+              <li><span class="material-symbols-outlined">check_circle</span>付费版中的所有功能，外加可选的以下功能：</li>
+              <li><span class="material-symbols-outlined">check_circle</span>专属支持渠道</li>
+              <li><span class="material-symbols-outlined">check_circle</span>高级安全与合规功能</li>
+              <li><span class="material-symbols-outlined">check_circle</span>预配的吞吐量</li>
+              <li><span class="material-symbols-outlined">check_circle</span>基于用量的折扣（基于使用情况）</li>
+              <li><span class="material-symbols-outlined">check_circle</span>MLOps、Model Garden 等</li>
+          </ul>
+          <a class="cta-button btn-secondary" href="https://cloud.google.com/contact?hl=zh-cn">与销售人员联系</a>
+      </div>
+  </div>
+</div>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 3.5 Flash" id="gemini-3.5-flash" tabindex="-1">Gemini 3.5 Flash</h2>
+        <em><code dir="ltr" translate="no">gemini-3.5-flash</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com?model=gemini-3.5-flash&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们最智能的模型，专为速度而生，将前沿智能与卓越的搜索和接地能力相结合。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$1.50</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>9.00 美元</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>免费</td>
+      <td>$0.15<br>$1.00 / 每小时每 100 万个令牌（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.75</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$4.50</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.075<br>$1.00/1,000,000 个令牌/小时（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.75</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$4.50</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.08<br>$1.00 / 每小时每 100 万个令牌（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$2.70</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>16.20 美元</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>免费</td>
+      <td>$0.27<br>$1.00 / 每小时每 1,000,000 个令牌（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p><sup>*</sup> 客户向 Gemini 提交的请求可能会导致系统向 Google 搜索发送一个或多个查询。您需要为每次单独的搜索查询付费。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 3.1 Flash-Lite" id="gemini-3.1-flash-lite" tabindex="-1">Gemini 3.1 Flash-Lite</h2>
+        <em><code dir="ltr" translate="no">gemini-3.1-flash-lite</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/prompts/new_chat?model=gemini-3.1-flash-lite&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>Google 旗下最具成本效益的模型，针对高容量智能体任务、翻译和简单的数据处理进行了优化。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_1" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.25（文字 / 图片 / 视频）<br>$0.50（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$1.50</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.025（文本/图片/视频）<br>$0.05（音频）<br>每小时每 100 万个令牌$1.00（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_1" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.125（文字 / 图片 / 视频）<br>$0.25（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$0.75</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.0125（文本/图片/视频）<br>$0.025（音频）<br>每小时每 1,000,000 个令牌$0.50（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex_1" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.125（文字 / 图片 / 视频）<br>$0.25（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$0.75</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.0125（文本/图片/视频）<br>$0.025（音频）<br>每小时每 1,000,000 个令牌$0.50（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority_1" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>0.45 美元（文字 / 图片 / 视频）<br>0.90 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$2.70</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.045（文本/图片/视频）<br>$0.09（音频）<br>每小时每 1,000,000 个令牌$1.80（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p><sup>*</sup> 客户向 Gemini 提交的请求可能会导致系统向 Google 搜索发送一个或多个查询。您需要为每次单独的搜索查询付费。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 3 Pro 预览版" id="gemini-3.1-pro-preview" tabindex="-1">Gemini 3 Pro 预览版</h2>
+        <em><code dir="ltr" translate="no">gemini-3.1-pro-preview</code> 和 <code dir="ltr" translate="no">gemini-3.1-pro-preview-customtools</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/prompts/new_chat?model=gemini-3.1-pro-preview&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>在性能、智能性和易用性方面进行了最新改进，是全球领先的多模态理解、智能体功能和氛围编程模型系列。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_2" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>2.00 美元，提示 &lt;= 20 万个 token<br>4.00 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$12.00，提示 &lt;= 20 万个词元<br>$18.00，提示 &gt; 20 万个词元</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.20，提示 &lt;= 20 万个令牌<br>$0.40，提示 &gt; 20 万个令牌<br>每小时每 100 万个令牌$4.50（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_2" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>1.00 美元，提示 &lt;= 20 万个 token<br>2.00 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>6.00 美元，提示 &lt;= 20 万个 token<br>9.00 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td><em>与标准版相同</em><br>
+        $0.20，提示 &lt;= 20 万个令牌<br>$0.40，提示 &gt; 20 万个令牌<br>每小时每 100 万个令牌$4.50（存储价格）
+      </td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex_2" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>1.00 美元，提示 &lt;= 20 万个 token<br>2.00 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>6.00 美元，提示 &lt;= 20 万个 token<br>9.00 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td><em>与标准版相同</em><br>
+        $0.20，提示 &lt;= 20 万个令牌<br>$0.40，提示 &gt; 20 万个令牌<br>每小时每 100 万个令牌$4.50（存储价格）
+      </td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority_2" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>3.60 美元，提示 &lt;= 20 万词元<br>7.20 美元，提示 &gt; 20 万词元</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>21.60 美元，提示 &lt;= 20 万个令牌<br>32.40 美元，提示 &gt; 20 万个令牌</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.36，提示 &lt;= 20 万个令牌<br>$0.72，提示 &gt; 20 万个令牌<br>每小时每 100 万个令牌$8.10（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p><sup>*</sup> 客户向 Gemini 提交的请求可能会导致系统向 Google 搜索发送一个或多个查询。您需要为每次单独的搜索查询付费。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 3.1 Flash Live 预览版" id="gemini-3.1-flash-live-preview" tabindex="-1">Gemini 3.1 Flash Live 预览版</h2>
+        <em><code dir="ltr" translate="no">gemini-3.1-flash-live-preview</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/prompts/new_chat?model=gemini-3.1-flash-live-preview&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们的低延迟音频转音频模型经过优化，可进行实时对话，并能检测声音细微差别、提高数值精度和实现多模态感知。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.75（文字）<br>$3.00 或 $0.005/分钟（音频）<br>$1.00 或 $0.002/分钟（图片/视频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$4.50（文字）<br>$12.00 或 $0.018/分钟（音频）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>支持</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><sup>*</sup> 客户向 Gemini 提交的请求可能会导致系统向 Google 搜索发送一个或多个查询。您需要为每次单独的搜索查询付费。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 3.1 Flash Image 🍌" id="gemini-3.1-flash-image" tabindex="-1">Gemini 3.1 Flash Image 🍌</h2>
+        <em><code dir="ltr" translate="no">gemini-3.1-flash-image</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/prompts/new_chat?model=gemini-3.1-flash-image&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>Gemini 3.1 Flash Image 生成模型专为速度和效率而设计，可快速生成交互式响应，并实现高吞吐量。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_3" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.50（文本/图片）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>3 美元（文本和思考）<br>
+        60.00 美元（图片）<br>
+        相当于每 500 张图片 0.045 美元<sup>*</sup><br>
+        每 1,000 张图片 0.067 美元<sup>*</sup>、
+        每 2,000 张图片 0.101 美元<sup>*</sup>，
+        以及每 4,000 张图片 0.151 美元<sup>*</sup>。
+      </td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>**</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），然后对于基于文本和图片的接地，每 1,000 次搜索查询收费 14 美元。</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_3" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.25（文本、图片）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>$1.50（文字和思考）<br>
+        $30.00（图片）<br>
+        相当于每 0.5K 图片<sup>*</sup> $0.022<br>
+        每 1K 图片<sup>*</sup> $0.034<br>
+        每 2K 图片<sup>*</sup> $0.050<br>
+        每 4K 图片<sup>*</sup> $0.076。
+      </td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p><sup>*</sup> 图片输出的费用为每 100 万个 token 60 美元。输出 0.5K (512 像素) 图片会消耗 747 个 token，相当于每张图片 0.045 美元。输出 1K (1024x1024 像素) 图片会消耗 1120 个 token，相当于每张图片 0.067 美元。输出 2K (2048x2048 像素) 图片会消耗 1680 个 token，相当于每张图片 0.101 美元。输出 4K (4096x4096 像素) 图片会消耗 2520 个 token，相当于每张图片 0.151 美元。</p>
+
+<p><sup>**</sup>客户向 Gemini 提交的请求可能会导致系统向 Google 搜索发送一个或多个查询。您需要为每次单独的搜索查询付费。通过“基于 Google 搜索进行接地”功能检索到的上下文（文本或图片）不会作为输入令牌收费。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 3.1 Flash TTS 预览版" id="gemini-3.1-flash-tts-preview" tabindex="-1">Gemini 3.1 Flash TTS 预览版</h2>
+        <em><code dir="ltr" translate="no">gemini-3.1-flash-tts-preview</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/prompts/new_chat?model=gemini-3.1-flash-tts-preview&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们的 3.1 Flash 文字转语音音频模型经过优化，可实现高性价比、低延迟、可控的语音生成。</p>
+
+<p>预览版模型在稳定之前可能会发生变化，并且速率限制更严格。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_4" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$1.00（文字）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>免费</td>
+      <td>20.00 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_4" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.50（文字）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>10.00 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p><sup>*</sup> 音频 token 对应于每秒 25 个音频 token。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 3 Flash 预览版" id="gemini-3-flash-preview" tabindex="-1">Gemini 3 Flash 预览版</h2>
+        <em><code dir="ltr" translate="no">gemini-3-flash-preview</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com?model=gemini-3-flash-preview&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们最智能的模型，专为速度而生，将前沿智能与卓越的搜索和接地能力相结合。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_5" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>0.50 美元（文字 / 图片 / 视频）<br>1.00 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$3.00</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>免费</td>
+      <td>$0.05（文本/图片/视频）<br>$0.10（音频）<br>每小时每 100 万个令牌$1.00（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_5" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.25（文字 / 图片 / 视频）<br>$0.50（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$1.50</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td><em>与标准版相同</em><br>
+        0.05 美元（文本/图片/视频）<br>
+        0.10 美元（音频）<br>
+        每小时每 100 万个令牌 1.00 美元（存储价格）
+      </td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex_3" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.25（文字 / 图片 / 视频）<br>$0.50（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$1.50</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td><em>与标准版相同</em><br>
+        0.05 美元（文本/图片/视频）<br>
+        0.10 美元（音频）<br>
+        每小时每 100 万个令牌 1.00 美元（存储价格）
+      </td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 个请求（免费，在 Gemini 3 之间共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority_3" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.90（文字 / 图片 / 视频）<br>$1.80（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$5.40</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>免费</td>
+      <td>$0.09（文本/图片/视频）<br>$0.18（音频）<br>每小时每 100 万个 token$1.80（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地<sup>*</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p><sup>*</sup> 客户向 Gemini 提交的请求可能会导致系统向 Google 搜索发送一个或多个查询。您需要为每次单独的搜索查询付费。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 3 Pro Image 🍌" id="gemini-3-pro-image" tabindex="-1">Gemini 3 Pro Image 🍌</h2>
+        <em><code dir="ltr" translate="no">gemini-3-pro-image</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/prompts/new_chat?model=gemini-3-pro-image&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们的原生图片生成模型，在速度、灵活性和上下文理解方面进行了优化。<strong>文本输入和输出</strong>的定价与 <a href="#gemini-3.1-pro-preview">Gemini 3.1 Pro</a> 相同。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_6" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$2.00（文字/图片），<br>
+      相当于每张图片 $0.0011<sup>*</sup></td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>12.00 美元（文本和思考）<br>
+        120.00 美元（图片）<br>
+        相当于每张 1K/2K 图片 0.134 美元<sup>**</sup><br>
+        和每张 4K 图片 0.24 美元<sup>**</sup>
+      </td>
+    </tr>
+    <tr>
+      <td>使用 Google 网页搜索和图片搜索建立依据<sup>***</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_6" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>1.00 美元（文字）、<br>0.0006 美元（图片）<sup>*</sup></td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>$6.00（文本和思考）<br>
+        每张 1K/2K 图片 $0.067<sup>**</sup><br>
+        每张 4K 图片 $0.12<sup>**</sup>
+      </td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex_4" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>1.00 美元（文字）、<br>0.0006 美元（图片）<sup>*</sup></td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>$6.00（文本和思考）<br>
+        每张 1K/2K 图片 $0.067<sup>**</sup><br>
+        每张 4K 图片 $0.12<sup>**</sup>
+      </td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority_4" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>3.60 美元（文字/图片）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>21.60 美元（文字和思考）<br>
+        216.00 美元（图片）
+      </td>
+    </tr>
+    <tr>
+      <td>使用 Google 网页搜索和图片搜索建立依据<sup>***</sup></td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，在 Gemini 3 中共享），之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p><sup>*</sup> 图片输入设置为每张图片 560 个 token 或 0.0011 美元。</p>
+
+<p><sup>**</sup>图片输出的费用为每 100 万个 token 120 美元。输出 1024x1024 像素 (1K) 到 2048x2048 像素 (2K) 的图片会消耗 1,120 个 token，相当于每张图片 0.134 美元。输出尺寸最大为 4096x4096 像素 (4K) 的图片会消耗 2,000 个 token，相当于每张图片 0.24 美元。</p>
+
+<p><sup>***</sup> 客户向 Gemini 提交的请求可能会导致系统向 Google 搜索发送一个或多个查询。您需要为每次单独的搜索查询付费。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Pro" id="gemini-2.5-pro" tabindex="-1">Gemini 2.5 Pro</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-pro</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com?model=gemini-2.5-pro&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们前沿的多用途模型，擅长处理编码和复杂的推理任务。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_7" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>1.25 美元，提示 &lt;= 20 万个 token<br>2.50 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>10.00 美元，提示不超过 20 万个 token<br>15.00 美元，提示超过 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.125，提示 &lt;= 20 万个令牌<br>$0.25，提示 &gt; 20 万个令牌<br>每小时每 100 万个令牌$4.50（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费），之后每 1,000 个接地提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>10,000 次 RPD（免费），之后每 1,000 次接地提示收费 25 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_7" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.625，提示 &lt;= 20 万个 token<br>$1.25，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>5.00 美元，提示 &lt;= 20 万个 token<br>7.50 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.125，提示 &lt;= 20 万个令牌<br>$0.25，提示 &gt; 20 万个令牌<br>每小时每 100 万个令牌$4.50（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费），之后每 1,000 个接地提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex_5" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.625，提示 &lt;= 20 万个 token<br>$1.25，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>5.00 美元，提示 &lt;= 20 万个 token<br>7.50 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.125，提示 &lt;= 20 万个令牌<br>$0.25，提示 &gt; 20 万个令牌<br>每小时每 100 万个令牌$4.50（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费），之后每 1,000 个接地提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority_5" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>2.25 美元，提示 &lt;= 20 万个 token<br>4.50 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>18 美元，提示 &lt;= 20 万个令牌<br>27 美元，提示 &gt; 20 万个令牌</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.225，提示 &lt;= 20 万个令牌<br>$0.45，提示 &gt; 20 万个令牌<br>每小时每 100 万个令牌$8.10（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费），之后每 1,000 个接地提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>10,000 次 RPD（免费），之后每 1,000 次接地提示收费 25 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Flash" id="gemini-2.5-flash" tabindex="-1">Gemini 2.5 Flash</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-flash</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com?model=gemini-2.5-flash&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们的首个混合推理模型，支持 100 万个 token 的上下文窗口，并具有思考预算。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_8" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.30（文字 / 图片 / 视频）<br>$1.00（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$2.50</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.03（文本 / 图片 / 视频）<br>$0.1（音频）<br>$1.00 / 每小时 1,000,000 个 token（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>免费，最多 500 个 RPD（与 Flash-Lite RPD 共用限额）</td>
+      <td>1,500 RPD（免费，与 Flash-Lite RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>500 RPD</td>
+      <td>1,500 次 RPD（免费），之后每 1,000 次基于事实的提示收费 25 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_8" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.15（文字 / 图片 / 视频）<br>$0.50（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$1.25</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.03（文本 / 图片 / 视频）<br>$0.1（音频）<br>$1.00 / 每小时 1,000,000 个 token（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费，与 Flash-Lite RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex_6" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.15（文字 / 图片 / 视频）<br>$0.50（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$1.25</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.03（文本 / 图片 / 视频）<br>$0.1（音频）<br>$1.00 / 每小时 1,000,000 个 token（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费，与 Flash-Lite RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority_6" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>0.54 美元（文字 / 图片 / 视频）<br>1.80 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$4.50</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.054（文字/图片/视频）<br>$0.18（音频）<br>每小时每 100 万个令牌$1.80（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>免费，最多 500 个 RPD（与 Flash-Lite RPD 共用限额）</td>
+      <td>1,500 RPD（免费，与 Flash-Lite RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>500 RPD</td>
+      <td>1,500 次 RPD（免费），之后每 1,000 次基于事实的提示收费 25 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Flash-Lite" id="gemini-2.5-flash-lite" tabindex="-1">Gemini 2.5 Flash-Lite</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-flash-lite</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com?model=gemini-2.5-flash-lite&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>Google 旗下最小巧且最具成本效益的模型，专为大规模使用而打造。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_9" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格（文字、图片、视频）</td>
+      <td>免费</td>
+      <td>0.10 美元（文字 / 图片 / 视频）<br> 0.30 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$0.40</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>0.01 美元（文本 / 图片 / 视频）<br>0.03 美元（音频）<br>1.00 美元 / 每小时 1,000,000 个 token（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>免费，最多 500 个 RPD（与 Flash RPD 共用限额）</td>
+      <td>1,500 RPD（免费，与 Flash RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>500 RPD</td>
+      <td>1,500 次 RPD（免费），之后每 1,000 次基于事实的提示收费 25 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_9" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格（文字、图片、视频）</td>
+      <td>不可用</td>
+      <td>$0.05（文字 / 图片 / 视频）<br>$0.15（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$0.20</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>0.01 美元（文本 / 图片 / 视频）<br>0.03 美元（音频）<br>1.00 美元 / 每小时 1,000,000 个 token（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费，与 Flash RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex_7" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格（文字、图片、视频）</td>
+      <td>不可用</td>
+      <td>$0.05（文字 / 图片 / 视频）<br>$0.15（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$0.20</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>0.01 美元（文本 / 图片 / 视频）<br>0.03 美元（音频）<br>1.00 美元 / 每小时 1,000,000 个 token（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费，与 Flash RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority_7" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格（文字、图片、视频）</td>
+      <td>免费</td>
+      <td>$0.18（文字 / 图片 / 视频）<br>$0.54（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$0.72</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>$0.018（文本/图片/视频）<br>$0.054（音频）<br>每小时每 100 万个令牌$1.80（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>免费，最多 500 个 RPD（与 Flash RPD 共用限额）</td>
+      <td>1,500 RPD（免费，与 Flash RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>500 RPD</td>
+      <td>1,500 次 RPD（免费），之后每 1,000 次基于事实的提示收费 25 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Flash-Lite 预览版" id="gemini-2.5-flash-lite-preview" tabindex="-1">Gemini 2.5 Flash-Lite 预览版</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-flash-lite-preview-09-2025</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com?model=gemini-2.5-flash-lite-preview-09-2025&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>最新模型基于 Gemini 2.5 Flash Lite，经过优化，可实现高成本效益、高吞吐量和高质量。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_10" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格（文字、图片、视频）</td>
+      <td>免费</td>
+      <td>0.10 美元（文字 / 图片 / 视频）<br> 0.30 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$0.40</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>0.01 美元（文本 / 图片 / 视频）<br>0.03 美元（音频）<br>1.00 美元 / 每小时 1,000,000 个 token（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>免费，最多 500 个 RPD（与 Flash RPD 共用限额）</td>
+      <td>1,500 RPD（免费，与 Flash RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_10" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格（文字、图片、视频）</td>
+      <td>不可用</td>
+      <td>$0.05（文字 / 图片 / 视频）<br>$0.15（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$0.20</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>0.01 美元（文本 / 图片 / 视频）<br>0.03 美元（音频）<br>1.00 美元 / 每小时 1,000,000 个 token（存储价格）</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费，与 Flash RPD 共用限额），之后每 1,000 个有根据的提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Flash 原生音频 (Live API)" id="gemini-2.5-flash-native-audio" tabindex="-1">Gemini 2.5 Flash 原生音频 (Live API)</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-flash-native-audio-preview-12-2025</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/app/live?hl=zh-cn#gemini-2.5-flash-native-audio-preview-12-2025">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们的 <a href="https://ai.google.dev/gemini-api/docs/live?hl=zh-cn">Live API</a> 原生音频模型经过优化，可提供更高质量的音频输出，并能更好地控制语速、声音自然度、表达详略和情绪。</p>
+
+<p>预览版模型在稳定之前可能会发生变化，并且速率限制更严格。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>0.50 美元（文字）<br> 3.00 美元（音频 / 视频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>$2.00（文字）<br>$12.00（音频）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Flash Image 🍌" id="gemini-2.5-flash-image" tabindex="-1">Gemini 2.5 Flash Image 🍌</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-flash-image</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com?model=gemini-2.5-flash-image&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们的原生图片生成模型，在速度、灵活性和上下文理解方面进行了优化。文本输入和输出的定价与 <a href="#gemini-2.5-flash">2.5 Flash</a> 相同。</p>
+
+<p>预览版模型在稳定之前可能会发生变化，并且速率限制更严格。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_11" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.30（文字 / 图片）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>每张图片 $0.039*</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_11" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.15（文本 / 图片）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>每张图片 $0.0195*</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="Flex" id="flex_8" tabindex="-1">Flex</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.15（文本 / 图片）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>每张图片 $0.0195*</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="优先级" id="priority_8" tabindex="-1">优先级</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>0.54 美元（文本 / 图片）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>每张图片 $0.0702*</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p>[*] 图片输出的费用为每 100 万个 token 30 美元。输出图片的最大尺寸为 1024x1024 像素，需要消耗 1290 个 token，相当于每张图片 $0.039。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Flash 预览版 TTS" id="gemini-2.5-flash-preview-tts" tabindex="-1">Gemini 2.5 Flash 预览版 TTS</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-flash-preview-tts</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/generate-speech?hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们的 2.5 Flash 文字转语音音频模型经过优化，可实现高性价比、低延迟、可控的语音生成。</p>
+
+<p>预览版模型在稳定之前可能会发生变化，并且速率限制更严格。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_12" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.50（文字）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>免费</td>
+      <td>10.00 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_12" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.25（文字）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>5.00 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Pro 预览版 TTS" id="gemini-2.5-pro-preview-tts" tabindex="-1">Gemini 2.5 Pro 预览版 TTS</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-pro-preview-tts</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/generate-speech?hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们的 2.5 Pro 文字转语音音频模型经过优化，可生成强大的低延迟语音，从而实现更自然的输出，并更轻松地引导提示。</p>
+
+<p>预览版模型在稳定之前可能会发生变化，并且速率限制更严格。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_13" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$1.00（文字）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>20.00 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_13" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.50（文字）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>10.00 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.0 Flash" id="gemini-2.0-flash" tabindex="-1">Gemini 2.0 Flash</h2>
+        <em><code dir="ltr" translate="no">gemini-2.0-flash</code></em>
+    </div>
+</div>
+
+<aside class="warning">
+  <b>警告</b>：Gemini 2.0 Flash 已<a href="https://ai.google.dev/gemini-api/docs/deprecations?hl=zh-cn">弃用</a>，并已于 2026 年 6 月 1 日停止服务。请迁移到<a href="https://ai.google.dev/gemini-api/docs/models?hl=zh-cn">较新的型号</a>，以免服务中断。
+</aside>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_14" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>0.10 美元（文字 / 图片 / 视频）<br> 0.70 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>免费</td>
+      <td>$0.40</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>免费</td>
+      <td>0.025 美元 / 100 万个 token（文本/图片/视频）<br>0.175 美元 / 100 万个 token（音频）</td>
+    </tr>
+    <tr>
+      <td>上下文缓存（存储）</td>
+      <td>不可用</td>
+      <td>每小时每 100 万个令牌 $1.00</td>
+    </tr>
+    <tr>
+      <td>图片生成价格</td>
+      <td>不可用（已<a href="https://ai.google.dev/gemini-api/docs/deprecations?hl=zh-cn#gemini-2.0-models">关闭</a>）</td>
+      <td>不可用（已<a href="https://ai.google.dev/gemini-api/docs/deprecations?hl=zh-cn#gemini-2.0-models">关闭</a>）</td>
+    </tr>
+    <tr>
+      <td>调整价格</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>免费，最多 500 个 RPD</td>
+      <td>1,500 RPD（免费），之后每 1,000 个接地提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>500 RPD</td>
+      <td>1,500 次 RPD（免费），之后每 1,000 次基于事实的提示收费 25 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_14" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>0.05 美元（文字 / 图片 / 视频）<br>0.35 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>$0.20</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>0.025 美元 / 100 万个 token（文本/图片/视频）<br>0.175 美元 / 100 万个 token（音频）</td>
+    </tr>
+    <tr>
+      <td>上下文缓存（存储）</td>
+      <td>不可用</td>
+      <td>每小时每 100 万个令牌 $1.00</td>
+    </tr>
+    <tr>
+      <td>图片生成价格</td>
+      <td>不可用（已<a href="https://ai.google.dev/gemini-api/docs/deprecations?hl=zh-cn#gemini-2.0-models">关闭</a>）</td>
+      <td>不可用（已<a href="https://ai.google.dev/gemini-api/docs/deprecations?hl=zh-cn#gemini-2.0-models">关闭</a>）</td>
+    </tr>
+    <tr>
+      <td>调整价格</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>1,500 RPD（免费），之后每 1,000 个接地提示收费 35 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 地图进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<p>[*] 图片输出的费用为每 100 万个 token 30 美元。输出图片的最大尺寸为 1024x1024 像素，需要消耗 1290 个 token，相当于每张图片 $0.039。</p>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.0 Flash-Lite" id="gemini-2.0-flash-lite" tabindex="-1">Gemini 2.0 Flash-Lite</h2>
+        <em><code dir="ltr" translate="no">gemini-2.0-flash-lite</code></em>
+    </div>
+</div>
+
+<aside class="warning">
+  <b>警告</b>：Gemini 2.0 Flash-Lite 已<a href="https://ai.google.dev/gemini-api/docs/deprecations?hl=zh-cn">弃用</a>，并已于 2026 年 6 月 1 日停止服务。请迁移到<a href="https://ai.google.dev/gemini-api/docs/models?hl=zh-cn">较新的型号</a>，以免服务中断。
+</aside>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_15" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.075</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>免费</td>
+      <td>$0.30</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>上下文缓存（存储）</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>调整价格</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_15" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.0375</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>$0.15</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>上下文缓存（存储）</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>调整价格</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Imagen 4" id="imagen-4" tabindex="-1">Imagen 4</h2>
+        <em><code dir="ltr" translate="no">imagen-4.0-generate-001</code>、<code dir="ltr" translate="no">imagen-4.0-ultra-generate-001</code>、<code dir="ltr" translate="no">imagen-4.0-fast-generate-001</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com/generate-image?hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>我们最新的图片生成模型，在文字渲染和整体图片质量方面都有显著提升。</p>
+
+<p>预览版模型在稳定之前可能会发生变化，并且速率限制更严格。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每张图片的价格（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Imagen 4 Fast 图片价格</td>
+      <td>不可用</td>
+      <td>$0.02</td>
+    </tr>
+    <tr>
+      <td>Imagen 4 标准图片价格</td>
+      <td>不可用</td>
+      <td>$0.04</td>
+    </tr>
+    <tr>
+      <td>Imagen 4 Ultra 图片价格</td>
+      <td>不可用</td>
+      <td>$0.06</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Veo 3.1" id="veo-3.1" tabindex="-1">Veo 3.1</h2>
+        <em><code dir="ltr" translate="no">veo-3.1-generate-preview</code>、<code dir="ltr" translate="no">veo-3.1-fast-generate-preview</code>、<code dir="ltr" translate="no">veo-3.1-lite-generate-preview</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://deepmind.google/models/veo/?hl=zh-cn">试用 Veo 3.1</a>
+    </p>
+</div>
+
+<p>我们的最新视频生成模型，适用于 Gemini API 付费层的开发者。</p>
+
+<p>预览版模型在稳定之前可能会发生变化，并且速率限制更严格。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每秒价格（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Veo 3.1 标准视频（含音频）价格（默认）</td>
+      <td>不可用</td>
+      <td>0.40 美元（720p 和 1080p）<br> 0.60 美元（4k）</td>
+    </tr>
+    <tr>
+      <td>Veo 3.1 Fast 视频（含音频）价格（默认）</td>
+      <td>不可用</td>
+      <td>$0.10（720p）<br>$0.12（1080p）<br>$0.30（4k）</td>
+    </tr>
+    <tr>
+      <td>Veo 3.1 Lite 含音频视频的价格（默认）</td>
+      <td>不可用</td>
+      <td>0.05 美元（720p）<br> 0.08 美元（1080p）<br>（不支持 4K 输出）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+<aside class="note"><strong>注意</strong>：<span> 在某些情况下，音频处理问题可能会导致视频无法生成。只有在成功生成视频后，系统才会向您收取费用。</span></aside>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Veo 3" id="veo-3" tabindex="-1">Veo 3</h2>
+        <em><code dir="ltr" translate="no">veo-3.0-generate-001</code>，<code dir="ltr" translate="no">veo-3.0-fast-generate-001</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://deepmind.google/models/veo/?hl=zh-cn">试用 Veo 3</a>
+    </p>
+</div>
+
+<p>我们的稳定版视频生成模型，适用于 Gemini API 付费层级的开发者。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每秒价格（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Veo 3 标准版有声视频价格（默认）</td>
+      <td>不可用</td>
+      <td>$0.40</td>
+    </tr>
+    <tr>
+      <td>Veo 3 Fast 有声视频价格（默认）</td>
+      <td>不可用</td>
+      <td>$0.10（720p）<br>$0.12（1080p）<br>$0.30（4k）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+<aside class="note"><strong>注意</strong>：<span> 在某些情况下，音频处理问题可能会导致视频无法生成。只有在成功生成视频后，系统才会向您收取费用。</span></aside>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Veo 2" id="veo-2" tabindex="-1">Veo 2</h2>
+        <em><code dir="ltr" translate="no">veo-2.0-generate-001</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://ai.google.dev/gemini-api/docs/video?hl=zh-cn">试用 API</a>
+    </p>
+</div>
+
+<p>我们前沿的视频生成模型，适用于 Gemini API 付费层级的开发者。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每秒价格（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>视频价格</td>
+      <td>不可用</td>
+      <td>$0.35</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Lyria 3" id="lyria-3" tabindex="-1">Lyria 3</h2>
+        <em><code dir="ltr" translate="no">lyria-3-clip-preview</code> 和 <code dir="ltr" translate="no">lyria-3-pro-preview</code></em>
+    </div>
+</div>
+
+<p>Google 的音乐创作模型系列。预览版模型在稳定版发布之前可能会发生变化，并且具有更严格的速率限制。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每次请求的费用（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lyria 3 短片预览（30 秒）</td>
+      <td>不可用</td>
+      <td>每首歌曲 $0.04</td>
+    </tr>
+    <tr>
+      <td>Lyria 3 Pro 预览版（完整歌曲）</td>
+      <td>不可用</td>
+      <td>每首歌曲 0.08 美元</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini Embedding 2" id="gemini-embedding-2" tabindex="-1">Gemini Embedding 2</h2>
+        <em><code dir="ltr" translate="no">gemini-embedding-2</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://ai.google.dev/gemini-api/docs/embeddings?hl=zh-cn">试用 API</a>
+    </p>
+</div>
+
+<p>我们的首个多模态嵌入模型，可将文本、图片、视频、音频和 PDF 映射到统一的嵌入空间中。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_16" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>文本输入价格</td>
+      <td>免费</td>
+      <td>$0.20</td>
+    </tr>
+    <tr>
+      <td>图片输入价格</td>
+      <td>免费</td>
+      <td>0.45 美元（每张图片 0.00012 美元）</td>
+    </tr>
+    <tr>
+      <td>音频输入价格</td>
+      <td>免费</td>
+      <td>6.50 美元（每秒 0.00016 美元）</td>
+    </tr>
+    <tr>
+      <td>视频输入价格</td>
+      <td>免费</td>
+      <td>12.00 美元（每帧 0.00079 美元）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_16" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+      <td>文本输入价格</td>
+      <td>不可用</td>
+      <td>$0.10</td>
+    </tr>
+    <tr>
+      <td>图片输入价格</td>
+      <td>不可用</td>
+      <td>$0.225（每张图片 $0.00006）</td>
+    </tr>
+    <tr>
+      <td>音频输入价格</td>
+      <td>不可用</td>
+      <td>3.25 美元（每秒 0.00008 美元）</td>
+    </tr>
+    <tr>
+      <td>视频输入价格</td>
+      <td>不可用</td>
+      <td>6.00 美元（每帧 0.000395 美元）</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini Embedding" id="gemini-embedding" tabindex="-1">Gemini Embedding</h2>
+        <em><code dir="ltr" translate="no">gemini-embedding-001</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://ai.google.dev/gemini-api/docs/embeddings?hl=zh-cn">试用 API</a>
+    </p>
+</div>
+
+<p>我们的 Gemini Embeddings 模型，适用于纯文本用例，可供 Gemini API 的免费层级和付费层级的开发者使用。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_17" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$0.15</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_17" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>$0.075</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini Robotics-ER 1.6 预览版" id="gemini-robotics-er" tabindex="-1">Gemini Robotics-ER 1.6 预览版</h2>
+        <em><code dir="ltr" translate="no">gemini-robotics-er-1.6-preview</code></em>
+    </div>
+    <p>
+        <a class="button button-primary ais" href="https://aistudio.google.com?model=gemini-robotics-er-1.6-preview&amp;hl=zh-cn">在 Google AI Studio 中试用</a>
+    </p>
+</div>
+
+<p>Gemini Robotics-ER 是 Gemini Robotics-Embodied Reasoning 的简称，是一种思维模型，可增强机器人理解和与物理世界互动的能力。</p>
+<div><devsite-selector data-ds-scope="code-sample">
+<section><h3 data-text="标准" id="standard_18" tabindex="-1">标准</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>$1.00（文字 / 图片 / 视频）<br>$2.00（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>免费</td>
+      <td>5.00 美元</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>每月 5,000 次提示（免费，与 Flash 共用限额），然后对于基于文本和图片的接地，每 1,000 次搜索查询收费 14 美元。</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h3 data-text="批量" id="batch_18" tabindex="-1">批量</h3><table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>0.50 美元（文字 / 图片 / 视频）<br>1.00 美元（音频）</td>
+    </tr>
+    <tr>
+      <td>输出价格（包括思考 token）</td>
+      <td>不可用</td>
+      <td>$2.50</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table></section>
+</devsite-selector></div>
+<div class="models-section">
+    <div class="heading-group">
+        <h2 data-text="Gemini 2.5 Computer Use 预览版" id="gemini-2.5-computer-use-preview-10-2025" tabindex="-1">Gemini 2.5 Computer Use 预览版</h2>
+        <em><code dir="ltr" translate="no">gemini-2.5-computer-use-preview-10-2025</code></em>
+    </div>
+</div>
+
+<p>我们的“计算机使用”模型经过优化，可用于构建可自动执行任务的浏览器控制代理。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>不可用</td>
+      <td>1.25 美元，提示 &lt;= 20 万个 token<br>2.50 美元，提示 &gt; 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>不可用</td>
+      <td>10.00 美元，提示不超过 20 万个 token<br>15.00 美元，提示超过 20 万个 token</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="models-section">
+    <h2 data-text="Gemma 4" id="gemma-4" tabindex="-1">Gemma 4</h2>
+</div>
+
+<p>我们基于 Gemini 模型所用的相同技术构建的先进轻量级开放模型。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>输入价格</td>
+      <td>免费</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>输出价格</td>
+      <td>免费</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>上下文缓存价格</td>
+      <td>免费</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>上下文缓存（存储）</td>
+      <td>免费</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>调整价格</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>依托 Google 搜索进行接地</td>
+      <td>不可用</td>
+      <td>不可用</td>
+    </tr>
+    <tr>
+      <td>用于改进我们的产品</td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">是</a></td>
+      <td><a href="https://ai.google.dev/gemini-api/terms?hl=zh-cn">否</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 data-text="工具价格" id="pricing-for-tools" tabindex="-1">工具价格</h2>
+
+<p>工具的价格按其各自的费率计算，并应用于使用它们的模型。请查看<a href="https://ai.google.dev/gemini-api/docs/models?hl=zh-cn">模型</a>页面，了解每种模型可使用哪些工具。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">免费层级</th>
+      <th scope="col">付费层级，每 100 万个令牌（美元）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/google-search?hl=zh-cn#pricing">Google 搜索</a></td>
+      <td>免费提供 500 RPD（Flash 和 Flash-Lite 共用此限额）。<br>Pro 不提供此限额。</td>
+      <td>Gemini 2.5 模型：<br>
+          免费使用 1,500 次 RPD（Flash 和 Flash-Lite 共用此限额）。<br>之后，每 1,000 次接地提示收费 35 美元<br><br>
+          Gemini 3 模型：<br>
+          每月免费使用 5,000 次提示，之后每 1,000 次搜索查询收费 14 美元</td>
+    </tr>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/maps-grounding?hl=zh-cn#pricing_and_rate_limits">Google 地图</a></td>
+      <td>500 RPD<br>不适用于 Pro 版。</td>
+      <td>1,500 次 RPD（Flash 和 Flash-Lite 共用限额）<br>Pro 版免费提供 10,000 次 RPD。<br>之后，每 1,000 次接地提示的价格为 25 美元</td>
+    </tr>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/code-execution?hl=zh-cn#billing">代码执行</a></td>
+      <td>免费</td>
+      <td>
+        代码执行按所选模型的标准 token 费率收费。
+        费用仅取决于工具的使用情况，会话运行时不会产生任何费用。生成的代码和执行结果在创建时按<strong>输出 token</strong> 计费，当模型在迭代推理过程中使用它们时，则按<strong>输入 token</strong> 计费。
+      </td>
+    </tr>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/url-context?hl=zh-cn#limitations">网址上下文</a></td>
+      <td>免费</td>
+      <td>按每个模型的输入 token 数价格收费。</td>
+    </tr>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/computer-use?hl=zh-cn">计算机使用</a></td>
+      <td>不可用</td>
+      <td>请参阅 <a href="#gemini-2.5-computer-use-preview-10-2025">Gemini 2.5 Computer Use 预览版</a>价格表。</td>
+    </tr>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/file-search?hl=zh-cn#pricing">文件搜索</a></td>
+      <td>免费</td>
+      <td><a href="#gemini-embedding">嵌入内容</a>按每 100 万个 token 0.15 美元的价格收费。<br>检索到的文档 token 按相应模型的常规 token 价格收费。</td>
+    </tr>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview?hl=zh-cn">自定义工具端点（Gemini 3.1 Pro 预览版）</a></td>
+      <td>不可用</td>
+      <td>与 <a href="#gemini-3.1-pro-preview">Gemini 3.1 Pro 预览版</a>的价格相同</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 data-text="智能体的价格" id="pricing-for-agents" tabindex="-1">智能体的价格</h2>
+
+<p>代理使用费用是根据基础令牌消耗量和工具使用情况计算的。</p>
+
+<table class="pricing-table">
+  <colgroup>
+    <col>
+    <col class="free-tier">
+    <col class="paid-tier">
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">模型</th>
+      <th scope="col">工具</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/deep-research?hl=zh-cn">Gemini Deep Research Agent</a></td>
+      <td>所有模型推理均按标准的 Gemini 目录价格计费，包括在智能体循环期间生成的输入、输出和中间输入 / 推理 token。
+      </td>
+      <td>工具使用费将按现有价格结构收取，并保持搜索接地（不包括检索到的令牌）与 Url_context / 文件搜索（包括所有其他工具中检索到的令牌）之间的标准区别。
+      </td>
+    </tr>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/agents?hl=zh-cn">Gemini API 中的托管式智能体</a></td>
+      <td>所有模型推理均按标准的 Gemini 目录价格计费，包括在智能体循环期间生成的输入、输出和中间输入 / 推理 token。（请参阅<a href="https://ai.google.dev/gemini-api/docs/agents?hl=zh-cn#pricing">价格详情</a>）。
+      </td>
+      <td>在预览版期间，环境计算（CPU、内存、沙盒执行）不收费。
+      </td>
+    </tr>
+    <tr>
+      <td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent?hl=zh-cn">Antigravity Agent</a></td>
+      <td>所有模型推理均按标准的 Gemini 目录价格计费，包括在智能体循环期间生成的输入、输出和中间输入 / 推理 token。（请参阅<a href="https://ai.google.dev/gemini-api/docs/agents?hl=zh-cn#pricing">价格详情</a>）。
+      </td>
+      <td>在预览版期间，环境计算（CPU、内存、沙盒执行）不收费。
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 data-text="备注" id="notes" tabindex="-1">备注</h2>
+
+<ul>
+<li><strong>文档 token 结算</strong>：<code dir="ltr" translate="no">DOCUMENT</code> 模态（例如 PDF）的 token 按图片 token 费率结算。在 API 响应中，这些 token 会显示在 <code dir="ltr" translate="no">promptTokensDetails</code> 内的 <code dir="ltr" translate="no">DOCUMENT</code> 模态下。</li>
+<li>在所有<a href="https://ai.google.dev/gemini-api/docs/available-regions?hl=zh-cn">可用区域</a>，Google AI Studio 均免费使用。如需了解详情，请参阅<a href="https://ai.google.dev/gemini-api/docs/billing?hl=zh-cn">结算常见问题解答</a>。</li>
+<li>价格可能与此处列出的价格以及 Gemini Enterprise Agent Platform 上提供的价格有所不同。如需了解 Gemini Enterprise Agent Platform 的价格，请参阅 <a href="https://cloud.google.com/products/gemini-enterprise-agent-platform?hl=zh-cn">Gemini Enterprise Agent Platform 价格页面</a>。</li>
+<li>如果您使用<a href="https://ai.google.dev/gemini-api/docs/grounding?hl=zh-cn">动态检索</a>来优化费用，则仅当请求返回的结果中包含至少一个来自网络的接地支持网址时，才会针对依托 Google 搜索进行接地的请求收费。Gemini 的费用始终适用。速率限制可能会发生变化。</li>
+</ul>
+<link data-page-link="" href="https://fonts.googleapis.com/css2?family=Google+Symbols:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  
+
+  
+
+  
+</div>
+
+  
+    
+    
+    
+  
+
+  <div class="devsite-floating-action-buttons"></div></article>
