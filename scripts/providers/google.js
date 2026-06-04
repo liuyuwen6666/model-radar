@@ -224,7 +224,7 @@ function extractModelsFromHtml(html, options = {}) {
       }
       if (cacheCell) {
         cacheReadPrice = parseUsdAmount(cacheCell);
-        cacheWritePrice = inputPrice;
+        cacheWritePrice = cacheReadPrice;
       }
 
       // 特殊处理多模态嵌入等
