@@ -20,35 +20,61 @@ function slugify(value) {
 }
 
 function parseFirstUsd(value) {
-  const match = normalizeWhitespace(value).match(/\$([\d.]+)/);
-  return match ? Number(match[1]) : null;
+  const normalized = normalizeWhitespace(value);
+  const matchWithDollar = normalized.match(/\$([\d.]+)/);
+  if (matchWithDollar) return Number(matchWithDollar[1]);
+  const matchNumber = normalized.match(/([\d.]+)/);
+  return matchNumber ? Number(matchNumber[1]) : null;
 }
 
 function parseFirstCny(value) {
-  const match = normalizeWhitespace(value).match(/([\d.]+)\s*元/);
-  return match ? Number(match[1]) : null;
+  const normalized = normalizeWhitespace(value);
+  const matchWithYuan = normalized.match(/([\d.]+)\s*元/);
+  if (matchWithYuan) return Number(matchWithYuan[1]);
+  const matchWithYenSign = normalized.match(/¥\s*([\d.]+)/);
+  if (matchWithYenSign) return Number(matchWithYenSign[1]);
+  const matchNumber = normalized.match(/([\d.]+)/);
+  return matchNumber ? Number(matchNumber[1]) : null;
 }
 
-function getRowMap($) {
-  const rows = new Map();
-
-  $("table tr").each((_, row) => {
-    const cells = $(row)
-      .find("th,td")
-      .toArray()
-      .map((cell) => normalizeWhitespace($(cell).text()))
-      .filter(Boolean);
-
-    if (cells.length > 0) {
-      rows.set(cells[0], cells);
+function buildTableGrid($, tableEl) {
+  const grid = [];
+  const trs = $(tableEl).find("tr");
+  
+  trs.each((r, tr) => {
+    if (!grid[r]) {
+      grid[r] = [];
     }
+    
+    let c = 0;
+    $(tr).find("th, td").each((_, cell) => {
+      while (grid[r][c] !== undefined) {
+        c++;
+      }
+      
+      const text = normalizeWhitespace($(cell).text());
+      const rowspan = parseInt($(cell).attr("rowspan") || "1", 10);
+      const colspan = parseInt($(cell).attr("colspan") || "1", 10);
+      
+      for (let dr = 0; dr < rowspan; dr++) {
+        const nr = r + dr;
+        if (!grid[nr]) {
+          grid[nr] = [];
+        }
+        for (let dc = 0; dc < colspan; dc++) {
+          grid[nr][c + dc] = text;
+        }
+      }
+      
+      c += colspan;
+    });
   });
-
-  return rows;
+  
+  return grid;
 }
 
 function cleanModelKey(value) {
-  return normalizeWhitespace(value).replace(/\(\d+\)$/g, "");
+  return normalizeWhitespace(value).replace(/\s*\(\d+\)$/g, "").trim();
 }
 
 function modelNameFromVersion(value, fallback) {
@@ -69,38 +95,65 @@ function resolveModelId(modelKey) {
   return fallbackId;
 }
 
+function findRowByLabel(grid, regex) {
+  return grid.find(row => 
+    row.slice(0, 2).some(cell => regex.test(cell))
+  );
+}
+
 function extractModelsFromHtml(html, options = {}) {
   const $ = cheerio.load(html);
   const updatedAt = options.updatedAt || new Date().toISOString();
   const sourceUrl = options.url || DEEPSEEK_PRICING_URL;
-  const rowMap = getRowMap($);
 
-  const isChinese = rowMap.has("模型");
+  console.log(`[deepseek] analyzing page structure for ${sourceUrl}`);
 
-  const modelRow = rowMap.get(isChinese ? "模型" : "MODEL");
-  const versionRow = rowMap.get(isChinese ? "模型版本" : "MODEL VERSION");
-  const inputRow = rowMap.get(isChinese ? "百万tokens输入（缓存未命中）" : "1M INPUT TOKENS (CACHE MISS)");
-  const pricingRow = rowMap.get(isChinese ? "价格" : "PRICING");
-  const outputRow = rowMap.get(isChinese ? "百万tokens输出" : "1M OUTPUT TOKENS");
+  // Find pricing table
+  let pricingTable = null;
+  $("table").each((_, table) => {
+    const text = $(table).text();
+    if (/模型|MODEL|PRICING|价格/i.test(text)) {
+      pricingTable = table;
+      return false; // break
+    }
+  });
+
+  if (!pricingTable) {
+    console.log("[deepseek] pricing table not found");
+    return [];
+  }
+
+  const grid = buildTableGrid($, pricingTable);
+  console.log(`[deepseek] built 2D matrix: ${grid.length} rows, ${grid[0] ? grid[0].length : 0} columns`);
+
+  const modelRow = findRowByLabel(grid, /^(模型|MODEL)$/i);
+  const versionRow = findRowByLabel(grid, /^(模型版本|MODEL VERSION)$/i);
+  const inputRow = findRowByLabel(grid, /(缓存未命中|CACHE MISS)/i);
+  const inputHitRow = findRowByLabel(grid, /(缓存命中|CACHE HIT)/i);
+  const outputRow = findRowByLabel(grid, /(百万tokens输出|1M OUTPUT TOKENS)/i);
+
+  console.log(`[deepseek] row detection:
+    - model row: ${modelRow ? 'found' : 'missing'}
+    - version row: ${versionRow ? 'found' : 'missing'}
+    - input row (cache miss): ${inputRow ? 'found' : 'missing'}
+    - input hit row (cache hit): ${inputHitRow ? 'found' : 'missing'}
+    - output row: ${outputRow ? 'found' : 'missing'}`);
 
   if (!modelRow || !versionRow || !inputRow || !outputRow) {
     console.log("[deepseek] required pricing table rows were not found");
     return [];
   }
 
-  const modelKeys = modelRow.slice(1).map(cleanModelKey);
-  const modelNames = versionRow.slice(1);
-  const inputPrices = inputRow.slice(1).map(isChinese ? parseFirstCny : parseFirstUsd);
-  const inputHitPrices = pricingRow ? pricingRow.slice(2).map(isChinese ? parseFirstCny : parseFirstUsd) : [];
-  const outputPrices = outputRow.slice(1).map(isChinese ? parseFirstCny : parseFirstUsd);
   const results = [];
+  const isChinese = /模型/i.test(modelRow[0]);
+  const currency = isChinese ? "CNY" : "USD";
 
-  for (let index = 0; index < modelKeys.length; index += 1) {
-    const modelKey = modelKeys[index];
-    const modelName = modelNameFromVersion(modelNames[index], modelKey);
-    const inputPrice = inputPrices[index];
-    const inputHitPrice = inputHitPrices[index] !== undefined ? inputHitPrices[index] : null;
-    const outputPrice = outputPrices[index];
+  for (let col = 2; col < modelRow.length; col += 1) {
+    const modelKey = cleanModelKey(modelRow[col]);
+    const modelName = modelNameFromVersion(versionRow[col], modelKey);
+    const inputPrice = isChinese ? parseFirstCny(inputRow[col]) : parseFirstUsd(inputRow[col]);
+    const inputHitPrice = inputHitRow ? (isChinese ? parseFirstCny(inputHitRow[col]) : parseFirstUsd(inputHitRow[col])) : null;
+    const outputPrice = isChinese ? parseFirstCny(outputRow[col]) : parseFirstUsd(outputRow[col]);
 
     if (!modelKey || inputPrice === null || outputPrice === null) {
       continue;
@@ -110,7 +163,7 @@ function extractModelsFromHtml(html, options = {}) {
       id: resolveModelId(modelKey),
       name: modelName,
       provider: "DeepSeek",
-      currency: isChinese ? "CNY" : "USD",
+      currency: currency,
       inputPricePer1M: inputPrice,
       outputPricePer1M: outputPrice,
       cacheReadPricePer1M: inputHitPrice,
@@ -119,7 +172,7 @@ function extractModelsFromHtml(html, options = {}) {
     };
 
     console.log(
-      `[deepseek] parsed ${model.name} (${isChinese ? 'CNY' : 'USD'}) input=${model.inputPricePer1M} output=${model.outputPricePer1M}`
+      `[deepseek] parsed ${model.name} (${currency}) input=${model.inputPricePer1M} output=${model.outputPricePer1M} cacheRead=${model.cacheReadPricePer1M}`
     );
     results.push(model);
   }
