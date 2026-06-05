@@ -263,12 +263,12 @@
     "label": "Moonshot Pricing",
     "url": "https://platform.moonshot.cn/docs/pricing/chat",
     "models": [
-      "kimi-k2-6",
-      "kimi-k2-5",
       "kimi-moonshot-v1-8k",
       "kimi-moonshot-v1-32k",
       "kimi-moonshot-v1-8k-vision-preview",
       "kimi-moonshot-v1-32k-vision-preview",
+      "kimi-k2-5",
+      "kimi-k2-6",
       "kimi-latest-128k"
     ]
   },
