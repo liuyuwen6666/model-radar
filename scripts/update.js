@@ -1,5 +1,32 @@
+/**
+ * @file update.js
+ * 
+ * @description
+ * 【大模型价格雷达数据更新与抓取主控制脚本】
+ * 本脚本是 AI 模型价格雷达（ModelRadar）的核心后台服务脚本。它负责自动抓取各大主流 AI 厂商（OpenAI, Anthropic, Google, DeepSeek, Kimi 等）的最新 API 价格，
+ * 对抓取到的价格进行标准化处理（汇率换算、元数据合并），最后将结果持久化输出到静态 JSON 数据库文件（models.json）及每日历史快照归档中。
+ * 
+ * 核心执行流程：
+ * 1. 初始化路径与环境变量：支持通过 `MODEL_RADAR_DATE` 指定目标日期（主要用于补录历史数据或测试）。
+ * 2. 备份旧数据：将当前的 `models.json` 写入缓存 `models.previous.json` 作为回滚和差分对照基准。
+ * 3. 执行网页并发抓取：并行触发 `providers/` 文件夹下各厂商官网定价爬虫脚本。
+ * 4. 合并与降级（Merge & Fallback）：
+ *    - 如果某厂商网页抓取成功：使用最新价格。同时在官网已消失的历史模型会被标记为 `legacy`（旧版遗留模型）并保留，以便作历史参考，不直接物理删除。
+ *    - 如果抓取失败/未编写抓取器：降级使用本地基准模型数据，并可选在测试模式下模拟价格微调。
+ * 5. 数据标准化：统一将人民币（CNY）与美元（USD）以固定汇率 7.25 双向换算，并补全缺少的能力标签、详情页路径等。
+ * 6. 排序与输出：按厂商预设权重排序（如 OpenAI 靠前，国内厂商靠后），并把 `legacy`（废弃旧版）模型放到底部。随后写入 models.json、sources.json 以及每日历史快照文件，最后触发站点地图 sitemap.xml 的更新。
+ * 
+ * @usage
+ * 在项目根目录下执行：
+ * $ npm run update             # 默认以当天日期执行抓取与更新
+ * $ MODEL_RADAR_DATE=2026-06-06 npm run update  # 指定特定日期更新（Linux/macOS）
+ * $ $env:MODEL_RADAR_DATE="2026-06-06"; npm run update # 指定特定日期更新（Windows PowerShell）
+ */
+
 const fs = require("node:fs/promises");
 const path = require("node:path");
+
+// 引入各大厂商的官方定价网页抓取模块 (Scrapers)
 const fetchAnthropicModels = require("./providers/anthropic");
 const fetchGoogleModels = require("./providers/google");
 const fetchOpenAIModels = require("./providers/openai");
@@ -8,25 +35,38 @@ const fetchKimiModels = require("./providers/kimi");
 const fetchQwenModels = require("./providers/qwen");
 const fetchDoubaoModels = require("./providers/doubao");
 const fetchHunyuanModels = require("./providers/hunyuan");
+
+// 引入自动生成站点地图（Sitemap）的辅助库
 const { writeSitemapForDataset } = require("./lib/sitemap");
 
+// 定义各种资源路径
 const ROOT_DIR = path.resolve(__dirname, "..");
+// 数据目录：可通过环境变量 MODEL_RADAR_DATA_DIR 动态指定，默认是根目录下的 data 目录
 const DATA_DIR = process.env.MODEL_RADAR_DATA_DIR
   ? path.resolve(ROOT_DIR, process.env.MODEL_RADAR_DATA_DIR)
   : path.join(ROOT_DIR, "data");
+// 缓存目录：用于存放上一次的数据备份，默认是根目录下的 .cache 目录
 const CACHE_DIR = process.env.MODEL_RADAR_CACHE_DIR
   ? path.resolve(ROOT_DIR, process.env.MODEL_RADAR_CACHE_DIR)
   : path.join(ROOT_DIR, ".cache");
+// Sitemap.xml 地图文件的保存位置
 const SITEMAP_PATH = process.env.MODEL_RADAR_SITEMAP_PATH
   ? path.resolve(ROOT_DIR, process.env.MODEL_RADAR_SITEMAP_PATH)
   : path.join(ROOT_DIR, "sitemap.xml");
 
+// 最终汇总的模型 JSON 数据文件路径
 const MODELS_PATH = path.join(DATA_DIR, "models.json");
+// 厂商数据源配置（包含来源 URL）的文件路径
 const SOURCES_PATH = path.join(DATA_DIR, "sources.json");
+// 上一次的模型数据备份路径，用作回滚或 diff
 const PREVIOUS_MODELS_PATH = path.join(CACHE_DIR, "models.previous.json");
+// 每日历史快照的存档目录
 const HISTORY_DIR = path.join(DATA_DIR, "history");
 
+// 当抓取源配置里没填来源名称时使用的默认名称
 const DEFAULT_SOURCE_LABEL = "Official Pricing";
+
+// 厂商名称与相应爬虫函数的键值对映射表
 const PROVIDER_LOADERS = {
   Anthropic: fetchAnthropicModels,
   Google: fetchGoogleModels,
@@ -37,13 +77,16 @@ const PROVIDER_LOADERS = {
   "字节豆包": fetchDoubaoModels,
   "腾讯混元": fetchHunyuanModels
 };
+
+// 需要进行校验和价格处理的价格字段列表
 const PRICE_FIELDS = [
-  "inputPriceUsdPer1M",
-  "outputPriceUsdPer1M",
-  "cacheWritePriceUsdPer1M",
-  "cacheReadPriceUsdPer1M"
+  "inputPriceUsdPer1M",      // 每百万 Token 输入价格 (USD)
+  "outputPriceUsdPer1M",     // 每百万 Token 输出价格 (USD)
+  "cacheWritePriceUsdPer1M", // 每百万 Token 缓存写入价格 (USD)
+  "cacheReadPriceUsdPer1M"   // 每百万 Token 缓存读取价格 (USD)
 ];
 
+// 本地基准模型数据蓝图：在网络请求失败或作为抓取冷启动时的兜底基础数据
 const MODEL_BLUEPRINTS = [
   {
     id: "anthropic-claude-3-opus",
@@ -141,8 +184,8 @@ const MODEL_BLUEPRINTS = [
     provider: "字节豆包",
     family: "Doubao",
     description: "偏中文企业应用的主力模型。",
-    inputPriceUsdPer1M: 0.80 / 7.25,  // ¥0.80 -> $0.1103
-    outputPriceUsdPer1M: 2.00 / 7.25, // ¥2.00 -> $0.2759
+    inputPriceUsdPer1M: 0.80 / 7.25,  // 人民币换算为美元价格：¥0.80 -> $0.1103
+    outputPriceUsdPer1M: 2.00 / 7.25, // 人民币换算为美元价格：¥2.00 -> $0.2759
     cacheWritePriceUsdPer1M: 0.20 / 7.25, // ¥0.20 -> $0.0276
     cacheReadPriceUsdPer1M: 0.08 / 7.25,  // ¥0.08 -> $0.0110
     contextWindow: 32000,
@@ -333,6 +376,12 @@ const MODEL_BLUEPRINTS = [
   }
 ];
 
+/**
+ * 获取本次数据更新的目标日期（格式：YYYY-MM-DD）
+ * @description 优先读取环境变量 `MODEL_RADAR_DATE`。若未设置，则默认返回当前本地日期的 ISO 字符串前 10 位（即今天）。
+ * @returns {string} 目标日期，格式如 "2026-06-06"
+ * @throws {Error} 如果环境变量中的日期格式不是 YYYY-MM-DD，将抛出异常以防止脏数据注入
+ */
 function getTargetDate() {
   const rawDate = process.env.MODEL_RADAR_DATE;
 
@@ -340,6 +389,7 @@ function getTargetDate() {
     return new Date().toISOString().slice(0, 10);
   }
 
+  // 验证是否为 YYYY-MM-DD 格式
   if (!/^\d{4}-\d{2}-\d{2}$/.test(rawDate)) {
     throw new Error("MODEL_RADAR_DATE must use YYYY-MM-DD format.");
   }
@@ -347,41 +397,83 @@ function getTargetDate() {
   return rawDate;
 }
 
+/**
+ * 根据日期字符串构建标准 UTC 零点的时间戳字符串
+ * @param {string} dateStamp - YYYY-MM-DD 格式的日期字符串
+ * @returns {string} ISO 8601 标准时间戳，如 "2026-06-06T00:00:00.000Z"
+ */
 function buildTimestamp(dateStamp) {
   return `${dateStamp}T00:00:00.000Z`;
 }
 
+/**
+ * 经典的 DJB2 字符串哈希算法实现
+ * @description 用于为特定的日期、模型 ID 和字段生成唯一的正整数哈希值，主要服务于价格波动模拟函数 `simulatePrice`，确保模拟结果确定（幂等性）。
+ * @param {string} input - 输入的源字符串
+ * @returns {number} 32位无符号整数哈希值
+ */
 function hashString(input) {
   let hash = 0;
 
   for (const char of input) {
+    // 经典的哈希混合运算：hash = hash * 31 + charCode
     hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
   }
 
   return hash;
 }
 
+/**
+ * 将浮点数价格保留 4 位有效小数（四舍五入）
+ * @description 避免因浮点数乘除计算引起的 JS 精度误差问题（如 0.1 + 0.2 === 0.30000000000000004）。
+ * @param {number} value - 输入的浮点数值
+ * @returns {number} 保留四位小数后的数值
+ */
 function roundPrice(value) {
   return Math.round(value * 10000) / 10000;
 }
 
+/**
+ * 校验输入值是否为合法的有限数值
+ * @param {*} value - 待检测的变量
+ * @returns {boolean} 如果是有限数字返回 true，否则返回 false（过滤 NaN, Infinity 以及非数字）
+ */
 function isNumber(value) {
   return typeof value === "number" && Number.isFinite(value);
 }
 
+/**
+ * 将 JavaScript 对象格式化为带有两格缩进且末尾带换行符的 JSON 字符串
+ * @description 使得输出的 JSON 数据结构稳定，便于 Git 进行版本差异对比（Diff）以及开发者可读。
+ * @param {*} value - 要序列化的对象
+ * @returns {string} 序列化后的 JSON 字符串
+ */
 function stableJson(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
 }
 
+/**
+ * 异步确保指定目录存在，如果不存在则自动递归创建
+ * @param {string} dirPath - 目标目录路径
+ * @returns {Promise<void>}
+ */
 async function ensureDirectory(dirPath) {
   await fs.mkdir(dirPath, { recursive: true });
 }
 
+/**
+ * 异步读取并解析指定路径的 JSON 文件
+ * @description 若文件不存在（ENOENT 错误），则返回提供的 fallback 默认值，而不是向外抛出异常中断执行。
+ * @param {string} filePath - JSON 文件路径
+ * @param {*} fallback - 文件不存在时的降级返回值，默认为 null
+ * @returns {Promise<*>} 解析后的 JavaScript 对象或降级值
+ */
 async function readJson(filePath, fallback = null) {
   try {
     const raw = await fs.readFile(filePath, "utf8");
     return JSON.parse(raw);
   } catch (error) {
+    // 捕获“文件不存在”异常并返回降级默认值，其它异常（如 JSON 格式损坏）继续抛出
     if (error.code === "ENOENT") {
       return fallback;
     }
@@ -390,6 +482,12 @@ async function readJson(filePath, fallback = null) {
   }
 }
 
+/**
+ * 严格校验输入的对象是否符合系统定义的 Dataset 数据集格式
+ * @description 一个合法的 Dataset 必须是包含 `models` 数组及 `effectiveDate` 字符串的有效对象。
+ * @param {*} dataset - 待检测的对象
+ * @returns {boolean} 校验结果
+ */
 function isDataset(dataset) {
   return Boolean(
     dataset &&
@@ -399,12 +497,24 @@ function isDataset(dataset) {
   );
 }
 
+/**
+ * 根据源数据列表构建以供应商（provider）为键的索引映射 Map
+ * @description 用于快速查找特定厂商官方定价页的 URL 链接与标识，避免在遍历模型列表时重复进行数组查找。
+ * @param {Array<Object>} sourceList - 厂商来源配置数组（来自 sources.json）
+ * @returns {Map<string, Object>} 厂商名称 -> 厂商源配置对象的 Map 映射
+ */
 function buildSourceIndex(sourceList) {
   return new Map(
     (Array.isArray(sourceList) ? sourceList : []).map((source) => [source.provider, source])
   );
 }
 
+/**
+ * 根据已有的模型数组构建以模型唯一标识（id）为键的索引映射 Map
+ * @description 用于在抓取到最新定价时，快速根据模型 ID 寻找基准蓝图或历史配置以继承部分字段（如名称、描述、推荐场景等）。
+ * @param {Array<Object>} models - 模型对象数组
+ * @returns {Map<string, Object>} 模型 ID -> 模型对象的 Map 映射
+ */
 function buildBaseIndex(models) {
   const index = new Map();
 
@@ -415,17 +525,30 @@ function buildBaseIndex(models) {
   return index;
 }
 
+/**
+ * 模型数据标准化函数
+ * @description 对传入的裸模型数据进行全面修复与规范化：
+ * 1. 自动识别国内外厂商并补全币种（国内厂商如阿里、字节、月之暗面默认为 CNY 人民币，国外为 USD 美元）；
+ * 2. 按照 7.25 汇率计算并在 `*PricePer1M`（官方本币）和 `*PriceUsdPer1M`（美元折算价）之间进行双向高精度补齐；
+ * 3. 补全默认字段（如 capabilities, recommendedFor, updatedAt 等），确保输出数据结构一致。
+ * @param {Object} model - 待标准化的模型原始数据
+ * @param {Map<string, Object>} sourceIndex - 厂商数据源索引映射
+ * @param {string} timestamp - 更新时间戳
+ * @returns {Object} 标准化后的模型对象
+ */
 function normalizeModel(model, sourceIndex, timestamp) {
   const source = sourceIndex.get(model.provider) || {};
+  // 根据厂商名，判定是否为国内厂商（国内厂商支持 CNY）
   const isDomestic = model.currency === "CNY" || ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(model.provider);
   const currency = model.currency || (isDomestic ? "CNY" : "USD");
 
-  // 获取高精度官方价格
+  // 获取高精度官方本币价格
   let inputPricePer1M = model.inputPricePer1M;
   let outputPricePer1M = model.outputPricePer1M;
   let cacheWritePricePer1M = model.cacheWritePricePer1M;
   let cacheReadPricePer1M = model.cacheReadPricePer1M;
 
+  // 如果本币价格为空，尝试用美元价格乘以 7.25 换算出来（仅限国内厂商）；如果是国外厂商，则直接等于美元价
   if (inputPricePer1M === undefined || inputPricePer1M === null) {
     if (isDomestic) {
       inputPricePer1M = model.inputPriceUsdPer1M ? roundPrice(model.inputPriceUsdPer1M * 7.25) : null;
@@ -440,11 +563,13 @@ function normalizeModel(model, sourceIndex, timestamp) {
     }
   }
 
+  // 获取美元折算价
   let inputPriceUsdPer1M = model.inputPriceUsdPer1M;
   let outputPriceUsdPer1M = model.outputPriceUsdPer1M;
   let cacheWritePriceUsdPer1M = model.cacheWritePriceUsdPer1M;
   let cacheReadPriceUsdPer1M = model.cacheReadPriceUsdPer1M;
 
+  // 如果美元价格为空，尝试用本币价格除以 7.25 换算出来（仅限国内厂商）；如果是国外厂商，则直接等于本币价
   if (inputPriceUsdPer1M === undefined || inputPriceUsdPer1M === null) {
     if (isDomestic) {
       inputPriceUsdPer1M = inputPricePer1M ? roundPrice(inputPricePer1M / 7.25) : null;
@@ -459,6 +584,7 @@ function normalizeModel(model, sourceIndex, timestamp) {
     }
   }
 
+  // 返回格式统一的完整模型对象，并填充默认降级值
   return {
     id: model.id,
     name: model.name,
@@ -489,13 +615,27 @@ function normalizeModel(model, sourceIndex, timestamp) {
   };
 }
 
+/**
+ * 标准化最新抓取到的厂商模型数据
+ * @description 将抓取器（crawler/provider loader）获取到的最新浮动数据与本地现有的静态基准模型（baseModel）进行合并：
+ * 1. 继承 baseModel 中无法动态抓取的静态元数据（如详细描述、能力标签、推荐应用场景、详情页路径等）；
+ * 2. 以最新抓取到的字段为准覆盖价格、上下文窗口和最大输出 Token 等易变属性；
+ * 3. 通过 normalizeModel 函数进行最终的标准双语价格折算与补全。
+ * @param {Object} providerModel - 抓取器返回的最新模型数据
+ * @param {Object|undefined} baseModel - 已有的本地基准模型对象
+ * @param {Map<string, Object>} sourceIndex - 厂商数据源索引映射
+ * @param {string} targetDate - 目标日期 YYYY-MM-DD
+ * @returns {Object} 标准化并合并后的模型对象
+ */
 function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDate) {
+  // 取得最新抓取的时间戳，如无则使用当前目标日期的 UTC 零点时间戳
   const timestamp = providerModel.updatedAt || providerModel.updated_at || buildTimestamp(targetDate);
   const isDomestic = providerModel.currency === "CNY" || ["字节豆包", "阿里通义", "月之暗面", "腾讯混元"].includes(providerModel.provider);
 
   const hasRawPrices = providerModel.inputPricePer1M !== undefined;
   const currency = providerModel.currency || (isDomestic ? "CNY" : "USD");
 
+  // 对抓取来的输入价格和输出价格进行处理与转换
   const inputPrice = hasRawPrices
     ? providerModel.inputPricePer1M
     : (isDomestic && providerModel.input_price_usd_per_1m !== undefined ? providerModel.input_price_usd_per_1m * 7.25 : providerModel.input_price_usd_per_1m);
@@ -512,6 +652,7 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
     ? providerModel.outputPriceUsdPer1M
     : providerModel.output_price_usd_per_1m;
 
+  // 对缓存读取价格进行兜底合并
   const cacheReadPriceUsd = hasRawPrices
     ? providerModel.cacheReadPriceUsdPer1M
     : (providerModel.cache_read_price_usd_per_1m ?? (baseModel?.cacheReadPriceUsdPer1M ?? null));
@@ -520,6 +661,7 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
     ? providerModel.cacheReadPricePer1M
     : (isDomestic && cacheReadPriceUsd !== null ? cacheReadPriceUsd * 7.25 : cacheReadPriceUsd);
 
+  // 对缓存写入价格进行兜底合并
   const cacheWritePriceUsd = hasRawPrices
     ? providerModel.cacheWritePriceUsdPer1M
     : (providerModel.cache_write_price_usd_per_1m ?? (baseModel?.cacheWritePriceUsdPer1M ?? null));
@@ -528,6 +670,7 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
     ? providerModel.cacheWritePricePer1M
     : (isDomestic && cacheWritePriceUsd !== null ? cacheWritePriceUsd * 7.25 : cacheWritePriceUsd);
 
+  // 将整合好的数据传递给标准格式化函数
   return normalizeModel(
     {
       ...baseModel,
@@ -565,18 +708,33 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
   );
 }
 
+/**
+ * 价格模拟变化函数（核心算法基于哈希决定）
+ * @description 仅用于在非生产测试、缺失抓取器数据或需要模拟演练时，提供确定性的、跟日期绑定的微幅价格波动模拟：
+ * 1. 利用 `hashString` 将日期、模型 ID 和当前校验价格字段混淆为一个哈希正整数；
+ * 2. 计算余数，有较大数率保持原价（variant <= 2），也有一定概率进行 2%, 4%, 6% 级别的微调；
+ * 3. 保证在同一个日期执行本脚本多次，生成的模拟价格完全一致（幂等性）。
+ * @param {number|null} baseValue - 基准价格
+ * @param {string} modelId - 模型唯一 ID
+ * @param {string} field - 价格字段名（如 inputPriceUsdPer1M）
+ * @param {string} targetDate - 目标日期
+ * @returns {number|null} 模拟后的价格，或 null
+ */
 function simulatePrice(baseValue, modelId, field, targetDate) {
   if (!isNumber(baseValue)) {
     return null;
   }
 
+  // 生成唯一哈希，使得模拟值在当前日期内绝对固定
   const hash = hashString(`${targetDate}:${modelId}:${field}`);
   const variant = hash % 7;
 
+  // 0, 1, 2 时保持原价不动 (大概有 43% 的概率不变)
   if (variant <= 2) {
     return roundPrice(baseValue);
   }
 
+  // 其他数值时进行 2%, 4% 或 6% 的微幅波动
   const delta = [0.02, 0.04, 0.06][hash % 3];
   const direction = variant % 2 === 0 ? 1 : -1;
   const nextValue = Math.max(baseValue * (1 + direction * delta), 0.01);
@@ -584,6 +742,14 @@ function simulatePrice(baseValue, modelId, field, targetDate) {
   return roundPrice(nextValue);
 }
 
+/**
+ * 批量模拟生成下一天的模型数据列表
+ * @description 多用于没有网络抓取或回滚补录场景，根据基准数据，自动运行哈希价格波动模拟，并按拼音对厂商和模型名称进行排序。
+ * @param {Array<Object>} baseModels - 基准模型数组
+ * @param {Map<string, Object>} sourceIndex - 来源索引映射 Map
+ * @param {string} targetDate - 目标日期
+ * @returns {Array<Object>} 模拟排序后的下一代模型列表
+ */
 function simulateNextModels(baseModels, sourceIndex, targetDate) {
   const timestamp = buildTimestamp(targetDate);
 
@@ -591,6 +757,7 @@ function simulateNextModels(baseModels, sourceIndex, targetDate) {
     .map((model) => {
       const nextModel = normalizeModel(model, sourceIndex, timestamp);
 
+      // 仅对 sourceType 为 provider（代表是由爬虫支撑的模型）的价格运行模拟波动
       if (nextModel.sourceType === "provider") {
         for (const field of PRICE_FIELDS) {
           nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
@@ -605,6 +772,16 @@ function simulateNextModels(baseModels, sourceIndex, targetDate) {
     });
 }
 
+/**
+ * 核心抓取控制：并发加载并执行所有已注册的厂商抓取器
+ * @description 遍历 `sources.json` 中配置的数据源，若在 `PROVIDER_LOADERS` 中存在对应的抓取执行器：
+ * 1. 异步触发抓取器加载（如访问 OpenAI/Google 的官方 API 或解析国内网页 HTML）；
+ * 2. 收集成功返回的模型定价数据；
+ * 3. 捕获任何网络或脚本报错，保证某个厂商抓取失败时不影响其他厂商的更新。
+ * @param {Array<Object>} sourceList - 数据源配置列表
+ * @param {string} targetDate - 目标日期
+ * @returns {Promise<Map<string, Array<Object>>>>} 抓取成功的供应商快照映射 Map (provider -> models[])
+ */
 async function loadProviderSnapshots(sourceList, targetDate) {
   const snapshots = new Map();
 
@@ -618,6 +795,7 @@ async function loadProviderSnapshots(sourceList, targetDate) {
     console.log(`[update] loading provider ${source.provider} from ${source.url}`);
 
     try {
+      // 触发异步爬虫抓取
       const models = await loader({
         url: source.url,
         updatedAt: buildTimestamp(targetDate)
@@ -630,6 +808,7 @@ async function loadProviderSnapshots(sourceList, targetDate) {
         console.log(`[update] provider ${source.provider} returned no models, using fallback data`);
       }
     } catch (error) {
+      // 捕获异常，打印错误警告，但不中断整个程序的执行（弹性容错）
       console.warn(`[update] provider ${source.provider} failed: ${error.message}`);
     }
   }
@@ -637,6 +816,23 @@ async function loadProviderSnapshots(sourceList, targetDate) {
   return snapshots;
 }
 
+/**
+ * 核心业务组装：合并本地基准模型与云端最新抓取的模型
+ * @description 组装逻辑：
+ * 1. 遍历当前本地的所有已知模型；
+ * 2. 如果当前厂商的抓取任务成功了：
+ *    - 将该厂商抓取到的最新模型（合并基准元数据后）加入列表；
+ *    - 寻找并标记该厂商下已废弃的历史遗留老模型（即在 baseModels 中有，但抓取到的新列表里已经消失的模型），将其状态 status 设为 "legacy" 并追加过期定价提示，保留作为历史参考，不予删除；
+ * 3. 如果当前厂商没有被抓取（如没有写抓取器，或者抓取器运行出错降级）：
+ *    - 沿用现有的基准模型；
+ *    - 如果开启了 `shouldSimulateFallback`，则在 fallback 数据上应用模拟的价格微调，以便在测试环境下演示价格波动。
+ * @param {Array<Object>} baseModels - 本地原有的模型列表
+ * @param {Map<string, Array<Object>>} providerSnapshots - 抓取成功的最新模型快照 Map
+ * @param {Map<string, Object>} sourceIndex - 来源索引 Map
+ * @param {string} targetDate - 目标日期
+ * @param {boolean} shouldSimulateFallback - 是否对 fallback 数据应用模拟波动
+ * @returns {Array<Object>} 合并更新完成后的全新模型数组
+ */
 function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate, shouldSimulateFallback) {
   const timestamp = buildTimestamp(targetDate);
   const baseIndex = buildBaseIndex(baseModels);
@@ -645,16 +841,18 @@ function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate,
   const nextModels = [];
 
   for (const model of baseModels) {
+    // 场景 A：抓取器运行成功了，我们需要优先把抓取到的该供应商的所有最新模型注入列表
     if (loadedProviders.has(model.provider) && !injectedProviders.has(model.provider)) {
       const providerModels = providerSnapshots.get(model.provider) || [];
       const crawledModelIds = new Set(providerModels.map(pm => pm.id));
 
+      // 1. 注入全新抓取到的模型列表
       for (const providerModel of providerModels) {
         const baseProviderModel = baseIndex.get(providerModel.id);
         nextModels.push(normalizeProviderModel(providerModel, baseProviderModel, sourceIndex, targetDate));
       }
 
-      // Preserving previous models of the provider as legacy instead of deleting them
+      // 2. 找到官网不再展示的老模型，转换成 status: "legacy" 进行软废弃保留，避免物理删除导致历史失效
       const obsoleteModels = baseModels.filter(bm => bm.provider === model.provider && !crawledModelIds.has(bm.id));
       for (const obsoleteModel of obsoleteModels) {
         const legacyModel = {
@@ -668,12 +866,15 @@ function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate,
       injectedProviders.add(model.provider);
     }
 
+    // 已经处理完抓取结果的厂商直接跳过
     if (loadedProviders.has(model.provider)) {
       continue;
     }
 
+    // 场景 B：该厂商抓取失败或根本没有配置抓取器，则降级使用之前的静态数据
     const nextModel = normalizeModel(model, sourceIndex, timestamp);
 
+    // 如果开启了模拟数据选项，且是爬虫驱动类型的模型，允许微调价格以观察变化
     if (shouldSimulateFallback && nextModel.sourceType === "provider") {
       for (const field of PRICE_FIELDS) {
         nextModel[field] = simulatePrice(nextModel[field], nextModel.id, field, targetDate);
@@ -683,6 +884,7 @@ function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate,
     nextModels.push(nextModel);
   }
 
+  // 兜底处理：如果抓取到了一个完全全新的厂商，且本地库里完全没有任何属于该厂商的历史模型记录，在这里补充写入
   for (const [providerName, providerModels] of providerSnapshots.entries()) {
     if (injectedProviders.has(providerName)) {
       continue;
@@ -697,6 +899,13 @@ function buildNextModels(baseModels, providerSnapshots, sourceIndex, targetDate,
   return nextModels;
 }
 
+/**
+ * 组装并生成最终的静态数据库 Schema
+ * @description 添加版本号、生成时间、免责声明等外层包覆元数据。
+ * @param {Array<Object>} models - 标准化并排序后的模型数组
+ * @param {string} targetDate - 目标日期
+ * @returns {Object} 符合 Schema 规范的 Dataset 数据集对象
+ */
 function buildDataset(models, targetDate) {
   return {
     schemaVersion: 1,
@@ -709,15 +918,33 @@ function buildDataset(models, targetDate) {
   };
 }
 
+/**
+ * 获取每日历史快照 JSON 文件的存放路径
+ * @param {string} targetDate - 目标日期，如 "2026-06-06"
+ * @returns {string} 历史文件绝对路径，形如 "/data/history/2026-06-06.json"
+ */
 function getHistorySnapshotPath(targetDate) {
   return path.join(HISTORY_DIR, `${targetDate}.json`);
 }
 
+/**
+ * 异步写入 JSON 数据到指定文件
+ * @description 会自动确保父级文件夹目录存在，并采用 stableJson 确保格式稳定性。
+ * @param {string} filePath - 文件路径
+ * @param {*} value - 要写入的 JS 对象
+ * @returns {Promise<void>}
+ */
 async function writeJson(filePath, value) {
   await ensureDirectory(path.dirname(filePath));
   await fs.writeFile(filePath, stableJson(value), "utf8");
 }
 
+/**
+ * 联动更新网站的 sitemap.xml 地图索引文件
+ * @description 根据最新的数据集，调用 sitemap 库重新计算并覆盖写入根目录下的 sitemap.xml 文件，确保 SEO 爬虫能及时抓取新模型页面。
+ * @param {Object} dataset - 数据集对象
+ * @returns {Promise<void>}
+ */
 async function updateSitemap(dataset) {
   const entries = await writeSitemapForDataset({
     dataset,
@@ -728,10 +955,20 @@ async function updateSitemap(dataset) {
   );
 }
 
+/**
+ * 模型列表的多级排序算法
+ * @description 排序权重逻辑如下：
+ * 1. 【厂商重要程度权重】：优先展示热门大厂（OpenAI权重 100 > Anthropic权重 90 > ... > 腾讯混元权重 30 > fallback 0）；
+ * 2. 【生命周期状态过滤】：在同一厂商内，活跃模型（status !== 'legacy'）始终排在最前面，已废弃或历史旧版模型（status === 'legacy'）被挪至该厂商列表的最底部；
+ * 3. 【稳定性保障】：在同一厂商且活跃状态相同的情况下，严格维持原有的蓝图或抓取器返回的排序序号，防止列表顺序在每次构建时发生抖动。
+ * @param {Array<Object>} models - 待排序的模型列表
+ * @returns {Array<Object>} 排序好的新模型列表拷贝
+ */
 function sortModels(models) {
   const originalIndexes = new Map(models.map((model, idx) => [model.id, idx]));
 
   return [...models].sort((left, right) => {
+    // 厂商推荐权重映射表
     const providerWeights = {
       "OpenAI": 100,
       "Anthropic": 90,
@@ -745,10 +982,12 @@ function sortModels(models) {
     const weightL = providerWeights[left.provider] || 0;
     const weightR = providerWeights[right.provider] || 0;
 
+    // 权重高（大厂）的排在前面
     if (weightL !== weightR) {
-      return weightR - weightL; // Priority provider first
+      return weightR - weightL;
     }
 
+    // 检查模型是否属于“旧版”、“废弃”状态的辅助判断函数
     const checkLegacy = (model) => {
       const status = String(model.status || '').toLowerCase();
       if (status === 'legacy' || status === 'deprecated' || status === 'inactive') {
@@ -765,17 +1004,22 @@ function sortModels(models) {
     const isLegacyL = checkLegacy(left);
     const isLegacyR = checkLegacy(right);
 
+    // 活跃模型在前，老旧废弃模型排在厂商内部的底部
     if (isLegacyL !== isLegacyR) {
-      return isLegacyL ? 1 : -1; // Inactive/Legacy models to the bottom
+      return isLegacyL ? 1 : -1;
     }
 
-    // Within the same provider and active/legacy status, preserve the exact original sequence (blueprint/crawled order)
+    // 如果厂商和状态都一致，则维持它们在原始列表中的相对位置，确保排序稳定性（稳定性排序）
     const idxL = originalIndexes.get(left.id);
     const idxR = originalIndexes.get(right.id);
     return idxL - idxR;
   });
 }
 
+/**
+ * 整个更新流水线的入口主函数
+ * @description 串联所有前置配置读取、旧数据备份、网页并发抓取、数据整合标准化、排序同步、地毯式写入以及 SEO Sitemap 更新等任务，处理完毕后优雅退出。
+ */
 async function main() {
   const targetDate = getTargetDate();
   const currentDataset = await readJson(MODELS_PATH, null);
@@ -784,9 +1028,11 @@ async function main() {
 
   await ensureDirectory(CACHE_DIR);
 
+  // 1. 备份数据：将现有的 models.json 内容写到 models.previous.json
   if (currentDataset) {
     await writeJson(PREVIOUS_MODELS_PATH, currentDataset);
   } else {
+    // 首次冷启动时，使用本地的模型数据蓝图作为默认备份
     await writeJson(
       PREVIOUS_MODELS_PATH,
       buildDataset(
@@ -796,10 +1042,17 @@ async function main() {
     );
   }
 
+  // 取得用来合并或修改的基准模型数组
   const baseModels = isDataset(currentDataset) ? currentDataset.models : MODEL_BLUEPRINTS;
+  
+  // 判断是否需要在 fallback 时模拟波动价格（当数据有效日期与目标日期不同，或者没有之前的数据集时开启）
   const shouldSimulateFallback =
     !isDataset(currentDataset) || currentDataset.effectiveDate !== targetDate;
+  
+  // 2. 爬虫抓取：触发并收集所有云端厂商定价页的最新模型数据
   const providerSnapshots = await loadProviderSnapshots(sourceList, targetDate);
+  
+  // 3. 数据融合：合并基准模型与抓取结果，获得更新后的模型数组
   const nextModels = buildNextModels(
     baseModels,
     providerSnapshots,
@@ -808,11 +1061,11 @@ async function main() {
     shouldSimulateFallback
   );
 
-  // Sort models elegantly based on priority, version, and legacy status
+  // 4. 数据重排：按照大厂优先和旧版置底规则进行多级稳定排序
   const sortedModels = sortModels(nextModels);
   const nextDataset = buildDataset(sortedModels, targetDate);
 
-  // Synchronize sources.json's models list with newly parsed and current models dynamically
+  // 5. 动态联动：实时同步更新 sources.json 里面的 models ID 列表，使各厂商拥有的模型关系保持最新
   for (const source of sourceList) {
     const providerModelIds = sortedModels
       .filter((model) => model.provider === source.provider)
@@ -822,6 +1075,7 @@ async function main() {
 
   const historySnapshotPath = getHistorySnapshotPath(targetDate);
 
+  // 6. 三合一异步写入：并行保存 models.json、sources.json 和当日历史归档
   await Promise.all([
     writeJson(MODELS_PATH, nextDataset),
     writeJson(historySnapshotPath, nextDataset),
@@ -829,14 +1083,16 @@ async function main() {
   ]);
 
   console.log(
-    `[update] wrote history snapshot ${path.relative(ROOT_DIR, historySnapshotPath) || path.basename(historySnapshotPath)
-    }`
+    `[update] wrote history snapshot ${path.relative(ROOT_DIR, historySnapshotPath) || path.basename(historySnapshotPath)}`
   );
   console.log(`[update] dynamically synchronized ${sourceList.length} sources inside sources.json`);
+  
+  // 7. 更新 SEO Sitemap
   await updateSitemap(nextDataset);
   console.log(`Updated ${nextModels.length} models for ${targetDate}`);
 }
 
+// 启动执行主程序
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

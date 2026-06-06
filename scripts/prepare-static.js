@@ -1,3 +1,25 @@
+/**
+ * @file prepare-static.js
+ * 
+ * @description
+ * 【静态页面构建与路由别名准备脚本】
+ * 本脚本是项目在发布/部署前的核心静态页面生成器（SSG 辅助工具）。
+ * 由于本项目是一个部署在 Cloudflare 上的纯静态站点，为了在没有动态服务器后端的情况下实现优雅路由（即 Pretty URLs，如：
+ * 访问 `/about` 实际渲染 `about.html`；访问 `/model/openai-gpt-5-5` 实际渲染模型详情页且不带后缀），
+ * 本脚本会在构建阶段（build 步骤）执行以下操作：
+ * 1. 同步站点地图：读取最新的模型数据集，在根目录下重新同步生成 sitemap.xml。
+ * 2. 清理发布目录：清空用于存放最终发布资源的 `public/` 文件夹。
+ * 3. 拷贝基础资源：将根目录下的 HTML 页面、数据目录（data/）和媒体资源（assets/）安全拷贝到 `public/` 下。
+ * 4. 创建伪静态路由目录别名：
+ *    - 基础页面：如将 `about.html` 写入 `public/about/index.html`，使用户访问 `/about` 路由时，托管服务器能自适应加载。
+ *    - 模型详情页：读取 `models.json` 中的模型 ID，将 `model.html` 循环拷贝为 `public/model/<model-id>/index.html`。
+ *    - 对比页及厂商页：根据预设的对比和厂商列表，将对应的模板拷贝为别名路径。
+ * 
+ * @usage
+ * 本脚本在本地执行打包或 Cloudflare 线上 Git 集成自动部署时，在 `npm run build` 流程中被自动触发：
+ * $ npm run build   (内部会先调用 node scripts/prepare-static.js，再运行 Tailwind CSS 编译)
+ */
+
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const { writeSitemapFromDatasetPath } = require("./lib/sitemap");
