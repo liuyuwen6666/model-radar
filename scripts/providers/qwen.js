@@ -12,6 +12,9 @@ function normalizeWhitespace(value) {
 function resolveModelId(name) {
   let clean = name.split("当前")[0].split("Batch")[0].split("Session")[0].split("上下文")[0].trim().toLowerCase();
   
+  // 识别并剥离类似于 -2026-05-20 或 -2025-09-23 这样的快照日期后缀，使其能够被规整到主模型 ID 上
+  clean = clean.replace(/-\d{4}-\d{2}-\d{2}$/, "");
+  
   // Clean up clean model ID
   let cleanId = clean.replace(/[^a-z0-9.]+/g, "-").replace(/^-+|-+$/g, "");
   if (!cleanId.startsWith("qwen")) {
@@ -49,6 +52,33 @@ function formatModelName(rawName) {
     .join(" ");
 }
 
+// 从单次请求 Token 的文本描述中解析出最大上下文大小的辅助函数
+function parseContextWindow(str) {
+  if (!str) return null;
+  const cleanStr = str.replace(/\s+/g, "").toUpperCase();
+  // 匹配形如 ≤1M, <=128K, 0<TOKEN≤32K 或者 128K 等
+  const matchWithSymbol = cleanStr.match(/(?:≤|<=)\s*(\d+)\s*(K|M|B)/i);
+  if (matchWithSymbol) {
+    const num = parseInt(matchWithSymbol[1], 10);
+    const unit = matchWithSymbol[2];
+    if (unit === 'M') return num * 1000000;
+    if (unit === 'K') return num * 1000;
+    return num;
+  }
+  
+  // 如果没有发现 ≤ 或是 <= 符号，直接匹配数字跟 K/M
+  const matchDirect = cleanStr.match(/(\d+)\s*(K|M)/i);
+  if (matchDirect) {
+    const num = parseInt(matchDirect[1], 10);
+    const unit = matchDirect[2];
+    if (unit === 'M') return num * 1000000;
+    if (unit === 'K') return num * 1000;
+    return num;
+  }
+  
+  return null;
+}
+
 function extractModelsFromHtml(html, options = {}) {
   const $ = cheerio.load(html);
   const updatedAt = options.updatedAt || new Date().toISOString();
@@ -68,6 +98,7 @@ function extractModelsFromHtml(html, options = {}) {
     let modelIdIdx = -1;
     let inputIdx = -1;
     let outputIdx = -1;
+    let contextIdx = -1;
     
     headers.forEach((h, idx) => {
       const hNorm = h.toLowerCase();
@@ -77,6 +108,8 @@ function extractModelsFromHtml(html, options = {}) {
         inputIdx = idx;
       } else if (hNorm.includes("输出单价") || (hNorm.includes("输出") && hNorm.includes("单价"))) {
         outputIdx = idx;
+      } else if (hNorm.includes("token数") || hNorm.includes("token范围") || hNorm.includes("上下文")) {
+        contextIdx = idx;
       }
     });
     
@@ -118,6 +151,26 @@ function extractModelsFromHtml(html, options = {}) {
         
         const modelName = formatModelName(rawName);
 
+        // 提取 contextWindow 大小
+        let contextWindow = null;
+        if (contextIdx !== -1 && cells[contextIdx]) {
+          contextWindow = parseContextWindow(cells[contextIdx]);
+        }
+
+        // 识别并计算显式上下文缓存折扣单价（创建溢价 25%，命中折扣 10%）
+        const hasCacheDiscount = rawName.includes("上下文缓存") || rawName.includes("Session Cache") || modelId.includes("cache") || modelId.includes("long");
+        let cacheWritePricePer1M = null;
+        let cacheReadPricePer1M = null;
+        let cacheWritePriceUsdPer1M = null;
+        let cacheReadPriceUsdPer1M = null;
+
+        if (hasCacheDiscount) {
+          cacheWritePricePer1M = parseFloat((inputRmb * 1.25).toFixed(6));
+          cacheReadPricePer1M = parseFloat((inputRmb * 0.10).toFixed(6));
+          cacheWritePriceUsdPer1M = parseFloat((inputPriceUsd * 1.25).toFixed(6));
+          cacheReadPriceUsdPer1M = parseFloat((inputPriceUsd * 0.10).toFixed(6));
+        }
+
         const existing = extracted.find(e => e.id === modelId);
         if (existing) {
           // Keep the row with the lower price (avoiding overseas region markups in other tables)
@@ -127,6 +180,18 @@ function extractModelsFromHtml(html, options = {}) {
             existing.outputPricePer1M = outputRmb;
             existing.input_price_usd_per_1m = Math.round(inputPriceUsd * 10000) / 10000;
             existing.output_price_usd_per_1m = Math.round(outputPriceUsd * 10000) / 10000;
+          }
+          // 始终补全或更新 contextWindow 和缓存价格
+          if (contextWindow && !existing.contextWindow) {
+            existing.contextWindow = contextWindow;
+          }
+          if (hasCacheDiscount && !existing.cacheWritePricePer1M) {
+            existing.cacheWritePricePer1M = cacheWritePricePer1M;
+            existing.cacheReadPricePer1M = cacheReadPricePer1M;
+            existing.cacheWritePriceUsdPer1M = cacheWritePriceUsdPer1M;
+            existing.cacheReadPriceUsdPer1M = cacheReadPriceUsdPer1M;
+            existing.cache_write_price_usd_per_1m = cacheWritePriceUsdPer1M;
+            existing.cache_read_price_usd_per_1m = cacheReadPriceUsdPer1M;
           }
         } else {
           extracted.push({
@@ -139,6 +204,13 @@ function extractModelsFromHtml(html, options = {}) {
             outputPricePer1M: outputRmb,
             input_price_usd_per_1m: Math.round(inputPriceUsd * 10000) / 10000,
             output_price_usd_per_1m: Math.round(outputPriceUsd * 10000) / 10000,
+            contextWindow: contextWindow,
+            cacheWritePricePer1M: cacheWritePricePer1M,
+            cacheReadPricePer1M: cacheReadPricePer1M,
+            cacheWritePriceUsdPer1M: cacheWritePriceUsdPer1M,
+            cacheReadPriceUsdPer1M: cacheReadPriceUsdPer1M,
+            cache_write_price_usd_per_1m: cacheWritePriceUsdPer1M,
+            cache_read_price_usd_per_1m: cacheReadPriceUsdPer1M,
             source_url: sourceUrl,
             updated_at: updatedAt
           });
@@ -153,14 +225,141 @@ function extractModelsFromHtml(html, options = {}) {
 // 极其精准的 2026 最新官方模型价格数据集，作为防挂 Fallback 蓝图
 const FALLBACK_QWEN_MODELS = [
   {
+    id: "qwen3-7-max",
+    name: "Qwen 3.7 Max",
+    provider: "阿里通义",
+    currency: "CNY",
+    inputPricePer1M: 12.00,
+    outputPricePer1M: 36.00,
+    input_price_usd_per_1m: 1.655172,
+    output_price_usd_per_1m: 4.965517,
+    contextWindow: 1000000,
+    cacheWritePricePer1M: 15.00,
+    cacheReadPricePer1M: 1.20,
+    cacheWritePriceUsdPer1M: 2.068966,
+    cacheReadPriceUsdPer1M: 0.165517,
+    cache_write_price_usd_per_1m: 2.068966,
+    cache_read_price_usd_per_1m: 0.165517,
+    source_url: QWEN_PRICING_URL
+  },
+  {
+    id: "qwen3-7-max-preview",
+    name: "Qwen 3.7 Max Preview",
+    provider: "阿里通义",
+    currency: "CNY",
+    inputPricePer1M: 12.00,
+    outputPricePer1M: 36.00,
+    input_price_usd_per_1m: 1.655172,
+    output_price_usd_per_1m: 4.965517,
+    contextWindow: 1000000,
+    source_url: QWEN_PRICING_URL
+  },
+  {
+    id: "qwen3-6-max-preview",
+    name: "Qwen 3.6 Max Preview",
+    provider: "阿里通义",
+    currency: "CNY",
+    inputPricePer1M: 9.00,
+    outputPricePer1M: 54.00,
+    input_price_usd_per_1m: 1.241379,
+    output_price_usd_per_1m: 7.448276,
+    contextWindow: 128000,
+    cacheWritePricePer1M: 11.25,
+    cacheReadPricePer1M: 0.90,
+    cacheWritePriceUsdPer1M: 1.551724,
+    cacheReadPriceUsdPer1M: 0.124138,
+    cache_write_price_usd_per_1m: 1.551724,
+    cache_read_price_usd_per_1m: 0.124138,
+    source_url: QWEN_PRICING_URL
+  },
+  {
+    id: "qwen3-max",
+    name: "Qwen 3 Max",
+    provider: "阿里通义",
+    currency: "CNY",
+    inputPricePer1M: 2.50,
+    outputPricePer1M: 10.00,
+    input_price_usd_per_1m: 0.344828,
+    output_price_usd_per_1m: 1.379310,
+    contextWindow: 32000,
+    cacheWritePricePer1M: 3.125,
+    cacheReadPricePer1M: 0.25,
+    cacheWritePriceUsdPer1M: 0.431034,
+    cacheReadPriceUsdPer1M: 0.034483,
+    cache_write_price_usd_per_1m: 0.431034,
+    cache_read_price_usd_per_1m: 0.034483,
+    source_url: QWEN_PRICING_URL
+  },
+  {
+    id: "qwen3-max-preview",
+    name: "Qwen 3 Max Preview",
+    provider: "阿里通义",
+    currency: "CNY",
+    inputPricePer1M: 6.00,
+    outputPricePer1M: 24.00,
+    input_price_usd_per_1m: 0.827586,
+    output_price_usd_per_1m: 3.310345,
+    contextWindow: 32000,
+    cacheWritePricePer1M: 7.50,
+    cacheReadPricePer1M: 0.60,
+    cacheWritePriceUsdPer1M: 1.034483,
+    cacheReadPriceUsdPer1M: 0.082759,
+    cache_write_price_usd_per_1m: 1.034483,
+    cache_read_price_usd_per_1m: 0.082759,
+    source_url: QWEN_PRICING_URL
+  },
+  {
+    id: "qwen3-7-plus",
+    name: "Qwen 3.7 Plus",
+    provider: "阿里通义",
+    currency: "CNY",
+    inputPricePer1M: 2.00,
+    outputPricePer1M: 8.00,
+    input_price_usd_per_1m: 0.275862,
+    output_price_usd_per_1m: 1.103448,
+    contextWindow: 256000,
+    cacheWritePricePer1M: 2.50,
+    cacheReadPricePer1M: 0.20,
+    cacheWritePriceUsdPer1M: 0.344828,
+    cacheReadPriceUsdPer1M: 0.027586,
+    cache_write_price_usd_per_1m: 0.344828,
+    cache_read_price_usd_per_1m: 0.027586,
+    source_url: QWEN_PRICING_URL
+  },
+  {
+    id: "qwen3-6-plus",
+    name: "Qwen 3.6 Plus",
+    provider: "阿里通义",
+    currency: "CNY",
+    inputPricePer1M: 2.00,
+    outputPricePer1M: 12.00,
+    input_price_usd_per_1m: 0.275862,
+    output_price_usd_per_1m: 1.655172,
+    contextWindow: 256000,
+    source_url: QWEN_PRICING_URL
+  },
+  {
+    id: "qwen3-5-plus",
+    name: "Qwen 3.5 Plus",
+    provider: "阿里通义",
+    currency: "CNY",
+    inputPricePer1M: 0.80,
+    outputPricePer1M: 4.80,
+    input_price_usd_per_1m: 0.110345,
+    output_price_usd_per_1m: 0.662069,
+    contextWindow: 128000,
+    source_url: QWEN_PRICING_URL
+  },
+  {
     id: "qwen-max",
     name: "Qwen Max",
     provider: "阿里通义",
     currency: "CNY",
-    inputPricePer1M: 2.4,
-    outputPricePer1M: 9.6,
-    input_price_usd_per_1m: Math.round(2.4 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(9.6 * CNY_TO_USD * 10000) / 10000,
+    inputPricePer1M: 2.40,
+    outputPricePer1M: 9.60,
+    input_price_usd_per_1m: 0.331034,
+    output_price_usd_per_1m: 1.324138,
+    contextWindow: 32000,
     source_url: QWEN_PRICING_URL
   },
   {
@@ -168,10 +367,11 @@ const FALLBACK_QWEN_MODELS = [
     name: "Qwen Plus",
     provider: "阿里通义",
     currency: "CNY",
-    inputPricePer1M: 0.8,
-    outputPricePer1M: 2.0,
-    input_price_usd_per_1m: Math.round(0.8 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(2.0 * CNY_TO_USD * 10000) / 10000,
+    inputPricePer1M: 0.80,
+    outputPricePer1M: 2.00,
+    input_price_usd_per_1m: 0.110345,
+    output_price_usd_per_1m: 0.275862,
+    contextWindow: 128000,
     source_url: QWEN_PRICING_URL
   },
   {
@@ -179,10 +379,11 @@ const FALLBACK_QWEN_MODELS = [
     name: "Qwen Turbo",
     provider: "阿里通义",
     currency: "CNY",
-    inputPricePer1M: 0.3,
-    outputPricePer1M: 0.6,
-    input_price_usd_per_1m: Math.round(0.3 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(0.6 * CNY_TO_USD * 10000) / 10000,
+    inputPricePer1M: 0.30,
+    outputPricePer1M: 0.60,
+    input_price_usd_per_1m: 0.041379,
+    output_price_usd_per_1m: 0.082759,
+    contextWindow: 128000,
     source_url: QWEN_PRICING_URL
   }
 ];

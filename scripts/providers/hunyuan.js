@@ -85,21 +85,40 @@ function extractModelsFromHtml(html, options = {}) {
 
         let idSuffix = "";
         let nameSuffix = "";
+        let contextWindow = null;
         const contextNorm = contextCell.toLowerCase();
         
         // Checking in descending order of size to avoid partial matching (e.g. "32k, 128k" matches "32k" first)
         if (contextNorm.includes("256k")) {
           idSuffix = "-256k";
           nameSuffix = " (256K)";
+          contextWindow = 256000;
         } else if (contextNorm.includes("128k")) {
           idSuffix = "-128k";
           nameSuffix = " (128K)";
+          contextWindow = 128000;
         } else if (contextNorm.includes("32k")) {
           idSuffix = "-32k";
           nameSuffix = " (32K)";
+          contextWindow = 32000;
         }
 
         const baseModelId = resolveModelId(currentProduct);
+
+        // 针对特定无阶梯计价模型的 contextWindow 兜底识别
+        if (!contextWindow) {
+          const modelIdLower = baseModelId.toLowerCase();
+          if (modelIdLower.includes("turbo-s") || modelIdLower.includes("turbos")) {
+            contextWindow = 128000;
+          } else if (modelIdLower.includes("t1")) {
+            contextWindow = 32000;
+          } else if (modelIdLower.includes("a13b") || modelIdLower.includes("large-role")) {
+            contextWindow = 32000;
+          } else if (modelIdLower.includes("translation") || modelIdLower.includes("vision")) {
+            contextWindow = 32000;
+          }
+        }
+
         const modelId = `${baseModelId}${idSuffix}`;
         const modelName = `${currentProduct}${nameSuffix}`;
 
@@ -116,6 +135,7 @@ function extractModelsFromHtml(html, options = {}) {
           outputPricePer1M: outputRmb,
           input_price_usd_per_1m: Math.round(inputPriceUsd * 10000) / 10000,
           output_price_usd_per_1m: Math.round(outputPriceUsd * 10000) / 10000,
+          contextWindow: contextWindow, // 写入 contextWindow
           source_url: sourceUrl,
           updated_at: updatedAt
         });
@@ -134,9 +154,10 @@ const FALLBACK_HUNYUAN_MODELS = [
     provider: "腾讯混元",
     currency: "CNY",
     inputPricePer1M: 3.975,
-    outputPricePer1M: 15.9,
-    input_price_usd_per_1m: Math.round(3.975 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(15.9 * CNY_TO_USD * 10000) / 10000,
+    outputPricePer1M: 15.90,
+    input_price_usd_per_1m: 0.548276,
+    output_price_usd_per_1m: 2.193103,
+    contextWindow: 32000,
     source_url: HUNYUAN_PRICING_URL
   },
   {
@@ -144,10 +165,11 @@ const FALLBACK_HUNYUAN_MODELS = [
     name: "Tencent HY 2.0 Think (128K)",
     provider: "腾讯混元",
     currency: "CNY",
-    inputPricePer1M: 5.3,
-    outputPricePer1M: 21.2,
-    input_price_usd_per_1m: Math.round(5.3 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(21.2 * CNY_TO_USD * 10000) / 10000,
+    inputPricePer1M: 5.30,
+    outputPricePer1M: 21.20,
+    input_price_usd_per_1m: 0.731034,
+    output_price_usd_per_1m: 2.924138,
+    contextWindow: 128000,
     source_url: HUNYUAN_PRICING_URL
   },
   {
@@ -157,8 +179,9 @@ const FALLBACK_HUNYUAN_MODELS = [
     currency: "CNY",
     inputPricePer1M: 3.18,
     outputPricePer1M: 7.95,
-    input_price_usd_per_1m: Math.round(3.18 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(7.95 * CNY_TO_USD * 10000) / 10000,
+    input_price_usd_per_1m: 0.438621,
+    output_price_usd_per_1m: 1.096552,
+    contextWindow: 32000,
     source_url: HUNYUAN_PRICING_URL
   },
   {
@@ -168,8 +191,9 @@ const FALLBACK_HUNYUAN_MODELS = [
     currency: "CNY",
     inputPricePer1M: 4.505,
     outputPricePer1M: 11.13,
-    input_price_usd_per_1m: Math.round(4.505 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(11.13 * CNY_TO_USD * 10000) / 10000,
+    input_price_usd_per_1m: 0.621379,
+    output_price_usd_per_1m: 1.535172,
+    contextWindow: 128000,
     source_url: HUNYUAN_PRICING_URL
   },
   {
@@ -177,10 +201,11 @@ const FALLBACK_HUNYUAN_MODELS = [
     name: "Hunyuan-T1",
     provider: "腾讯混元",
     currency: "CNY",
-    inputPricePer1M: 1,
-    outputPricePer1M: 4,
-    input_price_usd_per_1m: Math.round(1 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(4 * CNY_TO_USD * 10000) / 10000,
+    inputPricePer1M: 1.00,
+    outputPricePer1M: 4.00,
+    input_price_usd_per_1m: 0.137931,
+    output_price_usd_per_1m: 0.551724,
+    contextWindow: 32000,
     source_url: HUNYUAN_PRICING_URL
   },
   {
@@ -188,10 +213,35 @@ const FALLBACK_HUNYUAN_MODELS = [
     name: "Hunyuan-TurboS",
     provider: "腾讯混元",
     currency: "CNY",
-    inputPricePer1M: 0.8,
-    outputPricePer1M: 2,
-    input_price_usd_per_1m: Math.round(0.8 * CNY_TO_USD * 10000) / 10000,
-    output_price_usd_per_1m: Math.round(2 * CNY_TO_USD * 10000) / 10000,
+    inputPricePer1M: 0.80,
+    outputPricePer1M: 2.00,
+    input_price_usd_per_1m: 0.110345,
+    output_price_usd_per_1m: 0.275862,
+    contextWindow: 128000,
+    source_url: HUNYUAN_PRICING_URL
+  },
+  {
+    id: "hunyuan-a13b",
+    name: "Hunyuan-a13b",
+    provider: "腾讯混元",
+    currency: "CNY",
+    inputPricePer1M: 0.50,
+    outputPricePer1M: 2.00,
+    input_price_usd_per_1m: 0.068966,
+    output_price_usd_per_1m: 0.275862,
+    contextWindow: 32000,
+    source_url: HUNYUAN_PRICING_URL
+  },
+  {
+    id: "hunyuan-large-role",
+    name: "Hunyuan-large-role",
+    provider: "腾讯混元",
+    currency: "CNY",
+    inputPricePer1M: 2.40,
+    outputPricePer1M: 9.60,
+    input_price_usd_per_1m: 0.331034,
+    output_price_usd_per_1m: 1.324138,
+    contextWindow: 32000,
     source_url: HUNYUAN_PRICING_URL
   }
 ];

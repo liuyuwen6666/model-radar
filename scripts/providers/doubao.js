@@ -112,15 +112,19 @@ function extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt) {
     
     let idSuffix = "";
     let nameSuffix = "";
+    let contextWindow = null;
     if (contextCell.includes("[0, 32]")) {
       idSuffix = "-32k";
       nameSuffix = " (32K)";
+      contextWindow = 32000;
     } else if (contextCell.includes("(32, 128]")) {
       idSuffix = "-128k";
       nameSuffix = " (128K)";
+      contextWindow = 128000;
     } else if (contextCell.includes("(128, 256]")) {
       idSuffix = "-256k";
       nameSuffix = " (256K)";
+      contextWindow = 256000;
     }
     
     const modelId = `${currentModelName}${idSuffix}`;
@@ -147,6 +151,7 @@ function extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt) {
       output_price_usd_per_1m: Math.round(outputPriceUsd * 10000) / 10000,
       cache_read_price_usd_per_1m: cacheReadPriceUsd ? Math.round(cacheReadPriceUsd * 10000) / 10000 : null,
       cache_write_price_usd_per_1m: cacheWritePriceCny ? Math.round(cacheWritePriceCny * CNY_TO_USD * 10000) / 10000 : null,
+      contextWindow: contextWindow, // 添加上下文窗口大小
       source_url: sourceUrl,
       updated_at: updatedAt
     });
@@ -209,6 +214,150 @@ function extractModelsFromHtml(html, options = {}) {
 // Highly reliable fallback models blueprint
 const FALLBACK_DOUBAO_MODELS = [
   {
+    id: "doubao-seed-2.0-pro-32k",
+    name: "豆包 Seed 2.0 Pro (32K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 3.20,
+    outputPricePer1M: 16.00,
+    cacheReadPricePer1M: 0.64,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 0.441379,
+    output_price_usd_per_1m: 2.206897,
+    cache_read_price_usd_per_1m: 0.088276,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 32000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
+    id: "doubao-seed-2.0-pro-128k",
+    name: "豆包 Seed 2.0 Pro (128K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 4.80,
+    outputPricePer1M: 24.00,
+    cacheReadPricePer1M: 0.96,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 0.662069,
+    output_price_usd_per_1m: 3.310345,
+    cache_read_price_usd_per_1m: 0.132414,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 128000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
+    id: "doubao-seed-2.0-pro-256k",
+    name: "豆包 Seed 2.0 Pro (256K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 9.60,
+    outputPricePer1M: 48.00,
+    cacheReadPricePer1M: 1.92,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 1.324138,
+    output_price_usd_per_1m: 6.620690,
+    cache_read_price_usd_per_1m: 0.264828,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 256000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
+    id: "doubao-seed-2.0-lite-32k",
+    name: "豆包 Seed 2.0 Lite (32K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 0.60,
+    outputPricePer1M: 3.60,
+    cacheReadPricePer1M: 0.12,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 0.082759,
+    output_price_usd_per_1m: 0.496552,
+    cache_read_price_usd_per_1m: 0.016552,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 32000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
+    id: "doubao-seed-2.0-lite-128k",
+    name: "豆包 Seed 2.0 Lite (128K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 0.90,
+    outputPricePer1M: 5.40,
+    cacheReadPricePer1M: 0.18,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 0.124138,
+    output_price_usd_per_1m: 0.744828,
+    cache_read_price_usd_per_1m: 0.024828,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 128000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
+    id: "doubao-seed-2.0-lite-256k",
+    name: "豆包 Seed 2.0 Lite (256K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 1.80,
+    outputPricePer1M: 10.80,
+    cacheReadPricePer1M: 0.36,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 0.248276,
+    output_price_usd_per_1m: 1.489655,
+    cache_read_price_usd_per_1m: 0.049655,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 256000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
+    id: "doubao-seed-2.0-mini-32k",
+    name: "豆包 Seed 2.0 Mini (32K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 0.20,
+    outputPricePer1M: 2.00,
+    cacheReadPricePer1M: 0.04,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 0.027586,
+    output_price_usd_per_1m: 0.275862,
+    cache_read_price_usd_per_1m: 0.005517,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 32000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
+    id: "doubao-seed-2.0-mini-128k",
+    name: "豆包 Seed 2.0 Mini (128K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 0.40,
+    outputPricePer1M: 4.00,
+    cacheReadPricePer1M: 0.08,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 0.055172,
+    output_price_usd_per_1m: 0.551724,
+    cache_read_price_usd_per_1m: 0.011034,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 128000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
+    id: "doubao-seed-2.0-mini-256k",
+    name: "豆包 Seed 2.0 Mini (256K)",
+    provider: "字节豆包",
+    currency: "CNY",
+    inputPricePer1M: 0.80,
+    outputPricePer1M: 8.00,
+    cacheReadPricePer1M: 0.16,
+    cacheWritePricePer1M: 0.017,
+    input_price_usd_per_1m: 0.110345,
+    output_price_usd_per_1m: 1.103448,
+    cache_read_price_usd_per_1m: 0.022069,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 256000,
+    source_url: DOUBAO_PRICING_URL
+  },
+  {
     id: "doubao-1-5-pro-32k",
     name: "豆包 1.5 Pro 32K",
     provider: "字节豆包",
@@ -217,10 +366,11 @@ const FALLBACK_DOUBAO_MODELS = [
     outputPricePer1M: 2.00,
     cacheReadPricePer1M: 0.16,
     cacheWritePricePer1M: 0.017,
-    input_price_usd_per_1m: Math.round(0.80 * CNY_TO_USD * 1000) / 1000,
-    output_price_usd_per_1m: Math.round(2.00 * CNY_TO_USD * 1000) / 1000,
-    cache_read_price_usd_per_1m: Math.round(0.16 * CNY_TO_USD * 1000) / 1000,
-    cache_write_price_usd_per_1m: Math.round(0.017 * CNY_TO_USD * 1000) / 1000,
+    input_price_usd_per_1m: 0.110345,
+    output_price_usd_per_1m: 0.275862,
+    cache_read_price_usd_per_1m: 0.022069,
+    cache_write_price_usd_per_1m: 0.002345,
+    contextWindow: 32000,
     source_url: DOUBAO_PRICING_URL
   }
 ];

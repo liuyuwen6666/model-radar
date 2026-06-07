@@ -184,7 +184,8 @@ function extractModelsFromHtml(html, options = {}) {
         } else if (isLiteCode) {
           matchingRows = rows.filter(r => r[0].toLowerCase().includes("lite"));
         } else if (isProCode) {
-          matchingRows = rows.filter(r => r[0].toLowerCase().includes("pro") || r[0].includes("完整") || r[0].includes("专业"));
+          // 使用单词边界正则 \bpro\b 匹配以避免误匹配 'improve our products' 中的 'products' 等不相关的单词
+          matchingRows = rows.filter(r => /\bpro\b/i.test(r[0]) || r[0].includes("完整") || r[0].includes("专业"));
         } else if (isClipCode) {
           matchingRows = rows.filter(r => r[0].toLowerCase().includes("clip") || r[0].includes("短片") || r[0].includes("预览"));
         } else if (isCustomTools) {
