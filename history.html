@@ -365,14 +365,44 @@
     async function loadHistory() {
       try {
         const payload = await fetchJson(CHANGELOG_ENDPOINT);
-        const entries = Array.isArray(payload.latest) ? payload.latest : [];
+        const latest = Array.isArray(payload.latest) ? payload.latest : [];
+        const history = Array.isArray(payload.history) ? payload.history : [];
+
+        // 合并 latest 与 history，并根据 ID 进行去重，确保数据完整且不重复
+        const allEntriesMap = new Map();
+        for (const item of latest) {
+          if (item && item.id) {
+            allEntriesMap.set(item.id, item);
+          }
+        }
+        for (const item of history) {
+          if (item && item.id && !allEntriesMap.has(item.id)) {
+            allEntriesMap.set(item.id, item);
+          }
+        }
+        const allEntries = Array.from(allEntriesMap.values());
+
+        // 按照变更日期进行倒序排序，确保最新的变更显示在最前面
+        allEntries.sort((a, b) => {
+          const dateA = a.date || '';
+          const dateB = b.date || '';
+          return dateB.localeCompare(dateA);
+        });
+
+        // 截取最新的 50 条记录用于表格展示，避免页面因今日无变化而呈现空数据状态
+        const tableEntries = allEntries.slice(0, 50);
 
         historyUpdated.textContent = `最后更新：${formatUpdatedLabel(payload.effectiveDate || payload.generatedAt)}`;
-        tableCaption.textContent = `说明：本页读取 /data/changelog.json 的 latest 记录，当前批次共 ${entries.length} 条变化。`;
-        renderStats(entries);
-        renderSummary(entries);
-        renderTable(entries);
-        updateHistoryStructuredData(payload, entries);
+        tableCaption.textContent = `说明：本页展示最近 ${tableEntries.length} 条模型价格变化记录（数据源自 /data/changelog.json）。`;
+        
+        // stats 与 summary 依然代表最新一轮（即 latest 批次）的变更状态
+        renderStats(latest);
+        renderSummary(latest);
+        
+        // 渲染包含历史数据的前 50 条变更记录表格
+        renderTable(tableEntries);
+        
+        updateHistoryStructuredData(payload, allEntries);
       } catch (error) {
         renderError(`变更数据读取失败：${error.message}`);
       }
