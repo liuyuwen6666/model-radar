@@ -239,12 +239,15 @@
         .replace(/'/g, '&#39;');
     }
 
+    // 格式化模型价格字段，支持高精度（最多 6 位小数）并剔除尾部冗余的 0
     function formatPrice(value, currency = 'USD') {
       if (typeof value !== 'number' || !Number.isFinite(value)) {
         return '待更新';
       }
       const symbol = currency === 'CNY' ? '¥' : '$';
-      let formatted = value.toFixed(4);
+      // 提升最高保留位数至 6 位，以兼容极低单价的缓存计算
+      let formatted = value.toFixed(6);
+      // 小数位大于 2 时，剥除尾部无意义的 0
       while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
         formatted = formatted.slice(0, -1);
       }

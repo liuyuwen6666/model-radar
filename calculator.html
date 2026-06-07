@@ -156,13 +156,14 @@
     const modelSelect = document.getElementById('modelSelect');
     const inputs = ['dailyRequests', 'inputTokens', 'outputTokens', 'cacheHitRatio'];
 
+    // 格式化计算器最终输出的估算总费用，最大精度保留升至 6 位，以兼容当用户用量极小时估算总成本不被直接四舍五入抹零的问题
     function formatCurrency(val, currency = 'USD') {
       if (val === null || val === undefined) return '待更新';
       return new Intl.NumberFormat(currency === 'CNY' ? 'zh-CN' : 'en-US', {
         style: 'currency',
         currency: currency,
         minimumFractionDigits: 2,
-        maximumFractionDigits: 4
+        maximumFractionDigits: 6 // 提升至最大 6 位
       }).format(val);
     }
 
@@ -247,12 +248,14 @@
       credibilityEl.style.color = model.sourceType === 'provider' ? 'var(--good)' : 'var(--warn)';
       document.getElementById('infoContext').textContent = formatContext(model.contextWindow);
 
+      // 格式化所选模型的具体输入、输出、缓存单价，最大精度由 4 位改至 6 位
       function formatDetailPrice(nativeVal, usdVal, curr) {
         if (nativeVal === null || nativeVal === undefined) return '待更新';
         
         function formatSingle(val, c) {
           const symbol = c === 'CNY' ? '¥' : '$';
-          let formatted = val.toFixed(4);
+          // 改为最多保留 6 位，以符合小模型以及官方极低单价的精细显示要求
+          let formatted = val.toFixed(6);
           while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
             formatted = formatted.slice(0, -1);
           }

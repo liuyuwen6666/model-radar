@@ -154,10 +154,13 @@
       return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
+    // 格式化模型单价，将原本的 4 位精度限制提升到最多 6 位，以兼容高精度小数值（如缓存命中单价），并通过循环去掉多余的尾随零（最少保留2位小数）
     function formatPrice(value, currency = 'USD') {
       if (typeof value !== 'number' || !Number.isFinite(value)) return '待更新';
       const symbol = currency === 'CNY' ? '¥' : '$';
-      let formatted = value.toFixed(4);
+      // 允许最多保留 6 位小数以匹配低阶计费字段的精度要求
+      let formatted = value.toFixed(6);
+      // 若尾部为 0 且小数位数大于 2，则裁剪多余的 0，使普通数值（如 0.14）显示简洁
       while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
         formatted = formatted.slice(0, -1);
       }

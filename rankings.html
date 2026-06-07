@@ -192,7 +192,7 @@
         return '待更新';
       }
       const symbol = currency === 'CNY' ? '¥' : '$';
-      let formatted = value.toFixed(4);
+      let formatted = value.toFixed(6);
       while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
         formatted = formatted.slice(0, -1);
       }

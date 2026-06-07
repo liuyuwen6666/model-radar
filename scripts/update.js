@@ -424,13 +424,13 @@ function hashString(input) {
 }
 
 /**
- * 将浮点数价格保留 4 位有效小数（四舍五入）
- * @description 避免因浮点数乘除计算引起的 JS 精度误差问题（如 0.1 + 0.2 === 0.30000000000000004）。
+ * 将浮点数价格保留 6 位有效小数（四舍五入）
+ * @description 避免因浮点数乘除计算引起的 JS 精度误差问题（如 0.1 + 0.2 === 0.30000000000000004），保留更多位小数以支持高精度缓存优惠价。
  * @param {number} value - 输入的浮点数值
- * @returns {number} 保留四位小数后的数值
+ * @returns {number} 保留六位小数后的数值
  */
 function roundPrice(value) {
-  return Math.round(value * 10000) / 10000;
+  return Math.round(value * 1000000) / 1000000;
 }
 
 /**

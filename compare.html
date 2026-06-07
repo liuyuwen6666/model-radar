@@ -248,12 +248,15 @@
         .replace(/'/g, '&#39;');
     }
 
+    // 格式化价格字段，提升最大保留精度到 6 位以正确对比极低费用差异，且自动裁剪尾部 0
     function formatPrice(value, currency = 'USD') {
       if (typeof value !== 'number' || !Number.isFinite(value)) {
         return '待更新';
       }
       const symbol = currency === 'CNY' ? '¥' : '$';
-      let formatted = value.toFixed(4);
+      // 升至 6 位小数支持，避免在模型对比时因四舍五入丢失极小的缓存差价信息
+      let formatted = value.toFixed(6);
+      // 只要小数位数大于 2 且以 0 结尾，就持续剥离
       while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
         formatted = formatted.slice(0, -1);
       }

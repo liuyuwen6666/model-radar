@@ -179,11 +179,19 @@
       return dateOrTimestamp.length > 10 ? dateOrTimestamp.slice(0, 10) : dateOrTimestamp;
     }
 
+    // 格式化变更差异的具体数值，数值字段主要是美元单价，升为 6 位高精度展示且剪除尾零以应对极低缓存在变更历史里的准确度
     function formatValue(value, field) {
       if (typeof value === 'number') {
-        return field === 'model'
-          ? escapeHtml(value)
-          : `$${value < 1 ? value.toFixed(4) : value.toFixed(2)}`;
+        if (field === 'model') {
+          return escapeHtml(value);
+        }
+        // 对于价格数值，使用 6 位浮点数进行格式化
+        let formatted = value.toFixed(6);
+        // 如果小数位数大于 2 且尾随零，则循环裁剪掉无意义的尾部零
+        while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
+          formatted = formatted.slice(0, -1);
+        }
+        return `$${formatted}`;
       }
 
       if (value === null || value === undefined || value === '') {

@@ -31,7 +31,7 @@ function isNumber(value) {
 }
 
 function roundValue(value) {
-  return Math.round(value * 10000) / 10000;
+  return Math.round(value * 1000000) / 1000000;
 }
 
 function roundPercent(value) {
@@ -43,7 +43,10 @@ function formatUsd(value) {
     return "N/A";
   }
 
-  return value < 1 ? value.toFixed(4) : value.toFixed(2);
+  if (value < 1) {
+    return value.toFixed(6).replace(/\.?0+$/, "");
+  }
+  return value.toFixed(2);
 }
 
 async function ensureDirectory(dirPath) {
