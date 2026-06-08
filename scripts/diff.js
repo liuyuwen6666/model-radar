@@ -14,13 +14,33 @@ const CHANGELOG_PATH = path.join(DATA_DIR, "changelog.json");
 const PREVIOUS_MODELS_PATH = path.join(CACHE_DIR, "models.previous.json");
 
 const FIELD_LABELS = {
+  inputPricePer1M: "输入价 / 1M tokens",
+  outputPricePer1M: "输出价 / 1M tokens",
+  cacheWritePricePer1M: "缓存写价 / 1M tokens",
+  cacheReadPricePer1M: "缓存读价 / 1M tokens",
   inputPriceUsdPer1M: "输入价 / 1M tokens",
   outputPriceUsdPer1M: "输出价 / 1M tokens",
   cacheWritePriceUsdPer1M: "缓存写价 / 1M tokens",
   cacheReadPriceUsdPer1M: "缓存读价 / 1M tokens"
 };
 
-const PRICE_FIELDS = Object.keys(FIELD_LABELS);
+const CNY_PRICE_FIELDS = [
+  "inputPricePer1M",
+  "outputPricePer1M",
+  "cacheWritePricePer1M",
+  "cacheReadPricePer1M"
+];
+
+const USD_PRICE_FIELDS = [
+  "inputPriceUsdPer1M",
+  "outputPriceUsdPer1M",
+  "cacheWritePriceUsdPer1M",
+  "cacheReadPriceUsdPer1M"
+];
+
+function getFieldCurrency(field) {
+  return field.includes("Usd") ? "USD" : "CNY";
+}
 
 function stableJson(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
@@ -38,15 +58,20 @@ function roundPercent(value) {
   return Math.round(value * 100) / 100;
 }
 
-function formatUsd(value) {
+function formatPrice(value, currency) {
   if (!isNumber(value)) {
     return "N/A";
   }
 
+  let formatted;
   if (value < 1) {
-    return value.toFixed(6).replace(/\.?0+$/, "");
+    formatted = value.toFixed(6).replace(/\.?0+$/, "");
+  } else {
+    formatted = value.toFixed(2);
   }
-  return value.toFixed(2);
+
+  const symbol = currency === "CNY" ? "¥" : "$";
+  return `${symbol}${formatted}`;
 }
 
 async function ensureDirectory(dirPath) {
@@ -90,7 +115,8 @@ function makeEntry({
   type,
   previousValue,
   currentValue,
-  summary
+  summary,
+  currency
 }) {
   let delta = null;
   let deltaPercent = null;
@@ -117,6 +143,7 @@ function makeEntry({
     delta,
     deltaPercent,
     summary,
+    currency,
     sourceUrl: model.sourceUrl || "",
     sourceType: model.sourceType || "fallback"
   };
@@ -124,6 +151,7 @@ function makeEntry({
 
 function describeChange(model, field, previousValue, currentValue) {
   const label = FIELD_LABELS[field] || field;
+  const currency = getFieldCurrency(field);
 
   if (!isNumber(previousValue) && isNumber(currentValue)) {
     return makeEntry({
@@ -133,7 +161,8 @@ function describeChange(model, field, previousValue, currentValue) {
       type: "pricing_added",
       previousValue,
       currentValue,
-      summary: `${model.name} 新增 ${label} 字段。`
+      summary: `${model.name} 新增 ${label} 字段。`,
+      currency
     });
   }
 
@@ -145,7 +174,8 @@ function describeChange(model, field, previousValue, currentValue) {
       type: "pricing_removed",
       previousValue,
       currentValue,
-      summary: `${model.name} 移除了 ${label} 字段。`
+      summary: `${model.name} 移除了 ${label} 字段。`,
+      currency
     });
   }
 
@@ -163,7 +193,8 @@ function describeChange(model, field, previousValue, currentValue) {
     type,
     previousValue,
     currentValue,
-    summary: `${model.name} ${label} ${verb}至 $${formatUsd(currentValue)}。`
+    summary: `${model.name} ${label} ${verb}至 ${formatPrice(currentValue, currency)}。`,
+    currency
   });
 }
 
@@ -175,6 +206,7 @@ function collectChanges(previousDataset, currentDataset) {
 
   for (const model of currentMap.values()) {
     if (!previousMap.has(model.id)) {
+      const modelCurrency = model.currency || "USD";
       entries.push(
         makeEntry({
           date: currentDate,
@@ -183,7 +215,8 @@ function collectChanges(previousDataset, currentDataset) {
           type: "new_model",
           previousValue: null,
           currentValue: model.name,
-          summary: `新增模型 ${model.name}。`
+          summary: `新增模型 ${model.name}。`,
+          currency: modelCurrency
         })
       );
       continue;
@@ -191,7 +224,19 @@ function collectChanges(previousDataset, currentDataset) {
 
     const previousModel = previousMap.get(model.id);
 
-    for (const field of PRICE_FIELDS) {
+    const fieldsToCompare = [];
+    const isCny = model.currency === "CNY";
+    const isUsd = model.currency === "USD" || !model.currency;
+    const hasDual = model.hasOfficialDualCurrency === true;
+
+    if (isCny) {
+      fieldsToCompare.push(...CNY_PRICE_FIELDS);
+    }
+    if (isUsd || hasDual) {
+      fieldsToCompare.push(...USD_PRICE_FIELDS);
+    }
+
+    for (const field of fieldsToCompare) {
       const change = describeChange(
         { ...model, updatedAt: buildTimestamp(currentDate) },
         field,
@@ -210,6 +255,7 @@ function collectChanges(previousDataset, currentDataset) {
       continue;
     }
 
+    const modelCurrency = previousModel.currency || "USD";
     entries.push(
       makeEntry({
         date: currentDate,
@@ -218,7 +264,8 @@ function collectChanges(previousDataset, currentDataset) {
         type: "removed_model",
         previousValue: previousModel.name,
         currentValue: null,
-        summary: `模型 ${previousModel.name} 已从追踪列表移除。`
+        summary: `模型 ${previousModel.name} 已从追踪列表移除。`,
+        currency: modelCurrency
       })
     );
   }

@@ -179,8 +179,8 @@
       return dateOrTimestamp.length > 10 ? dateOrTimestamp.slice(0, 10) : dateOrTimestamp;
     }
 
-    // 格式化变更差异的具体数值，数值字段主要是美元单价，升为 6 位高精度展示且剪除尾零以应对极低缓存在变更历史里的准确度
-    function formatValue(value, field) {
+    // 格式化变更差异的具体数值，数值字段可以是人民币或美元单价，升为 6 位高精度展示且剪除尾零以应对极低缓存在变更历史里的准确度
+    function formatValue(value, field, currency = 'USD') {
       if (typeof value === 'number') {
         if (field === 'model') {
           return escapeHtml(value);
@@ -191,7 +191,8 @@
         while (formatted.endsWith('0') && formatted.split('.')[1].length > 2) {
           formatted = formatted.slice(0, -1);
         }
-        return `$${formatted}`;
+        const symbol = currency === 'CNY' ? '¥' : '$';
+        return `${symbol}${formatted}`;
       }
 
       if (value === null || value === undefined || value === '') {
@@ -298,8 +299,8 @@
             <td><span class="model-name">${escapeHtml(item.modelName || item.modelId || '未知模型')}</span></td>
             <td>${escapeHtml(item.provider || '—')}</td>
             <td><span class="tag ${formatChangeTypeClass(item.type)}">${escapeHtml(formatFieldLabel(item))}</span></td>
-            <td class="mono">${formatValue(item.previousValue, item.field)}</td>
-            <td class="mono">${formatValue(item.currentValue, item.field)}</td>
+            <td class="mono">${formatValue(item.previousValue, item.field, item.currency)}</td>
+            <td class="mono">${formatValue(item.currentValue, item.field, item.currency)}</td>
             <td class="mono">${formatPercent(item.deltaPercent)}</td>
             <td>${sourceLink}</td>
           </tr>
