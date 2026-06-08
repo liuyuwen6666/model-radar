@@ -28,3 +28,33 @@
 [2026-06-08T02:34:04.681Z] [INFO] - 成功率: 100.00%
 [2026-06-08T02:34:04.681Z] [INFO] ========================================
 
+[2026-06-08T15:24:53.062Z] [INFO] [save-raw] 准备开始抓取原始 HTML，目标日期: 2026-06-08
+[2026-06-08T15:24:53.063Z] [INFO] [save-raw] 开始抓取 openai 原始 HTML 页面: https://developers.openai.com/api/docs/pricing
+[2026-06-08T15:24:53.370Z] [INFO] [save-raw] 成功保存 openai 原始 HTML 至: raw/openai/2026/06/08.html
+[2026-06-08T15:24:53.370Z] [INFO] [save-raw] 开始抓取 anthropic 原始 HTML 页面: https://claude.com/pricing
+[2026-06-08T15:24:53.672Z] [INFO] [save-raw] 成功保存 anthropic 原始 HTML 至: raw/anthropic/2026/06/08.html
+[2026-06-08T15:24:53.672Z] [INFO] [save-raw] 开始抓取 google 原始 HTML 页面: https://ai.google.dev/gemini-api/docs/pricing?hl=zh-cn
+[2026-06-08T15:24:54.064Z] [INFO] [save-raw] 成功保存 google 原始 HTML 至: raw/google/2026/06/08.html
+[2026-06-08T15:24:54.065Z] [INFO] [save-raw] 开始抓取 deepseek_zh 原始 HTML 页面: https://api-docs.deepseek.com/zh-cn/quick_start/pricing/
+[2026-06-08T15:24:54.837Z] [INFO] [save-raw] 成功保存 deepseek_zh 原始 HTML 至: raw/deepseek_zh/2026/06/08.html
+[2026-06-08T15:24:54.838Z] [INFO] [save-raw] 开始抓取 deepseek_en 原始 HTML 页面: https://api-docs.deepseek.com/quick_start/pricing/
+[2026-06-08T15:24:55.058Z] [INFO] [save-raw] 成功保存 deepseek_en 原始 HTML 至: raw/deepseek_en/2026/06/08.html
+[2026-06-08T15:24:55.058Z] [INFO] [save-raw] 开始抓取 moonshot 原始 HTML 页面: https://platform.kimi.com/docs/pricing/chat
+[2026-06-08T15:24:57.932Z] [INFO] [save-raw] 发现 7 个 Kimi 定价子页面，开始逐个抓取合并并提取真实价格...
+[2026-06-08T15:25:06.928Z] [INFO] [save-raw] 成功保存合并并恢复价格表格后的 moonshot 原始 HTML 至: raw/moonshot/2026/06/08.html
+[2026-06-08T15:25:06.929Z] [INFO] [save-raw] 开始抓取 alibailian 原始 HTML 页面: https://help.aliyun.com/zh/model-studio/model-pricing
+[2026-06-08T15:25:10.366Z] [INFO] [save-raw] 成功保存 alibailian 原始 HTML 至: raw/alibailian/2026/06/08.html
+[2026-06-08T15:25:10.367Z] [INFO] [save-raw] 开始抓取 volcengine 原始 HTML 页面: https://www.volcengine.com/docs/82379/1544106?lang=zh
+[2026-06-08T15:25:12.294Z] [INFO] [save-raw] 成功解析并保存渲染后的火山 volcengine 原始 HTML 至: raw/volcengine/2026/06/08.html
+[2026-06-08T15:25:12.294Z] [INFO] [save-raw] 开始抓取 hunyuan 原始 HTML 页面: https://cloud.tencent.com/document/product/1729/97731
+[2026-06-08T15:25:13.445Z] [INFO] [save-raw] 成功保存 hunyuan 原始 HTML 至: raw/hunyuan/2026/06/08.html
+[2026-06-08T15:25:13.445Z] [INFO] 
+========================================
+[2026-06-08T15:25:13.445Z] [INFO] 抓取统计总结：
+[2026-06-08T15:25:13.445Z] [INFO] - 目标日期: 2026-06-08
+[2026-06-08T15:25:13.445Z] [INFO] - 计划抓取 provider 数量: 9
+[2026-06-08T15:25:13.445Z] [INFO] - 成功抓取数量: 9
+[2026-06-08T15:25:13.445Z] [INFO] - 失败抓取数量: 0
+[2026-06-08T15:25:13.445Z] [INFO] - 成功率: 100.00%
+[2026-06-08T15:25:13.445Z] [INFO] ========================================
+
