@@ -3,14 +3,52 @@
   "generatedAt": "2026-06-09T00:00:00.000Z",
   "effectiveDate": "2026-06-09",
   "summary": {
-    "totalChanges": 0,
+    "totalChanges": 1,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 0,
+    "newModelCount": 1,
     "removedModelCount": 0
   },
-  "latest": [],
-  "history": []
+  "latest": [
+    {
+      "id": "2026-06-09:qwen3-livetranslate-flash:model:new_model",
+      "date": "2026-06-09",
+      "modelId": "qwen3-livetranslate-flash",
+      "modelName": "Qwen 3 Livetranslate Flash",
+      "provider": "阿里通义",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "Qwen 3 Livetranslate Flash",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 Qwen 3 Livetranslate Flash。",
+      "currency": "CNY",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "sourceType": "provider"
+    }
+  ],
+  "history": [
+    {
+      "id": "2026-06-09:qwen3-livetranslate-flash:model:new_model",
+      "date": "2026-06-09",
+      "modelId": "qwen3-livetranslate-flash",
+      "modelName": "Qwen 3 Livetranslate Flash",
+      "provider": "阿里通义",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "Qwen 3 Livetranslate Flash",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 Qwen 3 Livetranslate Flash。",
+      "currency": "CNY",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "sourceType": "provider"
+    }
+  ]
 }

@@ -231,6 +231,7 @@
       "qwen-tts-realtime-latest",
       "qwen3-5-livetranslate-flash-realtime",
       "qwen3-livetranslate-flash-realtime",
+      "qwen3-livetranslate-flash",
       "qwen-plus-character",
       "qwen-flash-character",
       "qwen-plus-character-ja",
@@ -264,8 +265,8 @@
     "label": "Moonshot Pricing",
     "url": "https://platform.moonshot.cn/docs/pricing/chat",
     "models": [
-      "kimi-k2-5",
       "kimi-k2-6",
+      "kimi-k2-5",
       "kimi-moonshot-v1-8k",
       "kimi-moonshot-v1-32k",
       "kimi-moonshot-v1-8k-vision-preview",
