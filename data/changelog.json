@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-09T00:00:00.000Z",
-  "effectiveDate": "2026-06-09",
+  "generatedAt": "2026-06-10T00:00:00.000Z",
+  "effectiveDate": "2026-06-10",
   "summary": {
     "totalChanges": 1,
     "priceIncreaseCount": 0,
@@ -13,25 +13,43 @@
   },
   "latest": [
     {
-      "id": "2026-06-09:qwen3-livetranslate-flash:model:new_model",
-      "date": "2026-06-09",
-      "modelId": "qwen3-livetranslate-flash",
-      "modelName": "Qwen 3 Livetranslate Flash",
-      "provider": "阿里通义",
+      "id": "2026-06-10:google-gemini-3-5-live-translate-preview:model:new_model",
+      "date": "2026-06-10",
+      "modelId": "google-gemini-3-5-live-translate-preview",
+      "modelName": "gemini-3.5-live-translate-preview",
+      "provider": "Google",
       "field": "model",
       "fieldLabel": "model",
       "type": "new_model",
       "previousValue": null,
-      "currentValue": "Qwen 3 Livetranslate Flash",
+      "currentValue": "gemini-3.5-live-translate-preview",
       "delta": null,
       "deltaPercent": null,
-      "summary": "新增模型 Qwen 3 Livetranslate Flash。",
-      "currency": "CNY",
-      "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "summary": "新增模型 gemini-3.5-live-translate-preview。",
+      "currency": "USD",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceType": "provider"
     }
   ],
   "history": [
+    {
+      "id": "2026-06-10:google-gemini-3-5-live-translate-preview:model:new_model",
+      "date": "2026-06-10",
+      "modelId": "google-gemini-3-5-live-translate-preview",
+      "modelName": "gemini-3.5-live-translate-preview",
+      "provider": "Google",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "gemini-3.5-live-translate-preview",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 gemini-3.5-live-translate-preview。",
+      "currency": "USD",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "sourceType": "provider"
+    },
     {
       "id": "2026-06-09:qwen3-livetranslate-flash:model:new_model",
       "date": "2026-06-09",
