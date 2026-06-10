@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Superpowers-ZH 中文增强版
 
 本项目已安装 superpowers-zh 技能框架（20 个 skills）。
@@ -11,7 +15,7 @@
 
 ## 可用 Skills
 
-Skills 位于 `.antigravity/skills/` 目录，每个 skill 有独立的 `SKILL.md` 文件。
+Skills 位于 `.agent/skills/` 目录，每个 skill 有独立的 `SKILL.md` 文件。
 
 - **brainstorming**: 在任何创造性工作之前必须使用此技能——创建功能、构建组件、添加功能或修改行为。在实现之前先探索用户意图、需求和设计。
 - **chinese-code-review**: 中文 review 沟通参考——话术模板、分级标注（必须修复/建议修改/仅供参考）、国内团队常见反模式应对。仅在用户显式 /chinese-code-review 时调用，不要根据上下文自动触发。
@@ -36,4 +40,4 @@ Skills 位于 `.antigravity/skills/` 目录，每个 skill 有独立的 `SKILL.m
 
 ## 如何使用
 
-当任务匹配某个 skill 时，读取对应的 `.antigravity/skills/<skill-name>/SKILL.md` 并严格遵循其流程。
+当任务匹配某个 skill 时，读取对应的 `.agent/skills/<skill-name>/SKILL.md` 并严格遵循其流程。
