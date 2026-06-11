@@ -48,9 +48,9 @@
     "label": "Anthropic Pricing",
     "url": "https://claude.com/pricing",
     "models": [
-      "claude-3-opus-20240229",
-      "claude-3-7-sonnet-20250219",
-      "claude-3-5-haiku-20241022"
+      "claude-opus-4-8",
+      "claude-sonnet-4-6",
+      "claude-haiku-4-5-20251001"
     ]
   },
   {

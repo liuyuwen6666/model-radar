@@ -7,7 +7,7 @@
   "disclaimer": "当前为模拟数据，用于演示自动更新链路；后续可将 update.js 替换为真实抓取逻辑。",
   "models": [
     {
-      "id": "claude-3-7-sonnet-20250219",
+      "id": "claude-sonnet-4-6",
       "name": "Claude Sonnet 4.6",
       "provider": "Anthropic",
       "family": "Claude",
@@ -31,12 +31,12 @@
       "status": "stable",
       "sourceUrl": "https://www.anthropic.com/pricing",
       "sourceLabel": "Anthropic Pricing",
-      "detailPath": "/model/claude-3-7-sonnet",
+      "detailPath": "/model/claude-sonnet-4-6",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-16T00:00:00.000Z"
     },
     {
-      "id": "claude-3-5-haiku-20241022",
+      "id": "claude-haiku-4-5-20251001",
       "name": "Claude Haiku 4.5",
       "provider": "Anthropic",
       "family": "Claude",
@@ -60,7 +60,7 @@
       "status": "stable",
       "sourceUrl": "https://www.anthropic.com/pricing",
       "sourceLabel": "Anthropic Pricing",
-      "detailPath": "/model/claude-3-5-haiku",
+      "detailPath": "/model/claude-haiku-4-5-20251001",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-16T00:00:00.000Z"
     },

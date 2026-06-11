@@ -231,8 +231,8 @@
       "sourceType": "provider"
     },
     {
-      "id": "claude-3-opus-20240229",
-      "name": "Claude Opus 4.7",
+      "id": "claude-opus-4-8",
+      "name": "Claude Opus 4.8",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -257,13 +257,13 @@
       "status": "live",
       "sourceUrl": "https://claude.com/pricing",
       "sourceLabel": "Anthropic Pricing",
-      "detailPath": "/model/claude-3-opus-20240229",
+      "detailPath": "/model/claude-opus-4-8",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-26T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "claude-3-7-sonnet-20250219",
+      "id": "claude-sonnet-4-6",
       "name": "Claude Sonnet 4.6",
       "provider": "Anthropic",
       "family": "Claude",
@@ -293,13 +293,13 @@
       "status": "stable",
       "sourceUrl": "https://claude.com/pricing",
       "sourceLabel": "Anthropic Pricing",
-      "detailPath": "/model/claude-3-7-sonnet",
+      "detailPath": "/model/claude-sonnet-4-6",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-26T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "claude-3-5-haiku-20241022",
+      "id": "claude-haiku-4-5-20251001",
       "name": "Claude Haiku 4.5",
       "provider": "Anthropic",
       "family": "Claude",
@@ -329,7 +329,7 @@
       "status": "stable",
       "sourceUrl": "https://claude.com/pricing",
       "sourceLabel": "Anthropic Pricing",
-      "detailPath": "/model/claude-3-5-haiku",
+      "detailPath": "/model/claude-haiku-4-5-20251001",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-26T00:00:00.000Z",
       "sourceType": "provider"
