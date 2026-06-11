@@ -1113,7 +1113,7 @@ function normalizeProviderModel(providerModel, baseModel, sourceIndex, targetDat
       maxOutputTokens: baseModel?.maxOutputTokens ?? providerModel.maxOutputTokens ?? null,
       capabilities: providerModel.capabilities || baseModel?.capabilities || ["文本"],
       recommendedFor: baseModel?.recommendedFor || providerModel.recommendedFor || ["待补充"],
-      status: baseModel?.status || "live",
+      status: (baseModel?.status && baseModel.status !== "legacy" && baseModel.status !== "deprecated" && baseModel.status !== "inactive") ? baseModel.status : "live",
       sourceUrl: providerModel.sourceUrl || providerModel.source_url,
       sourceLabel: baseModel?.sourceLabel,
       detailPath: baseModel?.detailPath || `/model/${providerModel.id}`,
