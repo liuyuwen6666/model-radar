@@ -3874,7 +3874,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3.235b-a22b",
+      "id": "qwen3-235b-a22b",
       "name": "Qwen 3 235b A22b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3900,13 +3900,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3.235b-a22b",
+      "detailPath": "/model/qwen3-235b-a22b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3.32b",
+      "id": "qwen3-32b",
       "name": "Qwen 3 32b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3932,13 +3932,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3.32b",
+      "detailPath": "/model/qwen3-32b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3.30b-a3b",
+      "id": "qwen3-30b-a3b",
       "name": "Qwen 3 30b A3b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3964,13 +3964,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3.30b-a3b",
+      "detailPath": "/model/qwen3-30b-a3b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3.14b",
+      "id": "qwen3-14b",
       "name": "Qwen 3 14b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3996,13 +3996,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3.14b",
+      "detailPath": "/model/qwen3-14b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3.8b",
+      "id": "qwen3-8b",
       "name": "Qwen 3 8b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4028,7 +4028,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3.8b",
+      "detailPath": "/model/qwen3-8b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -4738,7 +4738,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3.4b",
+      "id": "qwen3-4b",
       "name": "Qwen 3 4b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4764,13 +4764,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3.4b",
+      "detailPath": "/model/qwen3-4b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3.1-7b",
+      "id": "qwen3-1.7b",
       "name": "Qwen 3 1.7b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4796,13 +4796,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3.1-7b",
+      "detailPath": "/model/qwen3-1.7b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3.0-6b",
+      "id": "qwen3-0.6b",
       "name": "Qwen 3 0.6b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4828,7 +4828,7 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3.0-6b",
+      "detailPath": "/model/qwen3-0.6b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
