@@ -413,7 +413,7 @@ const MODEL_BLUEPRINTS = [
     sourceType: "provider"
   },
   {
-    id: "google-gemini-2-5-flash",
+    id: "google-gemini-2.5-flash",
     name: "Gemini 2.5 Flash",
     provider: "Google",
     family: "Gemini",
@@ -427,11 +427,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["多模态", "长上下文", "低成本"],
     recommendedFor: ["批量摘要", "多模态分类", "低成本应用"],
     status: "stable",
-    detailPath: "/model/gemini-2-5-flash",
+    detailPath: "/model/gemini-2.5-flash",
     sourceType: "provider"
   },
   {
-    id: "google-gemini-2-5-pro",
+    id: "google-gemini-2.5-pro",
     name: "Gemini 2.5 Pro",
     provider: "Google",
     family: "Gemini",
@@ -445,7 +445,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["多模态", "长上下文", "推理"],
     recommendedFor: ["长文档分析", "图文理解", "复杂工作流"],
     status: "stable",
-    detailPath: "/model/gemini-2-5-pro",
+    detailPath: "/model/gemini-2.5-pro",
     sourceType: "provider"
   },
   {
@@ -617,7 +617,7 @@ const MODEL_BLUEPRINTS = [
     sourceType: "provider"
   },
   {
-    id: "openai-gpt-5-5",
+    id: "openai-gpt-5.5",
     name: "GPT-5.5",
     provider: "OpenAI",
     family: "GPT-5.5",
@@ -631,11 +631,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "工具调用", "长上下文"],
     recommendedFor: ["复杂开发", "深度推理", "长程任务"],
     status: "stable",
-    detailPath: "/model/openai-gpt-5-5",
+    detailPath: "/model/openai-gpt-5.5",
     sourceType: "provider"
   },
   {
-    id: "openai-gpt-5-4",
+    id: "openai-gpt-5.4",
     name: "GPT-5.4",
     provider: "OpenAI",
     family: "GPT-5.4",
@@ -649,11 +649,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "长上下文", "低成本"],
     recommendedFor: ["大规模日常任务", "辅助编程", "文本概括"],
     status: "stable",
-    detailPath: "/model/openai-gpt-5-4",
+    detailPath: "/model/openai-gpt-5.4",
     sourceType: "provider"
   },
   {
-    id: "openai-gpt-5-4-mini",
+    id: "openai-gpt-5.4-mini",
     name: "GPT-5.4 mini",
     provider: "OpenAI",
     family: "GPT-5.4",
@@ -665,7 +665,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "多模态", "极低成本"],
     recommendedFor: ["高并发调用", "简单子代理", "实时客服"],
     status: "stable",
-    detailPath: "/model/openai-gpt-5-4-mini",
+    detailPath: "/model/openai-gpt-5.4-mini",
     sourceType: "provider"
   },
   {

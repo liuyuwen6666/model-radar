@@ -9,7 +9,9 @@ function normalizeWhitespace(value) {
 function slugify(value) {
   return normalizeWhitespace(value)
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/\./g, "_dot_")
+    .replace(/[^a-z0-9_]+/g, "-")
+    .replace(/_dot_/g, ".")
     .replace(/^-+|-+$/g, "");
 }
 

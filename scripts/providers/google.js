@@ -7,7 +7,9 @@ function slugify(value) {
     .toLowerCase()
     .replace(/\u00a0/g, " ")
     .replace(/\bUSD\s*/gi, "$")
-    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/\./g, "_dot_")
+    .replace(/[^a-z0-9_]+/g, "-")
+    .replace(/_dot_/g, ".")
     .replace(/^-+|-+$/g, "");
 }
 

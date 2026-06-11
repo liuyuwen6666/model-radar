@@ -12,13 +12,14 @@ function normalizeWhitespace(value) {
 // 解析 Kimi 模型的 ID，对多模态 128k 预览版模型（包含 vision 关键字）和普通文本模型做区分以防 ID 冲突
 function resolveModelId(name) {
   const norm = name.toLowerCase();
-  if (norm.includes("k2.6")) return "kimi-k2-6";
-  if (norm.includes("k2.5")) return "kimi-k2-5";
+  if (norm.includes("k2.6")) return "kimi-k2.6";
+  if (norm.includes("k2.5")) return "kimi-k2.5";
   // 排除多模态版本的 128k（其具有 vision）以使其走最下方的标准 slug 生成路径，避免重名覆盖
   if (norm.includes("latest") || (norm.includes("v1-128k") && !norm.includes("vision"))) {
     return "kimi-latest-128k";
   }
-  return `kimi-${norm.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}`;
+  // 保留点号（如版本号中），再替换其他特殊字符为连字符
+  return `kimi-${norm.replace(/\./g, "_dot_").replace(/[^a-z0-9_]+/g, "-").replace(/_dot_/g, ".").replace(/^-+|-+$/g, "")}`;
 }
 
 function extractModelsFromHtml(html, options = {}) {
@@ -171,7 +172,7 @@ function extractModelsFromHtml(html, options = {}) {
 // 极其精准的 2026 最新官方模型价格数据集，作为防挂 Fallback 蓝图
 const FALLBACK_KIMI_MODELS = [
   {
-    id: "kimi-k2-6",
+    id: "kimi-k2.6",
     name: "Kimi K2.6",
     provider: "月之暗面",
     currency: "CNY",
@@ -193,7 +194,7 @@ const FALLBACK_KIMI_MODELS = [
     sourceUrl: "https://platform.moonshot.cn/docs/pricing/chat-k26"
   },
   {
-    id: "kimi-k2-5",
+    id: "kimi-k2.5",
     name: "Kimi K2.5",
     provider: "月之暗面",
     currency: "CNY",
