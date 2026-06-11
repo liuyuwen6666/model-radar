@@ -2982,6 +2982,38 @@
       "sourceType": "provider"
     },
     {
+      "id": "kimi-k2.5",
+      "name": "kimi-k2.5",
+      "provider": "月之暗面",
+      "family": "Kimi",
+      "description": "抓取自 月之暗面 官方定价页。",
+      "currency": "CNY",
+      "hasOfficialDualCurrency": false,
+      "inputPricePer1M": 4,
+      "outputPricePer1M": 21,
+      "cacheWritePricePer1M": 4,
+      "cacheReadPricePer1M": 0.7,
+      "inputPriceUsdPer1M": 0.551724,
+      "outputPriceUsdPer1M": 2.896552,
+      "cacheWritePriceUsdPer1M": 0.551724,
+      "cacheReadPriceUsdPer1M": 0.096552,
+      "contextWindow": 262144,
+      "maxOutputTokens": null,
+      "capabilities": [
+        "文本"
+      ],
+      "recommendedFor": [
+        "待补充"
+      ],
+      "status": "live",
+      "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-k25",
+      "sourceLabel": "Moonshot Pricing",
+      "detailPath": "/model/kimi-k2.5",
+      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
+      "updatedAt": "2026-06-10T00:00:00.000Z",
+      "sourceType": "provider"
+    },
+    {
       "id": "moonshot-v1-8k",
       "name": "moonshot-v1-8k",
       "provider": "月之暗面",
@@ -3137,38 +3169,6 @@
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-v1",
       "sourceLabel": "Moonshot Pricing",
       "detailPath": "/model/moonshot-v1-128k-vision-preview",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
-      "updatedAt": "2026-06-10T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "kimi-k2.5",
-      "name": "kimi-k2.5",
-      "provider": "月之暗面",
-      "family": "Kimi",
-      "description": "抓取自 月之暗面 官方定价页。",
-      "currency": "CNY",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 4,
-      "outputPricePer1M": 21,
-      "cacheWritePricePer1M": 4,
-      "cacheReadPricePer1M": 0.7,
-      "inputPriceUsdPer1M": 0.551724,
-      "outputPriceUsdPer1M": 2.896552,
-      "cacheWritePriceUsdPer1M": 0.551724,
-      "cacheReadPriceUsdPer1M": 0.096552,
-      "contextWindow": 262144,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "文本"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "live",
-      "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-k25",
-      "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-k2.5",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-10T00:00:00.000Z",
       "sourceType": "provider"
@@ -7602,7 +7602,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "hunyuan-2-0-think-32k",
+      "id": "hunyuan-2.0-think-32k",
       "name": "Tencent HY 2.0 Think (32K)",
       "provider": "腾讯混元",
       "family": "Tencent",
@@ -7628,13 +7628,13 @@
       "status": "live",
       "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
       "sourceLabel": "腾讯云混元 Pricing",
-      "detailPath": "/model/hunyuan-2-0-think-32k",
+      "detailPath": "/model/hunyuan-2.0-think-32k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-10T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "hunyuan-2-0-think-128k",
+      "id": "hunyuan-2.0-think-128k",
       "name": "Tencent HY 2.0 Think (128K)",
       "provider": "腾讯混元",
       "family": "Tencent",
@@ -7660,13 +7660,13 @@
       "status": "live",
       "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
       "sourceLabel": "腾讯云混元 Pricing",
-      "detailPath": "/model/hunyuan-2-0-think-128k",
+      "detailPath": "/model/hunyuan-2.0-think-128k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-10T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "hunyuan-2-0-instruct-32k",
+      "id": "hunyuan-2.0-instruct-32k",
       "name": "Tencent HY 2.0 Instruct (32K)",
       "provider": "腾讯混元",
       "family": "Tencent",
@@ -7692,13 +7692,13 @@
       "status": "live",
       "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
       "sourceLabel": "腾讯云混元 Pricing",
-      "detailPath": "/model/hunyuan-2-0-instruct-32k",
+      "detailPath": "/model/hunyuan-2.0-instruct-32k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-10T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "hunyuan-2-0-instruct-128k",
+      "id": "hunyuan-2.0-instruct-128k",
       "name": "Tencent HY 2.0 Instruct (128K)",
       "provider": "腾讯混元",
       "family": "Tencent",
@@ -7724,7 +7724,7 @@
       "status": "live",
       "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
       "sourceLabel": "腾讯云混元 Pricing",
-      "detailPath": "/model/hunyuan-2-0-instruct-128k",
+      "detailPath": "/model/hunyuan-2.0-instruct-128k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-10T00:00:00.000Z",
       "sourceType": "provider"

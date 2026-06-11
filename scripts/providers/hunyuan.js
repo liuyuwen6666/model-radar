@@ -12,7 +12,7 @@ function normalizeWhitespace(value) {
 function resolveModelId(name) {
   let norm = name.toLowerCase()
     .replace(/tencent\s*hy/gi, "hunyuan")
-    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/[^a-z0-9.]+/g, "-")
     .replace(/^-+|-+$/g, "");
   
   if (norm === "hunyuan-turbos" || norm === "hunyuan-turbo-s" || norm === "turbos" || norm === "turbo-s") {
@@ -149,7 +149,7 @@ function extractModelsFromHtml(html, options = {}) {
 // 极其精准的 2026 最新官方模型价格数据集，作为防挂 Fallback 蓝图
 const FALLBACK_HUNYUAN_MODELS = [
   {
-    id: "hunyuan-2-0-think-32k",
+    id: "hunyuan-2.0-think-32k",
     name: "Tencent HY 2.0 Think (32K)",
     provider: "腾讯混元",
     currency: "CNY",
@@ -161,7 +161,7 @@ const FALLBACK_HUNYUAN_MODELS = [
     source_url: HUNYUAN_PRICING_URL
   },
   {
-    id: "hunyuan-2-0-think-128k",
+    id: "hunyuan-2.0-think-128k",
     name: "Tencent HY 2.0 Think (128K)",
     provider: "腾讯混元",
     currency: "CNY",
@@ -173,7 +173,7 @@ const FALLBACK_HUNYUAN_MODELS = [
     source_url: HUNYUAN_PRICING_URL
   },
   {
-    id: "hunyuan-2-0-instruct-32k",
+    id: "hunyuan-2.0-instruct-32k",
     name: "Tencent HY 2.0 Instruct (32K)",
     provider: "腾讯混元",
     currency: "CNY",
@@ -185,7 +185,7 @@ const FALLBACK_HUNYUAN_MODELS = [
     source_url: HUNYUAN_PRICING_URL
   },
   {
-    id: "hunyuan-2-0-instruct-128k",
+    id: "hunyuan-2.0-instruct-128k",
     name: "Tencent HY 2.0 Instruct (128K)",
     provider: "腾讯混元",
     currency: "CNY",

@@ -7535,7 +7535,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "hunyuan-2-0-think-32k",
+      "id": "hunyuan-2.0-think-32k",
       "name": "Tencent HY 2.0 Think (32K)",
       "provider": "腾讯混元",
       "family": "Tencent",
@@ -7561,13 +7561,13 @@
       "status": "live",
       "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
       "sourceLabel": "腾讯云混元 Pricing",
-      "detailPath": "/model/hunyuan-2-0-think-32k",
+      "detailPath": "/model/hunyuan-2.0-think-32k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-09T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "hunyuan-2-0-think-128k",
+      "id": "hunyuan-2.0-think-128k",
       "name": "Tencent HY 2.0 Think (128K)",
       "provider": "腾讯混元",
       "family": "Tencent",
@@ -7593,13 +7593,13 @@
       "status": "live",
       "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
       "sourceLabel": "腾讯云混元 Pricing",
-      "detailPath": "/model/hunyuan-2-0-think-128k",
+      "detailPath": "/model/hunyuan-2.0-think-128k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-09T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "hunyuan-2-0-instruct-32k",
+      "id": "hunyuan-2.0-instruct-32k",
       "name": "Tencent HY 2.0 Instruct (32K)",
       "provider": "腾讯混元",
       "family": "Tencent",
@@ -7625,13 +7625,13 @@
       "status": "live",
       "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
       "sourceLabel": "腾讯云混元 Pricing",
-      "detailPath": "/model/hunyuan-2-0-instruct-32k",
+      "detailPath": "/model/hunyuan-2.0-instruct-32k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-09T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "hunyuan-2-0-instruct-128k",
+      "id": "hunyuan-2.0-instruct-128k",
       "name": "Tencent HY 2.0 Instruct (128K)",
       "provider": "腾讯混元",
       "family": "Tencent",
@@ -7657,7 +7657,7 @@
       "status": "live",
       "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
       "sourceLabel": "腾讯云混元 Pricing",
-      "detailPath": "/model/hunyuan-2-0-instruct-128k",
+      "detailPath": "/model/hunyuan-2.0-instruct-128k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-09T00:00:00.000Z",
       "sourceType": "provider"

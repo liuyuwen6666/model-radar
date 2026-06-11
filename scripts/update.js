@@ -449,7 +449,7 @@ const MODEL_BLUEPRINTS = [
     sourceType: "provider"
   },
   {
-    id: "hunyuan-2-0-think-32k",
+    id: "hunyuan-2.0-think-32k",
     name: "混元 2.0 Think (32K)",
     provider: "腾讯混元",
     family: "Hunyuan",
@@ -461,11 +461,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "推理", "思考模式"],
     recommendedFor: ["高难度编程", "科学计算", "复杂策略分析"],
     status: "stable",
-    detailPath: "/model/hunyuan-2-0-think-32k",
+    detailPath: "/model/hunyuan-2.0-think-32k",
     sourceType: "provider"
   },
   {
-    id: "hunyuan-2-0-think-128k",
+    id: "hunyuan-2.0-think-128k",
     name: "混元 2.0 Think (128K)",
     provider: "腾讯混元",
     family: "Hunyuan",
@@ -477,11 +477,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "推理", "长文本", "思考模式"],
     recommendedFor: ["长文档深度推理", "学术文献分析", "复杂跨文件排错"],
     status: "stable",
-    detailPath: "/model/hunyuan-2-0-think-128k",
+    detailPath: "/model/hunyuan-2.0-think-128k",
     sourceType: "provider"
   },
   {
-    id: "hunyuan-2-0-instruct-32k",
+    id: "hunyuan-2.0-instruct-32k",
     name: "混元 2.0 Instruct (32K)",
     provider: "腾讯混元",
     family: "Hunyuan",
@@ -493,11 +493,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "指令遵循", "常规模型"],
     recommendedFor: ["高并发 API 服务", "日常办公助理", "精准指令执行"],
     status: "stable",
-    detailPath: "/model/hunyuan-2-0-instruct-32k",
+    detailPath: "/model/hunyuan-2.0-instruct-32k",
     sourceType: "provider"
   },
   {
-    id: "hunyuan-2-0-instruct-128k",
+    id: "hunyuan-2.0-instruct-128k",
     name: "混元 2.0 Instruct (128K)",
     provider: "腾讯混元",
     family: "Hunyuan",
@@ -509,7 +509,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "长文本", "指令遵循", "常规模型"],
     recommendedFor: ["企业长文档分析", "中长篇报告撰写", "长历史多轮客服"],
     status: "stable",
-    detailPath: "/model/hunyuan-2-0-instruct-128k",
+    detailPath: "/model/hunyuan-2.0-instruct-128k",
     sourceType: "provider"
   },
   {

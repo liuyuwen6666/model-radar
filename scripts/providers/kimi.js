@@ -255,11 +255,11 @@ async function fetchKimiModels(options = {}) {
     "https://platform.moonshot.cn/docs/pricing/chat-v1"
   ];
 
-  const results = [];
+  const pageResults = new Array(subPages.length).fill(null).map(() => []);
   const errors = [];
 
   await Promise.all(
-    subPages.map(async (url) => {
+    subPages.map(async (url, index) => {
       try {
         console.log(`[kimi] fetching sub-page ${url}`);
         const response = await fetch(url, {
@@ -275,7 +275,7 @@ async function fetchKimiModels(options = {}) {
           const parsed = extractModelsFromHtml(html, { url, updatedAt });
           if (parsed.length > 0) {
             console.log(`[kimi] parsed ${parsed.length} models from sub-page ${url}`);
-            results.push(...parsed);
+            pageResults[index] = parsed;
           } else {
             console.warn(`[kimi] parsed 0 models from sub-page ${url}`);
           }
@@ -288,6 +288,11 @@ async function fetchKimiModels(options = {}) {
       }
     })
   );
+
+  const results = [];
+  for (const list of pageResults) {
+    results.push(...list);
+  }
 
   // 去重（以 id 为准）
   const finalModels = [];

@@ -279,8 +279,8 @@
     "label": "Moonshot Pricing",
     "url": "https://platform.moonshot.cn/docs/pricing/chat",
     "models": [
-      "kimi-k2.5",
       "kimi-k2.6",
+      "kimi-k2.5",
       "moonshot-v1-8k",
       "moonshot-v1-32k",
       "moonshot-v1-128k",
@@ -294,22 +294,23 @@
     "label": "腾讯云混元 Pricing",
     "url": "https://cloud.tencent.com/document/product/1729/97731",
     "models": [
-      "hunyuan-2-0-think-32k",
-      "hunyuan-2-0-think-128k",
-      "hunyuan-2-0-instruct-32k",
-      "hunyuan-2-0-instruct-128k",
+      "hunyuan-2.0-think-32k",
+      "hunyuan-2.0-think-128k",
+      "hunyuan-2.0-instruct-32k",
+      "hunyuan-2.0-instruct-128k",
       "hunyuan-t1",
       "hunyuan-turbo-s",
       "hunyuan-a13b",
       "hunyuan-large-role",
       "hunyuan-translation",
       "hunyuan-translation-lite",
-      "hunyuan-vision-1-5-instruct",
+      "hunyuan-vision-1.5-instruct",
       "hunyuan-turbos-vision",
       "hunyuan-t1-vision",
       "hunyuan-turbos-vision-video",
       "hunyuan-embedding",
-      "hunyuan-yuanqi"
+      "hunyuan-yuanqi",
+      "hunyuan-vision-1-5-instruct"
     ]
   }
 ]
