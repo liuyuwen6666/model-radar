@@ -120,10 +120,10 @@
       "provider": "字节豆包",
       "family": "Doubao",
       "description": "偏中文企业应用的主力模型。",
-      "inputPriceUsdPer1M": 0.8,
-      "outputPriceUsdPer1M": 2.4,
-      "cacheWritePriceUsdPer1M": 0.212,
-      "cacheReadPriceUsdPer1M": 0.0832,
+      "inputPriceUsdPer1M": 0.110345,
+      "outputPriceUsdPer1M": 0.275862,
+      "cacheWritePriceUsdPer1M": 0.002345,
+      "cacheReadPriceUsdPer1M": 0.022069,
       "contextWindow": 32000,
       "maxOutputTokens": 8192,
       "capabilities": [
@@ -141,7 +141,11 @@
       "sourceLabel": "豆包 Pricing",
       "detailPath": "/model/doubao-1-5-pro-32k",
       "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
-      "updatedAt": "2026-05-15T00:00:00.000Z"
+      "updatedAt": "2026-05-15T00:00:00.000Z",
+      "inputPricePer1M": 0.8,
+      "outputPricePer1M": 2,
+      "cacheWritePricePer1M": 0.017,
+      "cacheReadPricePer1M": 0.16
     },
     {
       "id": "google-gemini-2-5-flash",

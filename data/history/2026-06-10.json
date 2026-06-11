@@ -7295,70 +7295,6 @@
       "sourceType": "provider"
     },
     {
-      "id": "doubao-1.5-pro-32k",
-      "name": "豆包 1.5 Pro 32k",
-      "provider": "字节豆包",
-      "family": "豆包",
-      "description": "抓取自 字节豆包 官方定价页。",
-      "currency": "CNY",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 0.8,
-      "outputPricePer1M": 2,
-      "cacheWritePricePer1M": 0.017,
-      "cacheReadPricePer1M": 0.16,
-      "inputPriceUsdPer1M": 0.110345,
-      "outputPriceUsdPer1M": 0.275862,
-      "cacheWritePriceUsdPer1M": 0.002345,
-      "cacheReadPriceUsdPer1M": 0.022069,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "文本"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "legacy",
-      "sourceUrl": "https://www.volcengine.com/docs/82379/1544106?lang=zh",
-      "sourceLabel": "豆包 Pricing",
-      "detailPath": "/model/doubao-1.5-pro-32k",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
-      "updatedAt": "2026-06-10T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "doubao-1.5-lite-32k",
-      "name": "豆包 1.5 Lite 32k",
-      "provider": "字节豆包",
-      "family": "豆包",
-      "description": "抓取自 字节豆包 官方定价页。",
-      "currency": "CNY",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 0.3,
-      "outputPricePer1M": 0.6,
-      "cacheWritePricePer1M": 0.017,
-      "cacheReadPricePer1M": 0.06,
-      "inputPriceUsdPer1M": 0.041379,
-      "outputPriceUsdPer1M": 0.082759,
-      "cacheWritePriceUsdPer1M": 0.002345,
-      "cacheReadPriceUsdPer1M": 0.008276,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "文本"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "legacy",
-      "sourceUrl": "https://www.volcengine.com/docs/82379/1544106?lang=zh",
-      "sourceLabel": "豆包 Pricing",
-      "detailPath": "/model/doubao-1.5-lite-32k",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
-      "updatedAt": "2026-06-10T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
       "id": "doubao-seed-translation",
       "name": "豆包 Seed Translation",
       "provider": "字节豆包",
@@ -7386,38 +7322,6 @@
       "sourceUrl": "https://www.volcengine.com/docs/82379/1544106?lang=zh",
       "sourceLabel": "豆包 Pricing",
       "detailPath": "/model/doubao-seed-translation",
-      "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
-      "updatedAt": "2026-06-10T00:00:00.000Z",
-      "sourceType": "provider"
-    },
-    {
-      "id": "doubao-1.5-vision-pro",
-      "name": "豆包 1.5 Vision Pro",
-      "provider": "字节豆包",
-      "family": "豆包",
-      "description": "抓取自 字节豆包 官方定价页。",
-      "currency": "CNY",
-      "hasOfficialDualCurrency": false,
-      "inputPricePer1M": 3,
-      "outputPricePer1M": 9,
-      "cacheWritePricePer1M": null,
-      "cacheReadPricePer1M": null,
-      "inputPriceUsdPer1M": 0.413793,
-      "outputPriceUsdPer1M": 1.241379,
-      "cacheWritePriceUsdPer1M": null,
-      "cacheReadPriceUsdPer1M": null,
-      "contextWindow": null,
-      "maxOutputTokens": null,
-      "capabilities": [
-        "文本"
-      ],
-      "recommendedFor": [
-        "待补充"
-      ],
-      "status": "legacy",
-      "sourceUrl": "https://www.volcengine.com/docs/82379/1544106?lang=zh",
-      "sourceLabel": "豆包 Pricing",
-      "detailPath": "/model/doubao-1.5-vision-pro",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-10T00:00:00.000Z",
       "sourceType": "provider"

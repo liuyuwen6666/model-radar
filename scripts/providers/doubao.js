@@ -127,7 +127,7 @@ function extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt) {
       contextWindow = 256000;
     }
     
-    const modelId = `${currentModelName}${idSuffix}`;
+    const modelId = slugify(`${currentModelName}${idSuffix}`);
     const modelName = `${displayName}${nameSuffix}`;
     
     const inputPriceUsd = inputPriceCny * CNY_TO_USD;
@@ -174,7 +174,33 @@ function extractModelsFromHtml(html, options = {}) {
   });
   
   if (!routerDataText) {
-    console.error("[doubao] could not find window._ROUTER_DATA script tag");
+    // 降级尝试：如果不存在脚本，但网页中有表格行（静态 HTML 表格形式）
+    if ($("tr").length > 0) {
+      console.log("[doubao] window._ROUTER_DATA not found, attempting to parse raw HTML table");
+      const rows = [];
+      $("tr").each((_, tr) => {
+        const cells = [];
+        $(tr).find("th, td").each((_, cell) => {
+          // 替换掉文本中的换行符和多余空格，并对 | 字符进行转义，防止破坏 Markdown 的列格式
+          const text = $(cell).text().trim().replace(/\s+/g, " ").replace(/\|/g, "\\|");
+          cells.push(text);
+        });
+        if (cells.length > 0) {
+          rows.push(`| ${cells.join(" | ")} |`);
+        }
+      });
+      
+      if (rows.length > 0) {
+        // 构建 Markdown 时插入表头分割线
+        const colCount = rows[0].split("|").length - 2;
+        const separator = `| ${new Array(colCount).fill("---").join(" | ")} |`;
+        rows.splice(1, 0, separator);
+        
+        const mdContent = `## 在线推理（常规）\n\n${rows.join("\n")}`;
+        return extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt);
+      }
+    }
+    console.error("[doubao] could not find window._ROUTER_DATA script tag or HTML table");
     return [];
   }
   
