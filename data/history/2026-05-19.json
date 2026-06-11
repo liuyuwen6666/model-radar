@@ -119,8 +119,8 @@
       "sourceType": "provider"
     },
     {
-      "id": "doubao-1-5-pro-32k",
-      "name": "豆包 1.5 Pro 32K",
+      "id": "doubao-1.5-pro-32k",
+      "name": "豆包 1.5 Pro 32k",
       "provider": "字节豆包",
       "family": "Doubao",
       "description": "偏中文企业应用的主力模型。",
@@ -143,7 +143,7 @@
       "status": "stable",
       "sourceUrl": "https://www.volcengine.com/docs/82379/1547233",
       "sourceLabel": "豆包 Pricing",
-      "detailPath": "/model/doubao-1-5-pro-32k",
+      "detailPath": "/model/doubao-1.5-pro-32k",
       "pricingNotes": "模拟数据，字段结构可直接切换到真实抓取结果。",
       "updatedAt": "2026-05-19T00:00:00.000Z",
       "sourceType": "fallback",

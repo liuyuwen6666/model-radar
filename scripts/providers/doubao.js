@@ -127,7 +127,7 @@ function extractDoubaoModelsFromMarkdown(mdContent, sourceUrl, updatedAt) {
       contextWindow = 256000;
     }
     
-    const modelId = slugify(`${currentModelName}${idSuffix}`);
+    const modelId = `${currentModelName}${idSuffix}`;
     const modelName = `${displayName}${nameSuffix}`;
     
     const inputPriceUsd = inputPriceCny * CNY_TO_USD;
@@ -384,7 +384,7 @@ const FALLBACK_DOUBAO_MODELS = [
     source_url: DOUBAO_PRICING_URL
   },
   {
-    id: "doubao-1-5-pro-32k",
+    id: "doubao-1.5-pro-32k",
     name: "豆包 1.5 Pro 32K",
     provider: "字节豆包",
     currency: "CNY",

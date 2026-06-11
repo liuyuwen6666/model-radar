@@ -395,7 +395,7 @@ const MODEL_BLUEPRINTS = [
     sourceType: "provider"
   },
   {
-    id: "doubao-1-5-pro-32k",
+    id: "doubao-1.5-pro-32k",
     name: "豆包 1.5 Pro 32K",
     provider: "字节豆包",
     family: "Doubao",
@@ -409,7 +409,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "多模态", "企业"],
     recommendedFor: ["企业 Copilot", "中文内容", "客服助手"],
     status: "stable",
-    detailPath: "/model/doubao-1-5-pro-32k",
+    detailPath: "/model/doubao-1.5-pro-32k",
     sourceType: "provider"
   },
   {
