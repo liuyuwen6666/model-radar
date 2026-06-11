@@ -1,12 +1,6 @@
 const cheerio = require("cheerio");
 
 const ANTHROPIC_PRICING_URL = "https://claude.com/pricing";
-const MODEL_ID_MAP = {
-  opus: "claude-3-opus-20240229",
-  sonnet: "claude-3-7-sonnet-20250219",
-  haiku: "claude-3-5-haiku-20241022"
-};
-
 function normalizeWhitespace(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
@@ -32,34 +26,41 @@ function parseUsdPerMTok(value, label) {
   return Number(match[1].replace(/,/g, ""));
 }
 
+/**
+ * 动态提取并解析 Anthropic 模型标识符 (ID) 与展示名称
+ * @description 取消原有的硬编码映射，通过正则提取模型家族（Family）与版本号（Version），
+ * 并根据 canonical 拼装规则自动转换为官方 API 直接接收的 ID 参数（如 `claude-opus-4-8`）。
+ * @param {string} title - 来自官方定价 HTML 中 h3 元素的模型名称标题 (如 "Opus 4.8", "Fable 5")
+ * @returns {Object|null} 包含 id, name, family 的标识对象，若解析失败返回 null
+ */
 function resolveModelIdentity(title) {
   const normalized = normalizeWhitespace(title);
 
-  if (/\bopus\b/i.test(normalized)) {
-    return {
-      family: "opus",
-      id: MODEL_ID_MAP.opus,
-      name: normalizeModelName(normalized)
-    };
+  // 匹配已知模型家族名 (fable, opus, sonnet, haiku) 及后面的数字版本号
+  const match = normalized.match(/\b(fable|opus|sonnet|haiku)\b\s*([\d.]+)?/i);
+  if (!match) {
+    return null;
   }
 
-  if (/\bsonnet\b/i.test(normalized)) {
-    return {
-      family: "sonnet",
-      id: MODEL_ID_MAP.sonnet,
-      name: normalizeModelName(normalized)
-    };
+  const family = match[1].toLowerCase();
+  const version = match[2] || "";
+
+  // 拼装 ID：形如 `claude-${family}-${version}`（其中点号转为短横线）
+  let id = `claude-${family}`;
+  if (version) {
+    id += `-${version.replace(/\./g, "-")}`;
   }
 
-  if (/\bhaiku\b/i.test(normalized)) {
-    return {
-      family: "haiku",
-      id: MODEL_ID_MAP.haiku,
-      name: normalizeModelName(normalized)
-    };
+  // 针对 Haiku 4.5 的 API ID 进行特殊映射（官方附带了特定的日期后缀）
+  if (id === "claude-haiku-4-5") {
+    id = "claude-haiku-4-5-20251001";
   }
 
-  return null;
+  return {
+    family,
+    id,
+    name: normalizeModelName(normalized)
+  };
 }
 
 function findPriceCard(heading) {
