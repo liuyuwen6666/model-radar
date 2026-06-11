@@ -89,8 +89,8 @@ const PRICE_FIELDS = [
 // 本地基准模型数据蓝图：在网络请求失败或作为抓取冷启动时的兜底基础数据
 const MODEL_BLUEPRINTS = [
   {
-    id: "claude-3-opus-20240229",
-    name: "Claude Opus 4.7",
+    id: "claude-opus-4-8",
+    name: "Claude Opus 4.8",
     provider: "Anthropic",
     family: "Claude",
     description: "最智能的多模态旗舰模型，适合高难度推理与复杂代码任务。",
@@ -98,16 +98,16 @@ const MODEL_BLUEPRINTS = [
     outputPriceUsdPer1M: 25,
     cacheWritePriceUsdPer1M: 6.25,
     cacheReadPriceUsdPer1M: 0.5,
-    contextWindow: 200000,
-    maxOutputTokens: 8192,
+    contextWindow: 1000000,
+    maxOutputTokens: 128000,
     capabilities: ["长文本", "推理", "代码", "多模态"],
     recommendedFor: ["高难度编程", "科学研究", "复杂战略分析"],
     status: "stable",
-    detailPath: "/model/claude-3-opus-20240229",
+    detailPath: "/model/claude-opus-4-8",
     sourceType: "provider"
   },
   {
-    id: "claude-3-5-haiku-20241022",
+    id: "claude-haiku-4-5-20251001",
     name: "Claude Haiku 4.5",
     provider: "Anthropic",
     family: "Claude",
@@ -121,11 +121,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "分类", "代码"],
     recommendedFor: ["批量处理", "摘要", "轻量客服"],
     status: "stable",
-    detailPath: "/model/claude-3-5-haiku-20241022",
+    detailPath: "/model/claude-haiku-4-5-20251001",
     sourceType: "provider"
   },
   {
-    id: "claude-3-7-sonnet-20250219",
+    id: "claude-sonnet-4-6",
     name: "Claude Sonnet 4.6",
     provider: "Anthropic",
     family: "Claude",
@@ -139,7 +139,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["长文本", "推理", "代码"],
     recommendedFor: ["复杂 Agent", "代码审查", "长文档分析"],
     status: "stable",
-    detailPath: "/model/claude-3-7-sonnet-20250219",
+    detailPath: "/model/claude-sonnet-4-6",
     sourceType: "provider"
   },
   {
