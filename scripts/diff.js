@@ -153,37 +153,40 @@ function describeChange(model, field, previousValue, currentValue) {
   const label = FIELD_LABELS[field] || field;
   const currency = getFieldCurrency(field);
 
-  if (!isNumber(previousValue) && isNumber(currentValue)) {
+  const pVal = isNumber(previousValue) ? roundValue(previousValue) : previousValue;
+  const cVal = isNumber(currentValue) ? roundValue(currentValue) : currentValue;
+
+  if (!isNumber(pVal) && isNumber(cVal)) {
     return makeEntry({
       date: model.updatedAt?.slice(0, 10) || new Date().toISOString().slice(0, 10),
       model,
       field,
       type: "pricing_added",
-      previousValue,
-      currentValue,
+      previousValue: pVal,
+      currentValue: cVal,
       summary: `${model.name} 新增 ${label} 字段。`,
       currency
     });
   }
 
-  if (isNumber(previousValue) && !isNumber(currentValue)) {
+  if (isNumber(pVal) && !isNumber(cVal)) {
     return makeEntry({
       date: model.updatedAt?.slice(0, 10) || new Date().toISOString().slice(0, 10),
       model,
       field,
       type: "pricing_removed",
-      previousValue,
-      currentValue,
+      previousValue: pVal,
+      currentValue: cVal,
       summary: `${model.name} 移除了 ${label} 字段。`,
       currency
     });
   }
 
-  if (!isNumber(previousValue) || !isNumber(currentValue) || previousValue === currentValue) {
+  if (!isNumber(pVal) || !isNumber(cVal) || pVal === cVal) {
     return null;
   }
 
-  const type = currentValue > previousValue ? "price_increase" : "price_decrease";
+  const type = cVal > pVal ? "price_increase" : "price_decrease";
   const verb = type === "price_increase" ? "上调" : "下调";
 
   return makeEntry({
@@ -191,9 +194,9 @@ function describeChange(model, field, previousValue, currentValue) {
     model,
     field,
     type,
-    previousValue,
-    currentValue,
-    summary: `${model.name} ${label} ${verb}至 ${formatPrice(currentValue, currency)}。`,
+    previousValue: pVal,
+    currentValue: cVal,
+    summary: `${model.name} ${label} ${verb}至 ${formatPrice(cVal, currency)}。`,
     currency
   });
 }
@@ -286,7 +289,7 @@ function mergeHistory(existingHistory, latestEntries) {
     }
   }
 
-  return Array.from(map.values()).slice(0, 120);
+  return Array.from(map.values());
 }
 
 async function writeJson(filePath, value) {
