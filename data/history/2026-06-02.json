@@ -6737,7 +6737,7 @@
     },
     {
       "id": "claude-opus-4-8",
-      "name": "Claude Opus 4.8",
+      "name": "Opus 4.8",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -6772,7 +6772,7 @@
     },
     {
       "id": "claude-sonnet-4-6",
-      "name": "Claude Sonnet 4.6",
+      "name": "Sonnet 4.6",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -6806,7 +6806,7 @@
     },
     {
       "id": "claude-haiku-4-5-20251001",
-      "name": "Claude Haiku 4.5",
+      "name": "Haiku 4.5",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -6840,7 +6840,7 @@
     },
     {
       "id": "claude-opus-4-7",
-      "name": "Claude Opus 4.7",
+      "name": "Opus 4.7",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -6875,7 +6875,7 @@
     },
     {
       "id": "claude-opus-4-6",
-      "name": "Claude Opus 4.6",
+      "name": "Opus 4.6",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -6910,7 +6910,7 @@
     },
     {
       "id": "claude-sonnet-4-5",
-      "name": "Claude Sonnet 4.5",
+      "name": "Sonnet 4.5",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -6944,7 +6944,7 @@
     },
     {
       "id": "claude-opus-4-5",
-      "name": "Claude Opus 4.5",
+      "name": "Opus 4.5",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -6979,7 +6979,7 @@
     },
     {
       "id": "claude-opus-4-1",
-      "name": "Claude Opus 4.1",
+      "name": "Opus 4.1",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -7014,7 +7014,7 @@
     },
     {
       "id": "claude-sonnet-4",
-      "name": "Claude Sonnet 4",
+      "name": "Sonnet 4",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",
@@ -7048,7 +7048,7 @@
     },
     {
       "id": "claude-opus-4",
-      "name": "Claude Opus 4",
+      "name": "Opus 4",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "抓取自 Anthropic 官方定价页。",

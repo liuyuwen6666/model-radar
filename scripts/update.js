@@ -90,7 +90,7 @@ const PRICE_FIELDS = [
 const MODEL_BLUEPRINTS = [
   {
     id: "claude-opus-4-8",
-    name: "Claude Opus 4.8",
+    name: "Opus 4.8",
     provider: "Anthropic",
     family: "Claude",
     description: "最智能的多模态旗舰模型，适合高难度推理与复杂代码任务。",
@@ -108,7 +108,7 @@ const MODEL_BLUEPRINTS = [
   },
   {
     id: "claude-haiku-4-5-20251001",
-    name: "Claude Haiku 4.5",
+    name: "Haiku 4.5",
     provider: "Anthropic",
     family: "Claude",
     description: "低延迟、低成本的轻量模型。",
@@ -126,7 +126,7 @@ const MODEL_BLUEPRINTS = [
   },
   {
     id: "claude-sonnet-4-6",
-    name: "Claude Sonnet 4.6",
+    name: "Sonnet 4.6",
     provider: "Anthropic",
     family: "Claude",
     description: "偏复杂推理与代码的主力模型。",

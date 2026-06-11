@@ -8,7 +8,7 @@
   "models": [
     {
       "id": "claude-sonnet-4-6",
-      "name": "Claude Sonnet 4.6",
+      "name": "Sonnet 4.6",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "偏复杂推理与代码的主力模型。",
@@ -44,7 +44,7 @@
     },
     {
       "id": "claude-haiku-4-5-20251001",
-      "name": "Claude Haiku 4.5",
+      "name": "Haiku 4.5",
       "provider": "Anthropic",
       "family": "Claude",
       "description": "低延迟、低成本的轻量模型。",

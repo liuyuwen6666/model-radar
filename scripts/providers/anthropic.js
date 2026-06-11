@@ -12,7 +12,8 @@ function normalizeModelName(value) {
     return "";
   }
 
-  return /^claude\b/i.test(normalized) ? normalized : `Claude ${normalized}`;
+  // 物理去除可能存在的 Claude 前缀，保持与官网一模一样的纯粹模型名称
+  return normalized.replace(/^claude\s+/i, "");
 }
 
 function parseUsdPerMTok(value, label) {
