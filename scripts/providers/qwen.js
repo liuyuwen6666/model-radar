@@ -26,7 +26,7 @@ function resolveModelId(name) {
   if (cleanId === "qwen-plus-latest" || cleanId === "qwen-plus") return "qwen-plus";
   if (cleanId === "qwen-turbo-latest" || cleanId === "qwen-turbo") return "qwen-turbo";
   
-  return cleanId.replace(/\./g, "-");
+  return cleanId;
 }
 
 function formatModelName(rawName) {
@@ -225,7 +225,7 @@ function extractModelsFromHtml(html, options = {}) {
 // 极其精准的 2026 最新官方模型价格数据集，作为防挂 Fallback 蓝图
 const FALLBACK_QWEN_MODELS = [
   {
-    id: "qwen3-7-max",
+    id: "qwen3.7-max",
     name: "Qwen 3.7 Max",
     provider: "阿里通义",
     currency: "CNY",
@@ -243,7 +243,7 @@ const FALLBACK_QWEN_MODELS = [
     source_url: QWEN_PRICING_URL
   },
   {
-    id: "qwen3-7-max-preview",
+    id: "qwen3.7-max-preview",
     name: "Qwen 3.7 Max Preview",
     provider: "阿里通义",
     currency: "CNY",
@@ -255,7 +255,7 @@ const FALLBACK_QWEN_MODELS = [
     source_url: QWEN_PRICING_URL
   },
   {
-    id: "qwen3-6-max-preview",
+    id: "qwen3.6-max-preview",
     name: "Qwen 3.6 Max Preview",
     provider: "阿里通义",
     currency: "CNY",
@@ -309,7 +309,7 @@ const FALLBACK_QWEN_MODELS = [
     source_url: QWEN_PRICING_URL
   },
   {
-    id: "qwen3-7-plus",
+    id: "qwen3.7-plus",
     name: "Qwen 3.7 Plus",
     provider: "阿里通义",
     currency: "CNY",
@@ -327,7 +327,7 @@ const FALLBACK_QWEN_MODELS = [
     source_url: QWEN_PRICING_URL
   },
   {
-    id: "qwen3-6-plus",
+    id: "qwen3.6-plus",
     name: "Qwen 3.6 Plus",
     provider: "阿里通义",
     currency: "CNY",
@@ -339,7 +339,7 @@ const FALLBACK_QWEN_MODELS = [
     source_url: QWEN_PRICING_URL
   },
   {
-    id: "qwen3-5-plus",
+    id: "qwen3.5-plus",
     name: "Qwen 3.5 Plus",
     provider: "阿里通义",
     currency: "CNY",

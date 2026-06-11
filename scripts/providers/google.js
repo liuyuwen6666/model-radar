@@ -166,7 +166,7 @@ function extractModelsFromHtml(html, options = {}) {
 
     // 关联 codes 和 rows
     ctx.codes.forEach((code) => {
-      const modelId = `google-${slugify(code)}`;
+      const modelId = `${slugify(code)}`;
       if (crawledIds.has(modelId)) return;
       crawledIds.add(modelId);
 

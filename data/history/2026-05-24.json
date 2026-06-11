@@ -7,7 +7,7 @@
   "disclaimer": "部分模型由 provider 抓取器从官方 pricing 页面解析得到，部分模型仍为 fallback 蓝图数据。请通过 sourceType、sourceUrl、pricingNotes 判断数据可信度，商业决策前请务必以厂商官方价格页和官方账单为准。",
   "models": [
     {
-      "id": "anthropic-claude-3-7-sonnet",
+      "id": "claude-3-7-sonnet-20250219",
       "name": "Claude Sonnet 4.6",
       "provider": "Anthropic",
       "family": "Claude",
@@ -43,7 +43,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "anthropic-claude-3-5-haiku",
+      "id": "claude-3-5-haiku-20241022",
       "name": "Claude Haiku 4.5",
       "provider": "Anthropic",
       "family": "Claude",
@@ -179,7 +179,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-2-5-flash",
+      "id": "gemini-2-5-flash",
       "name": "Gemini 2.5 Flash",
       "provider": "Google",
       "family": "Gemini",
@@ -215,7 +215,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-2-5-pro",
+      "id": "gemini-2-5-pro",
       "name": "Gemini 2.5 Pro",
       "provider": "Google",
       "family": "Gemini",
@@ -287,7 +287,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "kimi-k2-6",
+      "id": "kimi-k2.6",
       "name": "Kimi K2.6",
       "provider": "月之暗面",
       "family": "Kimi",
@@ -313,13 +313,13 @@
       "status": "live",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-k26",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-k2-6",
+      "detailPath": "/model/kimi-k2.6",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-24T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "kimi-k2-5",
+      "id": "kimi-k2.5",
       "name": "Kimi K2.5",
       "provider": "月之暗面",
       "family": "Kimi",
@@ -345,13 +345,13 @@
       "status": "live",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-k25",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-k2-5",
+      "detailPath": "/model/kimi-k2.5",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-24T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "kimi-latest-128k",
+      "id": "moonshot-v1-128k",
       "name": "Kimi Latest 128K",
       "provider": "月之暗面",
       "family": "Kimi",
@@ -381,13 +381,13 @@
       "status": "stable",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-v1",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-latest-128k",
+      "detailPath": "/model/moonshot-v1-128k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-24T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-5",
+      "id": "gpt-5-5",
       "name": "GPT-5.5",
       "provider": "OpenAI",
       "family": "GPT-5.5",
@@ -413,13 +413,13 @@
       "status": "live",
       "sourceUrl": "https://openai.com/api/pricing/",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-5",
+      "detailPath": "/model/gpt-5-5",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-24T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-4",
+      "id": "gpt-5-4",
       "name": "GPT-5.4",
       "provider": "OpenAI",
       "family": "GPT-5.4",
@@ -445,13 +445,13 @@
       "status": "live",
       "sourceUrl": "https://openai.com/api/pricing/",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-4",
+      "detailPath": "/model/gpt-5-4",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-24T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-4-mini",
+      "id": "gpt-5-4-mini",
       "name": "GPT-5.4 mini",
       "provider": "OpenAI",
       "family": "GPT-5.4",
@@ -477,7 +477,7 @@
       "status": "live",
       "sourceUrl": "https://openai.com/api/pricing/",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-4-mini",
+      "detailPath": "/model/gpt-5-4-mini",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-05-24T00:00:00.000Z",
       "sourceType": "provider"

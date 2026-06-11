@@ -2,9 +2,9 @@ const cheerio = require("cheerio");
 
 const ANTHROPIC_PRICING_URL = "https://claude.com/pricing";
 const MODEL_ID_MAP = {
-  opus: "anthropic-claude-3-opus",
-  sonnet: "anthropic-claude-3-7-sonnet",
-  haiku: "anthropic-claude-3-5-haiku"
+  opus: "claude-3-opus-20240229",
+  sonnet: "claude-3-7-sonnet-20250219",
+  haiku: "claude-3-5-haiku-20241022"
 };
 
 function normalizeWhitespace(value) {

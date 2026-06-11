@@ -7,7 +7,7 @@
   "disclaimer": "部分模型由 provider 抓取器从官方 pricing 页面解析得到，部分模型仍为 fallback 蓝图数据。请通过 sourceType、sourceUrl、pricingNotes 判断数据可信度，商业决策前请务必以厂商官方价格页和官方账单为准。",
   "models": [
     {
-      "id": "openai-gpt-5-5",
+      "id": "gpt-5-5",
       "name": "GPT-5.5",
       "provider": "OpenAI",
       "family": "GPT-5.5",
@@ -33,13 +33,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-5",
+      "detailPath": "/model/gpt-5-5",
       "pricingNotes": "分类：旗舰模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-5-pro",
+      "id": "gpt-5-5-pro",
       "name": "GPT-5.5 pro",
       "provider": "OpenAI",
       "family": "GPT-5.5",
@@ -65,13 +65,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-5-pro",
+      "detailPath": "/model/gpt-5-5-pro",
       "pricingNotes": "分类：旗舰模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-4",
+      "id": "gpt-5-4",
       "name": "GPT-5.4",
       "provider": "OpenAI",
       "family": "GPT-5.4",
@@ -97,13 +97,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-4",
+      "detailPath": "/model/gpt-5-4",
       "pricingNotes": "分类：旗舰模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-4-mini",
+      "id": "gpt-5-4-mini",
       "name": "GPT-5.4 mini",
       "provider": "OpenAI",
       "family": "GPT-5.4",
@@ -129,13 +129,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-4-mini",
+      "detailPath": "/model/gpt-5-4-mini",
       "pricingNotes": "分类：旗舰模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-4-nano",
+      "id": "gpt-5-4-nano",
       "name": "GPT-5.4 nano",
       "provider": "OpenAI",
       "family": "GPT-5.4",
@@ -161,13 +161,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-4-nano",
+      "detailPath": "/model/gpt-5-4-nano",
       "pricingNotes": "分类：旗舰模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-4-pro",
+      "id": "gpt-5-4-pro",
       "name": "GPT-5.4 pro",
       "provider": "OpenAI",
       "family": "GPT-5.4",
@@ -193,13 +193,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-4-pro",
+      "detailPath": "/model/gpt-5-4-pro",
       "pricingNotes": "分类：旗舰模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-2-audio",
+      "id": "gpt-realtime-2-audio",
       "name": "GPT Realtime-2 (Audio)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -227,13 +227,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-2-audio",
+      "detailPath": "/model/gpt-realtime-2-audio",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-2-text",
+      "id": "gpt-realtime-2-text",
       "name": "GPT Realtime-2 (Text)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -261,13 +261,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-2-text",
+      "detailPath": "/model/gpt-realtime-2-text",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-2-image",
+      "id": "gpt-realtime-2-image",
       "name": "GPT Realtime-2 (Image)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -295,13 +295,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-2-image",
+      "detailPath": "/model/gpt-realtime-2-image",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-translate-audio",
+      "id": "gpt-realtime-translate-audio",
       "name": "GPT Realtime-translate (Audio)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -329,13 +329,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-translate-audio",
+      "detailPath": "/model/gpt-realtime-translate-audio",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。 音频输出计费：$0.034 / minute。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-1-5-audio",
+      "id": "gpt-realtime-1-5-audio",
       "name": "GPT Realtime-1.5 (Audio)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -363,13 +363,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-1-5-audio",
+      "detailPath": "/model/gpt-realtime-1-5-audio",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-1-5-text",
+      "id": "gpt-realtime-1-5-text",
       "name": "GPT Realtime-1.5 (Text)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -397,13 +397,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-1-5-text",
+      "detailPath": "/model/gpt-realtime-1-5-text",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-1-5-image",
+      "id": "gpt-realtime-1-5-image",
       "name": "GPT Realtime-1.5 (Image)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -431,13 +431,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-1-5-image",
+      "detailPath": "/model/gpt-realtime-1-5-image",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-mini-audio",
+      "id": "gpt-realtime-mini-audio",
       "name": "GPT Realtime mini (Audio)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -465,13 +465,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-mini-audio",
+      "detailPath": "/model/gpt-realtime-mini-audio",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-mini-text",
+      "id": "gpt-realtime-mini-text",
       "name": "GPT Realtime mini (Text)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -499,13 +499,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-mini-text",
+      "detailPath": "/model/gpt-realtime-mini-text",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-realtime-mini-image",
+      "id": "gpt-realtime-mini-image",
       "name": "GPT Realtime mini (Image)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -533,13 +533,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-realtime-mini-image",
+      "detailPath": "/model/gpt-realtime-mini-image",
       "pricingNotes": "分类：多模态模型 - 实时与语音生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-image-2-image",
+      "id": "gpt-image-2-image",
       "name": "GPT Image-2 (Image)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -567,13 +567,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-image-2-image",
+      "detailPath": "/model/gpt-image-2-image",
       "pricingNotes": "分类：多模态模型 - 图像生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-image-2-text",
+      "id": "gpt-image-2-text",
       "name": "GPT Image-2 (Text)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -601,13 +601,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-image-2-text",
+      "detailPath": "/model/gpt-image-2-text",
       "pricingNotes": "分类：多模态模型 - 图像生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-image-1-5-image",
+      "id": "gpt-image-1-5-image",
       "name": "GPT Image-1.5 (Image)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -635,13 +635,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-image-1-5-image",
+      "detailPath": "/model/gpt-image-1-5-image",
       "pricingNotes": "分类：多模态模型 - 图像生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-image-1-5-text",
+      "id": "gpt-image-1-5-text",
       "name": "GPT Image-1.5 (Text)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -669,13 +669,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-image-1-5-text",
+      "detailPath": "/model/gpt-image-1-5-text",
       "pricingNotes": "分类：多模态模型 - 图像生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-image-1-mini-image",
+      "id": "gpt-image-1-mini-image",
       "name": "GPT Image-1 mini (Image)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -703,13 +703,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-image-1-mini-image",
+      "detailPath": "/model/gpt-image-1-mini-image",
       "pricingNotes": "分类：多模态模型 - 图像生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-image-1-mini-text",
+      "id": "gpt-image-1-mini-text",
       "name": "GPT Image-1 mini (Text)",
       "provider": "OpenAI",
       "family": "GPT",
@@ -737,13 +737,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-image-1-mini-text",
+      "detailPath": "/model/gpt-image-1-mini-text",
       "pricingNotes": "分类：多模态模型 - 图像生成模型 (Standard)。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-sora-2-720p",
+      "id": "sora-2-720p",
       "name": "Sora-2 (720p)",
       "provider": "OpenAI",
       "family": "Sora-2",
@@ -771,13 +771,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-sora-2-720p",
+      "detailPath": "/model/sora-2-720p",
       "pricingNotes": "分类：多模态模型 - 视频生成模型 (Standard)。视频尺寸：竖屏 720x1280 / 横屏 1280x720。计费方式：$0.10 / 秒。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-sora-2-pro-720p",
+      "id": "sora-2-pro-720p",
       "name": "Sora-2 pro (720p)",
       "provider": "OpenAI",
       "family": "Sora-2",
@@ -805,13 +805,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-sora-2-pro-720p",
+      "detailPath": "/model/sora-2-pro-720p",
       "pricingNotes": "分类：多模态模型 - 视频生成模型 (Standard)。视频尺寸：竖屏 720x1280 / 横屏 1280x720。计费方式：$0.30 / 秒。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-sora-2-pro-1024p",
+      "id": "sora-2-pro-1024p",
       "name": "Sora-2 pro (1024p)",
       "provider": "OpenAI",
       "family": "Sora-2",
@@ -839,13 +839,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-sora-2-pro-1024p",
+      "detailPath": "/model/sora-2-pro-1024p",
       "pricingNotes": "分类：多模态模型 - 视频生成模型 (Standard)。视频尺寸：竖屏 1024x1792 / 横屏 1792x1024。计费方式：$0.50 / 秒。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-sora-2-pro-1080p",
+      "id": "sora-2-pro-1080p",
       "name": "Sora-2 pro (1080p)",
       "provider": "OpenAI",
       "family": "Sora-2",
@@ -873,13 +873,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-sora-2-pro-1080p",
+      "detailPath": "/model/sora-2-pro-1080p",
       "pricingNotes": "分类：多模态模型 - 视频生成模型 (Standard)。视频尺寸：竖屏 1080x1920 / 横屏 1920x1080。计费方式：$0.70 / 秒。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-4o-transcribe",
+      "id": "gpt-4o-transcribe",
       "name": "GPT-4o Transcribe",
       "provider": "OpenAI",
       "family": "GPT-4o",
@@ -906,13 +906,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-4o-transcribe",
+      "detailPath": "/model/gpt-4o-transcribe",
       "pricingNotes": "分类：多模态模型 - 语音转文字模型。估算成本：$0.006 / minute。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-4o-mini-transcribe",
+      "id": "gpt-4o-mini-transcribe",
       "name": "GPT-4o mini Transcribe",
       "provider": "OpenAI",
       "family": "GPT-4o",
@@ -939,13 +939,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-4o-mini-transcribe",
+      "detailPath": "/model/gpt-4o-mini-transcribe",
       "pricingNotes": "分类：多模态模型 - 语音转文字模型。估算成本：$0.003 / minute。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-chat-latest",
+      "id": "chat-latest",
       "name": "ChatGPT-latest",
       "provider": "OpenAI",
       "family": "ChatGPT-latest",
@@ -972,13 +972,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-chat-latest",
+      "detailPath": "/model/chat-latest",
       "pricingNotes": "分类：专用模型 - ChatGPT。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-3-codex",
+      "id": "gpt-5-3-codex",
       "name": "GPT-5.3 Codex",
       "provider": "OpenAI",
       "family": "GPT-5.3",
@@ -1004,13 +1004,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-3-codex",
+      "detailPath": "/model/gpt-5-3-codex",
       "pricingNotes": "分类：专用模型 - Codex。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-gpt-5-4-cyber",
+      "id": "gpt-5-4-cyber",
       "name": "GPT-5.4 Cyber",
       "provider": "OpenAI",
       "family": "GPT-5.4",
@@ -1037,13 +1037,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-gpt-5-4-cyber",
+      "detailPath": "/model/gpt-5-4-cyber",
       "pricingNotes": "分类：专用模型 - Cyber。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-o3-deep-research",
+      "id": "o3-deep-research",
       "name": "o3-deep-research",
       "provider": "OpenAI",
       "family": "o3-deep-research",
@@ -1070,13 +1070,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-o3-deep-research",
+      "detailPath": "/model/o3-deep-research",
       "pricingNotes": "分类：专用模型 - Deep research。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-o4-mini-deep-research",
+      "id": "o4-mini-deep-research",
       "name": "o4 mini-deep-research",
       "provider": "OpenAI",
       "family": "o4",
@@ -1103,13 +1103,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-o4-mini-deep-research",
+      "detailPath": "/model/o4-mini-deep-research",
       "pricingNotes": "分类：专用模型 - Deep research。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-computer-use-preview",
+      "id": "computer-use-preview",
       "name": "computer-use-preview",
       "provider": "OpenAI",
       "family": "computer-use-preview",
@@ -1136,13 +1136,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-computer-use-preview",
+      "detailPath": "/model/computer-use-preview",
       "pricingNotes": "分类：专用模型 - Computer use。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-o4-mini-2025-04-16",
+      "id": "o4-mini-2025-04-16",
       "name": "o4 mini-2025-04-16",
       "provider": "OpenAI",
       "family": "o4",
@@ -1169,13 +1169,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-o4-mini-2025-04-16",
+      "detailPath": "/model/o4-mini-2025-04-16",
       "pricingNotes": "分类：微调模型。训练费用：$100.00 / hour。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "openai-o4-mini-2025-04-16with-data-sharing-sharing",
+      "id": "o4-mini-2025-04-16with-data-sharing-sharing",
       "name": "o4 mini-2025-04-16with data sharing",
       "provider": "OpenAI",
       "family": "o4",
@@ -1202,13 +1202,13 @@
       "status": "live",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceLabel": "OpenAI API Pricing",
-      "detailPath": "/model/openai-o4-mini-2025-04-16with-data-sharing-sharing",
+      "detailPath": "/model/o4-mini-2025-04-16with-data-sharing-sharing",
       "pricingNotes": "分类：微调模型。训练费用：$100.00 / hour。由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "anthropic-claude-3-opus",
+      "id": "claude-3-opus-20240229",
       "name": "Claude Opus 4.8",
       "provider": "Anthropic",
       "family": "Claude",
@@ -1234,13 +1234,13 @@
       "status": "live",
       "sourceUrl": "https://claude.com/pricing",
       "sourceLabel": "Anthropic Pricing",
-      "detailPath": "/model/anthropic-claude-3-opus",
+      "detailPath": "/model/claude-3-opus-20240229",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "anthropic-claude-3-7-sonnet",
+      "id": "claude-3-7-sonnet-20250219",
       "name": "Claude Sonnet 4.6",
       "provider": "Anthropic",
       "family": "Claude",
@@ -1276,7 +1276,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "anthropic-claude-3-5-haiku",
+      "id": "claude-3-5-haiku-20241022",
       "name": "Claude Haiku 4.5",
       "provider": "Anthropic",
       "family": "Claude",
@@ -1312,7 +1312,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-3-5-flash",
+      "id": "gemini-3-5-flash",
       "name": "Gemini 3.5 Flash",
       "provider": "Google",
       "family": "Gemini",
@@ -1338,13 +1338,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-3-5-flash",
+      "detailPath": "/model/gemini-3-5-flash",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-3-1-flash-lite",
+      "id": "gemini-3-1-flash-lite",
       "name": "Gemini 3.1 Flash-Lite",
       "provider": "Google",
       "family": "Gemini",
@@ -1370,13 +1370,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-3-1-flash-lite",
+      "detailPath": "/model/gemini-3-1-flash-lite",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-3-1-pro-preview",
+      "id": "gemini-3-1-pro-preview",
       "name": "Gemini 3.1 Pro Preview",
       "provider": "Google",
       "family": "Gemini",
@@ -1402,13 +1402,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-3-1-pro-preview",
+      "detailPath": "/model/gemini-3-1-pro-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-3-1-flash-live-preview",
+      "id": "gemini-3-1-flash-live-preview",
       "name": "Gemini 3.1 Flash Live Preview",
       "provider": "Google",
       "family": "Gemini",
@@ -1434,13 +1434,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-3-1-flash-live-preview",
+      "detailPath": "/model/gemini-3-1-flash-live-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-3-flash-preview",
+      "id": "gemini-3-flash-preview",
       "name": "Gemini 3 Flash Preview",
       "provider": "Google",
       "family": "Gemini",
@@ -1466,13 +1466,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-3-flash-preview",
+      "detailPath": "/model/gemini-3-flash-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-2-5-pro",
+      "id": "gemini-2-5-pro",
       "name": "Gemini 2.5 Pro",
       "provider": "Google",
       "family": "Gemini",
@@ -1508,7 +1508,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-2-5-flash",
+      "id": "gemini-2-5-flash",
       "name": "Gemini 2.5 Flash",
       "provider": "Google",
       "family": "Gemini",
@@ -1544,7 +1544,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-2-5-flash-lite",
+      "id": "gemini-2-5-flash-lite",
       "name": "Gemini 2.5 Flash-Lite",
       "provider": "Google",
       "family": "Gemini",
@@ -1570,13 +1570,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-2-5-flash-lite",
+      "detailPath": "/model/gemini-2-5-flash-lite",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-2-5-flash-lite-preview",
+      "id": "gemini-2-5-flash-lite-preview",
       "name": "Gemini 2.5 Flash-Lite Preview",
       "provider": "Google",
       "family": "Gemini",
@@ -1602,13 +1602,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-2-5-flash-lite-preview",
+      "detailPath": "/model/gemini-2-5-flash-lite-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-2-0-flash",
+      "id": "gemini-2-0-flash",
       "name": "Gemini 2.0 Flash",
       "provider": "Google",
       "family": "Gemini",
@@ -1634,13 +1634,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-2-0-flash",
+      "detailPath": "/model/gemini-2-0-flash",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-2-0-flash-lite",
+      "id": "gemini-2-0-flash-lite",
       "name": "Gemini 2.0 Flash-Lite",
       "provider": "Google",
       "family": "Gemini",
@@ -1666,13 +1666,13 @@
       "status": "live",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-2-0-flash-lite",
+      "detailPath": "/model/gemini-2-0-flash-lite",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "google-gemini-3-1-flash-lite-preview",
+      "id": "gemini-3-1-flash-lite-preview",
       "name": "Gemini 3.1 Flash-Lite Preview",
       "provider": "Google",
       "family": "Gemini",
@@ -1698,7 +1698,7 @@
       "status": "legacy",
       "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
       "sourceLabel": "Google AI Pricing",
-      "detailPath": "/model/google-gemini-3-1-flash-lite-preview",
+      "detailPath": "/model/gemini-3-1-flash-lite-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -1768,7 +1768,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "kimi-moonshot-v1-8k",
+      "id": "moonshot-v1-8k",
       "name": "moonshot-v1-8k",
       "provider": "月之暗面",
       "family": "moonshot-v1-8k",
@@ -1794,13 +1794,13 @@
       "status": "live",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-v1",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-moonshot-v1-8k",
+      "detailPath": "/model/moonshot-v1-8k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "kimi-moonshot-v1-32k",
+      "id": "moonshot-v1-32k",
       "name": "moonshot-v1-32k",
       "provider": "月之暗面",
       "family": "moonshot-v1-32k",
@@ -1826,13 +1826,13 @@
       "status": "live",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-v1",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-moonshot-v1-32k",
+      "detailPath": "/model/moonshot-v1-32k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "kimi-moonshot-v1-8k-vision-preview",
+      "id": "moonshot-v1-8k-vision-preview",
       "name": "moonshot-v1-8k-vision-preview",
       "provider": "月之暗面",
       "family": "moonshot-v1-8k-vision-preview",
@@ -1858,13 +1858,13 @@
       "status": "live",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-v1",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-moonshot-v1-8k-vision-preview",
+      "detailPath": "/model/moonshot-v1-8k-vision-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "kimi-moonshot-v1-32k-vision-preview",
+      "id": "moonshot-v1-32k-vision-preview",
       "name": "moonshot-v1-32k-vision-preview",
       "provider": "月之暗面",
       "family": "moonshot-v1-32k-vision-preview",
@@ -1890,13 +1890,13 @@
       "status": "live",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-v1",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-moonshot-v1-32k-vision-preview",
+      "detailPath": "/model/moonshot-v1-32k-vision-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "kimi-k2-6",
+      "id": "kimi-k2.6",
       "name": "kimi-k2.6",
       "provider": "月之暗面",
       "family": "Kimi",
@@ -1922,13 +1922,13 @@
       "status": "live",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-k26",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-k2-6",
+      "detailPath": "/model/kimi-k2.6",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "kimi-k2-5",
+      "id": "kimi-k2.5",
       "name": "kimi-k2.5",
       "provider": "月之暗面",
       "family": "Kimi",
@@ -1954,13 +1954,13 @@
       "status": "live",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-k25",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-k2-5",
+      "detailPath": "/model/kimi-k2.5",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "kimi-latest-128k",
+      "id": "moonshot-v1-128k",
       "name": "moonshot-v1-128k",
       "provider": "月之暗面",
       "family": "Kimi",
@@ -1990,13 +1990,13 @@
       "status": "legacy",
       "sourceUrl": "https://platform.moonshot.cn/docs/pricing/chat-v1",
       "sourceLabel": "Moonshot Pricing",
-      "detailPath": "/model/kimi-latest-128k",
+      "detailPath": "/model/moonshot-v1-128k",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-7-max",
+      "id": "qwen3.7-max",
       "name": "Qwen 3.7 Max",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2022,13 +2022,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-7-max",
+      "detailPath": "/model/qwen3.7-max",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-7-max-preview",
+      "id": "qwen3.7-max-preview",
       "name": "Qwen 3.7 Max Preview",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2054,13 +2054,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-7-max-preview",
+      "detailPath": "/model/qwen3.7-max-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-6-max-preview",
+      "id": "qwen3.6-max-preview",
       "name": "Qwen 3.6 Max Preview",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2086,7 +2086,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-6-max-preview",
+      "detailPath": "/model/qwen3.6-max-preview",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -2192,7 +2192,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-7-plus",
+      "id": "qwen3.7-plus",
       "name": "Qwen 3.7 Plus",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2218,13 +2218,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-7-plus",
+      "detailPath": "/model/qwen3.7-plus",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-6-plus",
+      "id": "qwen3.6-plus",
       "name": "Qwen 3.6 Plus",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2250,13 +2250,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-6-plus",
+      "detailPath": "/model/qwen3.6-plus",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-plus",
+      "id": "qwen3.5-plus",
       "name": "Qwen 3.5 Plus",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2282,7 +2282,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-plus",
+      "detailPath": "/model/qwen3.5-plus",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -2320,7 +2320,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-6-flash",
+      "id": "qwen3.6-flash",
       "name": "Qwen 3.6 Flash",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2346,13 +2346,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-6-flash",
+      "detailPath": "/model/qwen3.6-flash",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-flash",
+      "id": "qwen3.5-flash",
       "name": "Qwen 3.5 Flash",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2378,7 +2378,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-flash",
+      "detailPath": "/model/qwen3.5-flash",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -2512,7 +2512,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-omni-plus",
+      "id": "qwen3.5-omni-plus",
       "name": "Qwen 3.5 Omni Plus",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2538,13 +2538,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-omni-plus",
+      "detailPath": "/model/qwen3.5-omni-plus",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-omni-flash",
+      "id": "qwen3.5-omni-flash",
       "name": "Qwen 3.5 Omni Flash",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2570,7 +2570,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-omni-flash",
+      "detailPath": "/model/qwen3.5-omni-flash",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -2672,7 +2672,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-omni-plus-realtime",
+      "id": "qwen3.5-omni-plus-realtime",
       "name": "Qwen 3.5 Omni Plus Realtime",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2698,13 +2698,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-omni-plus-realtime",
+      "detailPath": "/model/qwen3.5-omni-plus-realtime",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-omni-flash-realtime",
+      "id": "qwen3.5-omni-flash-realtime",
       "name": "Qwen 3.5 Omni Flash Realtime",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -2730,7 +2730,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-omni-flash-realtime",
+      "detailPath": "/model/qwen3.5-omni-flash-realtime",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -3408,7 +3408,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-6-35b-a3b",
+      "id": "qwen3.6-35b-a3b",
       "name": "Qwen 3.6 35b A3b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3434,13 +3434,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-6-35b-a3b",
+      "detailPath": "/model/qwen3.6-35b-a3b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-6-27b",
+      "id": "qwen3.6-27b",
       "name": "Qwen 3.6 27b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3466,13 +3466,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-6-27b",
+      "detailPath": "/model/qwen3.6-27b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-397b-a17b",
+      "id": "qwen3.5-397b-a17b",
       "name": "Qwen 3.5 397b A17b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3498,13 +3498,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-397b-a17b",
+      "detailPath": "/model/qwen3.5-397b-a17b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-122b-a10b",
+      "id": "qwen3.5-122b-a10b",
       "name": "Qwen 3.5 122b A10b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3530,13 +3530,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-122b-a10b",
+      "detailPath": "/model/qwen3.5-122b-a10b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-27b",
+      "id": "qwen3.5-27b",
       "name": "Qwen 3.5 27b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3562,13 +3562,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-27b",
+      "detailPath": "/model/qwen3.5-27b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-35b-a3b",
+      "id": "qwen3.5-35b-a3b",
       "name": "Qwen 3.5 35b A3b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3594,7 +3594,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-35b-a3b",
+      "detailPath": "/model/qwen3.5-35b-a3b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -3632,7 +3632,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-235b-a22b",
+      "id": "qwen3.235b-a22b",
       "name": "Qwen 3 235b A22b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3658,13 +3658,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-235b-a22b",
+      "detailPath": "/model/qwen3.235b-a22b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-32b",
+      "id": "qwen3.32b",
       "name": "Qwen 3 32b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3690,13 +3690,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-32b",
+      "detailPath": "/model/qwen3.32b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-30b-a3b",
+      "id": "qwen3.30b-a3b",
       "name": "Qwen 3 30b A3b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3722,13 +3722,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-30b-a3b",
+      "detailPath": "/model/qwen3.30b-a3b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-14b",
+      "id": "qwen3.14b",
       "name": "Qwen 3 14b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3754,13 +3754,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-14b",
+      "detailPath": "/model/qwen3.14b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-8b",
+      "id": "qwen3.8b",
       "name": "Qwen 3 8b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3786,13 +3786,13 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-8b",
+      "detailPath": "/model/qwen3.8b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-omni-7b",
+      "id": "qwen2.5-omni-7b",
       "name": "Qwen 2.5 Omni 7b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -3818,7 +3818,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-omni-7b",
+      "detailPath": "/model/qwen2.5-omni-7b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -4336,7 +4336,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-5-livetranslate-flash-realtime",
+      "id": "qwen3.5-livetranslate-flash-realtime",
       "name": "Qwen 3.5 Livetranslate Flash Realtime",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4362,7 +4362,7 @@
       "status": "live",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-5-livetranslate-flash-realtime",
+      "detailPath": "/model/qwen3.5-livetranslate-flash-realtime",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
@@ -4496,7 +4496,7 @@
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-4b",
+      "id": "qwen3.4b",
       "name": "Qwen 3 4b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4522,13 +4522,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-4b",
+      "detailPath": "/model/qwen3.4b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-1-7b",
+      "id": "qwen3.1-7b",
       "name": "Qwen 3 1.7b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4554,13 +4554,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-1-7b",
+      "detailPath": "/model/qwen3.1-7b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen3-0-6b",
+      "id": "qwen3.0-6b",
       "name": "Qwen 3 0.6b",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4586,13 +4586,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen3-0-6b",
+      "detailPath": "/model/qwen3.0-6b",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-14b-instruct",
+      "id": "qwen2.5-14b-instruct",
       "name": "Qwen 2.5 14b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4618,13 +4618,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-14b-instruct",
+      "detailPath": "/model/qwen2.5-14b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-14b-instruct-1m",
+      "id": "qwen2.5-14b-instruct-1m",
       "name": "Qwen 2.5 14b Instruct 1m",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4650,13 +4650,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-14b-instruct-1m",
+      "detailPath": "/model/qwen2.5-14b-instruct-1m",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-32b-instruct",
+      "id": "qwen2.5-32b-instruct",
       "name": "Qwen 2.5 32b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4682,13 +4682,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-32b-instruct",
+      "detailPath": "/model/qwen2.5-32b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-3b-instruct",
+      "id": "qwen2.5-3b-instruct",
       "name": "Qwen 2.5 3b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4714,13 +4714,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-3b-instruct",
+      "detailPath": "/model/qwen2.5-3b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-72b-instruct",
+      "id": "qwen2.5-72b-instruct",
       "name": "Qwen 2.5 72b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4746,13 +4746,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-72b-instruct",
+      "detailPath": "/model/qwen2.5-72b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-7b-instruct",
+      "id": "qwen2.5-7b-instruct",
       "name": "Qwen 2.5 7b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4778,13 +4778,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-7b-instruct",
+      "detailPath": "/model/qwen2.5-7b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-7b-instruct-1m",
+      "id": "qwen2.5-7b-instruct-1m",
       "name": "Qwen 2.5 7b Instruct 1m",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4810,13 +4810,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-7b-instruct-1m",
+      "detailPath": "/model/qwen2.5-7b-instruct-1m",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-coder-14b-instruct",
+      "id": "qwen2.5-coder-14b-instruct",
       "name": "Qwen 2.5 Coder 14b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4842,13 +4842,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-coder-14b-instruct",
+      "detailPath": "/model/qwen2.5-coder-14b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-coder-32b-instruct",
+      "id": "qwen2.5-coder-32b-instruct",
       "name": "Qwen 2.5 Coder 32b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4874,13 +4874,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-coder-32b-instruct",
+      "detailPath": "/model/qwen2.5-coder-32b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-coder-7b-instruct",
+      "id": "qwen2.5-coder-7b-instruct",
       "name": "Qwen 2.5 Coder 7b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4906,13 +4906,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-coder-7b-instruct",
+      "detailPath": "/model/qwen2.5-coder-7b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-math-72b-instruct",
+      "id": "qwen2.5-math-72b-instruct",
       "name": "Qwen 2.5 Math 72b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4938,13 +4938,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-math-72b-instruct",
+      "detailPath": "/model/qwen2.5-math-72b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-math-7b-instruct",
+      "id": "qwen2.5-math-7b-instruct",
       "name": "Qwen 2.5 Math 7b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -4970,13 +4970,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-math-7b-instruct",
+      "detailPath": "/model/qwen2.5-math-7b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-vl-32b-instruct",
+      "id": "qwen2.5-vl-32b-instruct",
       "name": "Qwen 2.5 VL 32b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -5002,13 +5002,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-vl-32b-instruct",
+      "detailPath": "/model/qwen2.5-vl-32b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-vl-3b-instruct",
+      "id": "qwen2.5-vl-3b-instruct",
       "name": "Qwen 2.5 VL 3b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -5034,13 +5034,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-vl-3b-instruct",
+      "detailPath": "/model/qwen2.5-vl-3b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-vl-72b-instruct",
+      "id": "qwen2.5-vl-72b-instruct",
       "name": "Qwen 2.5 VL 72b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -5066,13 +5066,13 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-vl-72b-instruct",
+      "detailPath": "/model/qwen2.5-vl-72b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"
     },
     {
-      "id": "qwen2-5-vl-7b-instruct",
+      "id": "qwen2.5-vl-7b-instruct",
       "name": "Qwen 2.5 VL 7b Instruct",
       "provider": "阿里通义",
       "family": "Qwen",
@@ -5098,7 +5098,7 @@
       "status": "legacy",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceLabel": "通义千问 Pricing",
-      "detailPath": "/model/qwen2-5-vl-7b-instruct",
+      "detailPath": "/model/qwen2.5-vl-7b-instruct",
       "pricingNotes": "由 provider 抓取器从官方定价页解析得到。 (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。) (已升级/旧版，官方价格页已不再展示，保留作历史参考。)",
       "updatedAt": "2026-06-02T00:00:00.000Z",
       "sourceType": "provider"

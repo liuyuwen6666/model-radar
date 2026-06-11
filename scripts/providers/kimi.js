@@ -14,12 +14,14 @@ function resolveModelId(name) {
   const norm = name.toLowerCase();
   if (norm.includes("k2.6")) return "kimi-k2.6";
   if (norm.includes("k2.5")) return "kimi-k2.5";
-  // 排除多模态版本的 128k（其具有 vision）以使其走最下方的标准 slug 生成路径，避免重名覆盖
   if (norm.includes("latest") || (norm.includes("v1-128k") && !norm.includes("vision"))) {
-    return "kimi-latest-128k";
+    return "moonshot-v1-128k";
   }
-  // 保留点号（如版本号中），再替换其他特殊字符为连字符
-  return `kimi-${norm.replace(/\./g, "_dot_").replace(/[^a-z0-9_]+/g, "-").replace(/_dot_/g, ".").replace(/^-+|-+$/g, "")}`;
+  const slug = norm.replace(/\./g, "_dot_").replace(/[^a-z0-9_]+/g, "-").replace(/_dot_/g, ".").replace(/^-+|-+$/g, "");
+  if (slug.startsWith("moonshot-")) {
+    return slug;
+  }
+  return `moonshot-${slug}`;
 }
 
 function extractModelsFromHtml(html, options = {}) {
@@ -216,7 +218,7 @@ const FALLBACK_KIMI_MODELS = [
     sourceUrl: "https://platform.moonshot.cn/docs/pricing/chat-k25"
   },
   {
-    id: "kimi-latest-128k",
+    id: "moonshot-v1-128k",
     name: "Kimi Latest 128K",
     provider: "月之暗面",
     currency: "CNY",

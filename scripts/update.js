@@ -89,7 +89,7 @@ const PRICE_FIELDS = [
 // 本地基准模型数据蓝图：在网络请求失败或作为抓取冷启动时的兜底基础数据
 const MODEL_BLUEPRINTS = [
   {
-    id: "anthropic-claude-3-opus",
+    id: "claude-3-opus-20240229",
     name: "Claude Opus 4.7",
     provider: "Anthropic",
     family: "Claude",
@@ -103,11 +103,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["长文本", "推理", "代码", "多模态"],
     recommendedFor: ["高难度编程", "科学研究", "复杂战略分析"],
     status: "stable",
-    detailPath: "/model/claude-3-opus",
+    detailPath: "/model/claude-3-opus-20240229",
     sourceType: "provider"
   },
   {
-    id: "anthropic-claude-3-5-haiku",
+    id: "claude-3-5-haiku-20241022",
     name: "Claude Haiku 4.5",
     provider: "Anthropic",
     family: "Claude",
@@ -121,11 +121,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "分类", "代码"],
     recommendedFor: ["批量处理", "摘要", "轻量客服"],
     status: "stable",
-    detailPath: "/model/claude-3-5-haiku",
+    detailPath: "/model/claude-3-5-haiku-20241022",
     sourceType: "provider"
   },
   {
-    id: "anthropic-claude-3-7-sonnet",
+    id: "claude-3-7-sonnet-20250219",
     name: "Claude Sonnet 4.6",
     provider: "Anthropic",
     family: "Claude",
@@ -139,7 +139,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["长文本", "推理", "代码"],
     recommendedFor: ["复杂 Agent", "代码审查", "长文档分析"],
     status: "stable",
-    detailPath: "/model/claude-3-7-sonnet",
+    detailPath: "/model/claude-3-7-sonnet-20250219",
     sourceType: "provider"
   },
   {
@@ -413,7 +413,7 @@ const MODEL_BLUEPRINTS = [
     sourceType: "provider"
   },
   {
-    id: "google-gemini-2.5-flash",
+    id: "gemini-2.5-flash",
     name: "Gemini 2.5 Flash",
     provider: "Google",
     family: "Gemini",
@@ -431,7 +431,7 @@ const MODEL_BLUEPRINTS = [
     sourceType: "provider"
   },
   {
-    id: "google-gemini-2.5-pro",
+    id: "gemini-2.5-pro",
     name: "Gemini 2.5 Pro",
     provider: "Google",
     family: "Gemini",
@@ -563,7 +563,7 @@ const MODEL_BLUEPRINTS = [
     sourceType: "provider"
   },
   {
-    id: "kimi-k2-6",
+    id: "kimi-k2.6",
     name: "Kimi K2.6",
     provider: "月之暗面",
     family: "Kimi",
@@ -577,11 +577,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "长文本", "多模态", "推理"],
     recommendedFor: ["长程代码", "智能对话", "自我纠错"],
     status: "stable",
-    detailPath: "/model/kimi-k2-6",
+    detailPath: "/model/kimi-k2.6",
     sourceType: "provider"
   },
   {
-    id: "kimi-k2-5",
+    id: "kimi-k2.5",
     name: "Kimi K2.5",
     provider: "月之暗面",
     family: "Kimi",
@@ -595,11 +595,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "多模态", "推理"],
     recommendedFor: ["对话系统", "Agent任务", "多模态分析"],
     status: "stable",
-    detailPath: "/model/kimi-k2-5",
+    detailPath: "/model/kimi-k2.5",
     sourceType: "provider"
   },
   {
-    id: "kimi-latest-128k",
+    id: "moonshot-v1-128k",
     name: "Kimi Latest 128K",
     provider: "月之暗面",
     family: "Kimi",
@@ -613,11 +613,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "长文本", "检索"],
     recommendedFor: ["知识库问答", "文档解读", "中文写作"],
     status: "stable",
-    detailPath: "/model/kimi-latest-128k",
+    detailPath: "/model/moonshot-v1-128k",
     sourceType: "provider"
   },
   {
-    id: "openai-gpt-5.5",
+    id: "gpt-5.5",
     name: "GPT-5.5",
     provider: "OpenAI",
     family: "GPT-5.5",
@@ -631,11 +631,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "工具调用", "长上下文"],
     recommendedFor: ["复杂开发", "深度推理", "长程任务"],
     status: "stable",
-    detailPath: "/model/openai-gpt-5.5",
+    detailPath: "/model/gpt-5.5",
     sourceType: "provider"
   },
   {
-    id: "openai-gpt-5.4",
+    id: "gpt-5.4",
     name: "GPT-5.4",
     provider: "OpenAI",
     family: "GPT-5.4",
@@ -649,11 +649,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "长上下文", "低成本"],
     recommendedFor: ["大规模日常任务", "辅助编程", "文本概括"],
     status: "stable",
-    detailPath: "/model/openai-gpt-5.4",
+    detailPath: "/model/gpt-5.4",
     sourceType: "provider"
   },
   {
-    id: "openai-gpt-5.4-mini",
+    id: "gpt-5.4-mini",
     name: "GPT-5.4 mini",
     provider: "OpenAI",
     family: "GPT-5.4",
@@ -665,11 +665,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["文本", "多模态", "极低成本"],
     recommendedFor: ["高并发调用", "简单子代理", "实时客服"],
     status: "stable",
-    detailPath: "/model/openai-gpt-5.4-mini",
+    detailPath: "/model/gpt-5.4-mini",
     sourceType: "provider"
   },
   {
-    id: "qwen3-7-max",
+    id: "qwen3.7-max",
     name: "Qwen 3.7 Max",
     provider: "阿里通义",
     family: "Qwen",
@@ -683,11 +683,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "推理", "长上下文", "旗舰模型"],
     recommendedFor: ["复杂推理", "智能 Agent", "长文档分析", "高难度编程"],
     status: "stable",
-    detailPath: "/model/qwen3-7-max",
+    detailPath: "/model/qwen3.7-max",
     sourceType: "provider"
   },
   {
-    id: "qwen3-7-max-preview",
+    id: "qwen3.7-max-preview",
     name: "Qwen 3.7 Max Preview",
     provider: "阿里通义",
     family: "Qwen",
@@ -699,11 +699,11 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "推理", "代码", "思考模式"],
     recommendedFor: ["深度数学推导", "复杂算法设计", "科研推理"],
     status: "stable",
-    detailPath: "/model/qwen3-7-max-preview",
+    detailPath: "/model/qwen3.7-max-preview",
     sourceType: "provider"
   },
   {
-    id: "qwen3-6-max-preview",
+    id: "qwen3.6-max-preview",
     name: "Qwen 3.6 Max Preview",
     provider: "阿里通义",
     family: "Qwen",
@@ -717,7 +717,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "推理", "思考模式"],
     recommendedFor: ["通用推理", "代码辅助", "逻辑分析"],
     status: "stable",
-    detailPath: "/model/qwen3-6-max-preview",
+    detailPath: "/model/qwen3.6-max-preview",
     sourceType: "provider"
   },
   {
@@ -757,7 +757,7 @@ const MODEL_BLUEPRINTS = [
     sourceType: "provider"
   },
   {
-    id: "qwen3-7-plus",
+    id: "qwen3.7-plus",
     name: "Qwen 3.7 Plus",
     provider: "阿里通义",
     family: "Qwen",
@@ -771,7 +771,7 @@ const MODEL_BLUEPRINTS = [
     capabilities: ["中文", "长文本", "极速"],
     recommendedFor: ["实时智能客服", "大批量长文本处理", "日常代码推荐"],
     status: "stable",
-    detailPath: "/model/qwen3-7-plus",
+    detailPath: "/model/qwen3.7-plus",
     sourceType: "provider"
   },
   {

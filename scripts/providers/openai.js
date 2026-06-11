@@ -109,7 +109,7 @@ function parseTable($, $table, section, subsection, tab, results, crawledIds, so
       
       if (shortInput === null) return;
       
-      const modelId = `openai-${slugify(name)}`;
+      const modelId = `${slugify(name)}`;
       if (crawledIds.has(modelId)) return;
       crawledIds.add(modelId);
       
@@ -154,7 +154,7 @@ function parseTable($, $table, section, subsection, tab, results, crawledIds, so
       const outputPrice = cleanPrice(outputVal);
       
       const modalityStr = modality ? modality.toLowerCase() : 'audio';
-      const modelId = `openai-${slugify(name)}-${modalityStr}`;
+      const modelId = `${slugify(name)}-${modalityStr}`;
       if (crawledIds.has(modelId)) return;
       crawledIds.add(modelId);
       
@@ -202,7 +202,7 @@ function parseTable($, $table, section, subsection, tab, results, crawledIds, so
       const outputPrice = cleanPrice(outputVal);
       
       const modalityStr = modality ? modality.toLowerCase() : 'image';
-      const modelId = `openai-${slugify(name)}-${modalityStr}`;
+      const modelId = `${slugify(name)}-${modalityStr}`;
       if (crawledIds.has(modelId)) return;
       crawledIds.add(modelId);
       
@@ -241,7 +241,7 @@ function parseTable($, $table, section, subsection, tab, results, crawledIds, so
       if (!name) return;
       
       const sizeStr = size ? size.toLowerCase() : '720p';
-      const modelId = `openai-${slugify(name)}-${sizeStr}`;
+      const modelId = `${slugify(name)}-${sizeStr}`;
       if (crawledIds.has(modelId)) return;
       crawledIds.add(modelId);
       
@@ -267,7 +267,7 @@ function parseTable($, $table, section, subsection, tab, results, crawledIds, so
       const outputPrice = cleanPrice(cells[3]);
       const estCost = cells[4];
       
-      const modelId = `openai-${slugify(name)}`;
+      const modelId = `${slugify(name)}`;
       if (crawledIds.has(modelId)) return;
       crawledIds.add(modelId);
       
@@ -308,7 +308,7 @@ function parseTable($, $table, section, subsection, tab, results, crawledIds, so
       const cachePrice = cleanPrice(cacheVal);
       const outputPrice = cleanPrice(outputVal);
       
-      const modelId = `openai-${slugify(name)}`;
+      const modelId = `${slugify(name)}`;
       if (crawledIds.has(modelId)) return;
       crawledIds.add(modelId);
       
@@ -338,7 +338,7 @@ function parseTable($, $table, section, subsection, tab, results, crawledIds, so
       
       const isSharing = name.toLowerCase().includes('sharing');
       const suffix = isSharing ? '-sharing' : '';
-      const modelId = `openai-${slugify(name)}${suffix}`;
+      const modelId = `${slugify(name)}${suffix}`;
       if (crawledIds.has(modelId)) return;
       crawledIds.add(modelId);
       
