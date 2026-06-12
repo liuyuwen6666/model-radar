@@ -1,36 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-11T00:00:00.000Z",
-  "effectiveDate": "2026-06-11",
+  "generatedAt": "2026-06-12T00:00:00.000Z",
+  "effectiveDate": "2026-06-12",
   "summary": {
-    "totalChanges": 1,
+    "totalChanges": 0,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 1,
+    "newModelCount": 0,
     "removedModelCount": 0
   },
-  "latest": [
-    {
-      "id": "2026-06-11:hunyuan-vision-1.5-instruct:model:new_model",
-      "date": "2026-06-11",
-      "modelId": "hunyuan-vision-1.5-instruct",
-      "modelName": "Tencent HY Vision 1.5 Instruct",
-      "provider": "腾讯混元",
-      "field": "model",
-      "fieldLabel": "model",
-      "type": "new_model",
-      "previousValue": null,
-      "currentValue": "Tencent HY Vision 1.5 Instruct",
-      "delta": null,
-      "deltaPercent": null,
-      "summary": "新增模型 Tencent HY Vision 1.5 Instruct。",
-      "currency": "CNY",
-      "sourceUrl": "https://cloud.tencent.com/document/product/1729/97731",
-      "sourceType": "provider"
-    }
-  ],
+  "latest": [],
   "history": [
     {
       "id": "2026-06-11:hunyuan-vision-1.5-instruct:model:new_model",
