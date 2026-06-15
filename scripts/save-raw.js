@@ -418,42 +418,38 @@ async function fetchAndSave(target, year, month, day) {
     
     // 分支 2：针对火山引擎 (Volcengine) 的处理
     } else if (provider === "volcengine") {
-      // 1. 抓取火山静态 HTML 并提取预加载状态中的 MDContent
-      const response = await fetch(url, {
-        headers: fetchHeaders
-      });
-
-      if (!response.ok) {
-        throw new Error(`火山引擎页面请求失败，HTTP 状态码: ${response.status}`);
+      // 从配置的 URL 中动态解析出 DocumentID
+      const docIdMatch = url.match(/\/docs\/\d+\/(\d+)/);
+      if (!docIdMatch) {
+        throw new Error(`火山引擎页面 URL 格式解析 DocumentID 失败: ${url}`);
       }
+      const documentId = docIdMatch[1];
+      const apiUrl = `https://www.volcengine.com/api/doc/getDocDetail?DocumentID=${documentId}`;
 
-      const html = await response.text();
-      const $ = cheerio.load(html);
-      
-      let routerDataText = "";
-      $("script").each((i, el) => {
-        const text = $(el).text();
-        if (text.includes("window._ROUTER_DATA =")) {
-          routerDataText = text;
+      // 1. 抓取火山文档 API 详情 JSON 数据
+      const response = await fetch(apiUrl, {
+        headers: {
+          ...fetchHeaders,
+          "accept": "application/json, text/plain, */*"
         }
       });
 
-      if (!routerDataText) {
-        throw new Error("在火山引擎静态页面中未找到 window._ROUTER_DATA 预加载数据！");
+      if (!response.ok) {
+        throw new Error(`火山引擎文档 API 请求失败，HTTP 状态码: ${response.status}`);
       }
 
-      // 截取并解析 window._ROUTER_DATA 的 JSON 内容
-      const startIdx = routerDataText.indexOf("window._ROUTER_DATA =");
-      const jsonStr = routerDataText.substring(startIdx + "window._ROUTER_DATA =".length).trim().replace(/;$/, "");
-      const data = JSON.parse(jsonStr);
-      const pageData = data.loaderData["docs/(libid)/(docid$)/page"];
-      
-      if (!pageData || !pageData.curDoc || !pageData.curDoc.MDContent) {
-        throw new Error("火山引擎预加载数据中未包含 curDoc.MDContent 内容！");
+      const resData = await response.json();
+      if (!resData || !resData.Result) {
+        const errorMsg = resData?.ResponseMetadata?.Error?.Message || "未知错误";
+        throw new Error(`火山引擎文档 API 响应异常: ${errorMsg}`);
       }
 
-      const title = pageData.curDoc.Title || "模型价格";
-      const md = pageData.curDoc.MDContent;
+      const title = resData.Result.Title || "模型价格";
+      const md = resData.Result.MDContent;
+
+      if (!md) {
+        throw new Error("火山引擎文档 API 响应结果中未包含 MDContent 内容！");
+      }
 
       // 2. 将提取到的 Markdown 定价内容，解析为精美排版表格的静态 HTML
       const renderedHtml = renderMarkdownToHtml(title, md);
