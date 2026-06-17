@@ -130,7 +130,6 @@
       "doubao-seed-2.0-mini-32k",
       "doubao-seed-2.0-mini-128k",
       "doubao-seed-2.0-mini-256k",
-      "doubao-1.5-pro-32k",
       "doubao-seed-2.0-code-32k",
       "doubao-seed-2.0-code-128k",
       "doubao-seed-2.0-code-256k",
@@ -155,6 +154,7 @@
       "doubao-seed-1.6-vision-128k",
       "doubao-seed-1.6-vision-256k",
       "doubao-seed-translation",
+      "doubao-1.5-pro-32k",
       "doubao-1.5-lite-32k",
       "doubao-1.5-vision-pro"
     ]
@@ -194,6 +194,7 @@
       "qwen3-vl-flash",
       "qwen-vl-max",
       "qwen-vl-plus",
+      "qwen3.5-ocr",
       "qwen-vl-ocr",
       "qwen-vl-ocr-latest",
       "qwen-math-plus",

@@ -1,18 +1,55 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-16T00:00:00.000Z",
-  "effectiveDate": "2026-06-16",
+  "generatedAt": "2026-06-17T00:00:00.000Z",
+  "effectiveDate": "2026-06-17",
   "summary": {
-    "totalChanges": 0,
+    "totalChanges": 1,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 0,
+    "newModelCount": 1,
     "removedModelCount": 0
   },
-  "latest": [],
+  "latest": [
+    {
+      "id": "2026-06-17:qwen3.5-ocr:model:new_model",
+      "date": "2026-06-17",
+      "modelId": "qwen3.5-ocr",
+      "modelName": "Qwen 3.5 OCR",
+      "provider": "阿里通义",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "Qwen 3.5 OCR",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 Qwen 3.5 OCR。",
+      "currency": "CNY",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "sourceType": "provider"
+    }
+  ],
   "history": [
+    {
+      "id": "2026-06-17:qwen3.5-ocr:model:new_model",
+      "date": "2026-06-17",
+      "modelId": "qwen3.5-ocr",
+      "modelName": "Qwen 3.5 OCR",
+      "provider": "阿里通义",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "Qwen 3.5 OCR",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 Qwen 3.5 OCR。",
+      "currency": "CNY",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "sourceType": "provider"
+    },
     {
       "id": "2026-06-11:hunyuan-vision-1.5-instruct:model:new_model",
       "date": "2026-06-11",
