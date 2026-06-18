@@ -1,36 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-17T00:00:00.000Z",
-  "effectiveDate": "2026-06-17",
+  "generatedAt": "2026-06-18T00:00:00.000Z",
+  "effectiveDate": "2026-06-18",
   "summary": {
-    "totalChanges": 1,
+    "totalChanges": 0,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 1,
+    "newModelCount": 0,
     "removedModelCount": 0
   },
-  "latest": [
-    {
-      "id": "2026-06-17:qwen3.5-ocr:model:new_model",
-      "date": "2026-06-17",
-      "modelId": "qwen3.5-ocr",
-      "modelName": "Qwen 3.5 OCR",
-      "provider": "阿里通义",
-      "field": "model",
-      "fieldLabel": "model",
-      "type": "new_model",
-      "previousValue": null,
-      "currentValue": "Qwen 3.5 OCR",
-      "delta": null,
-      "deltaPercent": null,
-      "summary": "新增模型 Qwen 3.5 OCR。",
-      "currency": "CNY",
-      "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
-      "sourceType": "provider"
-    }
-  ],
+  "latest": [],
   "history": [
     {
       "id": "2026-06-17:qwen3.5-ocr:model:new_model",
