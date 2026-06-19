@@ -29,9 +29,6 @@ jobs:
       - name: Run update script
         run: npm run update
 
-      - name: Run save-raw script
-        run: npm run save-raw
-
       - name: Run diff script
         run: npm run diff
 
@@ -40,7 +37,7 @@ jobs:
           git config user.name "modelradar-bot"
           git config user.email "bot@modelradar.cn"
 
-          git add data/ sitemap.xml raw/ log/
+          git add data/ sitemap.xml
 
           git commit -m "auto update pricing" || echo "No changes"
 

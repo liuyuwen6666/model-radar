@@ -15,7 +15,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm run update              # 抓取所有厂商最新价格，更新 data/models.json 和 changelog
-npm run save-raw            # 保存各厂商定价页原始 HTML 快照到 raw/ 目录
 npm run diff                # 对比上次更新，输出价格变化摘要
 npm run build               # prepare-static + Tailwind 编译 → public/
 npm run schema:check        # 校验 HTML 中 JSON-LD 结构化数据合规性
@@ -46,7 +45,6 @@ $env:MODEL_RADAR_DATE="2026-06-06"; npm run update  # Windows PowerShell
 │
 ├── scripts/
 │   ├── update.js           # 主控制脚本：抓取 + 合并 + 输出
-│   ├── save-raw.js         # 原始 HTML 快照存档
 │   ├── diff.js             # 两次更新间的价格变化差分
 │   ├── prepare-static.js   # 构建：生成路由别名、拷贝文件
 │   ├── check-structured-data.js  # JSON-LD 结构化数据 SEO 检查
@@ -69,7 +67,6 @@ $env:MODEL_RADAR_DATE="2026-06-06"; npm run update  # Windows PowerShell
 │   ├── sources.json        # 数据来源配置（url、关联模型列表）
 │   ├── changelog.json      # 价格变更历史记录
 │   └── history/            # 每日历史快照存档
-├── raw/                    # 厂商定价页原始 HTML 快照（按 provider/年/月/日 归档）
 ├── public/                 # 构建产物（部署到 Cloudflare Pages）
 │   └── dist/styles.css     # Tailwind 编译产物
 ├── .github/workflows/update.yml  # CI/CD：每 12h 自动抓取+提交
@@ -106,10 +103,9 @@ $env:MODEL_RADAR_DATE="2026-06-06"; npm run update  # Windows PowerShell
 5. **输出**：写入 `models.json`、`sources.json`、`data/history/YYYY-MM-DD.json`，更新 sitemap
 6. **差分**：`npm run diff` 调用 `diff.js`，对比新旧数据生成 `changelog.json`
 
-### 收集者两阶段
+### 价格更新机制
 
-- **save-raw**（`npm run save-raw`）：抓取各厂商定价页的**原始 HTML** 存档到 `raw/{provider}/年/月/日.html`，建立"定价证据链"
-- **update**（`npm run update`）：使用 cheerio 解析 HTML 提取结构化价格数据
+- **update**（`npm run update`）：调用 cheerio 实时抓取各大厂商官网并提取结构化价格数据，更新 `models.json` 及备份旧数据。
 
 ### 静态站点架构
 
