@@ -124,6 +124,9 @@
     "label": "豆包 Pricing",
     "url": "https://www.volcengine.com/docs/82379/1544106?lang=zh",
     "models": [
+      "doubao-seed-evolving",
+      "doubao-seed-2.1-pro",
+      "doubao-seed-2.1-turbo",
       "doubao-seed-2.0-pro-32k",
       "doubao-seed-2.0-pro-128k",
       "doubao-seed-2.0-pro-256k",
@@ -133,10 +136,6 @@
       "doubao-seed-2.0-mini-32k",
       "doubao-seed-2.0-mini-128k",
       "doubao-seed-2.0-mini-256k",
-      "doubao-1.5-pro-32k",
-      "doubao-seed-evolving",
-      "doubao-seed-2.1-pro",
-      "doubao-seed-2.1-turbo",
       "doubao-seed-2.0-code-32k",
       "doubao-seed-2.0-code-128k",
       "doubao-seed-2.0-code-256k",
@@ -161,6 +160,7 @@
       "doubao-seed-1.6-vision-128k",
       "doubao-seed-1.6-vision-256k",
       "doubao-seed-translation",
+      "doubao-1.5-pro-32k",
       "doubao-1.5-lite-32k",
       "doubao-1.5-vision-pro"
     ]
