@@ -3,20 +3,9 @@
  * 
  * @description
  * 【结构化数据与 SEO 校验脚本】
- * 本脚本用于校验项目中核心 HTML 模板文件（如 index.html 等）中嵌入的 JSON-LD 结构化数据是否合规。
- * 它可以防止不合规的 Schema 属性（例如在 AI 价格页面上误用零售商品的 Product 属性）导致 Google Search Console 报警或被搜索引擎惩罚。
- * 
- * @usage
- * 1. 本地手动校验：
- *    在修改 HTML 模版或更新 SEO 结构化数据后，在终端执行以下命令进行自检：
- *    $ npm run schema:check  (或直接执行: node scripts/check-structured-data.js)
- * 2. CI/CD 门禁（后续可扩展）：
- *    在 GitHub Action 或 Git 提交钩子（Husky）中集成该脚本，如果校验失败（进程退出码为 1），则阻止代码合并或部署。
- * 
- * @rules 校验规则：
- * 1. 语法正确性：提取所有 application/ld+json 脚本块并解析，确保符合标准 JSON 格式。
- * 2. 避免误判规则：禁止包含 Product 类型以及 offers, review, aggregateRating 等零售电商专用属性。
- * 3. 数据集规范：对于包含 Dataset 类型的条目，其 description（描述）字数必须在 50~5000 字符内，且不能包含 hasPart 属性。
+ * 本脚本用于校验根目录静态 HTML 模版及 public/ 打包产物中的 JSON-LD 结构化数据。
+ * 它会在构建阶段强制校验模型页面的 SoftwareApplication、BreadcrumbList 等关键 Schema 字段，
+ * 若不满足，则会 Fail Build 阻断构建。
  */
 
 const fs = require("node:fs/promises");
@@ -38,14 +27,15 @@ const HTML_FILES = [
 ];
 const DATASET_DESCRIPTION_MIN_LENGTH = 50;
 const DATASET_DESCRIPTION_MAX_LENGTH = 5000;
+
 const FORBIDDEN_SOURCE_PATTERNS = [
   {
     pattern: /['"]@type['"]\s*:\s*['"]Product['"]/,
-    message: "must not emit Product JSON-LD for model pricing pages"
+    message: "must not emit Product JSON-LD for non-model pages"
   },
   {
     pattern: /\boffers\b\s*:/,
-    message: "must not emit offers for AI model pricing data"
+    message: "must not emit offers for non-model pages"
   },
   {
     pattern: /\breview\b\s*:/,
@@ -83,8 +73,26 @@ function hasDatasetType(item) {
   return Array.isArray(type) ? type.includes("Dataset") : type === "Dataset";
 }
 
-async function checkHtmlFile(fileName) {
-  const filePath = path.join(ROOT_DIR, fileName);
+async function findHtmlFilesRecursively(dir) {
+  let results = [];
+  try {
+    const list = await fs.readdir(dir, { withFileTypes: true });
+    for (const file of list) {
+      const res = path.resolve(dir, file.name);
+      if (file.isDirectory()) {
+        results = results.concat(await findHtmlFilesRecursively(res));
+      } else if (file.isFile() && file.name.endsWith(".html")) {
+        results.push(res);
+      }
+    }
+  } catch (e) {
+    // If public/ is not built yet, skip gracefully
+  }
+  return results;
+}
+
+async function checkHtmlFile(filePath) {
+  const relativePath = path.relative(ROOT_DIR, filePath);
   const html = await fs.readFile(filePath, "utf8");
   const errors = [];
   const scriptPattern = /<script\b([^>]*)type=["']application\/ld\+json["']([^>]*)>([\s\S]*?)<\/script>/gi;
@@ -92,12 +100,21 @@ async function checkHtmlFile(fileName) {
   let match;
   let index = 0;
 
-  for (const { pattern, message } of FORBIDDEN_SOURCE_PATTERNS) {
-    if (pattern.test(html)) {
-      errors.push(`${fileName}: ${message}`);
+  const parts = relativePath.split(path.sep);
+  const isModelDetail = parts.length === 4 && parts[0] === 'public' && parts[1] === 'model' && parts[3] === 'index.html';
+  let hasSoftwareApplicationOrProduct = false;
+  let hasBreadcrumb = false;
+
+  // 1. 对于非模型详情页，执行黑名单规则匹配
+  if (!isModelDetail) {
+    for (const { pattern, message } of FORBIDDEN_SOURCE_PATTERNS) {
+      if (pattern.test(html)) {
+        errors.push(`${relativePath}: ${message}`);
+      }
     }
   }
 
+  // 2. 提取并解析 application/ld+json 脚本块
   while ((match = scriptPattern.exec(html))) {
     index += 1;
     const attributes = `${match[1] || ""} ${match[2] || ""}`;
@@ -108,27 +125,76 @@ async function checkHtmlFile(fileName) {
     try {
       parsed = JSON.parse(rawJson);
     } catch (error) {
-      errors.push(`${fileName} ${scriptId}: invalid JSON-LD (${error.message})`);
-      return;
+      errors.push(`${relativePath} ${scriptId}: invalid JSON-LD (${error.message})`);
+      continue;
     }
 
-    const datasets = collectJsonLdItems(parsed).filter(hasDatasetType);
+    const items = collectJsonLdItems(parsed);
 
+    // 校验 Dataset（适用于 Dataset 页面）
+    const datasets = items.filter(hasDatasetType);
     for (const dataset of datasets) {
       const length = getCharacterLength(dataset.description);
-
-      if (
-        length < DATASET_DESCRIPTION_MIN_LENGTH ||
-        length > DATASET_DESCRIPTION_MAX_LENGTH
-      ) {
+      if (length < DATASET_DESCRIPTION_MIN_LENGTH || length > DATASET_DESCRIPTION_MAX_LENGTH) {
         errors.push(
-          `${fileName} ${scriptId}: Dataset.description length is ${length}, expected ${DATASET_DESCRIPTION_MIN_LENGTH}-${DATASET_DESCRIPTION_MAX_LENGTH}`
+          `${relativePath} ${scriptId}: Dataset.description length is ${length}, expected ${DATASET_DESCRIPTION_MIN_LENGTH}-${DATASET_DESCRIPTION_MAX_LENGTH}`
         );
       }
-
       if (Object.prototype.hasOwnProperty.call(dataset, "hasPart")) {
-        errors.push(`${fileName} ${scriptId}: Dataset must not include hasPart`);
+        errors.push(`${relativePath} ${scriptId}: Dataset must not include hasPart`);
       }
+    }
+
+    // 3. 大模型详情页专用 Schema 强校验
+    if (isModelDetail) {
+      const softwareApps = items.filter(
+        item => item?.["@type"] === "SoftwareApplication" || item?.["@type"] === "Product"
+      );
+      const breadcrumbs = items.filter(item => item?.["@type"] === "BreadcrumbList");
+
+      if (softwareApps.length > 0) {
+        hasSoftwareApplicationOrProduct = true;
+        for (const app of softwareApps) {
+          if (!app.name || !app.name.trim()) {
+            errors.push(`${relativePath} ${scriptId}: SoftwareApplication/Product name is missing or empty`);
+          }
+          if (!app.description || !app.description.trim()) {
+            errors.push(`${relativePath} ${scriptId}: SoftwareApplication/Product description is missing or empty`);
+          }
+          if (!app.provider || typeof app.provider !== "object" || !app.provider.name) {
+            errors.push(`${relativePath} ${scriptId}: SoftwareApplication/Product provider or provider.name is missing`);
+          }
+          if (!app.offers || typeof app.offers !== "object" || !app.offers.price || !app.offers.priceCurrency) {
+            errors.push(`${relativePath} ${scriptId}: SoftwareApplication/Product offers or offers.price/priceCurrency is missing`);
+          }
+        }
+      }
+
+      if (breadcrumbs.length > 0) {
+        hasBreadcrumb = true;
+        for (const bc of breadcrumbs) {
+          const list = bc.itemListElement;
+          if (!Array.isArray(list) || list.length < 3) {
+            errors.push(`${relativePath} ${scriptId}: BreadcrumbList itemListElement must be an array with at least 3 items`);
+          } else {
+            list.forEach((elem, idx) => {
+              if (!elem.position || !elem.name || !elem.item) {
+                errors.push(`${relativePath} ${scriptId}: Breadcrumb item at position ${idx + 1} is missing key attributes (position, name, item)`);
+              }
+            });
+          }
+        }
+      }
+    }
+  }
+
+  // 4. 强约束报错
+  if (isModelDetail) {
+    if (!hasSoftwareApplicationOrProduct) {
+      errors.push(`${relativePath}: missing SoftwareApplication or Product JSON-LD schema`);
+    }
+    if (!hasBreadcrumb) {
+      errors.push(`${relativePath}: missing BreadcrumbList JSON-LD schema`);
     }
   }
 
@@ -136,13 +202,18 @@ async function checkHtmlFile(fileName) {
 }
 
 async function main() {
-  const errors = (await Promise.all(HTML_FILES.map(checkHtmlFile))).flat();
+  const rootFiles = HTML_FILES.map(name => path.join(ROOT_DIR, name));
+  const publicDir = path.join(ROOT_DIR, "public");
+  const publicFiles = await findHtmlFilesRecursively(publicDir);
+  const allFiles = [...rootFiles, ...publicFiles];
+
+  const uniqueFiles = Array.from(new Set(allFiles));
+  const errors = (await Promise.all(uniqueFiles.map(checkHtmlFile))).flat();
 
   if (errors.length) {
     for (const error of errors) {
       console.error(`[schema] ${error}`);
     }
-
     process.exitCode = 1;
     return;
   }

@@ -627,8 +627,22 @@
       `;
     }
 
+    function normalizeModelId(id) {
+      if (!id || typeof id !== 'string') return id;
+      const clean = id.trim();
+      const aliases = window.MODEL_ID_ALIASES || {};
+      if (aliases[clean]) {
+        return aliases[clean];
+      }
+      let fallback = clean.replace(/^(google|openai|kimi|anthropic|baidu|tencent)-/, '');
+      fallback = fallback.replace(/^qwen(\d+)-(\d+)/i, 'qwen$1.$2');
+      fallback = fallback.replace(/^gpt-(\d+)-(\d+)/i, 'gpt-$1.$2');
+      fallback = fallback.replace(/^gemini-(\d+)-(\d+)/i, 'gemini-$1.$2');
+      return fallback;
+    }
+
     function getModelById(modelId) {
-      return state.models.find((model) => model.id === modelId) || null;
+      return state.models.find((model) => normalizeModelId(model.id) === normalizeModelId(modelId)) || null;
     }
 
     function getPreferredSelection(preferredId, fallbackIndex, excludedId) {
