@@ -4,7 +4,7 @@
   "description": "Static AI model pricing radar with JSON data updates and lightweight Node.js scripts.",
   "main": "index.js",
   "scripts": {
-    "build": "node scripts/prepare-static.js && npx tailwindcss -i ./src/input.css -o ./public/dist/styles.css --minify",
+    "build": "node scripts/prepare-static.js && npx tailwindcss -i ./src/input.css -o ./public/dist/styles.css --minify && node scripts/check-sitemap.js",
     "deploy": "wrangler deploy",
     "schema:check": "node scripts/check-structured-data.js",
     "update": "node scripts/update.js",

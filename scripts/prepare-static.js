@@ -43,6 +43,7 @@ const STATIC_ENTRIES = [
   "api.html",
   "robots.txt",
   "sitemap.xml",
+  "_headers",
   "data"
 ];
 const ROUTE_ALIASES = [
@@ -111,6 +112,20 @@ async function copyEntry(sourceRelativePath, targetRelativePath = sourceRelative
   console.log(`[build] copied ${sourceRelativePath} -> public/${targetRelativePath}`);
 }
 
+async function updateCanonicalHref(targetRelativePath, newCanonicalUrl) {
+  const targetPath = path.join(PUBLIC_DIR, targetRelativePath);
+  let content = await fs.readFile(targetPath, "utf8");
+  content = content.replace(
+    /<link\s+rel=["']canonical["']\s+href=["']([\s\S]*?)["']\s*\/?>/i,
+    `<link rel="canonical" href="${newCanonicalUrl}" />`
+  );
+  content = content.replace(
+    /<meta\s+property=["']og:url["']\s+content=["']([\s\S]*?)["']\s*\/?>/i,
+    `<meta property="og:url" content="${newCanonicalUrl}" />`
+  );
+  await fs.writeFile(targetPath, content, "utf8");
+}
+
 async function createModelAliases(dataset) {
   const models = Array.isArray(dataset?.models) ? dataset.models : [];
 
@@ -120,7 +135,9 @@ async function createModelAliases(dataset) {
     }
 
     const encodedId = encodeURIComponent(model.id.trim());
-    await copyEntry("model.html", path.join("model", encodedId, "index.html"));
+    const aliasPath = path.join("model", encodedId, "index.html");
+    await copyEntry("model.html", aliasPath);
+    await updateCanonicalHref(aliasPath, `https://modelradar.cn/model/${encodedId}`);
   }
 
   console.log(`[build] generated ${models.length} model clean-route aliases`);
@@ -128,7 +145,9 @@ async function createModelAliases(dataset) {
 
 async function createCompareAliases() {
   for (const page of FIXED_COMPARE_PAGES) {
-    await copyEntry("compare.html", path.join("compare", page.slug, "index.html"));
+    const aliasPath = path.join("compare", page.slug, "index.html");
+    await copyEntry("compare.html", aliasPath);
+    await updateCanonicalHref(aliasPath, `https://modelradar.cn/compare/${page.slug}`);
   }
 
   console.log(`[build] generated ${FIXED_COMPARE_PAGES.length} fixed compare landing pages`);
@@ -136,7 +155,9 @@ async function createCompareAliases() {
 
 async function createProviderAliases() {
   for (const provider of FIXED_PROVIDERS) {
-    await copyEntry("provider.html", path.join("provider", provider.slug, "index.html"));
+    const aliasPath = path.join("provider", provider.slug, "index.html");
+    await copyEntry("provider.html", aliasPath);
+    await updateCanonicalHref(aliasPath, `https://modelradar.cn/provider/${provider.slug}`);
   }
 
   console.log(`[build] generated ${FIXED_PROVIDERS.length} provider landing pages`);

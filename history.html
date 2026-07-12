@@ -151,6 +151,15 @@
   </footer>
 
   <script>
+    function normalizeModelId(id) {
+      if (!id || typeof id !== 'string') return id;
+      let clean = id.trim();
+      clean = clean.replace(/^(google|openai|kimi|anthropic|baidu|tencent)-/, '');
+      clean = clean.replace(/^qwen(\d+)-(\d+)/i, 'qwen$1.$2');
+      clean = clean.replace(/^gpt-(\d+)-(\d+)/i, 'gpt-$1.$2');
+      clean = clean.replace(/^gemini-(\d+)-(\d+)/i, 'gemini-$1.$2');
+      return clean;
+    }
     const CHANGELOG_ENDPOINT = '/data/changelog.json';
     const historyUpdated = document.getElementById('historyUpdated');
     const summaryList = document.getElementById('summaryList');
@@ -296,7 +305,7 @@
         return `
           <tr>
             <td class="mono">${escapeHtml(item.date || '—')}</td>
-            <td><span class="model-name">${escapeHtml(item.modelName || item.modelId || '未知模型')}</span></td>
+            <td><span class="model-name">${escapeHtml(item.modelName || normalizeModelId(item.modelId) || '未知模型')}</span></td>
             <td>${escapeHtml(item.provider || '—')}</td>
             <td><span class="tag ${formatChangeTypeClass(item.type)}">${escapeHtml(formatFieldLabel(item))}</span></td>
             <td class="mono">${formatValue(item.previousValue, item.field, item.currency)}</td>

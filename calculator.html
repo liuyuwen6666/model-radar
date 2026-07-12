@@ -122,8 +122,8 @@
             <div class="info-item"><span>更新于：</span><strong id="infoUpdated">-</strong></div>
           </div>
           <div style="margin-top: 16px; display: flex; gap: 12px;">
-            <a id="linkModel" href="#" class="btn" style="padding: 8px 12px; font-size: 13px;">查看模型详情</a>
-            <a id="linkSource" href="#" target="_blank" rel="nofollow noopener" class="btn" style="padding: 8px 12px; font-size: 13px;">官方价格页</a>
+            <a id="linkModel" href="/" class="btn" style="padding: 8px 12px; font-size: 13px;">查看模型详情</a>
+            <a id="linkSource" href="/" target="_blank" rel="nofollow noopener" class="btn" style="padding: 8px 12px; font-size: 13px;">官方价格页</a>
           </div>
         </div>
       </div>
@@ -274,8 +274,8 @@
       document.getElementById('infoCachePrice').textContent = cacheReadPrice !== null ? formatDetailPrice(cacheReadPrice, model.cacheReadPriceUsdPer1M, currency) : '无';
       document.getElementById('infoUpdated').textContent = model.updatedAt ? model.updatedAt.slice(0, 10) : '未知';
       
-      document.getElementById('linkModel').href = `/model/${encodeURIComponent(model.id)}`;
-      document.getElementById('linkSource').href = model.sourceUrl || '#';
+      document.getElementById('linkModel').href = '/model/' + encodeURIComponent(model.id);
+      document.getElementById('linkSource').href = model.sourceUrl || '/';
     }
 
     modelSelect.addEventListener('change', update);

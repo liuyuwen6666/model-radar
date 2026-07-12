@@ -4,7 +4,7 @@
     <lastmod>2026-07-12</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/en</loc>
+    <loc>https://modelradar.cn/en/</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
   <url>
@@ -29,18 +29,6 @@
   </url>
   <url>
     <loc>https://modelradar.cn/api</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/data/models.json</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/data/changelog.json</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/data/history/2026-07-12.json</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
   <url>
@@ -1141,18 +1129,6 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/hunyuan-vision-1-5-instruct</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/compare?left=deepseek-v4-flash&amp;right=anthropic-claude-3-7-sonnet</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/compare?left=deepseek-v4-flash&amp;right=openai-gpt-5-5</loc>
-    <lastmod>2026-07-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/compare?left=anthropic-claude-3-7-sonnet&amp;right=openai-gpt-5-5</loc>
     <lastmod>2026-07-12</lastmod>
   </url>
   <url>
