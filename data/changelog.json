@@ -1,18 +1,55 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-24T00:00:00.000Z",
-  "effectiveDate": "2026-07-24",
+  "generatedAt": "2026-07-25T00:00:00.000Z",
+  "effectiveDate": "2026-07-25",
   "summary": {
-    "totalChanges": 0,
+    "totalChanges": 1,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 0,
+    "newModelCount": 1,
     "removedModelCount": 0
   },
-  "latest": [],
+  "latest": [
+    {
+      "id": "2026-07-25:claude-opus-5:model:new_model",
+      "date": "2026-07-25",
+      "modelId": "claude-opus-5",
+      "modelName": "Opus 5",
+      "provider": "Anthropic",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "Opus 5",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 Opus 5。",
+      "currency": "USD",
+      "sourceUrl": "https://claude.com/pricing",
+      "sourceType": "provider"
+    }
+  ],
   "history": [
+    {
+      "id": "2026-07-25:claude-opus-5:model:new_model",
+      "date": "2026-07-25",
+      "modelId": "claude-opus-5",
+      "modelName": "Opus 5",
+      "provider": "Anthropic",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "Opus 5",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 Opus 5。",
+      "currency": "USD",
+      "sourceUrl": "https://claude.com/pricing",
+      "sourceType": "provider"
+    },
     {
       "id": "2026-07-22:gemini-3.5-flash-lite:model:new_model",
       "date": "2026-07-22",
