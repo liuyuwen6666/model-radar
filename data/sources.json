@@ -187,6 +187,7 @@
     "label": "通义千问 Pricing",
     "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
     "models": [
+      "qwen3.8-max",
       "qwen3.7-max",
       "qwen3-max",
       "qwen3-max-preview",
