@@ -9,6 +9,34 @@ const FIXED_PROVIDERS = [
   { slug: 'hunyuan', name: '腾讯混元' }
 ];
 
+function getDynamicProviders(dataset) {
+  const models = Array.isArray(dataset?.models) ? dataset.models : [];
+  const map = new Map();
+
+  for (const p of FIXED_PROVIDERS) {
+    map.set(p.slug, p);
+  }
+
+  for (const m of models) {
+    if (!m || !m.provider) continue;
+    const providerName = String(m.provider).trim();
+    if (!providerName) continue;
+
+    const existing = Array.from(map.values()).find(
+      p => p.name.toLowerCase() === providerName.toLowerCase() || p.slug.toLowerCase() === providerName.toLowerCase()
+    );
+
+    if (!existing) {
+      const slug = providerName.toLowerCase().replace(/\s+/g, '-');
+      map.set(slug, { slug, name: providerName });
+    }
+  }
+
+  return Array.from(map.values());
+}
+
 module.exports = {
-  FIXED_PROVIDERS
+  FIXED_PROVIDERS,
+  getDynamicProviders
 };
+

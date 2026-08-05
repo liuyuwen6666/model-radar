@@ -198,6 +198,28 @@ async function checkHtmlFile(filePath) {
     }
   }
 
+  // 5. 校验 public/ 产物下的静态 Head SEO Title 唯一性与内容预渲染
+  if (parts[0] === 'public') {
+    if (parts[1] === 'model' && parts[3] === 'index.html') {
+      if (html.includes('<title>模型详情｜ModelRadar</title>')) {
+        errors.push(`${relativePath}: model detail static page must not use default non-unique title`);
+      }
+    }
+    if (parts[1] === 'provider' && parts[3] === 'index.html') {
+      if (html.includes('<title>厂商详情｜ModelRadar</title>')) {
+        errors.push(`${relativePath}: provider static page must not use default non-unique title`);
+      }
+      if (!/<tbody id="modelTableBody">[\s\S]*?<tr/i.test(html)) {
+        errors.push(`${relativePath}: provider static page model table body is empty`);
+      }
+    }
+    if (parts[1] === 'compare' && parts[3] === 'index.html') {
+      if (html.includes('<title>AI 模型对比｜ModelRadar</title>')) {
+        errors.push(`${relativePath}: compare static page must not use default non-unique title`);
+      }
+    }
+  }
+
   return errors;
 }
 

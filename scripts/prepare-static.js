@@ -24,7 +24,7 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 const { writeSitemapFromDatasetPath } = require("./lib/sitemap");
 const { FIXED_COMPARE_PAGES } = require("./lib/compare-pages");
-const { FIXED_PROVIDERS } = require("./lib/provider-pages");
+const { FIXED_PROVIDERS, getDynamicProviders } = require("./lib/provider-pages");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
@@ -112,7 +112,7 @@ async function copyEntry(sourceRelativePath, targetRelativePath = sourceRelative
   console.log(`[build] copied ${sourceRelativePath} -> public/${targetRelativePath}`);
 }
 
-async function processHtmlSEOAndAliases(targetRelativePath, newCanonicalUrl, aliases, extraReplacer = null) {
+async function processHtmlSEOAndAliases(targetRelativePath, seoMeta, aliases, extraReplacer = null) {
   const targetPath = path.join(PUBLIC_DIR, targetRelativePath);
   let content = await fs.readFile(targetPath, "utf8");
 
@@ -122,15 +122,31 @@ async function processHtmlSEOAndAliases(targetRelativePath, newCanonicalUrl, ali
     content = content.replace(/<head>/i, `<head>${scriptTag}`);
   }
 
-  // 2. 重写 canonical (如果传了的话)
-  if (newCanonicalUrl) {
+  // 2. 重写 SEO 标签 (title, description, canonicalUrl, og 标签)
+  const canonicalUrl = typeof seoMeta === "string" ? seoMeta : seoMeta?.canonicalUrl;
+  const title = typeof seoMeta === "object" ? seoMeta?.title : null;
+  const description = typeof seoMeta === "object" ? seoMeta?.description : null;
+
+  if (title) {
+    content = content.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);
+    content = content.replace(/<meta\s+property=["']og:title["']\s+content=["'][\s\S]*?["']\s*\/?>/i, `<meta property="og:title" content="${title}" />`);
+    content = content.replace(/<meta\s+name=["']twitter:title["']\s+content=["'][\s\S]*?["']\s*\/?>/i, `<meta name="twitter:title" content="${title}" />`);
+  }
+
+  if (description) {
+    content = content.replace(/<meta\s+name=["']description["']\s+content=["'][\s\S]*?["']\s*\/?>/i, `<meta name="description" content="${description}" />`);
+    content = content.replace(/<meta\s+property=["']og:description["']\s+content=["'][\s\S]*?["']\s*\/?>/i, `<meta property="og:description" content="${description}" />`);
+    content = content.replace(/<meta\s+name=["']twitter:description["']\s+content=["'][\s\S]*?["']\s*\/?>/i, `<meta name="twitter:description" content="${description}" />`);
+  }
+
+  if (canonicalUrl) {
     content = content.replace(
       /<link\s+rel=["']canonical["']\s+href=["']([\s\S]*?)["']\s*\/?>/i,
-      `<link rel="canonical" href="${newCanonicalUrl}" />`
+      `<link rel="canonical" href="${canonicalUrl}" />`
     );
     content = content.replace(
       /<meta\s+property=["']og:url["']\s+content=["']([\s\S]*?)["']\s*\/?>/i,
-      `<meta property="og:url" content="${newCanonicalUrl}" />`
+      `<meta property="og:url" content="${canonicalUrl}" />`
     );
   }
 
@@ -345,6 +361,7 @@ function modelExtraReplacer(content, model, allModels) {
   // 6. 注入底部拓扑内链
   const relatedModelsHtml = getRelatedModelsLinksHtml(model, allModels);
   const relatedCompareHtml = getRelatedCompareLinksHtml(model);
+  const providerHubHtml = `<div style="margin-top: 16px; border-top: 1px solid #f1f5f9; padding-top: 16px;"><a href="/provider/${providerSlug}" style="font-size: 14px; color: var(--brand); font-weight: 700; text-decoration: underline;">查看 ${escapeHtml(model.provider)} 旗下全部 API 模型与汇总评测 ➔</a></div>`;
   const internalLinksHtml = `
 <section class="related-links" style="margin-top: 40px; padding-top: 32px; border-top: 2px solid #f1f5f9; background: #fff; border-radius: 8px; padding: 24px;">
   <div class="container" style="max-width: 1200px; margin: 0 auto;">
@@ -360,6 +377,7 @@ function modelExtraReplacer(content, model, allModels) {
         <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 12px;" id="relatedCompareLinks">
           ${relatedCompareHtml}
         </ul>
+        ${providerHubHtml}
       </div>
     </div>
   </div>
@@ -431,6 +449,105 @@ function compareExtraReplacer(content, leftModel, rightModel, page) {
   return content;
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function providerExtraReplacer(content, providerObj, allModels) {
+  const providerName = providerObj.name;
+  const models = allModels.filter(m => m.provider === providerName);
+
+  if (models.length === 0) {
+    return content;
+  }
+
+  content = content.replace(/id="loadingState"/i, 'id="loadingState" hidden');
+  content = content.replace(/id="providerView"\s+hidden/i, 'id="providerView"');
+
+  const nativeInputPrices = models.map(m => m.inputPricePer1M).filter(v => typeof v === 'number');
+  const nativeOutputPrices = models.map(m => m.outputPricePer1M).filter(v => typeof v === 'number');
+  const minInput = nativeInputPrices.length ? Math.min(...nativeInputPrices) : null;
+  const minOutput = nativeOutputPrices.length ? Math.min(...nativeOutputPrices) : null;
+  const maxContext = Math.max(...models.map(m => m.contextWindow).filter(v => typeof v === 'number'));
+  const latestUpdate = models.reduce((a, b) => (!a || (b.updatedAt && b.updatedAt > a)) ? b.updatedAt : a, '');
+  const currency = models[0]?.currency || 'USD';
+
+  const formatP = (v) => v !== null ? (currency === 'CNY' ? `¥${v.toFixed(2)}` : `$${v.toFixed(2)}`) : '待更新';
+  const formatCtx = (v) => Number.isFinite(v) ? `${(v / 1000).toFixed(0)}K` : '待更新';
+
+  content = content.replace(/<h1 id="providerName"[\s\S]*?>厂商名称<\/h1>/i, `<h1 id="providerName" style="margin-top: 0; margin-bottom: 8px; font-size: clamp(30px, 4vw, 42px);">${escapeHtml(providerName)}</h1>`);
+  content = content.replace(/<p id="providerDescription"[\s\S]*?>[\s\S]*?<\/p>/i, `<p id="providerDescription" style="margin-bottom: 16px; font-size: 15px; color: var(--muted);">查看 ${escapeHtml(providerName)} 旗下所有 AI 模型的价格详情、性能指标与能力标签。</p>`);
+  content = content.replace(/<strong id="modelCountStat">0<\/strong>/i, `<strong id="modelCountStat">${models.length}</strong>`);
+  content = content.replace(/<strong id="maxContextStat">-<\/strong>/i, `<strong id="maxContextStat">${formatCtx(maxContext)}</strong>`);
+  content = content.replace(/<strong id="minInputPriceStat">-<\/strong>/i, `<strong id="minInputPriceStat">${formatP(minInput)}</strong>`);
+  content = content.replace(/<strong id="minOutputPriceStat">-<\/strong>/i, `<strong id="minOutputPriceStat">${formatP(minOutput)}</strong>`);
+  content = content.replace(/id="updatedLabel"[\s\S]*?>最后更新：未知/i, `id="updatedLabel" style="font-size: 13px; color: var(--muted); font-weight: 600;">最后更新：${latestUpdate ? latestUpdate.slice(0, 10) : '近期'}`);
+
+  const rowsHtml = models.map(m => {
+    const encodedId = encodeURIComponent(m.id.trim());
+    const modelLink = `<a href="/model/${encodedId}" style="color:var(--brand);font-weight:700;font-size:15px;">${escapeHtml(m.name)}</a>`;
+    const inputP = m.inputPriceUsdPer1M !== null ? `$${m.inputPriceUsdPer1M.toFixed(4).replace(/\.?0+$/, '')}` : '待更新';
+    const outputP = m.outputPriceUsdPer1M !== null ? `$${m.outputPriceUsdPer1M.toFixed(4).replace(/\.?0+$/, '')}` : '待更新';
+    const cacheW = m.cacheWritePriceUsdPer1M !== null ? `$${m.cacheWritePriceUsdPer1M.toFixed(4).replace(/\.?0+$/, '')}` : '待更新';
+    const cacheR = m.cacheReadPriceUsdPer1M !== null ? `$${m.cacheReadPriceUsdPer1M.toFixed(4).replace(/\.?0+$/, '')}` : '待更新';
+    const ctxStr = formatCtx(m.contextWindow);
+
+    return `
+      <tr>
+        <td>
+          ${modelLink}
+          ${m.sourceType === 'provider'
+            ? '<span style="font-size: 10px; background: #ecfdf5; color: #059669; padding: 1px 4px; border-radius: 4px; font-weight: 700; margin-left: 4px; display: inline-block; vertical-align: middle;">官方</span>'
+            : '<span style="font-size: 10px; background: #fffbeb; color: #d97706; padding: 1px 4px; border-radius: 4px; font-weight: 700; margin-left: 4px; display: inline-block; vertical-align: middle;">自备</span>'
+          }<br>
+          <span style="font-size: 11px; color: var(--muted);">${escapeHtml(m.id)}</span>
+        </td>
+        <td class="mono">${inputP}</td>
+        <td class="mono">${outputP}</td>
+        <td class="mono">${cacheW}</td>
+        <td class="mono">${cacheR}</td>
+        <td class="mono">${ctxStr}</td>
+        <td>${(m.capabilities || []).map(cap => `<span class="tag text-xs" style="margin:2px 0;background:#f1f5f9;color:#475569;">${escapeHtml(cap)}</span>`).join(' ') || '-'}</td>
+        <td style="font-size: 13px; color: #334155; line-height: 1.4;">${(m.recommendedFor || []).join('、') || '待补充'}</td>
+        <td><a href="${escapeHtml(m.sourceUrl || '#')}" target="_blank" rel="nofollow noopener" style="color:var(--brand);text-decoration:underline;font-size:13px;font-weight:600;">官方链接 &nearr;</a></td>
+      </tr>
+    `;
+  }).join('');
+
+  content = content.replace(/<tbody id="modelTableBody"><\/tbody>/i, `<tbody id="modelTableBody">${rowsHtml}</tbody>`);
+
+  const canonicalUrl = `https://modelradar.cn/provider/${providerObj.slug}`;
+  const ldJson = `
+  <script id="providerStructuredData" type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "${providerName} 模型价格详情与对比｜ModelRadar",
+    "description": "查看 ${providerName} 旗下所有 AI 模型的价格对比，包括输入价格、输出价格、上下文长度和官方来源。",
+    "url": "${canonicalUrl}",
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": ${models.length},
+      "itemListElement": ${JSON.stringify(models.map((m, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "url": `https://modelradar.cn/model/${encodeURIComponent(m.id)}`,
+        "name": m.name
+      })))}
+    }
+  }
+  </script>
+  `;
+  content = content.replace(/<\/head>/i, `${ldJson}\n</head>`);
+
+  return content;
+}
+
 async function createModelAliases(dataset, aliases) {
   const models = Array.isArray(dataset?.models) ? dataset.models : [];
 
@@ -442,9 +559,17 @@ async function createModelAliases(dataset, aliases) {
     const encodedId = encodeURIComponent(model.id.trim());
     const aliasPath = path.join("model", encodedId, "index.html");
     await copyEntry("model.html", aliasPath);
+
+    const title = `${model.name} API 价格、上下文与性能规格｜ModelRadar`;
+    const description = generateDescriptionText(model);
+
     await processHtmlSEOAndAliases(
       aliasPath, 
-      `https://modelradar.cn/model/${encodedId}`, 
+      {
+        title,
+        description,
+        canonicalUrl: `https://modelradar.cn/model/${encodedId}`
+      },
       aliases,
       (html) => modelExtraReplacer(html, model, models)
     );
@@ -463,9 +588,16 @@ async function createCompareAliases(dataset, aliases) {
     const leftModel = models.find(m => m.id === page.leftId) || { name: page.leftId, provider: "AI" };
     const rightModel = models.find(m => m.id === page.rightId) || { name: page.rightId, provider: "AI" };
 
+    const title = `${page.titleLabel} 价格对比与参数评测｜ModelRadar`;
+    const description = page.descriptionLabel;
+
     await processHtmlSEOAndAliases(
       aliasPath, 
-      `https://modelradar.cn/compare/${page.slug}`, 
+      {
+        title,
+        description,
+        canonicalUrl: `https://modelradar.cn/compare/${page.slug}`
+      },
       aliases,
       (html) => compareExtraReplacer(html, leftModel, rightModel, page)
     );
@@ -474,14 +606,29 @@ async function createCompareAliases(dataset, aliases) {
   console.log(`[build] generated ${FIXED_COMPARE_PAGES.length} fixed compare landing pages`);
 }
 
-async function createProviderAliases(aliases) {
-  for (const provider of FIXED_PROVIDERS) {
+async function createProviderAliases(dataset, aliases) {
+  const providers = getDynamicProviders(dataset);
+
+  for (const provider of providers) {
     const aliasPath = path.join("provider", provider.slug, "index.html");
     await copyEntry("provider.html", aliasPath);
-    await processHtmlSEOAndAliases(aliasPath, `https://modelradar.cn/provider/${provider.slug}`, aliases);
+
+    const title = `${provider.name} 所有 AI 模型 API 价格与上下文对比｜ModelRadar`;
+    const description = `查看 ${provider.name} 旗下所有 AI 模型的价格对比，包含输入价格、输出价格、缓存价格、上下文长度和官方来源。ModelRadar 实时追踪 ${provider.name} 模型 API 成本。`;
+
+    await processHtmlSEOAndAliases(
+      aliasPath,
+      {
+        title,
+        description,
+        canonicalUrl: `https://modelradar.cn/provider/${provider.slug}`
+      },
+      aliases,
+      (html) => providerExtraReplacer(html, provider, dataset.models)
+    );
   }
 
-  console.log(`[build] generated ${FIXED_PROVIDERS.length} provider landing pages`);
+  console.log(`[build] generated ${providers.length} provider landing pages`);
 }
 
 async function main() {
@@ -527,7 +674,7 @@ async function main() {
 
   await createModelAliases(dataset, aliases);
   await createCompareAliases(dataset, aliases);
-  await createProviderAliases(aliases);
+  await createProviderAliases(dataset, aliases);
 
   const assetsPath = path.join(ROOT_DIR, "assets");
 
