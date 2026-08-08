@@ -309,11 +309,11 @@
     "label": "Moonshot Pricing",
     "url": "https://platform.moonshot.cn/docs/pricing/chat",
     "models": [
-      "kimi-k2.6",
       "kimi-k2.5",
+      "kimi-k2.6",
+      "moonshot-v1-128k",
       "moonshot-v1-8k",
       "moonshot-v1-32k",
-      "moonshot-v1-128k",
       "moonshot-v1-8k-vision-preview",
       "moonshot-v1-32k-vision-preview",
       "moonshot-v1-128k-vision-preview"
