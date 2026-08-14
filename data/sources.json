@@ -83,6 +83,7 @@
     "label": "Google AI Pricing",
     "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
     "models": [
+      "gemini-3.7-flash",
       "gemini-3.6-flash",
       "gemini-3.5-flash",
       "gemini-3.5-live-translate-preview",
@@ -228,6 +229,7 @@
       "qwen-mt-turbo",
       "qwen-doc-turbo",
       "qwen-deep-research",
+      "qwen3.8-2.4t-a95b",
       "qwen3.6-35b-a3b",
       "qwen3.6-27b",
       "qwen3.5-397b-a17b",
