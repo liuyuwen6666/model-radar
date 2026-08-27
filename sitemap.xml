@@ -324,6 +324,10 @@
     <lastmod>2026-08-27</lastmod>
   </url>
   <url>
+    <loc>https://modelradar.cn/model/gemini-omni-1.1-flash</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
     <loc>https://modelradar.cn/model/gemini-omni-flash-preview</loc>
     <lastmod>2026-08-27</lastmod>
   </url>
@@ -1000,6 +1004,18 @@
     <lastmod>2026-08-27</lastmod>
   </url>
   <url>
+    <loc>https://modelradar.cn/model/doubao-seed-evolving</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/doubao-seed-2.1-pro</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/doubao-seed-2.1-turbo</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
     <loc>https://modelradar.cn/model/doubao-seed-2.0-pro-32k</loc>
     <lastmod>2026-08-27</lastmod>
   </url>
@@ -1033,22 +1049,6 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/doubao-seed-2.0-mini-256k</loc>
-    <lastmod>2026-08-27</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/doubao-1.5-pro-32k</loc>
-    <lastmod>2026-08-27</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/doubao-seed-evolving</loc>
-    <lastmod>2026-08-27</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/doubao-seed-2.1-pro</loc>
-    <lastmod>2026-08-27</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/doubao-seed-2.1-turbo</loc>
     <lastmod>2026-08-27</lastmod>
   </url>
   <url>
@@ -1145,6 +1145,10 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/doubao-seed-translation</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/doubao-1.5-pro-32k</loc>
     <lastmod>2026-08-27</lastmod>
   </url>
   <url>
