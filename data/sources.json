@@ -4,6 +4,7 @@
     "label": "OpenAI API Pricing",
     "url": "https://developers.openai.com/api/docs/pricing",
     "models": [
+      "gpt-6-astra",
       "gpt-5.6-sol",
       "gpt-5.6-terra",
       "gpt-5.6-luna",
@@ -113,6 +114,8 @@
       "veo-3.1-generate-preview",
       "veo-3.1-fast-generate-preview",
       "veo-3.1-lite-generate-preview",
+      "lyria-3.5-clip-preview",
+      "lyria-3.5-pro-preview",
       "lyria-3-clip-preview",
       "lyria-3-pro-preview",
       "gemini-embedding-2",
@@ -151,6 +154,9 @@
     "label": "豆包 Pricing",
     "url": "https://www.volcengine.com/docs/82379/1544106?lang=zh",
     "models": [
+      "doubao-seed-evolving",
+      "doubao-seed-2.1-pro",
+      "doubao-seed-2.1-turbo",
       "doubao-seed-2.0-pro-32k",
       "doubao-seed-2.0-pro-128k",
       "doubao-seed-2.0-pro-256k",
@@ -160,10 +166,6 @@
       "doubao-seed-2.0-mini-32k",
       "doubao-seed-2.0-mini-128k",
       "doubao-seed-2.0-mini-256k",
-      "doubao-1.5-pro-32k",
-      "doubao-seed-evolving",
-      "doubao-seed-2.1-pro",
-      "doubao-seed-2.1-turbo",
       "doubao-seed-2.0-code-32k",
       "doubao-seed-2.0-code-128k",
       "doubao-seed-2.0-code-256k",
@@ -188,6 +190,7 @@
       "doubao-seed-1.6-vision-128k",
       "doubao-seed-1.6-vision-256k",
       "doubao-seed-translation",
+      "doubao-1.5-pro-32k",
       "doubao-1.5-lite-32k",
       "doubao-1.5-vision-pro"
     ]
