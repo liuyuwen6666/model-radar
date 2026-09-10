@@ -3,16 +3,53 @@
   "generatedAt": "2026-09-10T00:00:00.000Z",
   "effectiveDate": "2026-09-10",
   "summary": {
-    "totalChanges": 0,
+    "totalChanges": 1,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 0,
+    "newModelCount": 1,
     "removedModelCount": 0
   },
-  "latest": [],
+  "latest": [
+    {
+      "id": "2026-09-10:deepseek-flash:model:new_model",
+      "date": "2026-09-10",
+      "modelId": "deepseek-flash",
+      "modelName": "DeepSeek V4.1 Flash",
+      "provider": "DeepSeek",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "DeepSeek V4.1 Flash",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 DeepSeek V4.1 Flash。",
+      "currency": "CNY",
+      "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "sourceType": "provider"
+    }
+  ],
   "history": [
+    {
+      "id": "2026-09-10:deepseek-flash:model:new_model",
+      "date": "2026-09-10",
+      "modelId": "deepseek-flash",
+      "modelName": "DeepSeek V4.1 Flash",
+      "provider": "DeepSeek",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "DeepSeek V4.1 Flash",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 DeepSeek V4.1 Flash。",
+      "currency": "CNY",
+      "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "sourceType": "provider"
+    },
     {
       "id": "2026-09-09:gemini-robotics-er-2-preview:inputPriceUsdPer1M:price_decrease",
       "date": "2026-09-09",
