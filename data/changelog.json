@@ -13,25 +13,43 @@
   },
   "latest": [
     {
-      "id": "2026-09-18:qwen3.8-omni-flash:model:new_model",
+      "id": "2026-09-18:qwen3.8-livetranslate-flash-realtime:model:new_model",
       "date": "2026-09-18",
-      "modelId": "qwen3.8-omni-flash",
-      "modelName": "Qwen 3.8 Omni Flash",
+      "modelId": "qwen3.8-livetranslate-flash-realtime",
+      "modelName": "Qwen 3.8 Livetranslate Flash Realtime",
       "provider": "阿里通义",
       "field": "model",
       "fieldLabel": "model",
       "type": "new_model",
       "previousValue": null,
-      "currentValue": "Qwen 3.8 Omni Flash",
+      "currentValue": "Qwen 3.8 Livetranslate Flash Realtime",
       "delta": null,
       "deltaPercent": null,
-      "summary": "新增模型 Qwen 3.8 Omni Flash。",
+      "summary": "新增模型 Qwen 3.8 Livetranslate Flash Realtime。",
       "currency": "CNY",
       "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "sourceType": "provider"
     }
   ],
   "history": [
+    {
+      "id": "2026-09-18:qwen3.8-livetranslate-flash-realtime:model:new_model",
+      "date": "2026-09-18",
+      "modelId": "qwen3.8-livetranslate-flash-realtime",
+      "modelName": "Qwen 3.8 Livetranslate Flash Realtime",
+      "provider": "阿里通义",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "Qwen 3.8 Livetranslate Flash Realtime",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 Qwen 3.8 Livetranslate Flash Realtime。",
+      "currency": "CNY",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "sourceType": "provider"
+    },
     {
       "id": "2026-09-18:qwen3.8-omni-flash:model:new_model",
       "date": "2026-09-18",
