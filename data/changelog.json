@@ -1,54 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-23T00:00:00.000Z",
-  "effectiveDate": "2026-09-23",
+  "generatedAt": "2026-09-24T00:00:00.000Z",
+  "effectiveDate": "2026-09-24",
   "summary": {
-    "totalChanges": 2,
+    "totalChanges": 0,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 2,
+    "newModelCount": 0,
     "removedModelCount": 0
   },
-  "latest": [
-    {
-      "id": "2026-09-23:gemini-3.8-flash-lite-tts:model:new_model",
-      "date": "2026-09-23",
-      "modelId": "gemini-3.8-flash-lite-tts",
-      "modelName": "gemini-3.8-flash-lite-tts",
-      "provider": "Google",
-      "field": "model",
-      "fieldLabel": "model",
-      "type": "new_model",
-      "previousValue": null,
-      "currentValue": "gemini-3.8-flash-lite-tts",
-      "delta": null,
-      "deltaPercent": null,
-      "summary": "新增模型 gemini-3.8-flash-lite-tts。",
-      "currency": "USD",
-      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
-      "sourceType": "provider"
-    },
-    {
-      "id": "2026-09-23:gemini-3.8-flash-tts:model:new_model",
-      "date": "2026-09-23",
-      "modelId": "gemini-3.8-flash-tts",
-      "modelName": "gemini-3.8-flash-tts",
-      "provider": "Google",
-      "field": "model",
-      "fieldLabel": "model",
-      "type": "new_model",
-      "previousValue": null,
-      "currentValue": "gemini-3.8-flash-tts",
-      "delta": null,
-      "deltaPercent": null,
-      "summary": "新增模型 gemini-3.8-flash-tts。",
-      "currency": "USD",
-      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
-      "sourceType": "provider"
-    }
-  ],
+  "latest": [],
   "history": [
     {
       "id": "2026-09-23:gemini-3.8-flash-lite-tts:model:new_model",
