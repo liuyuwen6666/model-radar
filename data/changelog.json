@@ -3,16 +3,53 @@
   "generatedAt": "2026-09-29T00:00:00.000Z",
   "effectiveDate": "2026-09-29",
   "summary": {
-    "totalChanges": 0,
+    "totalChanges": 1,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 0,
+    "newModelCount": 1,
     "removedModelCount": 0
   },
-  "latest": [],
+  "latest": [
+    {
+      "id": "2026-09-29:gpt-6.1-sol:model:new_model",
+      "date": "2026-09-29",
+      "modelId": "gpt-6.1-sol",
+      "modelName": "GPT-6.1-sol",
+      "provider": "OpenAI",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "GPT-6.1-sol",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 GPT-6.1-sol。",
+      "currency": "USD",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceType": "provider"
+    }
+  ],
   "history": [
+    {
+      "id": "2026-09-29:gpt-6.1-sol:model:new_model",
+      "date": "2026-09-29",
+      "modelId": "gpt-6.1-sol",
+      "modelName": "GPT-6.1-sol",
+      "provider": "OpenAI",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "GPT-6.1-sol",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 GPT-6.1-sol。",
+      "currency": "USD",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceType": "provider"
+    },
     {
       "id": "2026-09-28:claude-sonnet-5-5:model:new_model",
       "date": "2026-09-28",

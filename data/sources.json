@@ -5,7 +5,7 @@
     "url": "https://developers.openai.com/api/docs/pricing",
     "models": [
       "gpt-6-astra",
-      "gpt-6-sol",
+      "gpt-6.1-sol",
       "gpt-6-luna",
       "gpt-5.6-sol",
       "gpt-5.6-cyber",
@@ -32,6 +32,7 @@
       "gpt-rosalind-research",
       "o4-mini-2025-04-16",
       "o4-mini-2025-04-16with-data-sharing-sharing",
+      "gpt-6-sol",
       "sora-2-720p",
       "sora-2-pro-720p",
       "sora-2-pro-1024p",
