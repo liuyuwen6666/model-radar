@@ -648,18 +648,6 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen3-max</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen3-max-preview</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen3.6-max-preview</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
     <loc>https://modelradar.cn/model/qwen-max</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
@@ -700,10 +688,6 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen-turbo</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
     <loc>https://modelradar.cn/model/qwen3.8-omni-flash</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
@@ -720,14 +704,6 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen-omni-turbo</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen-omni-turbo-latest</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
     <loc>https://modelradar.cn/model/qwen3.5-omni-plus-realtime</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
@@ -740,14 +716,6 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen-omni-turbo-realtime</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen-omni-turbo-realtime-latest</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
     <loc>https://modelradar.cn/model/qwen3-vl-flash</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
@@ -756,19 +724,7 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen-vl-max</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen-vl-plus</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
     <loc>https://modelradar.cn/model/qwen-vl-ocr</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen3-coder-plus</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
@@ -785,10 +741,6 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/qwen-mt-plus</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen-mt-turbo</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
@@ -840,10 +792,6 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen3-32b</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
     <loc>https://modelradar.cn/model/qwen3-30b-a3b</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
@@ -856,19 +804,11 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen2.5-omni-7b</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
     <loc>https://modelradar.cn/model/qwen3-omni-30b-a3b-captioner</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
     <loc>https://modelradar.cn/model/qwen3-vl-235b-a22b-thinking</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen3-vl-235b-a22b-instruct</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
@@ -901,10 +841,6 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/qwen3-coder-30b-a3b-instruct</loc>
-    <lastmod>2026-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen3-coder-next</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
@@ -969,6 +905,70 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/qwen-plus-character-ja</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3-max</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3-max-preview</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3.6-max-preview</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-turbo</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-omni-turbo</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-omni-turbo-latest</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-omni-turbo-realtime</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-omni-turbo-realtime-latest</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-vl-max</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-vl-plus</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3-coder-plus</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-mt-turbo</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3-32b</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen2.5-omni-7b</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3-vl-235b-a22b-instruct</loc>
+    <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3-coder-next</loc>
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
