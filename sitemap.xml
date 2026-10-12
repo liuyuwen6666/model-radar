@@ -788,6 +788,10 @@
     <lastmod>2026-10-12</lastmod>
   </url>
   <url>
+    <loc>https://modelradar.cn/model/qwen-audio-3.1-tts-flash</loc>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
     <loc>https://modelradar.cn/model/qwen3.8-livetranslate-flash-realtime</loc>
     <lastmod>2026-10-12</lastmod>
   </url>
@@ -1140,6 +1144,22 @@
     <lastmod>2026-10-12</lastmod>
   </url>
   <url>
+    <loc>https://modelradar.cn/model/doubao-seed-evolving</loc>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/doubao-seed-2.1-pro</loc>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/doubao-seed-2.1-lite</loc>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/doubao-seed-2.1-turbo</loc>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
     <loc>https://modelradar.cn/model/doubao-seed-2.0-pro-32k</loc>
     <lastmod>2026-10-12</lastmod>
   </url>
@@ -1176,26 +1196,6 @@
     <lastmod>2026-10-12</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/doubao-1.5-pro-32k</loc>
-    <lastmod>2026-10-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/doubao-seed-evolving</loc>
-    <lastmod>2026-10-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/doubao-seed-2.1-pro</loc>
-    <lastmod>2026-10-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/doubao-seed-2.1-lite</loc>
-    <lastmod>2026-10-12</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/doubao-seed-2.1-turbo</loc>
-    <lastmod>2026-10-12</lastmod>
-  </url>
-  <url>
     <loc>https://modelradar.cn/model/doubao-seed-2.0-code-32k</loc>
     <lastmod>2026-10-12</lastmod>
   </url>
@@ -1217,6 +1217,10 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/doubao-seed-translation</loc>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/doubao-1.5-pro-32k</loc>
     <lastmod>2026-10-12</lastmod>
   </url>
   <url>
