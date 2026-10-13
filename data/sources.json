@@ -97,6 +97,7 @@
     "label": "Google AI Pricing",
     "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
     "models": [
+      "gemini-4-argon",
       "gemini-3.8-flash",
       "gemini-3.6-flash",
       "gemini-3.8-live",
