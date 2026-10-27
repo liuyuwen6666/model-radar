@@ -1,18 +1,55 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T00:00:00.000Z",
-  "effectiveDate": "2026-10-26",
+  "generatedAt": "2026-10-27T00:00:00.000Z",
+  "effectiveDate": "2026-10-27",
   "summary": {
-    "totalChanges": 0,
+    "totalChanges": 1,
     "priceIncreaseCount": 0,
     "priceDecreaseCount": 0,
     "pricingAddedCount": 0,
     "pricingRemovedCount": 0,
-    "newModelCount": 0,
+    "newModelCount": 1,
     "removedModelCount": 0
   },
-  "latest": [],
+  "latest": [
+    {
+      "id": "2026-10-27:gpt-6.1-terra:model:new_model",
+      "date": "2026-10-27",
+      "modelId": "gpt-6.1-terra",
+      "modelName": "GPT-6.1-terra",
+      "provider": "OpenAI",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "GPT-6.1-terra",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 GPT-6.1-terra。",
+      "currency": "USD",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceType": "provider"
+    }
+  ],
   "history": [
+    {
+      "id": "2026-10-27:gpt-6.1-terra:model:new_model",
+      "date": "2026-10-27",
+      "modelId": "gpt-6.1-terra",
+      "modelName": "GPT-6.1-terra",
+      "provider": "OpenAI",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "GPT-6.1-terra",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 GPT-6.1-terra。",
+      "currency": "USD",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceType": "provider"
+    },
     {
       "id": "2026-10-22:qwen-audio-3.1-tts-next:model:new_model",
       "date": "2026-10-22",
