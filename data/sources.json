@@ -269,6 +269,7 @@
       "qwen-audio-3.1-asr-flash-filetrans",
       "qwen-audio-3.1-asr-flash",
       "qwen-audio-3.1-realtime-plus",
+      "qwen-audio-3.1-realtime-flash",
       "qwen-audio-3.0-realtime-plus",
       "qwen-audio-3.0-realtime-flash",
       "qwen-plus-character",
