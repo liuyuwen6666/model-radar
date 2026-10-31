@@ -13,25 +13,43 @@
   },
   "latest": [
     {
-      "id": "2026-10-31:gpt-6-rosalind:model:new_model",
+      "id": "2026-10-31:gpt-6-astra-law:model:new_model",
       "date": "2026-10-31",
-      "modelId": "gpt-6-rosalind",
-      "modelName": "GPT-6-rosalind",
+      "modelId": "gpt-6-astra-law",
+      "modelName": "GPT-6-astra-law",
       "provider": "OpenAI",
       "field": "model",
       "fieldLabel": "model",
       "type": "new_model",
       "previousValue": null,
-      "currentValue": "GPT-6-rosalind",
+      "currentValue": "GPT-6-astra-law",
       "delta": null,
       "deltaPercent": null,
-      "summary": "新增模型 GPT-6-rosalind。",
+      "summary": "新增模型 GPT-6-astra-law。",
       "currency": "USD",
       "sourceUrl": "https://developers.openai.com/api/docs/pricing",
       "sourceType": "provider"
     }
   ],
   "history": [
+    {
+      "id": "2026-10-31:gpt-6-astra-law:model:new_model",
+      "date": "2026-10-31",
+      "modelId": "gpt-6-astra-law",
+      "modelName": "GPT-6-astra-law",
+      "provider": "OpenAI",
+      "field": "model",
+      "fieldLabel": "model",
+      "type": "new_model",
+      "previousValue": null,
+      "currentValue": "GPT-6-astra-law",
+      "delta": null,
+      "deltaPercent": null,
+      "summary": "新增模型 GPT-6-astra-law。",
+      "currency": "USD",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "sourceType": "provider"
+    },
     {
       "id": "2026-10-31:gpt-6-rosalind:model:new_model",
       "date": "2026-10-31",
