@@ -840,27 +840,7 @@
     <lastmod>2026-11-07</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen-audio-3.1-tts-next</loc>
-    <lastmod>2026-11-07</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen-audio-3.1-tts-flash</loc>
-    <lastmod>2026-11-07</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen3.8-livetranslate-flash-realtime</loc>
-    <lastmod>2026-11-07</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen3.5-livetranslate-flash-realtime</loc>
-    <lastmod>2026-11-07</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen3-livetranslate-flash</loc>
-    <lastmod>2026-11-07</lastmod>
-  </url>
-  <url>
-    <loc>https://modelradar.cn/model/qwen-audio-3.1-asr-flash-message</loc>
+    <loc>https://modelradar.cn/model/qwen-audio-3.1-asr-flash</loc>
     <lastmod>2026-11-07</lastmod>
   </url>
   <url>
@@ -872,7 +852,15 @@
     <lastmod>2026-11-07</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen-audio-3.1-asr-flash</loc>
+    <loc>https://modelradar.cn/model/qwen-audio-3.1-asr-flash-message</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-audio-3.1-tts-flash</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen-audio-3.1-tts-next</loc>
     <lastmod>2026-11-07</lastmod>
   </url>
   <url>
@@ -889,6 +877,18 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/qwen-audio-3.0-realtime-flash</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3.8-livetranslate-flash-realtime</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3.5-livetranslate-flash-realtime</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen3-livetranslate-flash</loc>
     <lastmod>2026-11-07</lastmod>
   </url>
   <url>
