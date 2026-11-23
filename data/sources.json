@@ -236,7 +236,7 @@
     "label": "通义千问 Pricing",
     "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
     "models": [
-      "qwen4-max-token",
+      "qwen4-max",
       "qwen3.8-max",
       "qwen3.7-max",
       "qwen-max",
@@ -290,6 +290,7 @@
       "qwen-plus-character",
       "qwen-flash-character",
       "qwen-plus-character-ja",
+      "qwen4-max-token",
       "qwen3-vl-flash",
       "qwen3-next-80b-a3b-instruct",
       "qwen3-235b-a22b",

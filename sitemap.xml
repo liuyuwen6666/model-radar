@@ -704,7 +704,7 @@
     <lastmod>2026-11-23</lastmod>
   </url>
   <url>
-    <loc>https://modelradar.cn/model/qwen4-max-token</loc>
+    <loc>https://modelradar.cn/model/qwen4-max</loc>
     <lastmod>2026-11-23</lastmod>
   </url>
   <url>
@@ -917,6 +917,10 @@
   </url>
   <url>
     <loc>https://modelradar.cn/model/qwen-plus-character-ja</loc>
+    <lastmod>2026-11-23</lastmod>
+  </url>
+  <url>
+    <loc>https://modelradar.cn/model/qwen4-max-token</loc>
     <lastmod>2026-11-23</lastmod>
   </url>
   <url>
